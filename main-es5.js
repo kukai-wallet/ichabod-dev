@@ -16768,7 +16768,7 @@
           this.route = route;
           this.lookupService = lookupService;
           this.activityService = activityService;
-          this.allowedOrigins = ['http://localhost', 'http://localhost:3000', 'https://www.tezos.help', 'https://x-tz.com'];
+          this.allowedOrigins = [];
           this.pendingOps = [];
           this.origin = '';
           this.login = false;
@@ -16780,7 +16780,7 @@
             try {
               var data = JSON.parse(evt.data);
 
-              if (_this37.allowedOrigins.includes(evt.origin)) {
+              if (!_environments_environment__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].MAINNET || _this37.allowedOrigins.includes(evt.origin)) {
                 console.log("Received ".concat(evt.data, " from ").concat(evt.origin));
 
                 if (data && data.type &&

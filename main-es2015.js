@@ -10137,7 +10137,7 @@ class EmbeddedComponent {
         this.route = route;
         this.lookupService = lookupService;
         this.activityService = activityService;
-        this.allowedOrigins = ['http://localhost', 'http://localhost:3000', 'https://www.tezos.help', 'https://x-tz.com'];
+        this.allowedOrigins = [];
         this.pendingOps = [];
         this.origin = '';
         this.login = false;
@@ -10147,7 +10147,7 @@ class EmbeddedComponent {
         this.handleRequest = (evt) => {
             try {
                 const data = JSON.parse(evt.data);
-                if (this.allowedOrigins.includes(evt.origin)) {
+                if (!_environments_environment__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].MAINNET || this.allowedOrigins.includes(evt.origin)) {
                     console.log(`Received ${evt.data} from ${evt.origin}`);
                     if (data &&
                         data.type &&
