@@ -5591,6 +5591,95 @@ SigninComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineCo
 
 /***/ }),
 
+/***/ "JJGL":
+/*!*****************************************************************!*\
+  !*** ./src/app/services/embedded-auth/embedded-auth.service.ts ***!
+  \*****************************************************************/
+/*! exports provided: EmbeddedAuthService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmbeddedAuthService", function() { return EmbeddedAuthService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _wallet_wallet_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../wallet/wallet.service */ "/cyv");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../environments/environment */ "AytR");
+/* harmony import */ var _taquito_michel_codec__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @taquito/michel-codec */ "lPlS");
+/* harmony import */ var _taquito_local_forging_dist_lib_michelson_codec__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @taquito/local-forging/dist/lib/michelson/codec */ "7vkd");
+/* harmony import */ var _taquito_local_forging_dist_lib_michelson_codec__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_taquito_local_forging_dist_lib_michelson_codec__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _operation_operation_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../operation/operation.service */ "2imr");
+
+
+
+
+
+
+
+
+
+
+class EmbeddedAuthService {
+    constructor(walletService, operationService) {
+        this.walletService = walletService;
+        this.operationService = operationService;
+    }
+    authenticate(authReq, origin) {
+        var _a;
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (!origin) {
+                throw new Error('NO_DOMAIN_FOUND');
+            }
+            else if (!(authReq === null || authReq === void 0 ? void 0 : authReq.id)) {
+                throw new Error('MISSING_REQUEST_ID');
+            }
+            else if (!authReq.nonce) {
+                throw new Error('MISSING_NONCE');
+            }
+            else if (!((_a = this.walletService) === null || _a === void 0 ? void 0 : _a.wallet) || !this.walletService.isEmbeddedTorusWallet()) {
+                throw new Error('NO_WALLET_FOUND');
+            }
+            const keys = yield this.walletService.getKeys('', this.walletService.wallet.implicitAccounts[0].pkh).catch(e => {
+                throw new Error('NO_KEYS_FOUND');
+            });
+            const authMessage = this.createAuthMessage(authReq.id, authReq.nonce, origin, keys.pk, keys.pkh);
+            const signature = this.signMessage(authMessage, keys.sk);
+            return { message: authMessage, signature };
+        });
+    }
+    createAuthMessage(requestId, nonce, domain, publicKey, address) {
+        const authPayload = {
+            requestId,
+            purpose: 'authentication',
+            currentTime: Math.floor(Date.now() / 1000).toString(),
+            nonce,
+            network: _environments_environment__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].NETWORK,
+            publicKey,
+            address,
+            domain
+        };
+        return `Tezos Signed Message: ${JSON.stringify(authPayload)}`;
+    }
+    signMessage(message, sk) {
+        const p = new _taquito_michel_codec__WEBPACK_IMPORTED_MODULE_4__["Parser"]();
+        const res = p.parseMichelineExpression(`"${message.replace('"', '\"')}"`);
+        const hexMessage = `05${Object(_taquito_local_forging_dist_lib_michelson_codec__WEBPACK_IMPORTED_MODULE_5__["valueEncoder"])(res)}`;
+        const signature = this.operationService.sign(hexMessage, sk).edsig;
+        return signature;
+    }
+}
+EmbeddedAuthService.ɵfac = function EmbeddedAuthService_Factory(t) { return new (t || EmbeddedAuthService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_2__["WalletService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_operation_operation_service__WEBPACK_IMPORTED_MODULE_6__["OperationService"])); };
+EmbeddedAuthService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({ token: EmbeddedAuthService, factory: EmbeddedAuthService.ɵfac, providedIn: 'root' });
+(function () { (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](EmbeddedAuthService, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"],
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: _wallet_wallet_service__WEBPACK_IMPORTED_MODULE_2__["WalletService"] }, { type: _operation_operation_service__WEBPACK_IMPORTED_MODULE_6__["OperationService"] }]; }, null); })();
+
+
+/***/ }),
+
 /***/ "LmEr":
 /*!*******************************************************!*\
   !*** ./src/app/components/footer/footer.component.ts ***!
@@ -10077,11 +10166,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ "tyNb");
 /* harmony import */ var _services_lookup_lookup_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../services/lookup/lookup.service */ "QDvW");
 /* harmony import */ var _services_activity_activity_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../services/activity/activity.service */ "s6Pj");
-/* harmony import */ var kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! kukai-embed/dist/types */ "OFNV");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common */ "ofXK");
-/* harmony import */ var _signin_signin_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./signin/signin.component */ "HlfV");
-/* harmony import */ var _send_send_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../send/send.component */ "MlEp");
-/* harmony import */ var _card_card_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../card/card.component */ "lXt9");
+/* harmony import */ var _services_embedded_auth_embedded_auth_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../services/embedded-auth/embedded-auth.service */ "JJGL");
+/* harmony import */ var kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! kukai-embed/dist/types */ "OFNV");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _signin_signin_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./signin/signin.component */ "HlfV");
+/* harmony import */ var _send_send_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../send/send.component */ "MlEp");
+/* harmony import */ var _card_card_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../card/card.component */ "lXt9");
+
+
 
 
 
@@ -10129,7 +10221,7 @@ function EmbeddedComponent_app_card_2_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("activeAccount", ctx_r2.activeAccount);
 } }
 class EmbeddedComponent {
-    constructor(torusService, importService, walletService, coordinatorService, route, lookupService, activityService) {
+    constructor(torusService, importService, walletService, coordinatorService, route, lookupService, activityService, embeddedAuthService) {
         this.torusService = torusService;
         this.importService = importService;
         this.walletService = walletService;
@@ -10137,6 +10229,7 @@ class EmbeddedComponent {
         this.route = route;
         this.lookupService = lookupService;
         this.activityService = activityService;
+        this.embeddedAuthService = embeddedAuthService;
         this.allowedOrigins = [];
         this.pendingOps = [];
         this.origin = '';
@@ -10154,17 +10247,20 @@ class EmbeddedComponent {
                         /* restricted to dev enviroment for now */ !_environments_environment__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].MAINNET) {
                         this.origin = evt.origin;
                         switch (data.type) {
-                            case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["RequestTypes"].loginRequest:
+                            case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].loginRequest:
                                 this.handleLoginRequest(data);
                                 break;
-                            case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["RequestTypes"].operationRequest:
+                            case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].operationRequest:
                                 this.handleOperationRequest(data);
                                 break;
-                            case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["RequestTypes"].trackRequest:
+                            case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].trackRequest:
                                 this.handleTrackRequest(data);
                                 break;
-                            case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["RequestTypes"].logoutRequest:
+                            case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].logoutRequest:
                                 this.handleLogoutRequest(data);
+                                break;
+                            case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].authRequest:
+                                this.handleAuthRequest(data);
                                 break;
                             default:
                                 console.warn('Unknown request', data);
@@ -10207,7 +10303,7 @@ class EmbeddedComponent {
     }
     handleLoginRequest(req) {
         if (this.activeAccount) {
-            const response = { type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].loginResponse, failed: true, error: 'ALREADY_LOGGED_IN' };
+            const response = { type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].loginResponse, failed: true, error: 'ALREADY_LOGGED_IN' };
             this.sendResponse(response);
         }
         else {
@@ -10225,7 +10321,7 @@ class EmbeddedComponent {
                 this.operationRequests = null;
                 this.sendResizeFailed('INVALID_SEND');
                 this.sendResponse({
-                    type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].operationResponse,
+                    type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
                     failed: true,
                     error: 'INVALID_TRANSACTION'
                 });
@@ -10234,7 +10330,7 @@ class EmbeddedComponent {
         else {
             this.sendResizeFailed('INVALID_SEND');
             this.sendResponse({
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].operationResponse,
+                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
                 failed: true,
                 error: 'NO_WALLET_FOUND'
             });
@@ -10250,7 +10346,7 @@ class EmbeddedComponent {
             const instanceId = this.walletService.wallet.instanceId;
             this.logout(instanceId);
             this.sendResponse({
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].logoutResponse,
+                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].logoutResponse,
                 instanceId,
                 failed: false
             });
@@ -10263,11 +10359,11 @@ class EmbeddedComponent {
         let response;
         if (loginData) {
             const { keyPair, userInfo } = loginData;
-            const filteredUserInfo = { typeOfLogin: userInfo.typeOfLogin, id: userInfo.verifierId, name: userInfo.name };
+            const _a = Object.assign({}, userInfo), { idToken = '', accessToken = '' } = _a, filteredUserInfo = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__rest"])(_a, ["idToken", "accessToken"]);
             // 160 bits of entropy, base58 encoded
             const instanceId = this.generateInstanceId();
             response = {
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].loginResponse,
+                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].loginResponse,
                 instanceId,
                 pk: keyPair.pk,
                 pkh: keyPair.pkh,
@@ -10277,16 +10373,34 @@ class EmbeddedComponent {
             this.importAccount(keyPair, userInfo, instanceId);
         }
         else {
-            response = { type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].loginResponse, failed: true, error: 'ABORTED_BY_USER' };
+            response = { type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].loginResponse, failed: true, error: 'ABORTED_BY_USER' };
         }
         this.login = false;
         setTimeout(() => {
             this.sendResponse(response);
         }, 0);
     }
+    handleAuthRequest(authReq) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.embeddedAuthService.authenticate(authReq, this.origin).then((authResponse) => {
+                this.sendResponse({
+                    type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].authResponse,
+                    failed: false,
+                    message: authResponse.message,
+                    signature: authResponse.signature
+                });
+            }).catch((e) => {
+                this.sendResponse({
+                    type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].authResponse,
+                    failed: true,
+                    error: e.message ? e.message : 'UNKNOWN_ERROR'
+                });
+            });
+        });
+    }
     noWalletError() {
         this.sendResponse({
-            type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].logoutResponse,
+            type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].logoutResponse,
             failed: true,
             error: 'NO_WALLET_FOUND'
         });
@@ -10294,16 +10408,16 @@ class EmbeddedComponent {
     operationResponse(opHash) {
         let response;
         if (!opHash) {
-            response = { type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].operationResponse, failed: true, error: 'ABORTED_BY_USER' };
+            response = { type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse, failed: true, error: 'ABORTED_BY_USER' };
         }
         else if (opHash === 'broadcast_error') {
-            response = { type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].operationResponse, failed: true, error: 'BROADCAST_ERROR' };
+            response = { type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse, failed: true, error: 'BROADCAST_ERROR' };
         }
         else if (opHash === 'invalid_parameters') {
-            response = { type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].operationResponse, failed: true, error: 'INVALID_PARAMETERS' };
+            response = { type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse, failed: true, error: 'INVALID_PARAMETERS' };
         }
         else {
-            response = { type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].operationResponse, opHash, failed: false };
+            response = { type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse, opHash, failed: false };
         }
         this.operationRequests = null;
         setTimeout(() => {
@@ -10317,7 +10431,7 @@ class EmbeddedComponent {
         this.blockCard = false;
         setTimeout(() => {
             this.sendResponse({
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].resize,
+                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].resize,
                 failed: true,
                 error
             });
@@ -10327,7 +10441,7 @@ class EmbeddedComponent {
         this.blockCard = true;
         setTimeout(() => {
             this.sendResponse({
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].resize,
+                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].resize,
                 failed: false
             });
         }, 0);
@@ -10377,7 +10491,7 @@ class EmbeddedComponent {
         this.ophashSubscription = this.activityService.confirmedOp.subscribe((opHash) => {
             if (this.pendingOps.includes(opHash)) {
                 this.sendResponse({
-                    type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_12__["ResponseTypes"].trackResponse,
+                    type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].trackResponse,
                     opHash: opHash,
                     failed: false
                 });
@@ -10390,7 +10504,7 @@ class EmbeddedComponent {
         });
     }
 }
-EmbeddedComponent.ɵfac = function EmbeddedComponent_Factory(t) { return new (t || EmbeddedComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_torus_torus_service__WEBPACK_IMPORTED_MODULE_2__["TorusService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_import_import_service__WEBPACK_IMPORTED_MODULE_4__["ImportService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_5__["WalletService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_7__["CoordinatorService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_lookup_lookup_service__WEBPACK_IMPORTED_MODULE_10__["LookupService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_activity_activity_service__WEBPACK_IMPORTED_MODULE_11__["ActivityService"])); };
+EmbeddedComponent.ɵfac = function EmbeddedComponent_Factory(t) { return new (t || EmbeddedComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_torus_torus_service__WEBPACK_IMPORTED_MODULE_2__["TorusService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_import_import_service__WEBPACK_IMPORTED_MODULE_4__["ImportService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_5__["WalletService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_7__["CoordinatorService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_lookup_lookup_service__WEBPACK_IMPORTED_MODULE_10__["LookupService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_activity_activity_service__WEBPACK_IMPORTED_MODULE_11__["ActivityService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_embedded_auth_embedded_auth_service__WEBPACK_IMPORTED_MODULE_12__["EmbeddedAuthService"])); };
 EmbeddedComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: EmbeddedComponent, selectors: [["app-embedded"]], hostBindings: function EmbeddedComponent_HostBindings(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("resize", function EmbeddedComponent_resize_HostBindingHandler($event) { return ctx.onResize($event); }, false, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresolveWindow"]);
     } }, decls: 3, vars: 3, consts: [[3, "loginResponse", 4, "ngIf"], [3, "headless", "operationRequest", "activeAccount", "operationResponse", 4, "ngIf"], [3, "activeAccount", 4, "ngIf"], [3, "loginResponse"], [3, "headless", "operationRequest", "activeAccount", "operationResponse"], [3, "activeAccount"]], template: function EmbeddedComponent_Template(rf, ctx) { if (rf & 1) {
@@ -10403,7 +10517,7 @@ EmbeddedComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefine
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", ctx.operationRequests && ctx.activeAccount);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", ctx.activeAccount && !ctx.blockCard && (!ctx.operationRequests && !ctx.login));
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_13__["NgIf"], _signin_signin_component__WEBPACK_IMPORTED_MODULE_14__["SigninComponent"], _send_send_component__WEBPACK_IMPORTED_MODULE_15__["SendComponent"], _card_card_component__WEBPACK_IMPORTED_MODULE_16__["CardComponent"]], styles: ["[_nghost-%COMP%] {\n  width: 100%;\n  height: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFxlbWJlZGRlZC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLFdBQUE7RUFDQSxZQUFBO0FBQ0YiLCJmaWxlIjoiZW1iZWRkZWQuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG59Il19 */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_14__["NgIf"], _signin_signin_component__WEBPACK_IMPORTED_MODULE_15__["SigninComponent"], _send_send_component__WEBPACK_IMPORTED_MODULE_16__["SendComponent"], _card_card_component__WEBPACK_IMPORTED_MODULE_17__["CardComponent"]], styles: ["[_nghost-%COMP%] {\n  width: 100%;\n  height: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFxlbWJlZGRlZC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLFdBQUE7RUFDQSxZQUFBO0FBQ0YiLCJmaWxlIjoiZW1iZWRkZWQuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG59Il19 */"] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](EmbeddedComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"],
         args: [{
@@ -10411,7 +10525,7 @@ EmbeddedComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefine
                 templateUrl: './embedded.component.html',
                 styleUrls: ['./embedded.component.scss']
             }]
-    }], function () { return [{ type: _services_torus_torus_service__WEBPACK_IMPORTED_MODULE_2__["TorusService"] }, { type: _services_import_import_service__WEBPACK_IMPORTED_MODULE_4__["ImportService"] }, { type: _services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_5__["WalletService"] }, { type: _services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_7__["CoordinatorService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_9__["ActivatedRoute"] }, { type: _services_lookup_lookup_service__WEBPACK_IMPORTED_MODULE_10__["LookupService"] }, { type: _services_activity_activity_service__WEBPACK_IMPORTED_MODULE_11__["ActivityService"] }]; }, { onResize: [{
+    }], function () { return [{ type: _services_torus_torus_service__WEBPACK_IMPORTED_MODULE_2__["TorusService"] }, { type: _services_import_import_service__WEBPACK_IMPORTED_MODULE_4__["ImportService"] }, { type: _services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_5__["WalletService"] }, { type: _services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_7__["CoordinatorService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_9__["ActivatedRoute"] }, { type: _services_lookup_lookup_service__WEBPACK_IMPORTED_MODULE_10__["LookupService"] }, { type: _services_activity_activity_service__WEBPACK_IMPORTED_MODULE_11__["ActivityService"] }, { type: _services_embedded_auth_embedded_auth_service__WEBPACK_IMPORTED_MODULE_12__["EmbeddedAuthService"] }]; }, { onResize: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"],
             args: ['window:resize', ['$event']]
         }] }); })();
