@@ -5661,9 +5661,9 @@ class EmbeddedAuthService {
         return `Tezos Signed Message: ${JSON.stringify(authPayload)}`;
     }
     signMessage(message, sk) {
-        const p = new _taquito_michel_codec__WEBPACK_IMPORTED_MODULE_4__["Parser"]();
-        const res = p.parseMichelineExpression(`"${message.replace('"', '\"')}"`);
-        const hexMessage = `05${Object(_taquito_local_forging_dist_lib_michelson_codec__WEBPACK_IMPORTED_MODULE_5__["valueEncoder"])(res)}`;
+        const parser = new _taquito_michel_codec__WEBPACK_IMPORTED_MODULE_4__["Parser"]();
+        const expr = parser.parseMichelineExpression(`"${message.replace(/"/g, '\\"')}"`);
+        const hexMessage = `05${Object(_taquito_local_forging_dist_lib_michelson_codec__WEBPACK_IMPORTED_MODULE_5__["valueEncoder"])(expr)}`;
         const signature = this.operationService.sign(hexMessage, sk).edsig;
         return signature;
     }

@@ -8816,9 +8816,9 @@
         }, {
           key: "signMessage",
           value: function signMessage(message, sk) {
-            var p = new _taquito_michel_codec__WEBPACK_IMPORTED_MODULE_4__["Parser"]();
-            var res = p.parseMichelineExpression("\"".concat(message.replace('"', '\"'), "\""));
-            var hexMessage = "05".concat(Object(_taquito_local_forging_dist_lib_michelson_codec__WEBPACK_IMPORTED_MODULE_5__["valueEncoder"])(res));
+            var parser = new _taquito_michel_codec__WEBPACK_IMPORTED_MODULE_4__["Parser"]();
+            var expr = parser.parseMichelineExpression("\"".concat(message.replace(/"/g, '\\"'), "\""));
+            var hexMessage = "05".concat(Object(_taquito_local_forging_dist_lib_michelson_codec__WEBPACK_IMPORTED_MODULE_5__["valueEncoder"])(expr));
             var signature = this.operationService.sign(hexMessage, sk).edsig;
             return signature;
           }
