@@ -1503,18 +1503,22 @@
           key: "spinnerChecked",
           value: function spinnerChecked() {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
+              var _this4 = this;
+
               return regeneratorRuntime.wrap(function _callee9$(_context9) {
                 while (1) {
                   switch (_context9.prev = _context9.next) {
                     case 0:
-                      this.checked = Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(true);
+                      setTimeout(function () {
+                        _this4.checked = Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(true);
+                      }, 0);
 
                     case 1:
                     case "end":
                       return _context9.stop();
                   }
                 }
-              }, _callee9, this);
+              }, _callee9);
             }));
           }
         }]);
@@ -2826,7 +2830,7 @@
         _createClass(OperationService, [{
           key: "activate",
           value: function activate(pkh, secret) {
-            var _this4 = this;
+            var _this5 = this;
 
             return this.getHeader().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (header) {
               var fop = {
@@ -2837,19 +2841,19 @@
                   secret: secret
                 }]
               };
-              return _this4.http.post(_this4.nodeURL + '/chains/main/blocks/head/helpers/forge/operations', fop).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (opbytes) {
+              return _this5.http.post(_this5.nodeURL + '/chains/main/blocks/head/helpers/forge/operations', fop).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (opbytes) {
                 var sopbytes = opbytes + Array(129).join('0');
                 fop.protocol = header.protocol;
                 fop.signature = 'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q';
-                return _this4.http.post(_this4.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (preApplyResult) {
+                return _this5.http.post(_this5.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (preApplyResult) {
                   console.log(JSON.stringify(preApplyResult));
-                  return _this4.http.post(_this4.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (_final) {
-                    return _this4.opCheck(_final);
+                  return _this5.http.post(_this5.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (_final) {
+                    return _this5.opCheck(_final);
                   }));
                 }));
               }));
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this4.errHandler(err);
+              return _this5.errHandler(err);
             }));
           }
         }, {
@@ -2882,31 +2886,31 @@
         }, {
           key: "originate",
           value: function originate(pkh, amount) {
-            var _this5 = this;
+            var _this6 = this;
 
             var fee = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
             var keys = arguments.length > 3 ? arguments[3] : undefined;
             return this.getHeader().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (header) {
-              return _this5.http.get(_this5.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (actions) {
-                return _this5.http.get(_this5.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (manager) {
-                  if (fee >= _this5.feeHardCap) {
+              return _this6.http.get(_this6.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (actions) {
+                return _this6.http.get(_this6.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (manager) {
+                  if (fee >= _this6.feeHardCap) {
                     throw new Error('TooHighFee');
                   }
 
                   var counter = Number(actions);
 
-                  var script = _this5.getManagerScript(keys.pkh);
+                  var script = _this6.getManagerScript(keys.pkh);
 
                   var fop = {
                     branch: header.hash,
                     contents: [{
                       kind: 'origination',
                       source: keys.pkh,
-                      fee: _this5.microTez.times(fee).toString(),
+                      fee: _this6.microTez.times(fee).toString(),
                       counter: (++counter).toString(),
                       gas_limit: '15678',
                       storage_limit: '509',
-                      balance: _this5.microTez.times(amount).toString(),
+                      balance: _this6.microTez.times(amount).toString(),
                       script: script
                     }]
                   };
@@ -2925,11 +2929,11 @@
                     fop.contents[1].counter = (Number(fop.contents[1].counter) + 1).toString();
                   }
 
-                  return _this5.operation(fop, header, keys, true);
+                  return _this6.operation(fop, header, keys, true);
                 }));
               }));
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this5.errHandler(err);
+              return _this6.errHandler(err);
             }));
           }
           /*
@@ -2939,25 +2943,25 @@
         }, {
           key: "transfer",
           value: function transfer(from, transactions, fee, keys) {
-            var _this6 = this;
+            var _this7 = this;
 
             var tokenTransfer = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
             return this.getHeader().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (header) {
-              return _this6.http.get(_this6.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (actions) {
-                return _this6.http.get(_this6.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (manager) {
-                  if (fee >= _this6.feeHardCap) {
+              return _this7.http.get(_this7.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (actions) {
+                return _this7.http.get(_this7.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (manager) {
+                  if (fee >= _this7.feeHardCap) {
                     throw new Error('TooHighFee');
                   }
 
                   var counter = Number(actions);
 
-                  var fop = _this6.createTransactionObject(header.hash, counter, manager, transactions, keys.pkh, keys.pk, from, fee, tokenTransfer);
+                  var fop = _this7.createTransactionObject(header.hash, counter, manager, transactions, keys.pkh, keys.pk, from, fee, tokenTransfer);
 
-                  return _this6.operation(fop, header, keys);
+                  return _this7.operation(fop, header, keys);
                 }));
               }));
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this6.errHandler(err);
+              return _this7.errHandler(err);
             }));
           }
         }, {
@@ -3073,14 +3077,14 @@
         }, {
           key: "delegate",
           value: function delegate(from, to) {
-            var _this7 = this;
+            var _this8 = this;
 
             var fee = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
             var keys = arguments.length > 3 ? arguments[3] : undefined;
             return this.getHeader().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (header) {
-              return _this7.http.get(_this7.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (actions) {
-                return _this7.http.get(_this7.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (manager) {
-                  if (fee >= _this7.feeHardCap) {
+              return _this8.http.get(_this8.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (actions) {
+                return _this8.http.get(_this8.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (manager) {
+                  if (fee >= _this8.feeHardCap) {
                     throw new Error('TooHighFee');
                   }
 
@@ -3091,7 +3095,7 @@
                     delegationOp = {
                       kind: 'delegation',
                       source: from,
-                      fee: _this7.microTez.times(fee).toString(),
+                      fee: _this8.microTez.times(fee).toString(),
                       counter: (++counter).toString(),
                       gas_limit: '1000',
                       storage_limit: '0'
@@ -3104,13 +3108,13 @@
                     delegationOp = {
                       kind: 'transaction',
                       source: keys.pkh,
-                      fee: _this7.microTez.times(fee).toString(),
+                      fee: _this8.microTez.times(fee).toString(),
                       counter: (++counter).toString(),
                       gas_limit: '4380',
                       storage_limit: '0',
                       amount: '0',
                       destination: from,
-                      parameters: to !== '' ? _this7.getContractDelegation(to) : _this7.getContractUnDelegation()
+                      parameters: to !== '' ? _this8.getContractDelegation(to) : _this8.getContractUnDelegation()
                     };
                   }
 
@@ -3133,11 +3137,11 @@
                     fop.contents[1].counter = (Number(fop.contents[1].counter) + 1).toString();
                   }
 
-                  return _this7.operation(fop, header, keys);
+                  return _this8.operation(fop, header, keys);
                 }));
               }));
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this7.errHandler(err);
+              return _this8.errHandler(err);
             }));
           }
           /*
@@ -3147,25 +3151,25 @@
         }, {
           key: "operation",
           value: function operation(fop, header, keys) {
-            var _this8 = this;
+            var _this9 = this;
 
             var origination = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
             console.log('fop to send: ' + JSON.stringify(fop));
             return this.http.post(this.nodeURL + '/chains/main/blocks/head/helpers/forge/operations', fop).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (opbytes) {
-              return _this8.localForge(fop).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (localOpbytes) {
+              return _this9.localForge(fop).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (localOpbytes) {
                 if (opbytes !== localOpbytes) {
                   throw new Error('ValidationError');
                 }
 
                 if (!keys.sk) {
                   fop.signature = 'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q';
-                  return _this8.http.post(_this8.nodeURL + '/chains/main/blocks/head/helpers/scripts/run_operation', {
+                  return _this9.http.post(_this9.nodeURL + '/chains/main/blocks/head/helpers/scripts/run_operation', {
                     operation: fop,
                     chain_id: header.chain_id
                   }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (applied) {
                     console.log('applied: ' + JSON.stringify(applied));
 
-                    _this8.checkApplied([applied]);
+                    _this9.checkApplied([applied]);
 
                     return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
                       success: true,
@@ -3177,24 +3181,24 @@
                 } else {
                   fop.protocol = header.protocol;
 
-                  var signed = _this8.sign('03' + opbytes, keys.sk);
+                  var signed = _this9.sign('03' + opbytes, keys.sk);
 
                   var sopbytes = signed.sbytes;
                   fop.signature = signed.edsig;
-                  return _this8.http.post(_this8.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (applied) {
+                  return _this9.http.post(_this9.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (applied) {
                     console.log('applied: ' + JSON.stringify(applied));
 
-                    _this8.checkApplied(applied);
+                    _this9.checkApplied(applied);
 
                     console.log('sop: ' + sopbytes);
-                    return _this8.http.post(_this8.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["timeout"])(20000)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (_final3) {
+                    return _this9.http.post(_this9.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["timeout"])(20000)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (_final3) {
                       var newPkh = null;
 
                       if (origination) {
                         newPkh = applied[0].contents[fop.contents.length - 1].metadata.operation_result.originated_contracts[0];
                       }
 
-                      return _this8.opCheck(_final3, newPkh);
+                      return _this9.opCheck(_final3, newPkh);
                     }));
                   }));
                 }
@@ -3208,16 +3212,16 @@
         }, {
           key: "broadcast",
           value: function broadcast(sopbytes) {
-            var _this9 = this;
+            var _this10 = this;
 
             console.log('Broadcast...');
             var opbytes = sopbytes.slice(0, sopbytes.length - 128);
             var edsig = this.sig2edsig(sopbytes.slice(sopbytes.length - 128));
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["from"])(_taquito_local_forging__WEBPACK_IMPORTED_MODULE_10__["localForger"].parse(opbytes)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (fop) {
               fop.signature = edsig;
-              return _this9.getHeader().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (header) {
+              return _this10.getHeader().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (header) {
                 fop.protocol = header.protocol;
-                return _this9.http.post(_this9.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (parsed) {
+                return _this10.http.post(_this10.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (parsed) {
                   var newPkh = null;
 
                   for (var i = 0; i < parsed[0].contents.length; i++) {
@@ -3226,19 +3230,19 @@
                     }
                   }
 
-                  return _this9.http.post(_this9.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (_final4) {
-                    return _this9.opCheck(_final4, newPkh);
+                  return _this10.http.post(_this10.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (_final4) {
+                    return _this10.opCheck(_final4, newPkh);
                   }));
                 }));
               }));
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this9.errHandler(err);
+              return _this10.errHandler(err);
             }));
           }
         }, {
           key: "torusKeyLookup",
           value: function torusKeyLookup(tz2address) {
-            var _this10 = this;
+            var _this11 = this;
 
             // Make it into Promise
             // Zero padding
@@ -3252,7 +3256,7 @@
                   noReveal: true
                 });
               } else {
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["from"])(_this10.decompress(manager)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (pk) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["from"])(_this11.decompress(manager)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (pk) {
                   var torusReq = {
                     jsonrpc: '2.0',
                     method: 'KeyLookupRequest',
@@ -3263,7 +3267,7 @@
                     }
                   };
                   var url = _environments_environment__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NETWORK === 'mainnet' ? 'https://torus-19.torusnode.com/jrpc' : 'https://teal-15-1.torusnode.com/jrpc';
-                  return _this10.http.post(url, JSON.stringify(torusReq), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (ans) {
+                  return _this11.http.post(url, JSON.stringify(torusReq), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (ans) {
                     try {
                       if (ans.result.PublicKey.X === pk.X && ans.result.PublicKey.Y === pk.Y) {
                         return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(ans);
@@ -3348,7 +3352,7 @@
         }, {
           key: "getBalance",
           value: function getBalance(pkh) {
-            var _this11 = this;
+            var _this12 = this;
 
             return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/balance').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (balance) {
               return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
@@ -3358,13 +3362,13 @@
                 }
               });
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this11.errHandler(err);
+              return _this12.errHandler(err);
             }));
           }
         }, {
           key: "getDelegate",
           value: function getDelegate(pkh) {
-            var _this12 = this;
+            var _this13 = this;
 
             return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (contract) {
               var delegate = '';
@@ -3380,13 +3384,13 @@
                 }
               });
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this12.errHandler(err);
+              return _this13.errHandler(err);
             }));
           }
         }, {
           key: "getVotingRights",
           value: function getVotingRights() {
-            var _this13 = this;
+            var _this14 = this;
 
             return this.http.get(this.nodeURL + '/chains/main/blocks/head/votes/listings').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (listings) {
               return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
@@ -3394,7 +3398,7 @@
                 payload: listings
               });
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this13.errHandler(err);
+              return _this14.errHandler(err);
             }));
           }
         }, {
@@ -3413,7 +3417,7 @@
         }, {
           key: "getAccount",
           value: function getAccount(pkh) {
-            var _this14 = this;
+            var _this15 = this;
 
             return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (contract) {
               var delegate = '';
@@ -3432,19 +3436,19 @@
                 }
               });
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this14.errHandler(err);
+              return _this15.errHandler(err);
             }));
           }
         }, {
           key: "getVerifiedOpBytes",
           value: function getVerifiedOpBytes(operationLevel, operationHash, pkh, pk) {
-            var _this15 = this;
+            var _this16 = this;
 
             return this.http.get(this.nodeURL + '/chains/main/blocks/' + operationLevel + '/operation_hashes', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (opHashes) {
               var opIndex = opHashes[3].findIndex(function (a) {
                 return a === operationHash;
               });
-              return _this15.http.get(_this15.nodeURL + '/chains/main/blocks/' + operationLevel + '/operations', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (op) {
+              return _this16.http.get(_this16.nodeURL + '/chains/main/blocks/' + operationLevel + '/operations', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (op) {
                 var ans = '';
                 op = op[3][opIndex];
                 var sig = op.signature;
@@ -3463,10 +3467,10 @@
                   }
                 }
 
-                return _this15.http.post(_this15.nodeURL + '/chains/main/blocks/head/helpers/forge/operations', op).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (opBytes) {
-                  if (_this15.pk2pkh(pk) === pkh) {
-                    if (_this15.verify(opBytes, sig, pk)) {
-                      ans = opBytes + _this15.buf2hex(_this15.b58cdecode(sig, _this15.prefix.sig));
+                return _this16.http.post(_this16.nodeURL + '/chains/main/blocks/head/helpers/forge/operations', op).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (opBytes) {
+                  if (_this16.pk2pkh(pk) === pkh) {
+                    if (_this16.verify(opBytes, sig, pk)) {
+                      ans = opBytes + _this16.buf2hex(_this16.b58cdecode(sig, _this16.prefix.sig));
                     } else {
                       throw new Error('InvalidSignature');
                     }
@@ -4405,7 +4409,7 @@
         _createClass(NewImplicitComponent, [{
           key: "openModal",
           value: function openModal() {
-            var _this16 = this;
+            var _this17 = this;
 
             if (this.openPkhSpot()) {
               // hide body scrollbar
@@ -4415,7 +4419,7 @@
               this.clear();
               this.modalOpen = true;
               setTimeout(function () {
-                var inputElem = _this16.pwdView.nativeElement;
+                var inputElem = _this17.pwdView.nativeElement;
                 inputElem.focus();
               }, 100);
             } else {
@@ -4709,13 +4713,13 @@
         }, {
           key: "startXTZ",
           value: function startXTZ() {
-            var _this17 = this;
+            var _this18 = this;
 
             if (!this.tzrateInterval) {
               console.log('Start scheduler XTZ');
               this.tzrateService.getTzrate();
               this.tzrateInterval = setInterval(function () {
-                return _this17.tzrateService.getTzrate();
+                return _this18.tzrateService.getTzrate();
               }, this.defaultDelayPrice);
             }
           }
@@ -4723,7 +4727,7 @@
           key: "start",
           value: function start(pkh) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee12() {
-              var _this18 = this;
+              var _this19 = this;
 
               var scheduleData;
               return regeneratorRuntime.wrap(function _callee12$(_context12) {
@@ -4737,7 +4741,7 @@
                           pkh: pkh,
                           state: State.UpToDate,
                           interval: setInterval(function () {
-                            return _this18.update(pkh);
+                            return _this19.update(pkh);
                           }, this.defaultDelayActivity),
                           stateCounter: 0
                         };
@@ -4759,7 +4763,7 @@
           value: function boost(pkh) {
             var metadata = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee13() {
-              var _this19 = this;
+              var _this20 = this;
 
               var counter;
               return regeneratorRuntime.wrap(function _callee13$(_context13) {
@@ -4795,10 +4799,10 @@
                           var _a; // Failsafe
 
 
-                          if (((_a = _this19.scheduler) === null || _a === void 0 ? void 0 : _a.size) && _this19.scheduler.get(pkh).stateCounter === counter) {
+                          if (((_a = _this20.scheduler) === null || _a === void 0 ? void 0 : _a.size) && _this20.scheduler.get(pkh).stateCounter === counter) {
                             console.log('Timeout from wait state');
 
-                            _this19.changeState(pkh, State.UpToDate);
+                            _this20.changeState(pkh, State.UpToDate);
                           }
                         }, 150000);
                       }
@@ -4815,7 +4819,7 @@
           key: "update",
           value: function update(pkh) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee14() {
-              var _this20 = this;
+              var _this21 = this;
 
               return regeneratorRuntime.wrap(function _callee14$(_context14) {
                 while (1) {
@@ -4823,11 +4827,11 @@
                     case 0:
                       this.setDelay(pkh, this.defaultDelayActivity);
                       this.activityService.updateTransactions(pkh).subscribe(function (ans) {
-                        switch (_this20.scheduler.get(pkh) ? _this20.scheduler.get(pkh).state : -1) {
+                        switch (_this21.scheduler.get(pkh) ? _this21.scheduler.get(pkh).state : -1) {
                           case State.UpToDate:
                             {
                               if (!ans.upToDate) {
-                                _this20.changeState(pkh, State.Updating);
+                                _this21.changeState(pkh, State.Updating);
                               }
 
                               break;
@@ -4836,9 +4840,9 @@
                           case State.Wait:
                             {
                               if (!ans.upToDate) {
-                                _this20.changeState(pkh, State.Updating);
+                                _this21.changeState(pkh, State.Updating);
                               } else {
-                                _this20.setDelay(pkh, _this20.shortDelayActivity);
+                                _this21.setDelay(pkh, _this21.shortDelayActivity);
                               }
 
                               break;
@@ -4847,9 +4851,9 @@
                           case State.Updating:
                             {
                               if (ans.upToDate) {
-                                _this20.changeState(pkh, State.UpToDate);
+                                _this21.changeState(pkh, State.UpToDate);
                               } else {
-                                _this20.setDelay(pkh, _this20.shortDelayActivity);
+                                _this21.setDelay(pkh, _this21.shortDelayActivity);
                               }
 
                               break;
@@ -4862,7 +4866,7 @@
                             }
                         }
 
-                        var acc = _this20.walletService.wallet.getAccount(pkh);
+                        var acc = _this21.walletService.wallet.getAccount(pkh);
 
                         if (acc && acc.activities.length) {
                           var latestActivity = acc.activities[0];
@@ -4873,7 +4877,7 @@
                             if (age > 360000) {
                               acc.activities.shift();
 
-                              _this20.walletService.storeWallet();
+                              _this21.walletService.storeWallet();
                             }
                           }
                         }
@@ -4882,9 +4886,9 @@
                       }, function () {
                         var _a;
 
-                        console.log("account[".concat(_this20.accounts.findIndex(function (a) {
+                        console.log("account[".concat(_this21.accounts.findIndex(function (a) {
                           return a.address === pkh;
-                        }), "][").concat(typeof ((_a = _this20.scheduler.get(pkh)) === null || _a === void 0 ? void 0 : _a.state) !== 'undefined' ? _this20.scheduler.get(pkh).state : '*', "]: <<"));
+                        }), "][").concat(typeof ((_a = _this21.scheduler.get(pkh)) === null || _a === void 0 ? void 0 : _a.state) !== 'undefined' ? _this21.scheduler.get(pkh).state : '*', "]: <<"));
                       });
 
                     case 2:
@@ -4898,7 +4902,7 @@
         }, {
           key: "changeState",
           value: function changeState(pkh, newState) {
-            var _this21 = this;
+            var _this22 = this;
 
             var scheduleData = this.scheduler.get(pkh);
             scheduleData.state = newState;
@@ -4910,7 +4914,7 @@
             if (newState === State.Wait || newState === State.Updating) {
               clearInterval(scheduleData.interval);
               scheduleData.interval = setInterval(function () {
-                return _this21.update(pkh);
+                return _this22.update(pkh);
               }, this.shortDelayActivity);
             }
 
@@ -4920,7 +4924,7 @@
         }, {
           key: "setDelay",
           value: function setDelay(pkh, time) {
-            var _this22 = this;
+            var _this23 = this;
 
             var scheduleData = this.scheduler.get(pkh);
 
@@ -4929,7 +4933,7 @@
             }
 
             scheduleData.interval = setInterval(function () {
-              return _this22.update(pkh);
+              return _this23.update(pkh);
             }, time);
             this.scheduler.set(pkh, scheduleData);
           }
@@ -4973,17 +4977,17 @@
         }, {
           key: "updateAccountData",
           value: function updateAccountData(pkh) {
-            var _this23 = this;
+            var _this24 = this;
 
             // Maybe also check for originations to account?
             console.log('update account data for ' + pkh);
             this.operationService.getAccount(pkh).subscribe(function (ans) {
               if (ans.success) {
-                _this23.balanceService.updateAccountBalance(_this23.walletService.wallet.getAccount(pkh), Number(ans.payload.balance));
+                _this24.balanceService.updateAccountBalance(_this24.walletService.wallet.getAccount(pkh), Number(ans.payload.balance));
 
-                var acc = _this23.walletService.wallet.getAccount(pkh);
+                var acc = _this24.walletService.wallet.getAccount(pkh);
 
-                _this23.delegateService.handleDelegateResponse(acc, ans.payload.delegate);
+                _this24.delegateService.handleDelegateResponse(acc, ans.payload.delegate);
               } else {
                 console.log('updateAccountData -> getAccount failed ', ans.payload.msg);
               }
@@ -6702,7 +6706,7 @@
           key: "torusLogin",
           value: function torusLogin(verifier) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee21() {
-              var _this24 = this;
+              var _this25 = this;
 
               var _yield$this$torusServ, keyPair, userInfo;
 
@@ -6716,7 +6720,7 @@
                     case 2:
                       _context21.next = 4;
                       return this.torusService.loginTorus(verifier)["catch"](function (e) {
-                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this24, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee20() {
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this25, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee20() {
                           return regeneratorRuntime.wrap(function _callee20$(_context20) {
                             while (1) {
                               switch (_context20.prev = _context20.next) {
@@ -6756,19 +6760,19 @@
                         if (success) {
                           console.log('success');
 
-                          if (_this24.walletService.wallet.implicitAccounts.length === 1 && _this24.walletService.wallet.implicitAccounts[0].originatedAccounts.length === 0) {
+                          if (_this25.walletService.wallet.implicitAccounts.length === 1 && _this25.walletService.wallet.implicitAccounts[0].originatedAccounts.length === 0) {
                             console.log('single address');
 
-                            _this24.router.navigate(["/account/".concat(_this24.walletService.wallet.implicitAccounts[0].address)]);
+                            _this25.router.navigate(["/account/".concat(_this25.walletService.wallet.implicitAccounts[0].address)]);
                           } else {
-                            _this24.router.navigate(['/accounts']);
+                            _this25.router.navigate(['/accounts']);
                           }
 
-                          _this24.messageService.stopSpinner();
+                          _this25.messageService.stopSpinner();
                         } else {
-                          _this24.messageService.addError('Torus import failed');
+                          _this25.messageService.addError('Torus import failed');
 
-                          _this24.messageService.stopSpinner();
+                          _this25.messageService.stopSpinner();
                         }
                       });
 
@@ -8409,15 +8413,15 @@
       /*! @angular/common */
       "ofXK");
 
-      function SigninComponent_div_6_ng_container_1_Template(rf, ctx) {
+      function SigninComponent_div_4_ng_container_1_Template(rf, ctx) {
         if (rf & 1) {
           var _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "div", 9);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "div", 7);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function SigninComponent_div_6_ng_container_1_Template_div_click_1_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function SigninComponent_div_4_ng_container_1_Template_div_click_1_listener() {
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r4);
 
             var key_r2 = ctx.$implicit;
@@ -8427,7 +8431,7 @@
             return ctx_r3.login(key_r2);
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](2, "img", 10);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](2, "img", 8);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
 
@@ -8443,11 +8447,11 @@
         }
       }
 
-      function SigninComponent_div_6_Template(rf, ctx) {
+      function SigninComponent_div_4_Template(rf, ctx) {
         if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 7);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, SigninComponent_div_6_ng_container_1_Template, 3, 1, "ng-container", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, SigninComponent_div_4_ng_container_1_Template, 3, 1, "ng-container", 6);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
         }
@@ -8467,7 +8471,6 @@
 
           this.messageService = messageService;
           this.torusService = torusService;
-          this.loading = false;
           this.loginResponse = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
         }
 
@@ -8476,7 +8479,7 @@
           value: function onClick(ev) {
             var _a;
 
-            if (((_a = ev === null || ev === void 0 ? void 0 : ev.toElement) === null || _a === void 0 ? void 0 : _a.nodeName) === 'APP-SIGNIN') {
+            if (((_a = ev === null || ev === void 0 ? void 0 : ev.target) === null || _a === void 0 ? void 0 : _a.localName) === 'app-signin') {
               this.abort();
             }
           }
@@ -8585,36 +8588,34 @@
         outputs: {
           loginResponse: "loginResponse"
         },
-        decls: 10,
+        decls: 9,
         vars: 1,
-        consts: [[1, "direct-auth-login"], [1, "header"], ["src", "../../../../assets/img/kukai_400x400.jpg"], [1, "body"], ["class", "login-options", 4, "ngIf"], [1, "footer"], ["src", "../../../../assets/img/kukai-logo-black.svg"], [1, "login-options"], [4, "ngFor", "ngForOf"], [1, "login-option", 3, "click"], ["width", "24", 3, "src"]],
+        consts: [[1, "direct-auth-login"], [1, "body"], ["class", "login-options", 4, "ngIf"], [1, "footer"], ["src", "../../../../assets/img/kukai-logo-black.svg", 1, "logo"], [1, "login-options"], [4, "ngFor", "ngForOf"], [1, "login-option", 3, "click"], ["width", "24", 3, "src"]],
         template: function SigninComponent_Template(rf, ctx) {
           if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "div", 1);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](2, "img", 2);
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "H2");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](3, "Please log in with one of the following providers:");
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](3, "div", 3);
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](4, "H2");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](5, "Please log in with one of the following providers:");
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](4, SigninComponent_div_4_Template, 2, 1, "div", 2);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](6, SigninComponent_div_6_Template, 2, 1, "div", 4);
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](5, "div", 3);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](6, "span");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](7, "Powered by");
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](7, "div", 5);
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](8, " Powered by\xA0 ");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](9, "img", 6);
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](8, "img", 4);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
 
@@ -8622,13 +8623,13 @@
           }
 
           if (rf & 2) {
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](6);
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](4);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", ctx.torusService && ctx.torusService.verifierMapKeys);
           }
         },
         directives: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgForOf"]],
-        styles: ["[_nghost-%COMP%] {\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.4);\n}\n\ndiv.direct-auth-login[_ngcontent-%COMP%] {\n  font-family: \"Poppins\" !important;\n  font-style: normal !important;\n  font-weight: 300 !important;\n  width: 21.875rem;\n  background: #f3f3f3;\n  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.24), 0px 4px 12px rgba(0, 0, 0, 0.24), 0px 32px 48px rgba(0, 0, 0, 0.36);\n  border-radius: 0.625rem;\n}\n\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.header[_ngcontent-%COMP%] {\n  height: 4.375rem;\n  background: white;\n  border-top-left-radius: 0.625rem;\n  border-top-right-radius: 0.625rem;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.header[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  height: 3.125rem;\n  width: 3.125rem;\n}\n\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   H2[_ngcontent-%COMP%] {\n  margin: 0.5rem 2rem;\n  font-size: 1.25rem;\n  line-height: 1.875rem;\n  text-align: center;\n  vertical-align: top;\n}\n\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-options[_ngcontent-%COMP%] {\n  margin: 1rem 0;\n  display: flex;\n  justify-content: space-evenly;\n  align-items: center;\n}\n\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background: white;\n  border-radius: 0.625rem;\n  width: 90px;\n  height: 60px;\n}\n\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%]:hover {\n  cursor: pointer;\n  background: #eaebf9;\n}\n\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%]    > img[_ngcontent-%COMP%] {\n  width: 2.5rem;\n}\n\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.footer[_ngcontent-%COMP%] {\n  font-size: 0.625rem;\n  line-height: 0.9375rem;\n  margin: 0.5rem 0;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.footer[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  width: 2.5rem;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFwuLlxcc2lnbmluLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsWUFBQTtFQUNBLGFBQUE7RUFDQSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtFQUNBLDhCQUFBO0FBQ0Y7O0FBQ0E7RUFDRSxpQ0FBQTtFQUNBLDZCQUFBO0VBQ0EsMkJBQUE7RUFDQSxnQkFBQTtFQUNBLG1CQUFBO0VBQ0EsZ0hBQUE7RUFFQSx1QkFBQTtBQUNGOztBQUNBO0VBQ0UsZ0JBQUE7RUFDQSxpQkFBQTtFQUNBLGdDQUFBO0VBQ0EsaUNBQUE7RUFDQSxhQUFBO0VBQ0EsdUJBQUE7RUFDQSxtQkFBQTtBQUVGOztBQUFBO0VBQ0UsZ0JBQUE7RUFDQSxlQUFBO0FBR0Y7O0FBREE7RUFDRSxtQkFBQTtFQUNBLGtCQUFBO0VBQ0EscUJBQUE7RUFDQSxrQkFBQTtFQUNBLG1CQUFBO0FBSUY7O0FBRkE7RUFDRSxjQUFBO0VBQ0EsYUFBQTtFQUNBLDZCQUFBO0VBQ0EsbUJBQUE7QUFLRjs7QUFIQTtFQUNFLGFBQUE7RUFDQSx1QkFBQTtFQUNBLG1CQUFBO0VBQ0EsaUJBQUE7RUFDQSx1QkFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0FBTUY7O0FBSkE7RUFDRSxlQUFBO0VBQ0EsbUJBQUE7QUFPRjs7QUFMQTtFQUNFLGFBQUE7QUFRRjs7QUFOQTtFQUNFLG1CQUFBO0VBQ0Esc0JBQUE7RUFDQSxnQkFBQTtFQUNBLGFBQUE7RUFDQSx1QkFBQTtFQUNBLG1CQUFBO0FBU0Y7O0FBUEE7RUFDRSxhQUFBO0FBVUY7O0FBUkE7Ozs7Ozs7Ozs7Ozs7OztFQUFBIiwiZmlsZSI6InNpZ25pbi5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIjpob3N0IHtcclxuICB3aWR0aDogMTAwdnc7XHJcbiAgaGVpZ2h0OiAxMDB2aDtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjQpO1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJyAhaW1wb3J0YW50O1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbCAhaW1wb3J0YW50O1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDAgIWltcG9ydGFudDtcclxuICB3aWR0aDogMjEuODc1cmVtO1xyXG4gIGJhY2tncm91bmQ6ICNmM2YzZjM7XHJcbiAgYm94LXNoYWRvdzogMHB4IDBweCAycHggcmdiYSgwLCAwLCAwLCAwLjI0KSwgMHB4IDRweCAxMnB4IHJnYmEoMCwgMCwgMCwgMC4yNCksXHJcbiAgICAwcHggMzJweCA0OHB4IHJnYmEoMCwgMCwgMCwgMC4zNik7XHJcbiAgYm9yZGVyLXJhZGl1czogMC42MjVyZW07XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmhlYWRlciB7XHJcbiAgaGVpZ2h0OiA0LjM3NXJlbTtcclxuICBiYWNrZ3JvdW5kOiB3aGl0ZTtcclxuICBib3JkZXItdG9wLWxlZnQtcmFkaXVzOiAwLjYyNXJlbTtcclxuICBib3JkZXItdG9wLXJpZ2h0LXJhZGl1czogMC42MjVyZW07XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5oZWFkZXIgaW1nIHtcclxuICBoZWlnaHQ6IDMuMTI1cmVtO1xyXG4gIHdpZHRoOiAzLjEyNXJlbTtcclxufVxyXG5kaXYuZGlyZWN0LWF1dGgtbG9naW4gPiBkaXYuYm9keSBIMiB7XHJcbiAgbWFyZ2luOiAwLjVyZW0gMnJlbTtcclxuICBmb250LXNpemU6IDEuMjVyZW07XHJcbiAgbGluZS1oZWlnaHQ6IDEuODc1cmVtO1xyXG4gIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICB2ZXJ0aWNhbC1hbGlnbjogdG9wO1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5ib2R5IGRpdi5sb2dpbi1vcHRpb25zIHtcclxuICBtYXJnaW46IDFyZW0gMDtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogc3BhY2UtZXZlbmx5O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmJvZHkgZGl2LmxvZ2luLW9wdGlvbiB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGJhY2tncm91bmQ6IHdoaXRlO1xyXG4gIGJvcmRlci1yYWRpdXM6IDAuNjI1cmVtO1xyXG4gIHdpZHRoOiA5MHB4O1xyXG4gIGhlaWdodDogNjBweFxyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5ib2R5IGRpdi5sb2dpbi1vcHRpb246aG92ZXIge1xyXG4gIGN1cnNvcjogcG9pbnRlcjtcclxuICBiYWNrZ3JvdW5kOiAjZWFlYmY5O1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5ib2R5IGRpdi5sb2dpbi1vcHRpb24gPiBpbWcge1xyXG4gIHdpZHRoOiAyLjVyZW07XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmZvb3RlciB7XHJcbiAgZm9udC1zaXplOiAwLjYyNXJlbTtcclxuICBsaW5lLWhlaWdodDogMC45Mzc1cmVtO1xyXG4gIG1hcmdpbjogMC41cmVtIDA7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5mb290ZXIgaW1nIHtcclxuICB3aWR0aDogMi41cmVtO1xyXG59XHJcbi8qXHJcbjpob3N0ID4gZGl2IHtcclxuICBib3JkZXI6IDFweCBzb2xpZDtcclxuICBwYWRkaW5nOiAwIDJyZW0gMnJlbTtcclxuICBiYWNrZ3JvdW5kOiB3aGl0ZTtcclxuICBib3gtc2hhZG93OiAwcHggMHB4IDJweCByZ2JhKDAsIDAsIDAsIDAuMjQpLCAwcHggNHB4IDEycHggcmdiYSgwLCAwLCAwLCAwLjI0KSxcclxuICAgIDBweCAzMnB4IDQ4cHggcmdiYSgwLCAwLCAwLCAwLjM2KTtcclxuICBib3JkZXItcmFkaXVzOiAwLjc1cmVtO1xyXG59XHJcbjpob3N0ID4gZGl2ID4gZGl2LmJ1dHRvbnMge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG59XHJcbjpob3N0ID4gZGl2ID4gZGl2LmJ1dHRvbnMgPiBpbWc6aG92ZXIge1xyXG4gIGN1cnNvcjogcG9pbnRlcjtcclxufSovIl19 */"]
+        styles: ["@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tDMPKzSQ.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tMMPKzSQ.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tCMPI.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLucXtAKPY.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLufntAKPY.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLucHtA.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTucXtAKPY.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTufntAKPY.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTucHtA.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJbecmNE.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJnecmNE.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJfecg.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n[_nghost-%COMP%] {\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.4);\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%] {\n  width: 21.875rem;\n  background: #f3f3f3;\n  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.24), 0px 4px 12px rgba(0, 0, 0, 0.24), 0px 32px 48px rgba(0, 0, 0, 0.36);\n  border-radius: 0.625rem;\n}\r\n[_nghost-%COMP%]    > div.direct-auth-login[_ngcontent-%COMP%]   H2[_ngcontent-%COMP%], [_nghost-%COMP%]    > div.direct-auth-login[_ngcontent-%COMP%]   span[_ngcontent-%COMP%] {\n  font-family: \"Poppins\" !important;\n  font-style: normal !important;\n  font-weight: 300 !important;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.header[_ngcontent-%COMP%] {\n  height: 4.375rem;\n  background: white;\n  border-top-left-radius: 0.625rem;\n  border-top-right-radius: 0.625rem;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.header[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  height: 3.125rem;\n  width: 3.125rem;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]   H2[_ngcontent-%COMP%] {\n  margin: 0.5rem 2rem;\n  font-size: 1.25rem;\n  line-height: 1.875rem;\n  text-align: center;\n  vertical-align: top;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-options[_ngcontent-%COMP%] {\n  margin: 1rem 0;\n  display: flex;\n  justify-content: space-evenly;\n  align-items: center;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background: white;\n  border-radius: 0.625rem;\n  width: 90px;\n  height: 60px;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%]:hover {\n  cursor: pointer;\n  background: #eaebf9;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%]    > img[_ngcontent-%COMP%] {\n  width: 2.5rem;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.footer[_ngcontent-%COMP%] {\n  margin: 0.5rem 0;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.footer[_ngcontent-%COMP%]    > span[_ngcontent-%COMP%] {\n  font-size: 0.625rem;\n  line-height: 0.9375rem;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.footer[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  width: 2.5rem;\n  margin-left: 0.25rem;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2Fzc2V0cy9mb250cy9Qb3BwaW5zL3N0eWxlc2hlZXQuY3NzIiwiLi5cXC4uXFwuLlxcLi5cXC4uXFxzaWduaW4uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHNHQUFzRztFQUN0RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsc0dBQXNHO0VBQ3RHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixtR0FBbUc7RUFDbkcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG1HQUFtRztFQUNuRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsbUdBQW1HO0VBQ25HLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnR0FBZ0c7RUFDaEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG1HQUFtRztFQUNuRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsbUdBQW1HO0VBQ25HLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnR0FBZ0c7RUFDaEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLGdHQUFnRztFQUNoRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsZ0dBQWdHO0VBQ2hHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQiw4RkFBOEY7RUFDOUYseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FDcGVBO0VBQ0UsWUFBQTtFQUNBLGFBQUE7RUFDQSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtFQUNBLDhCQUFBO0FBQ0Y7QUFDQTtFQUNFLGdCQUFBO0VBQ0EsbUJBQUE7RUFDQSxnSEFBQTtFQUVBLHVCQUFBO0FBQ0Y7QUFDQTs7RUFFRSxpQ0FBQTtFQUNBLDZCQUFBO0VBQ0EsMkJBQUE7QUFFRjtBQUFBO0VBQ0UsZ0JBQUE7RUFDQSxpQkFBQTtFQUNBLGdDQUFBO0VBQ0EsaUNBQUE7RUFDQSxhQUFBO0VBQ0EsdUJBQUE7RUFDQSxtQkFBQTtBQUdGO0FBREE7RUFDRSxnQkFBQTtFQUNBLGVBQUE7QUFJRjtBQUZBO0VBQ0UsbUJBQUE7RUFDQSxrQkFBQTtFQUNBLHFCQUFBO0VBQ0Esa0JBQUE7RUFDQSxtQkFBQTtBQUtGO0FBSEE7RUFDRSxjQUFBO0VBQ0EsYUFBQTtFQUNBLDZCQUFBO0VBQ0EsbUJBQUE7QUFNRjtBQUpBO0VBQ0UsYUFBQTtFQUNBLHVCQUFBO0VBQ0EsbUJBQUE7RUFDQSxpQkFBQTtFQUNBLHVCQUFBO0VBQ0EsV0FBQTtFQUNBLFlBQUE7QUFPRjtBQUxBO0VBQ0UsZUFBQTtFQUNBLG1CQUFBO0FBUUY7QUFOQTtFQUNFLGFBQUE7QUFTRjtBQVBBO0VBQ0UsZ0JBQUE7RUFDQSxhQUFBO0VBQ0EsdUJBQUE7RUFDQSxtQkFBQTtBQVVGO0FBUkE7RUFDRSxtQkFBQTtFQUNBLHNCQUFBO0FBV0Y7QUFUQTtFQUNFLGFBQUE7RUFDQSxvQkFBQTtBQVlGIiwiZmlsZSI6InNpZ25pbi5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDEwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUF5cDhrdjhKSGdGVnJKSkxtRTB0RE1QS3pTUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlBeXA4a3Y4SkhnRlZySkpMbUUwdE1NUEt6U1Eud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlBeXA4a3Y4SkhnRlZySkpMbUUwdENNUEkud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtdjFwVkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG12MXBWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtdjFwVkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMjFsVkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG0yMWxWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMjFsVkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUd5cDhrdjhKSGdGVnJKSkx1Y1h0QUtQWS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZySkpMdWZudEFLUFkud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZySkpMdWNIdEEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtZzFoVkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG1nMWhWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtZzFoVkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtcjE5VkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG1yMTlWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtcjE5VkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxteTE1VkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG15MTVWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxteTE1VkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMTExVkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogODAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG0xMTFWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMTExVkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtODF4VkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogOTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG04MXhWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtODF4VkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDEwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUd5cDhrdjhKSGdGVnJMUFR1Y1h0QUtQWS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZyTFBUdWZudEFLUFkud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZyTFBUdWNIdEEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRmpfWjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxGal9aMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRmpfWjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTER6OFoxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRHo4WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTER6OFoxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNDAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRXlwOGt2OEpIZ0ZWckpKYmVjbU5FLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUV5cDhrdjhKSGdGVnJKSm5lY21ORS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUV5cDhrdjhKSGdGVnJKSmZlY2cud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMR1Q5WjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxHVDlaMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMR1Q5WjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEVqNloxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRWo2WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEVqNloxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxDejdaMTFsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA3MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEN6N1oxSmxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxDejdaMXhsRlEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMREQ0WjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogODAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxERDRaMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMREQ0WjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA5MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEJUNVoxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMQlQ1WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA5MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEJUNVoxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn0iLCJAaW1wb3J0ICcuLi8uLi8uLi8uLi9hc3NldHMvZm9udHMvUG9wcGlucy9zdHlsZXNoZWV0LmNzcyc7XHJcbjpob3N0IHtcclxuICB3aWR0aDogMTAwdnc7XHJcbiAgaGVpZ2h0OiAxMDB2aDtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjQpO1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiB7XHJcbiAgd2lkdGg6IDIxLjg3NXJlbTtcclxuICBiYWNrZ3JvdW5kOiAjZjNmM2YzO1xyXG4gIGJveC1zaGFkb3c6IDBweCAwcHggMnB4IHJnYmEoMCwgMCwgMCwgMC4yNCksIDBweCA0cHggMTJweCByZ2JhKDAsIDAsIDAsIDAuMjQpLFxyXG4gICAgMHB4IDMycHggNDhweCByZ2JhKDAsIDAsIDAsIDAuMzYpO1xyXG4gIGJvcmRlci1yYWRpdXM6IDAuNjI1cmVtO1xyXG59XHJcbjpob3N0ID4gZGl2LmRpcmVjdC1hdXRoLWxvZ2luIEgyLFxyXG46aG9zdCA+IGRpdi5kaXJlY3QtYXV0aC1sb2dpbiBzcGFuIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnICFpbXBvcnRhbnQ7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsICFpbXBvcnRhbnQ7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMCAhaW1wb3J0YW50O1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5oZWFkZXIge1xyXG4gIGhlaWdodDogNC4zNzVyZW07XHJcbiAgYmFja2dyb3VuZDogd2hpdGU7XHJcbiAgYm9yZGVyLXRvcC1sZWZ0LXJhZGl1czogMC42MjVyZW07XHJcbiAgYm9yZGVyLXRvcC1yaWdodC1yYWRpdXM6IDAuNjI1cmVtO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufVxyXG5kaXYuZGlyZWN0LWF1dGgtbG9naW4gPiBkaXYuaGVhZGVyIGltZyB7XHJcbiAgaGVpZ2h0OiAzLjEyNXJlbTtcclxuICB3aWR0aDogMy4xMjVyZW07XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luIEgyIHtcclxuICBtYXJnaW46IDAuNXJlbSAycmVtO1xyXG4gIGZvbnQtc2l6ZTogMS4yNXJlbTtcclxuICBsaW5lLWhlaWdodDogMS44NzVyZW07XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIHZlcnRpY2FsLWFsaWduOiB0b3A7XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmJvZHkgZGl2LmxvZ2luLW9wdGlvbnMge1xyXG4gIG1hcmdpbjogMXJlbSAwO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1ldmVubHk7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufVxyXG5kaXYuZGlyZWN0LWF1dGgtbG9naW4gPiBkaXYuYm9keSBkaXYubG9naW4tb3B0aW9uIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgYmFja2dyb3VuZDogd2hpdGU7XHJcbiAgYm9yZGVyLXJhZGl1czogMC42MjVyZW07XHJcbiAgd2lkdGg6IDkwcHg7XHJcbiAgaGVpZ2h0OiA2MHB4XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmJvZHkgZGl2LmxvZ2luLW9wdGlvbjpob3ZlciB7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG4gIGJhY2tncm91bmQ6ICNlYWViZjk7XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmJvZHkgZGl2LmxvZ2luLW9wdGlvbiA+IGltZyB7XHJcbiAgd2lkdGg6IDIuNXJlbTtcclxufVxyXG5kaXYuZGlyZWN0LWF1dGgtbG9naW4gPiBkaXYuZm9vdGVyIHtcclxuICBtYXJnaW46IDAuNXJlbSAwO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufVxyXG5kaXYuZGlyZWN0LWF1dGgtbG9naW4gPiBkaXYuZm9vdGVyID4gc3BhbiB7XHJcbiAgZm9udC1zaXplOiAwLjYyNXJlbTtcclxuICBsaW5lLWhlaWdodDogMC45Mzc1cmVtO1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5mb290ZXIgaW1nIHtcclxuICB3aWR0aDogMi41cmVtO1xyXG4gIG1hcmdpbi1sZWZ0OiAwLjI1cmVtO1xyXG59Il19 */"]
       });
 
       (function () {
@@ -8994,13 +8995,13 @@
         _createClass(FooterComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this25 = this;
+            var _this26 = this;
 
             this.path = this.location.path();
             this.setFooter();
             this.router.events.subscribe(function (event) {
               if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
-                _this25.setFooter();
+                _this26.setFooter();
               }
             });
           }
@@ -9144,27 +9145,45 @@
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      /*! ../../services/wallet/wallet.service */
+      "/cyv");
+      /* harmony import */
+
+
+      var _services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      /*! ../../services/coordinator/coordinator.service */
+      "3OJ0");
+      /* harmony import */
+
+
+      var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! @angular/common */
       "ofXK");
       /* harmony import */
 
 
-      var _prepare_send_prepare_send_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      var _prepare_send_prepare_send_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
       /*! ./prepare-send/prepare-send.component */
       "iZs2");
       /* harmony import */
 
 
-      var _confirm_send_confirm_send_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      var _confirm_send_confirm_send_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
       /*! ./confirm-send/confirm-send.component */
       "r94U");
+      /* harmony import */
+
+
+      var _confirm_send_template_confirm_send_template_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+      /*! ./confirm-send-template/confirm-send-template.component */
+      "QU+B");
 
       function SendComponent_ng_container_0_button_1_Template(rf, ctx) {
         if (rf & 1) {
           var _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "button", 5);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "button", 6);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function SendComponent_ng_container_0_button_1_Template_button_click_0_listener() {
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r4);
@@ -9184,7 +9203,7 @@
         if (rf & 1) {
           var _r6 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "span", 6);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "span", 7);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function SendComponent_ng_container_0_span_2_Template_span_click_0_listener() {
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r6);
@@ -9204,9 +9223,9 @@
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, SendComponent_ng_container_0_button_1_Template, 2, 0, "button", 3);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, SendComponent_ng_container_0_button_1_Template, 2, 0, "button", 4);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](2, SendComponent_ng_container_0_span_2_Template, 2, 0, "span", 4);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](2, SendComponent_ng_container_0_span_2_Template, 2, 0, "span", 5);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
         }
@@ -9225,16 +9244,19 @@
       }
 
       var SendComponent = /*#__PURE__*/function () {
-        function SendComponent(tokenService, estimateService, messageService, operationService) {
+        function SendComponent(tokenService, estimateService, messageService, operationService, walletService, coordinatorService) {
           _classCallCheck(this, SendComponent);
 
           this.tokenService = tokenService;
           this.estimateService = estimateService;
           this.messageService = messageService;
           this.operationService = operationService;
+          this.walletService = walletService;
+          this.coordinatorService = coordinatorService;
           this.operationResponse = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
           this.prepareRequest = null;
           this.confirmRequest = null;
+          this.templateRequest = null;
         }
 
         _createClass(SendComponent, [{
@@ -9348,7 +9370,7 @@
           key: "simulateRequest",
           value: function simulateRequest(txs, tokenTransfer) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee34() {
-              var _this26 = this;
+              var _this27 = this;
 
               var callback;
               return regeneratorRuntime.wrap(function _callee34$(_context34) {
@@ -9367,9 +9389,9 @@
                       callback = function callback(res) {
                         if (res) {
                           if (res.error) {
-                            _this26.messageService.addError("Simulation error: ".concat(res.error.message), 0);
+                            _this27.messageService.addError("Simulation error: ".concat(res.error.message), 0);
 
-                            _this26.operationResponse.emit('invalid_parameters');
+                            _this27.operationResponse.emit('invalid_parameters');
                           } else {
                             var fullyPrepared = txs.map(function (tx, i) {
                               return Object.assign(Object.assign({}, tx), {
@@ -9379,7 +9401,18 @@
                               });
                             });
 
-                            _this26.confirmTransactions(fullyPrepared);
+                            if (_this27.template) {
+                              var fee = _this27.getTemplateFee(fullyPrepared);
+
+                              console.log('Use template', _this27.template);
+                              _this27.templateRequest = {
+                                template: _this27.template,
+                                ops: fullyPrepared,
+                                fee: fee
+                              };
+                            } else {
+                              _this27.confirmTransactions(fullyPrepared);
+                            }
                           }
                         } else {
                           console.log('no res');
@@ -9439,13 +9472,249 @@
             this.confirmRequest = null;
             this.operationResponse.emit(opHash);
           }
+        }, {
+          key: "handleTemplateApproval",
+          value: function handleTemplateApproval(ops) {
+            if (ops) {
+              this.silentInject(ops);
+            } else {
+              this.operationResponse.emit(null);
+            }
+
+            this.template = null;
+          }
+        }, {
+          key: "getTemplateFee",
+          value: function getTemplateFee(ops) {
+            var network = new big_js__WEBPACK_IMPORTED_MODULE_8___default.a(0);
+            var storageLimit = new big_js__WEBPACK_IMPORTED_MODULE_8___default.a(0);
+
+            var _iterator7 = _createForOfIteratorHelper(ops),
+                _step7;
+
+            try {
+              for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+                var op = _step7.value;
+                network = network.plus(op.fee);
+                storageLimit = storageLimit.plus(op.storageLimit);
+              }
+            } catch (err) {
+              _iterator7.e(err);
+            } finally {
+              _iterator7.f();
+            }
+
+            var storage = storageLimit.times(this.estimateService.costPerByte);
+            var total = network.plus(storage).toFixed();
+            network = network.toFixed();
+            storage = storage.toFixed();
+            return {
+              network: network,
+              storage: storage,
+              total: total
+            };
+          }
+        }, {
+          key: "silentInject",
+          value: function silentInject(ops) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee36() {
+              var _this28 = this;
+
+              var _iterator8, _step8, op, keys;
+
+              return regeneratorRuntime.wrap(function _callee36$(_context36) {
+                while (1) {
+                  switch (_context36.prev = _context36.next) {
+                    case 0:
+                      if (this.walletService.isEmbeddedTorusWallet()) {
+                        _context36.next = 3;
+                        break;
+                      }
+
+                      this.operationResponse.emit('UNSUPPORTED_WALLET_TYPE');
+                      return _context36.abrupt("return");
+
+                    case 3:
+                      _iterator8 = _createForOfIteratorHelper(ops);
+                      _context36.prev = 4;
+
+                      _iterator8.s();
+
+                    case 6:
+                      if ((_step8 = _iterator8.n()).done) {
+                        _context36.next = 13;
+                        break;
+                      }
+
+                      op = _step8.value;
+
+                      if (!(op.kind !== 'transaction')) {
+                        _context36.next = 11;
+                        break;
+                      }
+
+                      this.operationResponse.emit('UNSUPPORTED_KIND');
+                      return _context36.abrupt("break", 13);
+
+                    case 11:
+                      _context36.next = 6;
+                      break;
+
+                    case 13:
+                      _context36.next = 18;
+                      break;
+
+                    case 15:
+                      _context36.prev = 15;
+                      _context36.t0 = _context36["catch"](4);
+
+                      _iterator8.e(_context36.t0);
+
+                    case 18:
+                      _context36.prev = 18;
+
+                      _iterator8.f();
+
+                      return _context36.finish(18);
+
+                    case 21:
+                      this.messageService.startSpinner('Sending transaction...');
+                      _context36.prev = 22;
+                      _context36.next = 25;
+                      return this.walletService.getKeys('', this.activeAccount.pkh);
+
+                    case 25:
+                      keys = _context36.sent;
+                      _context36.next = 31;
+                      break;
+
+                    case 28:
+                      _context36.prev = 28;
+                      _context36.t1 = _context36["catch"](22);
+                      this.messageService.stopSpinner();
+
+                    case 31:
+                      if (keys) {
+                        _context36.next = 34;
+                        break;
+                      }
+
+                      this.operationResponse.emit('FAILED_TO_SIGN');
+                      return _context36.abrupt("return");
+
+                    case 34:
+                      this.operationService.transfer(this.activeAccount.address, ops, Number(ops[ops.length - 1].fee), keys, '').subscribe(function (ans) {
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this28, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee35() {
+                          var metadata, _iterator9, _step9, transaction;
+
+                          return regeneratorRuntime.wrap(function _callee35$(_context35) {
+                            while (1) {
+                              switch (_context35.prev = _context35.next) {
+                                case 0:
+                                  if (!(ans.success === true)) {
+                                    _context35.next = 28;
+                                    break;
+                                  }
+
+                                  console.log('Transaction successful ', ans);
+                                  _context35.next = 4;
+                                  return this.messageService.stopSpinner();
+
+                                case 4:
+                                  this.operationResponse.emit(ans.payload.opHash);
+                                  metadata = {
+                                    transactions: ops,
+                                    opHash: ans.payload.opHash
+                                  };
+                                  _context35.next = 8;
+                                  return this.coordinatorService.boost(this.activeAccount.address, metadata);
+
+                                case 8:
+                                  _iterator9 = _createForOfIteratorHelper(ops);
+                                  _context35.prev = 9;
+
+                                  _iterator9.s();
+
+                                case 11:
+                                  if ((_step9 = _iterator9.n()).done) {
+                                    _context35.next = 18;
+                                    break;
+                                  }
+
+                                  transaction = _step9.value;
+
+                                  if (!this.walletService.addressExists(transaction.destination)) {
+                                    _context35.next = 16;
+                                    break;
+                                  }
+
+                                  _context35.next = 16;
+                                  return this.coordinatorService.boost(transaction.destination);
+
+                                case 16:
+                                  _context35.next = 11;
+                                  break;
+
+                                case 18:
+                                  _context35.next = 23;
+                                  break;
+
+                                case 20:
+                                  _context35.prev = 20;
+                                  _context35.t0 = _context35["catch"](9);
+
+                                  _iterator9.e(_context35.t0);
+
+                                case 23:
+                                  _context35.prev = 23;
+
+                                  _iterator9.f();
+
+                                  return _context35.finish(23);
+
+                                case 26:
+                                  _context35.next = 33;
+                                  break;
+
+                                case 28:
+                                  _context35.next = 30;
+                                  return this.messageService.stopSpinner();
+
+                                case 30:
+                                  console.log('Transaction error id ', ans.payload.msg);
+                                  this.messageService.addError(ans.payload.msg, 0);
+                                  this.operationResponse.emit('broadcast_error');
+
+                                case 33:
+                                case "end":
+                                  return _context35.stop();
+                              }
+                            }
+                          }, _callee35, this, [[9, 20, 23, 26]]);
+                        }));
+                      }, function (err) {
+                        _this28.messageService.stopSpinner();
+
+                        console.log(err);
+
+                        _this28.operationResponse.emit('UNKNOWN_ERROR');
+                      });
+
+                    case 35:
+                    case "end":
+                      return _context36.stop();
+                  }
+                }
+              }, _callee36, this, [[4, 15, 18, 21], [22, 28]]);
+            }));
+          }
         }]);
 
         return SendComponent;
       }();
 
       SendComponent.ɵfac = function SendComponent_Factory(t) {
-        return new (t || SendComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_token_token_service__WEBPACK_IMPORTED_MODULE_3__["TokenService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_estimate_estimate_service__WEBPACK_IMPORTED_MODULE_4__["EstimateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_message_message_service__WEBPACK_IMPORTED_MODULE_5__["MessageService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_operation_operation_service__WEBPACK_IMPORTED_MODULE_7__["OperationService"]));
+        return new (t || SendComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_token_token_service__WEBPACK_IMPORTED_MODULE_3__["TokenService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_estimate_estimate_service__WEBPACK_IMPORTED_MODULE_4__["EstimateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_message_message_service__WEBPACK_IMPORTED_MODULE_5__["MessageService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_operation_operation_service__WEBPACK_IMPORTED_MODULE_7__["OperationService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_9__["WalletService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_10__["CoordinatorService"]));
       };
 
       SendComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
@@ -9455,15 +9724,16 @@
           activeAccount: "activeAccount",
           headless: "headless",
           tokenTransfer: "tokenTransfer",
-          operationRequest: "operationRequest"
+          operationRequest: "operationRequest",
+          template: "template"
         },
         outputs: {
           operationResponse: "operationResponse"
         },
         features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]],
-        decls: 3,
-        vars: 4,
-        consts: [[4, "ngIf"], [3, "prepareRequest", "prepareResponse"], [3, "headlessMode", "confirmRequest", "operationResponse"], ["class", "purple open", 3, "click", 4, "ngIf"], ["class", "token-send", 3, "click", 4, "ngIf"], [1, "purple", "open", 3, "click"], [1, "token-send", 3, "click"]],
+        decls: 4,
+        vars: 5,
+        consts: [[4, "ngIf"], [3, "prepareRequest", "prepareResponse"], [3, "headlessMode", "confirmRequest", "operationResponse"], [3, "templateRequest", "isApproved"], ["class", "purple open", 3, "click", 4, "ngIf"], ["class", "token-send", 3, "click", 4, "ngIf"], [1, "purple", "open", 3, "click"], [1, "token-send", 3, "click"]],
         template: function SendComponent_Template(rf, ctx) {
           if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, SendComponent_ng_container_0_Template, 3, 2, "ng-container", 0);
@@ -9483,6 +9753,14 @@
             });
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](3, "app-confirm-send-template", 3);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("isApproved", function SendComponent_Template_app_confirm_send_template_isApproved_3_listener($event) {
+              return ctx.handleTemplateApproval($event);
+            });
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
           }
 
           if (rf & 2) {
@@ -9495,9 +9773,13 @@
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("headlessMode", ctx.headless)("confirmRequest", ctx.confirmRequest);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("templateRequest", ctx.templateRequest);
           }
         },
-        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_9__["NgIf"], _prepare_send_prepare_send_component__WEBPACK_IMPORTED_MODULE_10__["PrepareSendComponent"], _confirm_send_confirm_send_component__WEBPACK_IMPORTED_MODULE_11__["ConfirmSendComponent"]],
+        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_11__["NgIf"], _prepare_send_prepare_send_component__WEBPACK_IMPORTED_MODULE_12__["PrepareSendComponent"], _confirm_send_confirm_send_component__WEBPACK_IMPORTED_MODULE_13__["ConfirmSendComponent"], _confirm_send_template_confirm_send_template_component__WEBPACK_IMPORTED_MODULE_14__["ConfirmSendTemplateComponent"]],
         styles: ["div.kukai-modal[_ngcontent-%COMP%] {\n  position: fixed;\n  z-index: 100;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: black;\n  background-color: rgba(0, 0, 0, 0.4);\n}\ndiv.kukai-modal.top[_ngcontent-%COMP%] {\n  z-index: 101;\n}\n\ndiv.kukai-modal[_ngcontent-%COMP%]    > div.km-content[_ngcontent-%COMP%] {\n  position: relative;\n  background-color: #fcfcfc;\n  margin: 5rem auto;\n  border: 1px solid #ffffff;\n  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 6px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.06);\n  border-radius: 0.75rem;\n  width: 25rem;\n  -webkit-animation-name: animatetop;\n  -webkit-animation-duration: 0.5s;\n  animation-name: animatetop;\n  animation-duration: 0.5s;\n}\ndiv.kukai-modal.confirm[_ngcontent-%COMP%]    > div.km-content[_ngcontent-%COMP%] {\n  -webkit-animation-name: none;\n  -webkit-animation-duration: none;\n  animation-name: none;\n  animation-duration: none;\n}\n\n@-webkit-keyframes animatetop {\n  from {\n    top: 20rem;\n    opacity: 0;\n  }\n  to {\n    top: 0;\n    opacity: 1;\n  }\n}\n@keyframes animatetop {\n  from {\n    top: -300px;\n    opacity: 0;\n  }\n  to {\n    top: 0;\n    opacity: 1;\n  }\n}\ndiv.kukai-modal[_ngcontent-%COMP%]    > div.km-content[_ngcontent-%COMP%]    > div.km-header[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-between;\n  flex-direction: row;\n  border-bottom: 1px solid black;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.04);\n}\ndiv.km-header[_ngcontent-%COMP%]    > H1[_ngcontent-%COMP%] {\n  font-style: normal;\n  font-weight: bold;\n  font-size: 1.25rem;\n  line-height: 1.5rem;\n  display: flex;\n  align-items: center;\n  color: #2c323a;\n  margin: 1rem;\n}\ndiv.km-header[_ngcontent-%COMP%]    > span.close[_ngcontent-%COMP%] {\n  margin: 0.25rem 0.5rem;\n  color: #aaa;\n  font-size: 28px;\n  font-weight: bold;\n}\ndiv.km-header[_ngcontent-%COMP%]    > span.close[_ngcontent-%COMP%]:hover, div.km-header[_ngcontent-%COMP%]    > span.close[_ngcontent-%COMP%]:focus {\n  color: #2c323a;\n  text-decoration: none;\n  cursor: pointer;\n}\ndiv.km-body[_ngcontent-%COMP%] {\n  margin: 1rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.amount[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: center;\n  flex-direction: row;\n  height: 5rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   input.custom-large[_ngcontent-%COMP%] {\n  width: auto;\n  font-style: normal;\n  font-weight: normal;\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 5rem;\n  line-height: 5rem;\n  color: #2C323A;\n  background: #fcfcfc;\n  opacity: 0.4;\n  padding: 0;\n  text-align: center;\n  border: 0;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   p.previewAttention[_ngcontent-%COMP%] {\n  color: #CD0000;\n  font-size: 0.875rem;\n  line-height: 1rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   input.custom-large[_ngcontent-%COMP%]:disabled {\n  background-color: rgba(0, 0, 0, 0);\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   input[_ngcontent-%COMP%]:focus, div.kukai-modal[_ngcontent-%COMP%]   textarea[_ngcontent-%COMP%]:focus {\n  outline: none;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   span.tez[_ngcontent-%COMP%] {\n  font-style: normal;\n  font-weight: 500;\n  font-size: 1rem;\n  line-height: 1rem;\n  color: #2C323A;\n  opacity: 0.4;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   p.fee[_ngcontent-%COMP%] {\n  margin-top: 0.375rem;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  color: #2C323A;\n  opacity: 0.4;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   p.preview[_ngcontent-%COMP%] {\n  font-style: normal;\n  font-weight: normal;\n  font-size: 0.875rem;\n  line-height: 1rem;\n  display: flex;\n  align-items: flex-end;\n  color: #000000;\n  opacity: 0.6;\n  margin-bottom: 0.5rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   td[_ngcontent-%COMP%], div.kukai-modal[_ngcontent-%COMP%]   th[_ngcontent-%COMP%] {\n  font-style: normal;\n  font-weight: normal;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  color: #000000;\n  opacity: 0.6;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   th[_ngcontent-%COMP%] {\n  font-weight: bold;\n}\ndiv.km-content[_ngcontent-%COMP%]   label[_ngcontent-%COMP%]:not(.switch) {\n  margin-bottom: 0.5rem;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 1rem;\n  line-height: 1.125rem;\n  display: flex;\n  align-items: center;\n  color: #2C323A;\n  opacity: 0.4;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   p[_ngcontent-%COMP%], span.danger[_ngcontent-%COMP%] {\n  font-style: normal;\n  font-weight: normal;\n  font-size: 0.875rem;\n  line-height: 1rem;\n  display: flex;\n  align-items: flex-end;\n  color: #000000;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   span.no-margin[_ngcontent-%COMP%], div.kukai-modal[_ngcontent-%COMP%]   span.margin[_ngcontent-%COMP%] {\n  color: #FF0000;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   span.no-margin[_ngcontent-%COMP%] {\n  margin-top: 0.75rem;\n  margin-bottom: -1.75rem;\n  color: #FF0000;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.group[_ngcontent-%COMP%] {\n  margin-top: 1.5rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   input.text[_ngcontent-%COMP%], div.kukai-modal[_ngcontent-%COMP%]   textarea.text[_ngcontent-%COMP%] {\n  width: 100%;\n  background: #E1E1E1;\n  border-radius: 0.75rem;\n  height: 3rem;\n  font-style: normal;\n  font-weight: normal;\n  font-size: 1rem;\n  line-height: 3rem;\n  letter-spacing: 0.16px;\n  color: #000000;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  border: 0;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   input.text.password[_ngcontent-%COMP%] {\n  width: 200%;\n  margin-right: 1rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   textarea.text[_ngcontent-%COMP%] {\n  padding-top: 0.5rem;\n  height: 7rem;\n  line-height: 1.25rem;\n  resize: none;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   input.text[_ngcontent-%COMP%]::-moz-placeholder, div.kukai-modal[_ngcontent-%COMP%]   textarea.text[_ngcontent-%COMP%]::-moz-placeholder {\n  color: #808080;\n  opacity: 1;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   input.text[_ngcontent-%COMP%]::placeholder, div.kukai-modal[_ngcontent-%COMP%]   textarea.text[_ngcontent-%COMP%]::placeholder {\n  color: #808080;\n  opacity: 1;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   textarea.text[_ngcontent-%COMP%]::placeholder, div.kukai-modal[_ngcontent-%COMP%]   textarea.text[_ngcontent-%COMP%]::-webkit-input-placeholder, div.kukai-modal[_ngcontent-%COMP%]   textarea.text[_ngcontent-%COMP%]:-ms-input-placeholder {\n  padding-top: 0.5rem;\n  line-height: 1.25rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.row-group[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-between;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.row-group[_ngcontent-%COMP%]    > div.group[_ngcontent-%COMP%]:first-child {\n  margin-right: 1rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.advanced[_ngcontent-%COMP%] {\n  margin-top: 1.5rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   button.blue[_ngcontent-%COMP%] {\n  font-style: normal;\n  font-weight: bold;\n  font-size: 1rem;\n  line-height: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  text-align: center;\n  color: white;\n  background: #5963FF;\n  box-shadow: 0px 0px 1px rgba(89, 99, 255, 0.04), 0px 2px 6px rgba(89, 99, 255, 0.04), 0px 16px 24px rgba(89, 99, 255, 0.24);\n  width: 100%;\n  height: 3rem;\n  border-radius: 0.75rem;\n  border: 0;\n  margin-top: 2.5rem;\n  margin-bottom: 1.5rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   button.blue.confirm[_ngcontent-%COMP%], div.kukai-modal[_ngcontent-%COMP%]   button.retry[_ngcontent-%COMP%] {\n  height: 3rem;\n  margin: 0;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   button.retry[_ngcontent-%COMP%] {\n  width: 100%;\n  font-size: 1rem;\n  background-color: #d3d3d3;\n  color: #212529;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:focus {\n  outline: none;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.switch-container[_ngcontent-%COMP%] {\n  width: auto !important;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   button.small[_ngcontent-%COMP%] {\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  text-align: center;\n  width: auto;\n  height: 1.5rem;\n  color: #000000;\n  opacity: 0.6;\n  background: rgba(214, 214, 214, 0.4);\n  border-radius: 0.3125rem;\n  border: 0;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   button.small.max[_ngcontent-%COMP%] {\n  background: #d5f2dc;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   button.small.multiple-destinations[_ngcontent-%COMP%] {\n  color: #5963FF;\n  opacity: 1;\n  margin: 1rem 1.5rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.advanced[_ngcontent-%COMP%]    > div.row-group[_ngcontent-%COMP%] {\n  height: 1.5rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.x[_ngcontent-%COMP%] {\n  position: absolute;\n  top: -1rem;\n  right: -1rem;\n  width: 2rem;\n  height: 2rem;\n  z-index: 120;\n  background: #FCFCFC;\n  border: 1px solid #FFFFFF;\n  border-radius: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n}\n@media screen and (max-width: 27rem) {\n  div.kukai-modal[_ngcontent-%COMP%]   div.x[_ngcontent-%COMP%] {\n    right: -1px;\n    border-bottom-right-radius: 0;\n  }\n\n  div.kukai-modal[_ngcontent-%COMP%]   button.small.multiple-destinations[_ngcontent-%COMP%] {\n    margin-right: 2.5rem;\n  }\n}\n@media screen and (max-width: 25rem) {\n  div.kukai-modal[_ngcontent-%COMP%]    > div.km-content[_ngcontent-%COMP%] {\n    width: 23rem;\n  }\n\n  div.kukai-modal[_ngcontent-%COMP%]   input.text.password[_ngcontent-%COMP%] {\n    width: 11rem;\n  }\n}\n.switch[_ngcontent-%COMP%] {\n  position: relative;\n  display: inline-block;\n  width: 3rem;\n  height: 1.5rem;\n  margin-bottom: 0;\n}\n.switch[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] {\n  opacity: 0;\n  -webkit-opacity: 0;\n  -khtml-opacity: 0;\n  width: 0;\n  height: 0;\n}\n.slider[_ngcontent-%COMP%] {\n  position: absolute;\n  cursor: pointer;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: #d9d9d9;\n  transition: 0.4s;\n}\n.slider[_ngcontent-%COMP%]:before {\n  position: absolute;\n  content: \"\";\n  height: 1.125rem;\n  width: 1.125rem;\n  left: 0.1875rem;\n  bottom: 0.1875rem;\n  background-color: #7B7B7B;\n  transition: 0.4s;\n}\ninput[_ngcontent-%COMP%]:checked    + .slider[_ngcontent-%COMP%] {\n  box-shadow: 0px 0px 1px rgba(89, 99, 255, 0.04), 0px 2px 6px rgba(89, 99, 255, 0.04), 0px 16px 24px rgba(89, 99, 255, 0.24);\n}\ninput[_ngcontent-%COMP%]:checked    + .slider[_ngcontent-%COMP%]:before {\n  background-color: #5963FF;\n  transform: translateX(1.5rem);\n}\n.slider.round[_ngcontent-%COMP%] {\n  border-radius: 2.125rem;\n}\n.slider.round[_ngcontent-%COMP%]:before {\n  border-radius: 50%;\n}\ninput[_ngcontent-%COMP%]:checked    + .slider[_ngcontent-%COMP%] {\n  background-color: rgba(89, 99, 255, 0.4);\n}\ndiv.kukai-card[_ngcontent-%COMP%]    > div.grey-card[_ngcontent-%COMP%]    > div.switch-container[_ngcontent-%COMP%]    > span.switch-desc[_ngcontent-%COMP%], span.switch-desc[_ngcontent-%COMP%] {\n  font-style: normal;\n  font-weight: normal;\n  font-size: 14px;\n  line-height: 18px;\n  letter-spacing: 0.16px;\n  color: #161616;\n  margin-left: 0.5rem;\n}\ndiv.switch-container[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n  flex-direction: row;\n  width: 28rem;\n}\nsmall[_ngcontent-%COMP%] {\n  font-style: normal;\n  font-weight: normal;\n  font-size: 0.75rem;\n  line-height: 1rem;\n  letter-spacing: 0.32px;\n  color: #393939;\n  margin-top: 2.5rem;\n  margin-bottom: 0.5rem;\n}\n@media screen and (max-width: 29rem) {\n  div.switch-container[_ngcontent-%COMP%] {\n    width: 20rem;\n  }\n}\n\n\n.select-css[_ngcontent-%COMP%] {\n  border-radius: 0.75rem;\n  font-style: normal;\n  font-weight: normal;\n  font-size: 0.875rem;\n  letter-spacing: 0.16px;\n  color: #000000;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  border: 0;\n  width: 100%;\n  max-width: 100%;\n  \n  height: 3rem;\n  line-height: 3rem;\n  box-sizing: border-box;\n  margin: 0;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  appearance: none;\n  opacity: 1;\n  background-color: #e1e1e1;\n  \n  background-image: url(\"data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E\");\n  background-repeat: no-repeat, repeat;\n  \n  background-position: right 0.7em top 50%, 0 0;\n  \n  background-size: 0.65em auto, 100%;\n}\n\n.select-css[_ngcontent-%COMP%]::-ms-expand {\n  display: none;\n}\n\n.select-css[_ngcontent-%COMP%]:hover {\n  border-color: #888;\n}\n\n.select-css[_ngcontent-%COMP%]:focus {\n  outline: none;\n}\n\n.select-css[_ngcontent-%COMP%]   option[_ngcontent-%COMP%] {\n  font-weight: normal;\n}\n\n*[dir=rtl][_ngcontent-%COMP%]   .select-css[_ngcontent-%COMP%], [_ngcontent-%COMP%]:root:lang(ar)   .select-css[_ngcontent-%COMP%], [_ngcontent-%COMP%]:root:lang(iw)   .select-css[_ngcontent-%COMP%] {\n  background-position: left 0.7em top 50%, 0 0;\n  padding: 0.6em 0.8em 0.5em 1.4em;\n}\n\n.select-css[_ngcontent-%COMP%]:disabled, .select-css[aria-disabled=true][_ngcontent-%COMP%] {\n  color: graytext;\n  background-image: url(\"data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22graytext%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E\");\n}\n.select-css[_ngcontent-%COMP%]:disabled:hover, .select-css[aria-disabled=true][_ngcontent-%COMP%] {\n  border-color: #aaa;\n}\nbutton.purple.open[_ngcontent-%COMP%]:hover {\n  margin-top: -0.125rem;\n  margin-bottom: 0.125rem;\n}\nbutton[_ngcontent-%COMP%]:focus {\n  outline: none;\n}\n[_nghost-%COMP%]   button[_ngcontent-%COMP%] {\n  border-radius: 0.75rem;\n  height: 3rem;\n  width: 100%;\n  font-style: normal;\n  font-weight: bold;\n  font-size: 1rem;\n  line-height: 1rem;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  -webkit-appearance: none !important;\n  border-width: 0;\n}\n[_nghost-%COMP%]   button[_ngcontent-%COMP%]:focus {\n  outline: none;\n}\n[_nghost-%COMP%]   p.torus-details[_ngcontent-%COMP%] {\n  margin-top: 0.5rem;\n  margin-bottom: 0;\n}\n[_nghost-%COMP%]   button.purple[_ngcontent-%COMP%] {\n  color: white;\n  background: #5963FF;\n  box-shadow: 0px 0px 1px rgba(89, 99, 255, 0.04), 0px 2px 6px rgba(89, 99, 255, 0.04), 0px 16px 24px rgba(89, 99, 255, 0.24);\n  transition: margin-top 0.1s ease-in, margin-bottom 0.1s ease-in;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   table[_ngcontent-%COMP%] {\n  display: block;\n  margin-top: 1rem;\n  width: 100%;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.km-body[_ngcontent-%COMP%]    > div.group[_ngcontent-%COMP%]   select.select-css[_ngcontent-%COMP%] {\n  width: 9.5rem;\n  height: 2rem;\n  line-height: 2rem;\n  opacity: 0.6;\n  border-radius: 0.5rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.km-body[_ngcontent-%COMP%]   select.select-css.parameters[_ngcontent-%COMP%] {\n  margin: 0.5rem 0;\n  height: 2.25rem;\n  line-height: 2.25rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   table[_ngcontent-%COMP%]    > thead[_ngcontent-%COMP%], div.kukai-modal[_ngcontent-%COMP%]   table[_ngcontent-%COMP%]    > thead[_ngcontent-%COMP%] {\n  width: 100%;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   table[_ngcontent-%COMP%]    > thead[_ngcontent-%COMP%]    > tr[_ngcontent-%COMP%]    > th[_ngcontent-%COMP%] {\n  padding-bottom: 0.25rem;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.875rem;\n  line-height: 1rem;\n  color: #A8A8A8;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   table[_ngcontent-%COMP%]    > tbody[_ngcontent-%COMP%]    > tr[_ngcontent-%COMP%]    > td.txAmount[_ngcontent-%COMP%], div.kukai-modal[_ngcontent-%COMP%]   table[_ngcontent-%COMP%]    > thead[_ngcontent-%COMP%]    > tr[_ngcontent-%COMP%]    > th[_ngcontent-%COMP%]:last-child {\n  text-align: right;\n  width: 100%;\n}\nsmall[_ngcontent-%COMP%] {\n  margin-bottom: 0;\n}\ndiv.switch-container[_ngcontent-%COMP%] {\n  margin-top: 0.5rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   input.text.read-only[_ngcontent-%COMP%] {\n  background: #f2f2f2;\n}\ninput.custom-textbox[_ngcontent-%COMP%] {\n  padding-left: 0.75rem;\n}\ndiv.kukai-modal.confirm[_ngcontent-%COMP%]   div.advanced[_ngcontent-%COMP%] {\n  margin-top: 0.5rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.advanced-form[_ngcontent-%COMP%]   input.text[_ngcontent-%COMP%]::-moz-placeholder {\n  color: black;\n  opacity: 1;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.advanced-form[_ngcontent-%COMP%]   input.text[_ngcontent-%COMP%]::placeholder {\n  color: black;\n  opacity: 1;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.advanced-form[_ngcontent-%COMP%]   input.text.read-only[_ngcontent-%COMP%]::-moz-placeholder {\n  color: #808080;\n  opacity: 1;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.advanced-form[_ngcontent-%COMP%]   input.text.read-only[_ngcontent-%COMP%]::placeholder {\n  color: #808080;\n  opacity: 1;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.advanced-form[_ngcontent-%COMP%]   input.text.read-only[_ngcontent-%COMP%]::-webkit-input-placeholder, div.kukai-modal[_ngcontent-%COMP%]   div.advanced-form[_ngcontent-%COMP%]   input.text.read-only[_ngcontent-%COMP%]:-ms-input-placeholder {\n  color: #808080;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.advanced-form[_ngcontent-%COMP%]   input.text.read-only[_ngcontent-%COMP%] {\n  color: #808080;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]    > div.km-content[_ngcontent-%COMP%]    > div.km-body[_ngcontent-%COMP%]    > div.group[_ngcontent-%COMP%]    > input.text[_ngcontent-%COMP%], div.kukai-modal[_ngcontent-%COMP%]    > div.km-content[_ngcontent-%COMP%]    > div.km-body[_ngcontent-%COMP%]    > div.group[_ngcontent-%COMP%]    > textarea[_ngcontent-%COMP%] {\n  font-size: 0.8125rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]    > div.km-content[_ngcontent-%COMP%] {\n  width: 30rem;\n}\n[_nghost-%COMP%]   span.token-send[_ngcontent-%COMP%] {\n  cursor: pointer;\n  color: #5963FF;\n  line-height: 2.75rem;\n  padding: 0.9375rem 1rem;\n  font-size: 0.875rem;\n}\n[_nghost-%COMP%]   span.token-send[_ngcontent-%COMP%]:hover {\n  text-decoration: underline;\n}\n@supports (-webkit-touch-callout: none) {\n  div.kukai-modal[_ngcontent-%COMP%]    > div.km-content[_ngcontent-%COMP%]    > div.km-body[_ngcontent-%COMP%]    > div.group[_ngcontent-%COMP%]    > input.text[_ngcontent-%COMP%], div.kukai-modal[_ngcontent-%COMP%]    > div.km-content[_ngcontent-%COMP%]    > div.km-body[_ngcontent-%COMP%]    > div.group[_ngcontent-%COMP%]    > textarea[_ngcontent-%COMP%] {\n    font-size: 1rem;\n  }\n}\n@media screen and (max-width: 32.25rem) {\n  div.kukai-modal[_ngcontent-%COMP%]    > div.km-content[_ngcontent-%COMP%] {\n    width: 25rem;\n  }\n}\n@media screen and (max-width: 25rem) {\n  input#toAddress[_ngcontent-%COMP%], input.custom-textbox[_ngcontent-%COMP%] {\n    font-size: 0.8125rem;\n  }\n\n  div.kukai-modal[_ngcontent-%COMP%]    > div.km-content[_ngcontent-%COMP%] {\n    width: 22rem;\n  }\n}\n@media screen and (max-width: 22rem) {\n  input#toAddress[_ngcontent-%COMP%], input.custom-textbox[_ngcontent-%COMP%] {\n    font-size: 0.75rem;\n  }\n}\nspan.batchInfo[_ngcontent-%COMP%] {\n  margin-left: auto;\n  font-size: 0.75rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.preview-amount[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  margin-bottom: 0.5rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.preview-top[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.preview-amount[_ngcontent-%COMP%]    > span.amount-tez[_ngcontent-%COMP%] {\n  margin: 0.5rem 0 0.25rem;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 1.5rem;\n  line-height: 1.5rem;\n  color: #161616;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.preview-amount[_ngcontent-%COMP%]    > span.amount-usd[_ngcontent-%COMP%] {\n  margin-bottom: 0.75rem;\n  font-style: normal;\n  font-weight: normal;\n  font-size: 0.875rem;\n  line-height: 1rem;\n  color: #525252;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.km-body[_ngcontent-%COMP%]   span.single-to[_ngcontent-%COMP%] {\n  display: flex;\n  margin: 0rem 0 0.5rem;\n  word-break: break-all;\n  font-style: normal;\n  font-weight: normal;\n  font-size: 1rem;\n  line-height: 1rem;\n  color: #161616;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.km-body[_ngcontent-%COMP%]   span.torus-to[_ngcontent-%COMP%] {\n  display: block;\n  margin-bottom: 0.25rem;\n  font-style: normal;\n  font-weight: normal;\n  font-size: 0.875rem;\n  line-height: 1rem;\n  color: #161616;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.seperator[_ngcontent-%COMP%] {\n  border-bottom: 1px solid rgba(0, 0, 0, 0.08);\n  margin: 0.5rem 0;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.preview-row[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.preview-row[_ngcontent-%COMP%]    > span[_ngcontent-%COMP%] {\n  margin: 0.25rem 0;\n  font-weight: normal;\n  font-size: 0.875rem;\n  line-height: 1rem;\n  color: #525252;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.km-body[_ngcontent-%COMP%]   span.section[_ngcontent-%COMP%], div.kukai-modal[_ngcontent-%COMP%]   div.preview-row[_ngcontent-%COMP%]    > span[_ngcontent-%COMP%]:first-child {\n  font-weight: 500;\n  font-weight: normal;\n  font-size: 0.875rem;\n  line-height: 1rem;\n  color: #A8A8A8;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.preview-row[_ngcontent-%COMP%]    > span[_ngcontent-%COMP%]:last-child {\n  word-break: break-all;\n  padding-left: 0.5rem;\n}\ndiv.kukai-modal[_ngcontent-%COMP%]   div.preview-row[_ngcontent-%COMP%]   img[_ngcontent-%COMP%], div.kukai-modal[_ngcontent-%COMP%]   div.km-body[_ngcontent-%COMP%]   span.torus-to[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  height: 0.75rem;\n  margin-bottom: 0.0625rem;\n}\ndiv.tabs-container[_ngcontent-%COMP%] {\n  margin-top: 0.5rem;\n}\ndiv.tabs-container[_ngcontent-%COMP%]    > ul.tabs[_ngcontent-%COMP%] {\n  display: flex;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\ndiv.tabs-container[_ngcontent-%COMP%]    > ul.tabs[_ngcontent-%COMP%]    > li.tab[_ngcontent-%COMP%] {\n  width: 100%;\n  color: #787878;\n  text-align: center;\n  cursor: pointer;\n  padding: 1rem auto;\n  background-color: #f6f6f6;\n}\ndiv.tabs-container.blue[_ngcontent-%COMP%]    > ul.tabs[_ngcontent-%COMP%]    > li.tab[_ngcontent-%COMP%] {\n  color: black;\n  background-color: rgba(89, 99, 255, 0.4);\n  border-bottom: 0.0625 solid #5963ff;\n}\ndiv.tabs-container[_ngcontent-%COMP%]:not(.blue)    > ul.tabs[_ngcontent-%COMP%]    > li.tab[_ngcontent-%COMP%]:first-child {\n  border-top-left-radius: 0.75rem;\n}\ndiv.tabs-container[_ngcontent-%COMP%]:not(.blue)    > ul.tabs[_ngcontent-%COMP%]    > li.tab[_ngcontent-%COMP%]:last-child {\n  border-top-right-radius: 0.75rem;\n}\ndiv.tabs-container[_ngcontent-%COMP%]    > ul.tabs[_ngcontent-%COMP%]    > li.tab.active[_ngcontent-%COMP%] {\n  background-color: #d9d9d9;\n  color: #484848;\n}\ndiv.tabs-container[_ngcontent-%COMP%]    > ul.tabs[_ngcontent-%COMP%]    > li.tab[_ngcontent-%COMP%]:hover {\n  background-color: #C0C0C0;\n  color: #484848;\n}\ndiv.tabs-container.blue[_ngcontent-%COMP%]    > ul.tabs[_ngcontent-%COMP%]    > li.tab.active[_ngcontent-%COMP%] {\n  background-color: #5963FF;\n  color: #f3f3f3;\n}\ndiv.tabs-container.blue[_ngcontent-%COMP%]    > ul.tabs[_ngcontent-%COMP%]    > li.tab[_ngcontent-%COMP%]:hover {\n  background-color: rgba(89, 99, 255, 0.7);\n  color: #f3f3f3;\n}\ndiv.simple-tabs[_ngcontent-%COMP%]    > ul.tabs[_ngcontent-%COMP%] {\n  display: flex;\n  list-style-type: none;\n  margin: 0.5rem 0;\n  padding: 0;\n}\ndiv.simple-tabs[_ngcontent-%COMP%]    > ul.tabs[_ngcontent-%COMP%]    > li.tab[_ngcontent-%COMP%] {\n  border: 1px solid rgba(0, 0, 0, 0);\n  color: #808080;\n  border-bottom: 1px solid;\n  text-align: center;\n  cursor: pointer;\n  padding: 0.25rem 0.75rem;\n}\ndiv.simple-tabs[_ngcontent-%COMP%]    > ul.tabs[_ngcontent-%COMP%]    > li.tab.active[_ngcontent-%COMP%] {\n  border: 1px solid;\n  color: #161616;\n  border-bottom: 1px solid rgba(0, 0, 0, 0);\n}\ndiv.simple-tabs[_ngcontent-%COMP%]    > ul.tabs[_ngcontent-%COMP%]    > li.tab.rest[_ngcontent-%COMP%] {\n  width: 100%;\n  padding: 0;\n  border-left: none;\n  border-right: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFwuLlxcLi5cXC4uXFxzY3NzXFxtb2RhbC5zY3NzIiwiLi5cXC4uXFwuLlxcLi5cXHNlbmQuY29tcG9uZW50LnNjc3MiLCIuLlxcLi5cXC4uXFwuLlxcLi5cXC4uXFwuLlxcc2Nzc1xcc3dpdGNoLnNjc3MiLCIuLlxcLi5cXC4uXFwuLlxcLi5cXC4uXFwuLlxcc2Nzc1xcZHJvcGRvd24uc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxVQUFBO0FBQ0E7RUFDRSxlQUFBO0VBQ0EsWUFBQTtFQUNBLE9BQUE7RUFDQSxNQUFBO0VBQ0EsV0FBQTtFQUNBLFlBQUE7RUFDQSxjQUFBO0VBQ0EsdUJBQUE7RUFDQSxvQ0FBQTtBQ0NGO0FEQ0E7RUFDRSxZQUFBO0FDRUY7QURBQSxzQkFBQTtBQUNBO0VBQ0Usa0JBQUE7RUFDQSx5QkFBQTtFQUNBLGlCQUFBO0VBQ0EseUJBQUE7RUFDQSwrR0FBQTtFQUVBLHNCQUFBO0VBQ0EsWUFBQTtFQUNBLGtDQUFBO0VBQ0EsZ0NBQUE7RUFDQSwwQkFBQTtFQUNBLHdCQUFBO0FDRUY7QURBQTtFQUNFLDRCQUFBO0VBQ0EsZ0NBQUE7RUFDQSxvQkFBQTtFQUNBLHdCQUFBO0FDR0Y7QUREQSxrQkFBQTtBQUNBO0VBQ0U7SUFDRSxVQUFBO0lBQ0EsVUFBQTtFQ0lGO0VERkE7SUFDRSxNQUFBO0lBQ0EsVUFBQTtFQ0lGO0FBQ0Y7QURGQTtFQUNFO0lBQ0UsV0FBQTtJQUNBLFVBQUE7RUNJRjtFREZBO0lBQ0UsTUFBQTtJQUNBLFVBQUE7RUNJRjtBQUNGO0FERkE7RUFDRSxhQUFBO0VBQ0EsOEJBQUE7RUFDQSxtQkFBQTtFQUNBLDhCQUFBO0VBQ0EsNENBQUE7QUNJRjtBREZBO0VBQ0Usa0JBQUE7RUFDQSxpQkFBQTtFQUNBLGtCQUFBO0VBQ0EsbUJBQUE7RUFDQSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSxjQUFBO0VBQ0EsWUFBQTtBQ0tGO0FESEE7RUFDRSxzQkFBQTtFQUNBLFdBQUE7RUFDQSxlQUFBO0VBQ0EsaUJBQUE7QUNNRjtBREpBOztFQUVFLGNBQUE7RUFDQSxxQkFBQTtFQUNBLGVBQUE7QUNPRjtBRExBO0VBQ0UsWUFBQTtBQ1FGO0FETkE7RUFDRSxhQUFBO0VBQ0EsdUJBQUE7RUFDQSxtQkFBQTtFQUNBLFlBQUE7QUNTRjtBRFBBO0VBQ0UsV0FBQTtFQUNBLGtCQUFBO0VBQ0EsbUJBQUE7RUFDQSx5Q0FBQTtFQUNBLGVBQUE7RUFDQSxpQkFBQTtFQUNBLGNBQUE7RUFDQSxtQkFBQTtFQUNBLFlBQUE7RUFDQSxVQUFBO0VBQ0Esa0JBQUE7RUFDQSxTQUFBO0FDVUY7QURSQTtFQUNFLGNBQUE7RUFDQSxtQkFBQTtFQUNBLGlCQUFBO0FDV0Y7QURUQTtFQUNFLGtDQUFBO0FDWUY7QURWQTs7RUFFRSxhQUFBO0FDYUY7QURYQTtFQUNFLGtCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxlQUFBO0VBQ0EsaUJBQUE7RUFDQSxjQUFBO0VBQ0EsWUFBQTtBQ2NGO0FEWkE7RUFDRSxvQkFBQTtFQUNBLGtCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxrQkFBQTtFQUNBLGlCQUFBO0VBQ0EsY0FBQTtFQUNBLFlBQUE7QUNlRjtBRGJBO0VBQ0Usa0JBQUE7RUFDQSxtQkFBQTtFQUNBLG1CQUFBO0VBQ0EsaUJBQUE7RUFDQSxhQUFBO0VBQ0EscUJBQUE7RUFDQSxjQUFBO0VBQ0EsWUFBQTtFQUNBLHFCQUFBO0FDZ0JGO0FEZEE7O0VBRUUsa0JBQUE7RUFDQSxtQkFBQTtFQUNBLGtCQUFBO0VBQ0EsaUJBQUE7RUFDQSxjQUFBO0VBQ0EsWUFBQTtBQ2lCRjtBRGZBO0VBQ0UsaUJBQUE7QUNrQkY7QURoQkE7RUFDRSxxQkFBQTtFQUNBLGtCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxlQUFBO0VBQ0EscUJBQUE7RUFDQSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSxjQUFBO0VBQ0EsWUFBQTtBQ21CRjtBRGpCQTtFQUNFLGtCQUFBO0VBQ0EsbUJBQUE7RUFDQSxtQkFBQTtFQUNBLGlCQUFBO0VBQ0EsYUFBQTtFQUNBLHFCQUFBO0VBQ0EsY0FBQTtBQ29CRjtBRGxCQTs7RUFFRSxjQUFBO0FDcUJGO0FEbkJBO0VBQ0UsbUJBQUE7RUFDQSx1QkFBQTtFQUNBLGNBQUE7QUNzQkY7QURwQkE7RUFDRSxrQkFBQTtBQ3VCRjtBRHJCQTs7RUFFRSxXQUFBO0VBQ0EsbUJBQUE7RUFDQSxzQkFBQTtFQUNBLFlBQUE7RUFDQSxrQkFBQTtFQUNBLG1CQUFBO0VBQ0EsZUFBQTtFQUNBLGlCQUFBO0VBQ0Esc0JBQUE7RUFDQSxjQUFBO0VBQ0Esa0JBQUE7RUFDQSxtQkFBQTtFQUNBLFNBQUE7QUN3QkY7QUR0QkE7RUFDRSxXQUFBO0VBQ0Esa0JBQUE7QUN5QkY7QUR2QkE7RUFDRSxtQkFBQTtFQUNBLFlBQUE7RUFDQSxvQkFBQTtFQUNBLFlBQUE7QUMwQkY7QUR4QkE7RUFFRSxjQUFBO0VBQ0EsVUFBQTtBQzJCRjtBRDlCQTs7RUFFRSxjQUFBO0VBQ0EsVUFBQTtBQzJCRjtBRG5CQTs7O0VBR0UsbUJBQUE7RUFDQSxvQkFBQTtBQzZCRjtBRDNCQTtFQUNFLGFBQUE7RUFDQSw4QkFBQTtBQzhCRjtBRDVCQTtFQUNFLGtCQUFBO0FDK0JGO0FEN0JBO0VBQ0Usa0JBQUE7QUNnQ0Y7QUQ5QkE7RUFDRSxrQkFBQTtFQUNBLGlCQUFBO0VBQ0EsZUFBQTtFQUNBLGlCQUFBO0VBQ0EsYUFBQTtFQUNBLG1CQUFBO0VBQ0EsdUJBQUE7RUFDQSxrQkFBQTtFQUNBLFlBQUE7RUFDQSxtQkFBQTtFQUNBLDJIQUFBO0VBQ0EsV0FBQTtFQUNBLFlBQUE7RUFDQSxzQkFBQTtFQUNBLFNBQUE7RUFDQSxrQkFBQTtFQUNBLHFCQUFBO0FDaUNGO0FEL0JBOztFQUVFLFlBQUE7RUFDQSxTQUFBO0FDa0NGO0FEaENBO0VBQ0UsV0FBQTtFQUNBLGVBQUE7RUFDQSx5QkFBQTtFQUNBLGNBQUE7QUNtQ0Y7QURqQ0E7RUFDRSxhQUFBO0FDb0NGO0FEbENBO0VBQ0Usc0JBQUE7QUNxQ0Y7QURuQ0E7RUFDRSxrQkFBQTtFQUNBLGdCQUFBO0VBQ0Esa0JBQUE7RUFDQSxpQkFBQTtFQUNBLGFBQUE7RUFDQSxtQkFBQTtFQUNBLHVCQUFBO0VBQ0Esa0JBQUE7RUFDQSxXQUFBO0VBQ0EsY0FBQTtFQUNBLGNBQUE7RUFDQSxZQUFBO0VBQ0Esb0NBQUE7RUFDQSx3QkFBQTtFQUNBLFNBQUE7QUNzQ0Y7QURwQ0E7RUFDRSxtQkFBQTtBQ3VDRjtBRHJDQTtFQUNFLGNBQUE7RUFDQSxVQUFBO0VBQ0EsbUJBQUE7QUN3Q0Y7QUR0Q0E7RUFDRSxjQUFBO0FDeUNGO0FEdkNBO0VBQ0Usa0JBQUE7RUFDQSxVQUFBO0VBQ0EsWUFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0VBQ0EsWUFBQTtFQUNBLG1CQUFBO0VBQ0EseUJBQUE7RUFDQSxtQkFBQTtFQUNBLGFBQUE7RUFDQSxtQkFBQTtFQUNBLHVCQUFBO0VBQ0EsZUFBQTtBQzBDRjtBRHhDQTtFQUNFO0lBQ0UsV0FBQTtJQUNBLDZCQUFBO0VDMkNGOztFRHpDQTtJQUNFLG9CQUFBO0VDNENGO0FBQ0Y7QUQxQ0E7RUFDRTtJQUNFLFlBQUE7RUM0Q0Y7O0VEMUNBO0lBQ0UsWUFBQTtFQzZDRjtBQUNGO0FDallBO0VBQ0Usa0JBQUE7RUFDQSxxQkFBQTtFQUNBLFdBQUE7RUFDQSxjQUFBO0VBQ0EsZ0JBQUE7QURtWUY7QUNoWUE7RUFDRSxVQUFBO0VBQ0Esa0JBQUE7RUFDQSxpQkFBQTtFQUNBLFFBQUE7RUFDQSxTQUFBO0FEbVlGO0FDaFlBO0VBQ0Usa0JBQUE7RUFDQSxlQUFBO0VBQ0EsTUFBQTtFQUNBLE9BQUE7RUFDQSxRQUFBO0VBQ0EsU0FBQTtFQUNBLHlCQUFBO0VBRUEsZ0JBQUE7QURtWUY7QUNoWUE7RUFDRSxrQkFBQTtFQUNBLFdBQUE7RUFDQSxnQkFBQTtFQUNBLGVBQUE7RUFDQSxlQUFBO0VBQ0EsaUJBQUE7RUFDQSx5QkFBQTtFQUVBLGdCQUFBO0FEbVlGO0FDaFlBO0VBQ0UsMkhBQUE7QURtWUY7QUNoWUE7RUFDRSx5QkFBQTtFQUdBLDZCQUFBO0FEbVlGO0FDaFlBO0VBQ0UsdUJBQUE7QURtWUY7QUNqWUE7RUFDRSxrQkFBQTtBRG9ZRjtBQ2xZQTtFQUNFLHdDQUFBO0FEcVlGO0FDbllBOztFQUVFLGtCQUFBO0VBQ0EsbUJBQUE7RUFDQSxlQUFBO0VBQ0EsaUJBQUE7RUFDQSxzQkFBQTtFQUNBLGNBQUE7RUFDQSxtQkFBQTtBRHNZRjtBQ3BZQTtFQUNFLGFBQUE7RUFDQSwyQkFBQTtFQUNBLG1CQUFBO0VBQ0EsbUJBQUE7RUFDQSxZQUFBO0FEdVlGO0FDcllBO0VBQ0Usa0JBQUE7RUFDQSxtQkFBQTtFQUNBLGtCQUFBO0VBQ0EsaUJBQUE7RUFDQSxzQkFBQTtFQUNBLGNBQUE7RUFDQSxrQkFBQTtFQUNBLHFCQUFBO0FEd1lGO0FDdFlBO0VBQ0U7SUFDSSxZQUFBO0VEeVlKO0FBQ0Y7QUVuZUEsY0FBQTtBQUVBLGtFQUFBO0FBQ0E7RUFDRSxzQkFBQTtFQUNBLGtCQUFBO0VBQ0EsbUJBQUE7RUFDQSxtQkFBQTtFQUNBLHNCQUFBO0VBQ0EsY0FBQTtFQUNBLGtCQUFBO0VBQ0EsbUJBQUE7RUFDQSxTQUFBO0VBQ0QsV0FBQTtFQUNDLGVBQUE7RUFBaUIseURBQUE7RUFDakIsWUFBQTtFQUNBLGlCQUFBO0VBQ0Qsc0JBQUE7RUFDQSxTQUFBO0VBQ0EscUJBQUE7RUFDQSx3QkFBQTtFQUNDLGdCQUFBO0VBQ0EsVUFBQTtFQUNELHlCQUFBO0VBQ0E7OztHQUFBO0VBSUEsb2ZBQUE7RUFDQSxvQ0FBQTtFQUNBLG1GQUFBO0VBQ0EsNkNBQUE7RUFDQSw2QkFBQTtFQUNBLGtDQUFBO0FGcWVEO0FFbmVBLG1DQUFBO0FBQ0E7RUFDQyxhQUFBO0FGc2VEO0FFcGVBLGdCQUFBO0FBQ0E7RUFDQyxrQkFBQTtBRnVlRDtBRXJlQSxnQkFBQTtBQUNBO0VBQ0MsYUFBQTtBRndlRDtBRXJlQSxpQ0FBQTtBQUNBO0VBQ0MsbUJBQUE7QUZ3ZUQ7QUVyZUEsaUVBQUE7QUFDQTtFQUNDLDRDQUFBO0VBQ0EsZ0NBQUE7QUZ3ZUQ7QUVyZUEsb0JBQUE7QUFDQTtFQUNDLGVBQUE7RUFDQSxtZkFBQTtBRndlRDtBRXJlQTtFQUNDLGtCQUFBO0FGd2VEO0FBdGlCQTtFQUNFLHFCQUFBO0VBQ0EsdUJBQUE7QUF5aUJGO0FBdmlCQTtFQUNFLGFBQUE7QUEwaUJGO0FBeGlCQTtFQUNFLHNCQUFBO0VBQ0EsWUFBQTtFQUNBLFdBQUE7RUFDQSxrQkFBQTtFQUNBLGlCQUFBO0VBQ0EsZUFBQTtFQUNBLGlCQUFBO0VBQ0EsYUFBQTtFQUNBLHNCQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtFQUNBLGVBQUE7RUFDQSxtQ0FBQTtFQUNBLGVBQUE7QUEyaUJGO0FBemlCQTtFQUNFLGFBQUE7QUE0aUJGO0FBMWlCQTtFQUNFLGtCQUFBO0VBQ0EsZ0JBQUE7QUE2aUJGO0FBM2lCQTtFQUNFLFlBQUE7RUFDQSxtQkFBQTtFQUNBLDJIQUFBO0VBQ0EsK0RBQUE7QUE4aUJGO0FBNWlCQTtFQUNFLGNBQUE7RUFDQSxnQkFBQTtFQUNBLFdBQUE7QUEraUJGO0FBN2lCQTtFQUNFLGFBQUE7RUFDQSxZQUFBO0VBQ0EsaUJBQUE7RUFDQSxZQUFBO0VBQ0EscUJBQUE7QUFnakJGO0FBOWlCQTtFQUNFLGdCQUFBO0VBQ0EsZUFBQTtFQUNBLG9CQUFBO0FBaWpCRjtBQS9pQkE7O0VBRUUsV0FBQTtBQWtqQkY7QUFoakJBO0VBQ0UsdUJBQUE7RUFDQSxrQkFBQTtFQUNBLGdCQUFBO0VBQ0EsbUJBQUE7RUFDQSxpQkFBQTtFQUNBLGNBQUE7QUFtakJGO0FBampCQTs7RUFFRSxpQkFBQTtFQUNBLFdBQUE7QUFvakJGO0FBbGpCQTtFQUNFLGdCQUFBO0FBcWpCRjtBQW5qQkE7RUFDRSxrQkFBQTtBQXNqQkY7QUFwakJBO0VBQ0UsbUJBQUE7QUF1akJGO0FBcGpCQTtFQUNFLHFCQUFBO0FBdWpCRjtBQXJqQkE7RUFDRSxrQkFBQTtBQXdqQkY7QUF0akJBO0VBQ0UsWUFBQTtFQUNBLFVBQUE7QUF5akJGO0FBM2pCQTtFQUNFLFlBQUE7RUFDQSxVQUFBO0FBeWpCRjtBQW5qQkE7RUFDRSxjQUFBO0VBQ0EsVUFBQTtBQTJqQkY7QUE3akJBO0VBQ0UsY0FBQTtFQUNBLFVBQUE7QUEyakJGO0FBempCQTs7RUFFRSxjQUFBO0FBNGpCRjtBQTFqQkE7RUFDRSxjQUFBO0FBNmpCRjtBQTNqQkE7O0VBRUUsb0JBQUE7QUE4akJGO0FBNWpCQTtFQUNFLFlBQUE7QUErakJGO0FBN2pCQTtFQUNFLGVBQUE7RUFDQSxjQUFBO0VBQ0Esb0JBQUE7RUFDQSx1QkFBQTtFQUNBLG1CQUFBO0FBZ2tCRjtBQTlqQkE7RUFDRSwwQkFBQTtBQWlrQkY7QUEvakJBO0VBQ0U7O0lBRUUsZUFBQTtFQWtrQkY7QUFDRjtBQS9qQkE7RUFDRTtJQUNFLFlBQUE7RUFpa0JGO0FBQ0Y7QUE5akJBO0VBQ0U7SUFDRSxvQkFBQTtFQWdrQkY7O0VBOWpCQTtJQUNFLFlBQUE7RUFpa0JGO0FBQ0Y7QUEvakJBO0VBQ0U7SUFDRSxrQkFBQTtFQWlrQkY7QUFDRjtBQS9qQkE7RUFDRSxpQkFBQTtFQUNBLGtCQUFBO0FBaWtCRjtBQS9qQkE7RUFDRSxhQUFBO0VBQ0Esc0JBQUE7RUFDQSxxQkFBQTtBQWtrQkY7QUFoa0JBO0VBQ0UsYUFBQTtFQUNBLG1CQUFBO0VBQ0EsOEJBQUE7QUFta0JGO0FBamtCQTtFQUNFLHdCQUFBO0VBQ0Esa0JBQUE7RUFDQSxnQkFBQTtFQUNBLGlCQUFBO0VBQ0EsbUJBQUE7RUFDQSxjQUFBO0FBb2tCRjtBQWxrQkE7RUFDRSxzQkFBQTtFQUNBLGtCQUFBO0VBQ0EsbUJBQUE7RUFDQSxtQkFBQTtFQUNBLGlCQUFBO0VBQ0EsY0FBQTtBQXFrQkY7QUFua0JBO0VBQ0UsYUFBQTtFQUNBLHFCQUFBO0VBQ0EscUJBQUE7RUFDQSxrQkFBQTtFQUNBLG1CQUFBO0VBQ0EsZUFBQTtFQUNBLGlCQUFBO0VBQ0EsY0FBQTtBQXNrQkY7QUFwa0JBO0VBQ0UsY0FBQTtFQUNBLHNCQUFBO0VBQ0Esa0JBQUE7RUFDQSxtQkFBQTtFQUNBLG1CQUFBO0VBQ0EsaUJBQUE7RUFDQSxjQUFBO0FBdWtCRjtBQXJrQkE7RUFDRSw0Q0FBQTtFQUNBLGdCQUFBO0FBd2tCRjtBQXRrQkE7RUFDRSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSw4QkFBQTtBQXlrQkY7QUF2a0JBO0VBQ0UsaUJBQUE7RUFDQSxtQkFBQTtFQUNBLG1CQUFBO0VBQ0EsaUJBQUE7RUFDQSxjQUFBO0FBMGtCRjtBQXhrQkE7O0VBRUUsZ0JBQUE7RUFDQSxtQkFBQTtFQUNBLG1CQUFBO0VBQ0EsaUJBQUE7RUFDQSxjQUFBO0FBMmtCRjtBQXprQkE7RUFDRSxxQkFBQTtFQUNBLG9CQUFBO0FBNGtCRjtBQTFrQkE7O0VBRUUsZUFBQTtFQUNBLHdCQUFBO0FBNmtCRjtBQTFrQkE7RUFDRSxrQkFBQTtBQTZrQkY7QUEza0JBO0VBQ0UsYUFBQTtFQUNBLHFCQUFBO0VBQ0EsU0FBQTtFQUNBLFVBQUE7QUE4a0JGO0FBNWtCQTtFQUNFLFdBQUE7RUFDQSxjQUFBO0VBQ0Esa0JBQUE7RUFDQSxlQUFBO0VBQ0Esa0JBQUE7RUFDQSx5QkFBQTtBQStrQkY7QUE3a0JBO0VBQ0UsWUFBQTtFQUNBLHdDQUFBO0VBQ0EsbUNBQUE7QUFnbEJGO0FBOWtCQTtFQUNFLCtCQUFBO0FBaWxCRjtBQS9rQkE7RUFDRSxnQ0FBQTtBQWtsQkY7QUFobEJBO0VBQ0UseUJBQUE7RUFDQSxjQUFBO0FBbWxCRjtBQWpsQkE7RUFDRSx5QkFBQTtFQUNBLGNBQUE7QUFvbEJGO0FBbGxCQTtFQUNFLHlCQUFBO0VBQ0EsY0FBQTtBQXFsQkY7QUFubEJBO0VBQ0Usd0NBQUE7RUFDQSxjQUFBO0FBc2xCRjtBQW5sQkE7RUFDRSxhQUFBO0VBQ0EscUJBQUE7RUFDQSxnQkFBQTtFQUNBLFVBQUE7QUFzbEJGO0FBcGxCQTtFQUNFLGtDQUFBO0VBQ0EsY0FBQTtFQUNBLHdCQUFBO0VBQ0Esa0JBQUE7RUFDQSxlQUFBO0VBQ0Esd0JBQUE7QUF1bEJGO0FBcmxCQTtFQUNFLGlCQUFBO0VBQ0EsY0FBQTtFQUNBLHlDQUFBO0FBd2xCRjtBQXRsQkE7RUFDRSxXQUFBO0VBQ0EsVUFBQTtFQUNBLGlCQUFBO0VBQ0Esa0JBQUE7QUF5bEJGIiwiZmlsZSI6InNlbmQuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKiBNb2RhbCAqL1xyXG5kaXYua3VrYWktbW9kYWwge1xyXG4gIHBvc2l0aW9uOiBmaXhlZDtcclxuICB6LWluZGV4OiAxMDA7XHJcbiAgbGVmdDogMDtcclxuICB0b3A6IDA7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG4gIG92ZXJmbG93OiBhdXRvO1xyXG4gIGJhY2tncm91bmQtY29sb3I6IHJnYigwLCAwLCAwKTsgLy9mYWxsYmFja1xyXG4gIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMCwgMCwgMCwgMC40KTtcclxufVxyXG5kaXYua3VrYWktbW9kYWwudG9wIHtcclxuICB6LWluZGV4OiAxMDE7XHJcbn1cclxuLyogTW9kYWwgQ29udGVudC9Cb3ggKi9cclxuZGl2Lmt1a2FpLW1vZGFsID4gZGl2LmttLWNvbnRlbnQge1xyXG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmNmY2ZjO1xyXG4gIG1hcmdpbjogNXJlbSBhdXRvO1xyXG4gIGJvcmRlcjogMXB4IHNvbGlkICNmZmZmZmY7XHJcbiAgYm94LXNoYWRvdzogMHB4IDBweCAxcHggcmdiYSgwLCAwLCAwLCAwLjA0KSwgMHB4IDJweCA2cHggcmdiYSgwLCAwLCAwLCAwLjA0KSxcclxuICAgIDBweCAxNnB4IDI0cHggcmdiYSgwLCAwLCAwLCAwLjA2KTtcclxuICBib3JkZXItcmFkaXVzOiAwLjc1cmVtO1xyXG4gIHdpZHRoOiAyNXJlbTtcclxuICAtd2Via2l0LWFuaW1hdGlvbi1uYW1lOiBhbmltYXRldG9wO1xyXG4gIC13ZWJraXQtYW5pbWF0aW9uLWR1cmF0aW9uOiAwLjVzO1xyXG4gIGFuaW1hdGlvbi1uYW1lOiBhbmltYXRldG9wO1xyXG4gIGFuaW1hdGlvbi1kdXJhdGlvbjogMC41cztcclxufVxyXG5kaXYua3VrYWktbW9kYWwuY29uZmlybSA+IGRpdi5rbS1jb250ZW50IHtcclxuICAtd2Via2l0LWFuaW1hdGlvbi1uYW1lOiBub25lO1xyXG4gIC13ZWJraXQtYW5pbWF0aW9uLWR1cmF0aW9uOiBub25lO1xyXG4gIGFuaW1hdGlvbi1uYW1lOiBub25lO1xyXG4gIGFuaW1hdGlvbi1kdXJhdGlvbjogbm9uZTtcclxufVxyXG4vKiBBZGQgQW5pbWF0aW9uICovXHJcbkAtd2Via2l0LWtleWZyYW1lcyBhbmltYXRldG9wIHtcclxuICBmcm9tIHtcclxuICAgIHRvcDogMjByZW07XHJcbiAgICBvcGFjaXR5OiAwO1xyXG4gIH1cclxuICB0byB7XHJcbiAgICB0b3A6IDA7XHJcbiAgICBvcGFjaXR5OiAxO1xyXG4gIH1cclxufVxyXG5Aa2V5ZnJhbWVzIGFuaW1hdGV0b3Age1xyXG4gIGZyb20ge1xyXG4gICAgdG9wOiAtMzAwcHg7XHJcbiAgICBvcGFjaXR5OiAwO1xyXG4gIH1cclxuICB0byB7XHJcbiAgICB0b3A6IDA7XHJcbiAgICBvcGFjaXR5OiAxO1xyXG4gIH1cclxufVxyXG5kaXYua3VrYWktbW9kYWwgPiBkaXYua20tY29udGVudCA+IGRpdi5rbS1oZWFkZXIge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG4gIGZsZXgtZGlyZWN0aW9uOiByb3c7XHJcbiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkIHJnYmEoMCwgMCwgMCk7XHJcbiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkIHJnYmEoMCwgMCwgMCwgMC4wNCk7XHJcbn1cclxuZGl2LmttLWhlYWRlciA+IEgxIHtcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbiAgZm9udC1zaXplOiAxLjI1cmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAxLjVyZW07XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGNvbG9yOiAjMmMzMjNhO1xyXG4gIG1hcmdpbjogMXJlbTtcclxufVxyXG5kaXYua20taGVhZGVyID4gc3Bhbi5jbG9zZSB7XHJcbiAgbWFyZ2luOiAwLjI1cmVtIDAuNXJlbTtcclxuICBjb2xvcjogI2FhYTtcclxuICBmb250LXNpemU6IDI4cHg7XHJcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbn1cclxuZGl2LmttLWhlYWRlciA+IHNwYW4uY2xvc2U6aG92ZXIsXHJcbmRpdi5rbS1oZWFkZXIgPiBzcGFuLmNsb3NlOmZvY3VzIHtcclxuICBjb2xvcjogIzJjMzIzYTtcclxuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG59XHJcbmRpdi5rbS1ib2R5IHtcclxuICBtYXJnaW46IDFyZW07XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIGRpdi5hbW91bnQge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgZmxleC1kaXJlY3Rpb246IHJvdztcclxuICBoZWlnaHQ6IDVyZW07XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIGlucHV0LmN1c3RvbS1sYXJnZSB7XHJcbiAgd2lkdGg6IGF1dG87XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiBub3JtYWw7XHJcbiAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XHJcbiAgZm9udC1zaXplOiA1cmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiA1cmVtO1xyXG4gIGNvbG9yOiAjMkMzMjNBO1xyXG4gIGJhY2tncm91bmQ6ICNmY2ZjZmM7XHJcbiAgb3BhY2l0eTogMC40O1xyXG4gIHBhZGRpbmc6IDA7XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIGJvcmRlcjogMDtcclxufVxyXG5kaXYua3VrYWktbW9kYWwgcC5wcmV2aWV3QXR0ZW50aW9uIHtcclxuICBjb2xvcjogI0NEMDAwMDtcclxuICBmb250LXNpemU6IDAuODc1cmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xyXG59XHJcbmRpdi5rdWthaS1tb2RhbCBpbnB1dC5jdXN0b20tbGFyZ2U6ZGlzYWJsZWQge1xyXG4gIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMCwgMCwgMCwgMCk7XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIGlucHV0OmZvY3VzLFxyXG5kaXYua3VrYWktbW9kYWwgdGV4dGFyZWE6Zm9jdXMge1xyXG4gIG91dGxpbmU6IG5vbmU7XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIHNwYW4udGV6IHtcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LXNpemU6IDFyZW07XHJcbiAgbGluZS1oZWlnaHQ6IDFyZW07XHJcbiAgY29sb3I6ICMyQzMyM0E7XHJcbiAgb3BhY2l0eTogMC40O1xyXG59XHJcbmRpdi5rdWthaS1tb2RhbCBwLmZlZSB7XHJcbiAgbWFyZ2luLXRvcDogMC4zNzVyZW07XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgZm9udC1zaXplOiAwLjc1cmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xyXG4gIGNvbG9yOiAjMkMzMjNBO1xyXG4gIG9wYWNpdHk6IDAuNDtcclxufVxyXG5kaXYua3VrYWktbW9kYWwgcC5wcmV2aWV3IHtcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IG5vcm1hbDtcclxuICBmb250LXNpemU6IDAuODc1cmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGZsZXgtZW5kO1xyXG4gIGNvbG9yOiAjMDAwMDAwO1xyXG4gIG9wYWNpdHk6IDAuNjtcclxuICBtYXJnaW4tYm90dG9tOiAwLjVyZW07XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIHRkLFxyXG5kaXYua3VrYWktbW9kYWwgdGgge1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogbm9ybWFsO1xyXG4gIGZvbnQtc2l6ZTogMC43NXJlbTtcclxuICBsaW5lLWhlaWdodDogMXJlbTtcclxuICBjb2xvcjogIzAwMDAwMDtcclxuICBvcGFjaXR5OiAwLjY7XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIHRoIHtcclxuICBmb250LXdlaWdodDogYm9sZDtcclxufVxyXG5kaXYua20tY29udGVudCBsYWJlbDpub3QoLnN3aXRjaCkge1xyXG4gIG1hcmdpbi1ib3R0b206IDAuNXJlbTtcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LXNpemU6IDFyZW07XHJcbiAgbGluZS1oZWlnaHQ6IDEuMTI1cmVtO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBjb2xvcjogIzJDMzIzQTtcclxuICBvcGFjaXR5OiAwLjQ7XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIHAsIHNwYW4uZGFuZ2VyIHtcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IG5vcm1hbDtcclxuICBmb250LXNpemU6IDAuODc1cmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGZsZXgtZW5kO1xyXG4gIGNvbG9yOiAjMDAwMDAwO1xyXG59XHJcbmRpdi5rdWthaS1tb2RhbCBzcGFuLm5vLW1hcmdpbixcclxuZGl2Lmt1a2FpLW1vZGFsIHNwYW4ubWFyZ2luIHtcclxuICBjb2xvcjogI0ZGMDAwMDtcclxufVxyXG5kaXYua3VrYWktbW9kYWwgc3Bhbi5uby1tYXJnaW4ge1xyXG4gIG1hcmdpbi10b3A6IDAuNzVyZW07XHJcbiAgbWFyZ2luLWJvdHRvbTogLTEuNzVyZW07XHJcbiAgY29sb3I6ICNGRjAwMDA7XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIGRpdi5ncm91cCB7XHJcbiAgbWFyZ2luLXRvcDogMS41cmVtO1xyXG59XHJcbmRpdi5rdWthaS1tb2RhbCBpbnB1dC50ZXh0LFxyXG5kaXYua3VrYWktbW9kYWwgdGV4dGFyZWEudGV4dCB7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgYmFja2dyb3VuZDogI0UxRTFFMTtcclxuICBib3JkZXItcmFkaXVzOiAwLjc1cmVtO1xyXG4gIGhlaWdodDogM3JlbTtcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IG5vcm1hbDtcclxuICBmb250LXNpemU6IDFyZW07XHJcbiAgbGluZS1oZWlnaHQ6IDNyZW07XHJcbiAgbGV0dGVyLXNwYWNpbmc6IDAuMTZweDtcclxuICBjb2xvcjogIzAwMDAwMDtcclxuICBwYWRkaW5nLWxlZnQ6IDFyZW07XHJcbiAgcGFkZGluZy1yaWdodDogMXJlbTtcclxuICBib3JkZXI6IDA7XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIGlucHV0LnRleHQucGFzc3dvcmQge1xyXG4gIHdpZHRoOiAyMDAlO1xyXG4gIG1hcmdpbi1yaWdodDogMXJlbTtcclxufVxyXG5kaXYua3VrYWktbW9kYWwgdGV4dGFyZWEudGV4dCB7XHJcbiAgcGFkZGluZy10b3A6IDAuNXJlbTtcclxuICBoZWlnaHQ6IDdyZW07XHJcbiAgbGluZS1oZWlnaHQ6IDEuMjVyZW07XHJcbiAgcmVzaXplOiBub25lO1xyXG59XHJcbmRpdi5rdWthaS1tb2RhbCBpbnB1dC50ZXh0OjpwbGFjZWhvbGRlcixcclxuZGl2Lmt1a2FpLW1vZGFsIHRleHRhcmVhLnRleHQ6OnBsYWNlaG9sZGVyIHtcclxuICBjb2xvcjogIzgwODA4MDtcclxuICBvcGFjaXR5OiAxO1xyXG59XHJcbmRpdi5rdWthaS1tb2RhbCBpbnB1dC50ZXh0Ojotd2Via2l0LWlucHV0LXBsYWNlaG9sZGVyLFxyXG5kaXYua3VrYWktbW9kYWwgaW5wdXQudGV4dDotbXMtaW5wdXQtcGxhY2Vob2xkZXIsXHJcbmRpdi5rdWthaS1tb2RhbCB0ZXh0YXJlYS50ZXh0Ojotd2Via2l0LWlucHV0LXBsYWNlaG9sZGVyLFxyXG5kaXYua3VrYWktbW9kYWwgdGV4dGFyZWEudGV4dDotbXMtaW5wdXQtcGxhY2Vob2xkZXIge1xyXG4gIGNvbG9yOiAjODA4MDgwO1xyXG59XHJcbmRpdi5rdWthaS1tb2RhbCB0ZXh0YXJlYS50ZXh0OjpwbGFjZWhvbGRlcixcclxuZGl2Lmt1a2FpLW1vZGFsIHRleHRhcmVhLnRleHQ6Oi13ZWJraXQtaW5wdXQtcGxhY2Vob2xkZXIsXHJcbmRpdi5rdWthaS1tb2RhbCB0ZXh0YXJlYS50ZXh0Oi1tcy1pbnB1dC1wbGFjZWhvbGRlciB7XHJcbiAgcGFkZGluZy10b3A6IDAuNXJlbTtcclxuICBsaW5lLWhlaWdodDogMS4yNXJlbTtcclxufVxyXG5kaXYua3VrYWktbW9kYWwgZGl2LnJvdy1ncm91cCB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIGRpdi5yb3ctZ3JvdXAgPiBkaXYuZ3JvdXA6Zmlyc3QtY2hpbGQge1xyXG4gIG1hcmdpbi1yaWdodDogMXJlbTtcclxufVxyXG5kaXYua3VrYWktbW9kYWwgZGl2LmFkdmFuY2VkIHtcclxuICBtYXJnaW4tdG9wOiAxLjVyZW07XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIGJ1dHRvbi5ibHVlIHtcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbiAgZm9udC1zaXplOiAxcmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgY29sb3I6IHdoaXRlO1xyXG4gIGJhY2tncm91bmQ6ICM1OTYzRkY7XHJcbiAgYm94LXNoYWRvdzogMHB4IDBweCAxcHggcmdiYSg4OSwgOTksIDI1NSwgMC4wNCksIDBweCAycHggNnB4IHJnYmEoODksIDk5LCAyNTUsIDAuMDQpLCAwcHggMTZweCAyNHB4IHJnYmEoODksIDk5LCAyNTUsIDAuMjQpO1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIGhlaWdodDogM3JlbTtcclxuICBib3JkZXItcmFkaXVzOiAwLjc1cmVtO1xyXG4gIGJvcmRlcjogMDtcclxuICBtYXJnaW4tdG9wOiAyLjVyZW07XHJcbiAgbWFyZ2luLWJvdHRvbTogMS41cmVtO1xyXG59XHJcbmRpdi5rdWthaS1tb2RhbCBidXR0b24uYmx1ZS5jb25maXJtLFxyXG5kaXYua3VrYWktbW9kYWwgYnV0dG9uLnJldHJ5IHtcclxuICBoZWlnaHQ6IDNyZW07XHJcbiAgbWFyZ2luOiAwO1xyXG59XHJcbmRpdi5rdWthaS1tb2RhbCBidXR0b24ucmV0cnkge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIGZvbnQtc2l6ZTogMXJlbTtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZDNkM2QzO1xyXG4gIGNvbG9yOiByZ2IoMzMsIDM3LCA0MSk7XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIGJ1dHRvbjpmb2N1cyB7XHJcbiAgb3V0bGluZTogbm9uZTtcclxufVxyXG5kaXYua3VrYWktbW9kYWwgZGl2LnN3aXRjaC1jb250YWluZXIge1xyXG4gIHdpZHRoOiBhdXRvICFpbXBvcnRhbnQ7XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIGJ1dHRvbi5zbWFsbCB7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgZm9udC1zaXplOiAwLjc1cmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgd2lkdGg6IGF1dG87XHJcbiAgaGVpZ2h0OiAxLjVyZW07XHJcbiAgY29sb3I6ICMwMDAwMDA7XHJcbiAgb3BhY2l0eTogMC42O1xyXG4gIGJhY2tncm91bmQ6IHJnYmEoMjE0LCAyMTQsIDIxNCwgMC40KTtcclxuICBib3JkZXItcmFkaXVzOiAwLjMxMjVyZW07XHJcbiAgYm9yZGVyOiAwO1xyXG59XHJcbmRpdi5rdWthaS1tb2RhbCBidXR0b24uc21hbGwubWF4IHtcclxuICBiYWNrZ3JvdW5kOiAjZDVmMmRjO1xyXG59XHJcbmRpdi5rdWthaS1tb2RhbCBidXR0b24uc21hbGwubXVsdGlwbGUtZGVzdGluYXRpb25zIHtcclxuICBjb2xvcjogIzU5NjNGRjtcclxuICBvcGFjaXR5OiAxO1xyXG4gIG1hcmdpbjogMXJlbSAxLjVyZW07XHJcbn1cclxuZGl2Lmt1a2FpLW1vZGFsIGRpdi5hZHZhbmNlZCA+IGRpdi5yb3ctZ3JvdXAge1xyXG4gIGhlaWdodDogMS41cmVtO1xyXG59XHJcbmRpdi5rdWthaS1tb2RhbCBkaXYueCB7XHJcbiAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gIHRvcDogLTFyZW07XHJcbiAgcmlnaHQ6IC0xcmVtO1xyXG4gIHdpZHRoOiAycmVtO1xyXG4gIGhlaWdodDogMnJlbTtcclxuICB6LWluZGV4OiAxMjA7XHJcbiAgYmFja2dyb3VuZDogI0ZDRkNGQztcclxuICBib3JkZXI6IDFweCBzb2xpZCAjRkZGRkZGO1xyXG4gIGJvcmRlci1yYWRpdXM6IDFyZW07XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiAyN3JlbSkge1xyXG4gIGRpdi5rdWthaS1tb2RhbCBkaXYueCB7XHJcbiAgICByaWdodDogLTFweDtcclxuICAgIGJvcmRlci1ib3R0b20tcmlnaHQtcmFkaXVzOiAwO1xyXG4gIH1cclxuICBkaXYua3VrYWktbW9kYWwgYnV0dG9uLnNtYWxsLm11bHRpcGxlLWRlc3RpbmF0aW9ucyB7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDIuNXJlbTtcclxuICB9XHJcbn1cclxuQG1lZGlhIHNjcmVlbiBhbmQgKG1heC13aWR0aDogMjVyZW0pIHtcclxuICBkaXYua3VrYWktbW9kYWwgPiBkaXYua20tY29udGVudCB7XHJcbiAgICB3aWR0aDogMjNyZW07XHJcbiAgfVxyXG4gIGRpdi5rdWthaS1tb2RhbCBpbnB1dC50ZXh0LnBhc3N3b3JkIHtcclxuICAgIHdpZHRoOiAxMXJlbTtcclxuICB9XHJcbn0iLCIvKiBNb2RhbCAqL1xuZGl2Lmt1a2FpLW1vZGFsIHtcbiAgcG9zaXRpb246IGZpeGVkO1xuICB6LWluZGV4OiAxMDA7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgd2lkdGg6IDEwMCU7XG4gIGhlaWdodDogMTAwJTtcbiAgb3ZlcmZsb3c6IGF1dG87XG4gIGJhY2tncm91bmQtY29sb3I6IGJsYWNrO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDAsIDAsIDAsIDAuNCk7XG59XG5cbmRpdi5rdWthaS1tb2RhbC50b3Age1xuICB6LWluZGV4OiAxMDE7XG59XG5cbi8qIE1vZGFsIENvbnRlbnQvQm94ICovXG5kaXYua3VrYWktbW9kYWwgPiBkaXYua20tY29udGVudCB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2ZjZmNmYztcbiAgbWFyZ2luOiA1cmVtIGF1dG87XG4gIGJvcmRlcjogMXB4IHNvbGlkICNmZmZmZmY7XG4gIGJveC1zaGFkb3c6IDBweCAwcHggMXB4IHJnYmEoMCwgMCwgMCwgMC4wNCksIDBweCAycHggNnB4IHJnYmEoMCwgMCwgMCwgMC4wNCksIDBweCAxNnB4IDI0cHggcmdiYSgwLCAwLCAwLCAwLjA2KTtcbiAgYm9yZGVyLXJhZGl1czogMC43NXJlbTtcbiAgd2lkdGg6IDI1cmVtO1xuICAtd2Via2l0LWFuaW1hdGlvbi1uYW1lOiBhbmltYXRldG9wO1xuICAtd2Via2l0LWFuaW1hdGlvbi1kdXJhdGlvbjogMC41cztcbiAgYW5pbWF0aW9uLW5hbWU6IGFuaW1hdGV0b3A7XG4gIGFuaW1hdGlvbi1kdXJhdGlvbjogMC41cztcbn1cblxuZGl2Lmt1a2FpLW1vZGFsLmNvbmZpcm0gPiBkaXYua20tY29udGVudCB7XG4gIC13ZWJraXQtYW5pbWF0aW9uLW5hbWU6IG5vbmU7XG4gIC13ZWJraXQtYW5pbWF0aW9uLWR1cmF0aW9uOiBub25lO1xuICBhbmltYXRpb24tbmFtZTogbm9uZTtcbiAgYW5pbWF0aW9uLWR1cmF0aW9uOiBub25lO1xufVxuXG4vKiBBZGQgQW5pbWF0aW9uICovXG5ALXdlYmtpdC1rZXlmcmFtZXMgYW5pbWF0ZXRvcCB7XG4gIGZyb20ge1xuICAgIHRvcDogMjByZW07XG4gICAgb3BhY2l0eTogMDtcbiAgfVxuICB0byB7XG4gICAgdG9wOiAwO1xuICAgIG9wYWNpdHk6IDE7XG4gIH1cbn1cbkBrZXlmcmFtZXMgYW5pbWF0ZXRvcCB7XG4gIGZyb20ge1xuICAgIHRvcDogLTMwMHB4O1xuICAgIG9wYWNpdHk6IDA7XG4gIH1cbiAgdG8ge1xuICAgIHRvcDogMDtcbiAgICBvcGFjaXR5OiAxO1xuICB9XG59XG5kaXYua3VrYWktbW9kYWwgPiBkaXYua20tY29udGVudCA+IGRpdi5rbS1oZWFkZXIge1xuICBkaXNwbGF5OiBmbGV4O1xuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG4gIGZsZXgtZGlyZWN0aW9uOiByb3c7XG4gIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCBibGFjaztcbiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkIHJnYmEoMCwgMCwgMCwgMC4wNCk7XG59XG5cbmRpdi5rbS1oZWFkZXIgPiBIMSB7XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gIGZvbnQtc2l6ZTogMS4yNXJlbTtcbiAgbGluZS1oZWlnaHQ6IDEuNXJlbTtcbiAgZGlzcGxheTogZmxleDtcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgY29sb3I6ICMyYzMyM2E7XG4gIG1hcmdpbjogMXJlbTtcbn1cblxuZGl2LmttLWhlYWRlciA+IHNwYW4uY2xvc2Uge1xuICBtYXJnaW46IDAuMjVyZW0gMC41cmVtO1xuICBjb2xvcjogI2FhYTtcbiAgZm9udC1zaXplOiAyOHB4O1xuICBmb250LXdlaWdodDogYm9sZDtcbn1cblxuZGl2LmttLWhlYWRlciA+IHNwYW4uY2xvc2U6aG92ZXIsXG5kaXYua20taGVhZGVyID4gc3Bhbi5jbG9zZTpmb2N1cyB7XG4gIGNvbG9yOiAjMmMzMjNhO1xuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gIGN1cnNvcjogcG9pbnRlcjtcbn1cblxuZGl2LmttLWJvZHkge1xuICBtYXJnaW46IDFyZW07XG59XG5cbmRpdi5rdWthaS1tb2RhbCBkaXYuYW1vdW50IHtcbiAgZGlzcGxheTogZmxleDtcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gIGZsZXgtZGlyZWN0aW9uOiByb3c7XG4gIGhlaWdodDogNXJlbTtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGlucHV0LmN1c3RvbS1sYXJnZSB7XG4gIHdpZHRoOiBhdXRvO1xuICBmb250LXN0eWxlOiBub3JtYWw7XG4gIGZvbnQtd2VpZ2h0OiBub3JtYWw7XG4gIGZvbnQtZmFtaWx5OiBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmO1xuICBmb250LXNpemU6IDVyZW07XG4gIGxpbmUtaGVpZ2h0OiA1cmVtO1xuICBjb2xvcjogIzJDMzIzQTtcbiAgYmFja2dyb3VuZDogI2ZjZmNmYztcbiAgb3BhY2l0eTogMC40O1xuICBwYWRkaW5nOiAwO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIGJvcmRlcjogMDtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIHAucHJldmlld0F0dGVudGlvbiB7XG4gIGNvbG9yOiAjQ0QwMDAwO1xuICBmb250LXNpemU6IDAuODc1cmVtO1xuICBsaW5lLWhlaWdodDogMXJlbTtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGlucHV0LmN1c3RvbS1sYXJnZTpkaXNhYmxlZCB7XG4gIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMCwgMCwgMCwgMCk7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBpbnB1dDpmb2N1cyxcbmRpdi5rdWthaS1tb2RhbCB0ZXh0YXJlYTpmb2N1cyB7XG4gIG91dGxpbmU6IG5vbmU7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBzcGFuLnRleiB7XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC13ZWlnaHQ6IDUwMDtcbiAgZm9udC1zaXplOiAxcmVtO1xuICBsaW5lLWhlaWdodDogMXJlbTtcbiAgY29sb3I6ICMyQzMyM0E7XG4gIG9wYWNpdHk6IDAuNDtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIHAuZmVlIHtcbiAgbWFyZ2luLXRvcDogMC4zNzVyZW07XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC13ZWlnaHQ6IDUwMDtcbiAgZm9udC1zaXplOiAwLjc1cmVtO1xuICBsaW5lLWhlaWdodDogMXJlbTtcbiAgY29sb3I6ICMyQzMyM0E7XG4gIG9wYWNpdHk6IDAuNDtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIHAucHJldmlldyB7XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC13ZWlnaHQ6IG5vcm1hbDtcbiAgZm9udC1zaXplOiAwLjg3NXJlbTtcbiAgbGluZS1oZWlnaHQ6IDFyZW07XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGFsaWduLWl0ZW1zOiBmbGV4LWVuZDtcbiAgY29sb3I6ICMwMDAwMDA7XG4gIG9wYWNpdHk6IDAuNjtcbiAgbWFyZ2luLWJvdHRvbTogMC41cmVtO1xufVxuXG5kaXYua3VrYWktbW9kYWwgdGQsXG5kaXYua3VrYWktbW9kYWwgdGgge1xuICBmb250LXN0eWxlOiBub3JtYWw7XG4gIGZvbnQtd2VpZ2h0OiBub3JtYWw7XG4gIGZvbnQtc2l6ZTogMC43NXJlbTtcbiAgbGluZS1oZWlnaHQ6IDFyZW07XG4gIGNvbG9yOiAjMDAwMDAwO1xuICBvcGFjaXR5OiAwLjY7XG59XG5cbmRpdi5rdWthaS1tb2RhbCB0aCB7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xufVxuXG5kaXYua20tY29udGVudCBsYWJlbDpub3QoLnN3aXRjaCkge1xuICBtYXJnaW4tYm90dG9tOiAwLjVyZW07XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC13ZWlnaHQ6IDUwMDtcbiAgZm9udC1zaXplOiAxcmVtO1xuICBsaW5lLWhlaWdodDogMS4xMjVyZW07XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gIGNvbG9yOiAjMkMzMjNBO1xuICBvcGFjaXR5OiAwLjQ7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBwLCBzcGFuLmRhbmdlciB7XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC13ZWlnaHQ6IG5vcm1hbDtcbiAgZm9udC1zaXplOiAwLjg3NXJlbTtcbiAgbGluZS1oZWlnaHQ6IDFyZW07XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGFsaWduLWl0ZW1zOiBmbGV4LWVuZDtcbiAgY29sb3I6ICMwMDAwMDA7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBzcGFuLm5vLW1hcmdpbixcbmRpdi5rdWthaS1tb2RhbCBzcGFuLm1hcmdpbiB7XG4gIGNvbG9yOiAjRkYwMDAwO1xufVxuXG5kaXYua3VrYWktbW9kYWwgc3Bhbi5uby1tYXJnaW4ge1xuICBtYXJnaW4tdG9wOiAwLjc1cmVtO1xuICBtYXJnaW4tYm90dG9tOiAtMS43NXJlbTtcbiAgY29sb3I6ICNGRjAwMDA7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBkaXYuZ3JvdXAge1xuICBtYXJnaW4tdG9wOiAxLjVyZW07XG59XG5cbmRpdi5rdWthaS1tb2RhbCBpbnB1dC50ZXh0LFxuZGl2Lmt1a2FpLW1vZGFsIHRleHRhcmVhLnRleHQge1xuICB3aWR0aDogMTAwJTtcbiAgYmFja2dyb3VuZDogI0UxRTFFMTtcbiAgYm9yZGVyLXJhZGl1czogMC43NXJlbTtcbiAgaGVpZ2h0OiAzcmVtO1xuICBmb250LXN0eWxlOiBub3JtYWw7XG4gIGZvbnQtd2VpZ2h0OiBub3JtYWw7XG4gIGZvbnQtc2l6ZTogMXJlbTtcbiAgbGluZS1oZWlnaHQ6IDNyZW07XG4gIGxldHRlci1zcGFjaW5nOiAwLjE2cHg7XG4gIGNvbG9yOiAjMDAwMDAwO1xuICBwYWRkaW5nLWxlZnQ6IDFyZW07XG4gIHBhZGRpbmctcmlnaHQ6IDFyZW07XG4gIGJvcmRlcjogMDtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGlucHV0LnRleHQucGFzc3dvcmQge1xuICB3aWR0aDogMjAwJTtcbiAgbWFyZ2luLXJpZ2h0OiAxcmVtO1xufVxuXG5kaXYua3VrYWktbW9kYWwgdGV4dGFyZWEudGV4dCB7XG4gIHBhZGRpbmctdG9wOiAwLjVyZW07XG4gIGhlaWdodDogN3JlbTtcbiAgbGluZS1oZWlnaHQ6IDEuMjVyZW07XG4gIHJlc2l6ZTogbm9uZTtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGlucHV0LnRleHQ6OnBsYWNlaG9sZGVyLFxuZGl2Lmt1a2FpLW1vZGFsIHRleHRhcmVhLnRleHQ6OnBsYWNlaG9sZGVyIHtcbiAgY29sb3I6ICM4MDgwODA7XG4gIG9wYWNpdHk6IDE7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBpbnB1dC50ZXh0Ojotd2Via2l0LWlucHV0LXBsYWNlaG9sZGVyLFxuZGl2Lmt1a2FpLW1vZGFsIGlucHV0LnRleHQ6LW1zLWlucHV0LXBsYWNlaG9sZGVyLFxuZGl2Lmt1a2FpLW1vZGFsIHRleHRhcmVhLnRleHQ6Oi13ZWJraXQtaW5wdXQtcGxhY2Vob2xkZXIsXG5kaXYua3VrYWktbW9kYWwgdGV4dGFyZWEudGV4dDotbXMtaW5wdXQtcGxhY2Vob2xkZXIge1xuICBjb2xvcjogIzgwODA4MDtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIHRleHRhcmVhLnRleHQ6OnBsYWNlaG9sZGVyLFxuZGl2Lmt1a2FpLW1vZGFsIHRleHRhcmVhLnRleHQ6Oi13ZWJraXQtaW5wdXQtcGxhY2Vob2xkZXIsXG5kaXYua3VrYWktbW9kYWwgdGV4dGFyZWEudGV4dDotbXMtaW5wdXQtcGxhY2Vob2xkZXIge1xuICBwYWRkaW5nLXRvcDogMC41cmVtO1xuICBsaW5lLWhlaWdodDogMS4yNXJlbTtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGRpdi5yb3ctZ3JvdXAge1xuICBkaXNwbGF5OiBmbGV4O1xuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG59XG5cbmRpdi5rdWthaS1tb2RhbCBkaXYucm93LWdyb3VwID4gZGl2Lmdyb3VwOmZpcnN0LWNoaWxkIHtcbiAgbWFyZ2luLXJpZ2h0OiAxcmVtO1xufVxuXG5kaXYua3VrYWktbW9kYWwgZGl2LmFkdmFuY2VkIHtcbiAgbWFyZ2luLXRvcDogMS41cmVtO1xufVxuXG5kaXYua3VrYWktbW9kYWwgYnV0dG9uLmJsdWUge1xuICBmb250LXN0eWxlOiBub3JtYWw7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xuICBmb250LXNpemU6IDFyZW07XG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xuICBkaXNwbGF5OiBmbGV4O1xuICBhbGlnbi1pdGVtczogY2VudGVyO1xuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICBjb2xvcjogd2hpdGU7XG4gIGJhY2tncm91bmQ6ICM1OTYzRkY7XG4gIGJveC1zaGFkb3c6IDBweCAwcHggMXB4IHJnYmEoODksIDk5LCAyNTUsIDAuMDQpLCAwcHggMnB4IDZweCByZ2JhKDg5LCA5OSwgMjU1LCAwLjA0KSwgMHB4IDE2cHggMjRweCByZ2JhKDg5LCA5OSwgMjU1LCAwLjI0KTtcbiAgd2lkdGg6IDEwMCU7XG4gIGhlaWdodDogM3JlbTtcbiAgYm9yZGVyLXJhZGl1czogMC43NXJlbTtcbiAgYm9yZGVyOiAwO1xuICBtYXJnaW4tdG9wOiAyLjVyZW07XG4gIG1hcmdpbi1ib3R0b206IDEuNXJlbTtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGJ1dHRvbi5ibHVlLmNvbmZpcm0sXG5kaXYua3VrYWktbW9kYWwgYnV0dG9uLnJldHJ5IHtcbiAgaGVpZ2h0OiAzcmVtO1xuICBtYXJnaW46IDA7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBidXR0b24ucmV0cnkge1xuICB3aWR0aDogMTAwJTtcbiAgZm9udC1zaXplOiAxcmVtO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZDNkM2QzO1xuICBjb2xvcjogIzIxMjUyOTtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGJ1dHRvbjpmb2N1cyB7XG4gIG91dGxpbmU6IG5vbmU7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBkaXYuc3dpdGNoLWNvbnRhaW5lciB7XG4gIHdpZHRoOiBhdXRvICFpbXBvcnRhbnQ7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBidXR0b24uc21hbGwge1xuICBmb250LXN0eWxlOiBub3JtYWw7XG4gIGZvbnQtd2VpZ2h0OiA1MDA7XG4gIGZvbnQtc2l6ZTogMC43NXJlbTtcbiAgbGluZS1oZWlnaHQ6IDFyZW07XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIHdpZHRoOiBhdXRvO1xuICBoZWlnaHQ6IDEuNXJlbTtcbiAgY29sb3I6ICMwMDAwMDA7XG4gIG9wYWNpdHk6IDAuNjtcbiAgYmFja2dyb3VuZDogcmdiYSgyMTQsIDIxNCwgMjE0LCAwLjQpO1xuICBib3JkZXItcmFkaXVzOiAwLjMxMjVyZW07XG4gIGJvcmRlcjogMDtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGJ1dHRvbi5zbWFsbC5tYXgge1xuICBiYWNrZ3JvdW5kOiAjZDVmMmRjO1xufVxuXG5kaXYua3VrYWktbW9kYWwgYnV0dG9uLnNtYWxsLm11bHRpcGxlLWRlc3RpbmF0aW9ucyB7XG4gIGNvbG9yOiAjNTk2M0ZGO1xuICBvcGFjaXR5OiAxO1xuICBtYXJnaW46IDFyZW0gMS41cmVtO1xufVxuXG5kaXYua3VrYWktbW9kYWwgZGl2LmFkdmFuY2VkID4gZGl2LnJvdy1ncm91cCB7XG4gIGhlaWdodDogMS41cmVtO1xufVxuXG5kaXYua3VrYWktbW9kYWwgZGl2Lngge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHRvcDogLTFyZW07XG4gIHJpZ2h0OiAtMXJlbTtcbiAgd2lkdGg6IDJyZW07XG4gIGhlaWdodDogMnJlbTtcbiAgei1pbmRleDogMTIwO1xuICBiYWNrZ3JvdW5kOiAjRkNGQ0ZDO1xuICBib3JkZXI6IDFweCBzb2xpZCAjRkZGRkZGO1xuICBib3JkZXItcmFkaXVzOiAxcmVtO1xuICBkaXNwbGF5OiBmbGV4O1xuICBhbGlnbi1pdGVtczogY2VudGVyO1xuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgY3Vyc29yOiBwb2ludGVyO1xufVxuXG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiAyN3JlbSkge1xuICBkaXYua3VrYWktbW9kYWwgZGl2Lngge1xuICAgIHJpZ2h0OiAtMXB4O1xuICAgIGJvcmRlci1ib3R0b20tcmlnaHQtcmFkaXVzOiAwO1xuICB9XG5cbiAgZGl2Lmt1a2FpLW1vZGFsIGJ1dHRvbi5zbWFsbC5tdWx0aXBsZS1kZXN0aW5hdGlvbnMge1xuICAgIG1hcmdpbi1yaWdodDogMi41cmVtO1xuICB9XG59XG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiAyNXJlbSkge1xuICBkaXYua3VrYWktbW9kYWwgPiBkaXYua20tY29udGVudCB7XG4gICAgd2lkdGg6IDIzcmVtO1xuICB9XG5cbiAgZGl2Lmt1a2FpLW1vZGFsIGlucHV0LnRleHQucGFzc3dvcmQge1xuICAgIHdpZHRoOiAxMXJlbTtcbiAgfVxufVxuLnN3aXRjaCB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aWR0aDogM3JlbTtcbiAgaGVpZ2h0OiAxLjVyZW07XG4gIG1hcmdpbi1ib3R0b206IDA7XG59XG5cbi5zd2l0Y2ggaW5wdXQge1xuICBvcGFjaXR5OiAwO1xuICAtd2Via2l0LW9wYWNpdHk6IDA7XG4gIC1raHRtbC1vcGFjaXR5OiAwO1xuICB3aWR0aDogMDtcbiAgaGVpZ2h0OiAwO1xufVxuXG4uc2xpZGVyIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICBjdXJzb3I6IHBvaW50ZXI7XG4gIHRvcDogMDtcbiAgbGVmdDogMDtcbiAgcmlnaHQ6IDA7XG4gIGJvdHRvbTogMDtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2Q5ZDlkOTtcbiAgLXdlYmtpdC10cmFuc2l0aW9uOiAwLjRzO1xuICB0cmFuc2l0aW9uOiAwLjRzO1xufVxuXG4uc2xpZGVyOmJlZm9yZSB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgY29udGVudDogXCJcIjtcbiAgaGVpZ2h0OiAxLjEyNXJlbTtcbiAgd2lkdGg6IDEuMTI1cmVtO1xuICBsZWZ0OiAwLjE4NzVyZW07XG4gIGJvdHRvbTogMC4xODc1cmVtO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjN0I3QjdCO1xuICAtd2Via2l0LXRyYW5zaXRpb246IDAuNHM7XG4gIHRyYW5zaXRpb246IDAuNHM7XG59XG5cbmlucHV0OmNoZWNrZWQgKyAuc2xpZGVyIHtcbiAgYm94LXNoYWRvdzogMHB4IDBweCAxcHggcmdiYSg4OSwgOTksIDI1NSwgMC4wNCksIDBweCAycHggNnB4IHJnYmEoODksIDk5LCAyNTUsIDAuMDQpLCAwcHggMTZweCAyNHB4IHJnYmEoODksIDk5LCAyNTUsIDAuMjQpO1xufVxuXG5pbnB1dDpjaGVja2VkICsgLnNsaWRlcjpiZWZvcmUge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjNTk2M0ZGO1xuICAtd2Via2l0LXRyYW5zZm9ybTogdHJhbnNsYXRlWCgxLjVyZW0pO1xuICAtbXMtdHJhbnNmb3JtOiB0cmFuc2xhdGVYKDEuNXJlbSk7XG4gIHRyYW5zZm9ybTogdHJhbnNsYXRlWCgxLjVyZW0pO1xufVxuXG4uc2xpZGVyLnJvdW5kIHtcbiAgYm9yZGVyLXJhZGl1czogMi4xMjVyZW07XG59XG5cbi5zbGlkZXIucm91bmQ6YmVmb3JlIHtcbiAgYm9yZGVyLXJhZGl1czogNTAlO1xufVxuXG5pbnB1dDpjaGVja2VkICsgLnNsaWRlciB7XG4gIGJhY2tncm91bmQtY29sb3I6IHJnYmEoODksIDk5LCAyNTUsIDAuNCk7XG59XG5cbmRpdi5rdWthaS1jYXJkID4gZGl2LmdyZXktY2FyZCA+IGRpdi5zd2l0Y2gtY29udGFpbmVyID4gc3Bhbi5zd2l0Y2gtZGVzYyxcbnNwYW4uc3dpdGNoLWRlc2Mge1xuICBmb250LXN0eWxlOiBub3JtYWw7XG4gIGZvbnQtd2VpZ2h0OiBub3JtYWw7XG4gIGZvbnQtc2l6ZTogMTRweDtcbiAgbGluZS1oZWlnaHQ6IDE4cHg7XG4gIGxldHRlci1zcGFjaW5nOiAwLjE2cHg7XG4gIGNvbG9yOiAjMTYxNjE2O1xuICBtYXJnaW4tbGVmdDogMC41cmVtO1xufVxuXG5kaXYuc3dpdGNoLWNvbnRhaW5lciB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGp1c3RpZnktY29udGVudDogZmxleC1zdGFydDtcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgZmxleC1kaXJlY3Rpb246IHJvdztcbiAgd2lkdGg6IDI4cmVtO1xufVxuXG5zbWFsbCB7XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC13ZWlnaHQ6IG5vcm1hbDtcbiAgZm9udC1zaXplOiAwLjc1cmVtO1xuICBsaW5lLWhlaWdodDogMXJlbTtcbiAgbGV0dGVyLXNwYWNpbmc6IDAuMzJweDtcbiAgY29sb3I6ICMzOTM5Mzk7XG4gIG1hcmdpbi10b3A6IDIuNXJlbTtcbiAgbWFyZ2luLWJvdHRvbTogMC41cmVtO1xufVxuXG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiAyOXJlbSkge1xuICBkaXYuc3dpdGNoLWNvbnRhaW5lciB7XG4gICAgd2lkdGg6IDIwcmVtO1xuICB9XG59XG4vKiBkcm9wLWRvd24gKi9cbi8qIGNsYXNzIGFwcGxpZXMgdG8gc2VsZWN0IGVsZW1lbnQgaXRzZWxmLCBub3QgYSB3cmFwcGVyIGVsZW1lbnQgKi9cbi5zZWxlY3QtY3NzIHtcbiAgYm9yZGVyLXJhZGl1czogMC43NXJlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LXdlaWdodDogbm9ybWFsO1xuICBmb250LXNpemU6IDAuODc1cmVtO1xuICBsZXR0ZXItc3BhY2luZzogMC4xNnB4O1xuICBjb2xvcjogIzAwMDAwMDtcbiAgcGFkZGluZy1sZWZ0OiAxcmVtO1xuICBwYWRkaW5nLXJpZ2h0OiAxcmVtO1xuICBib3JkZXI6IDA7XG4gIHdpZHRoOiAxMDAlO1xuICBtYXgtd2lkdGg6IDEwMCU7XG4gIC8qIHVzZWZ1bCB3aGVuIHdpZHRoIGlzIHNldCB0byBhbnl0aGluZyBvdGhlciB0aGFuIDEwMCUgKi9cbiAgaGVpZ2h0OiAzcmVtO1xuICBsaW5lLWhlaWdodDogM3JlbTtcbiAgYm94LXNpemluZzogYm9yZGVyLWJveDtcbiAgbWFyZ2luOiAwO1xuICAtbW96LWFwcGVhcmFuY2U6IG5vbmU7XG4gIC13ZWJraXQtYXBwZWFyYW5jZTogbm9uZTtcbiAgYXBwZWFyYW5jZTogbm9uZTtcbiAgb3BhY2l0eTogMTtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2UxZTFlMTtcbiAgLyogbm90ZTogYmcgaW1hZ2UgYmVsb3cgdXNlcyAyIHVybHMuIFRoZSBmaXJzdCBpcyBhbiBzdmcgZGF0YSB1cmkgZm9yIHRoZSBhcnJvdyBpY29uLCBhbmQgdGhlIHNlY29uZCBpcyB0aGUgZ3JhZGllbnQuIFxuICBcdGZvciB0aGUgaWNvbiwgaWYgeW91IHdhbnQgdG8gY2hhbmdlIHRoZSBjb2xvciwgYmUgc3VyZSB0byB1c2UgYCUyM2AgaW5zdGVhZCBvZiBgI2AsIHNpbmNlIGl0J3MgYSB1cmwuIFlvdSBjYW4gYWxzbyBzd2FwIGluIGEgZGlmZmVyZW50IHN2ZyBpY29uIG9yIGFuIGV4dGVybmFsIGltYWdlIHJlZmVyZW5jZVxuXG4gICovXG4gIGJhY2tncm91bmQtaW1hZ2U6IHVybChcImRhdGE6aW1hZ2Uvc3ZnK3htbDtjaGFyc2V0PVVTLUFTQ0lJLCUzQ3N2ZyUyMHhtbG5zJTNEJTIyaHR0cCUzQSUyRiUyRnd3dy53My5vcmclMkYyMDAwJTJGc3ZnJTIyJTIwd2lkdGglM0QlMjIyOTIuNCUyMiUyMGhlaWdodCUzRCUyMjI5Mi40JTIyJTNFJTNDcGF0aCUyMGZpbGwlM0QlMjIlMjMwMDdDQjIlMjIlMjBkJTNEJTIyTTI4NyUyMDY5LjRhMTcuNiUyMDE3LjYlMjAwJTIwMCUyMDAtMTMtNS40SDE4LjRjLTUlMjAwLTkuMyUyMDEuOC0xMi45JTIwNS40QTE3LjYlMjAxNy42JTIwMCUyMDAlMjAwJTIwMCUyMDgyLjJjMCUyMDUlMjAxLjglMjA5LjMlMjA1LjQlMjAxMi45bDEyOCUyMDEyNy45YzMuNiUyMDMuNiUyMDcuOCUyMDUuNCUyMDEyLjglMjA1LjRzOS4yLTEuOCUyMDEyLjgtNS40TDI4NyUyMDk1YzMuNS0zLjUlMjA1LjQtNy44JTIwNS40LTEyLjglMjAwLTUtMS45LTkuMi01LjUtMTIuOHolMjIlMkYlM0UlM0MlMkZzdmclM0VcIik7XG4gIGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQsIHJlcGVhdDtcbiAgLyogYXJyb3cgaWNvbiBwb3NpdGlvbiAoMWVtIGZyb20gdGhlIHJpZ2h0LCA1MCUgdmVydGljYWwpICwgdGhlbiBncmFkaWVudCBwb3NpdGlvbiovXG4gIGJhY2tncm91bmQtcG9zaXRpb246IHJpZ2h0IDAuN2VtIHRvcCA1MCUsIDAgMDtcbiAgLyogaWNvbiBzaXplLCB0aGVuIGdyYWRpZW50ICovXG4gIGJhY2tncm91bmQtc2l6ZTogMC42NWVtIGF1dG8sIDEwMCU7XG59XG5cbi8qIEhpZGUgYXJyb3cgaWNvbiBpbiBJRSBicm93c2VycyAqL1xuLnNlbGVjdC1jc3M6Oi1tcy1leHBhbmQge1xuICBkaXNwbGF5OiBub25lO1xufVxuXG4vKiBIb3ZlciBzdHlsZSAqL1xuLnNlbGVjdC1jc3M6aG92ZXIge1xuICBib3JkZXItY29sb3I6ICM4ODg7XG59XG5cbi8qIEZvY3VzIHN0eWxlICovXG4uc2VsZWN0LWNzczpmb2N1cyB7XG4gIG91dGxpbmU6IG5vbmU7XG59XG5cbi8qIFNldCBvcHRpb25zIHRvIG5vcm1hbCB3ZWlnaHQgKi9cbi5zZWxlY3QtY3NzIG9wdGlvbiB7XG4gIGZvbnQtd2VpZ2h0OiBub3JtYWw7XG59XG5cbi8qIFN1cHBvcnQgZm9yIHJ0bCB0ZXh0LCBleHBsaWNpdCBzdXBwb3J0IGZvciBBcmFiaWMgYW5kIEhlYnJldyAqL1xuKltkaXI9cnRsXSAuc2VsZWN0LWNzcywgOnJvb3Q6bGFuZyhhcikgLnNlbGVjdC1jc3MsIDpyb290OmxhbmcoaXcpIC5zZWxlY3QtY3NzIHtcbiAgYmFja2dyb3VuZC1wb3NpdGlvbjogbGVmdCAwLjdlbSB0b3AgNTAlLCAwIDA7XG4gIHBhZGRpbmc6IDAuNmVtIDAuOGVtIDAuNWVtIDEuNGVtO1xufVxuXG4vKiBEaXNhYmxlZCBzdHlsZXMgKi9cbi5zZWxlY3QtY3NzOmRpc2FibGVkLCAuc2VsZWN0LWNzc1thcmlhLWRpc2FibGVkPXRydWVdIHtcbiAgY29sb3I6IGdyYXl0ZXh0O1xuICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoXCJkYXRhOmltYWdlL3N2Zyt4bWw7Y2hhcnNldD1VUy1BU0NJSSwlM0NzdmclMjB4bWxucyUzRCUyMmh0dHAlM0ElMkYlMkZ3d3cudzMub3JnJTJGMjAwMCUyRnN2ZyUyMiUyMHdpZHRoJTNEJTIyMjkyLjQlMjIlMjBoZWlnaHQlM0QlMjIyOTIuNCUyMiUzRSUzQ3BhdGglMjBmaWxsJTNEJTIyZ3JheXRleHQlMjIlMjBkJTNEJTIyTTI4NyUyMDY5LjRhMTcuNiUyMDE3LjYlMjAwJTIwMCUyMDAtMTMtNS40SDE4LjRjLTUlMjAwLTkuMyUyMDEuOC0xMi45JTIwNS40QTE3LjYlMjAxNy42JTIwMCUyMDAlMjAwJTIwMCUyMDgyLjJjMCUyMDUlMjAxLjglMjA5LjMlMjA1LjQlMjAxMi45bDEyOCUyMDEyNy45YzMuNiUyMDMuNiUyMDcuOCUyMDUuNCUyMDEyLjglMjA1LjRzOS4yLTEuOCUyMDEyLjgtNS40TDI4NyUyMDk1YzMuNS0zLjUlMjA1LjQtNy44JTIwNS40LTEyLjglMjAwLTUtMS45LTkuMi01LjUtMTIuOHolMjIlMkYlM0UlM0MlMkZzdmclM0VcIik7XG59XG5cbi5zZWxlY3QtY3NzOmRpc2FibGVkOmhvdmVyLCAuc2VsZWN0LWNzc1thcmlhLWRpc2FibGVkPXRydWVdIHtcbiAgYm9yZGVyLWNvbG9yOiAjYWFhO1xufVxuXG5idXR0b24ucHVycGxlLm9wZW46aG92ZXIge1xuICBtYXJnaW4tdG9wOiAtMC4xMjVyZW07XG4gIG1hcmdpbi1ib3R0b206IDAuMTI1cmVtO1xufVxuXG5idXR0b246Zm9jdXMge1xuICBvdXRsaW5lOiBub25lO1xufVxuXG46aG9zdCBidXR0b24ge1xuICBib3JkZXItcmFkaXVzOiAwLjc1cmVtO1xuICBoZWlnaHQ6IDNyZW07XG4gIHdpZHRoOiAxMDAlO1xuICBmb250LXN0eWxlOiBub3JtYWw7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xuICBmb250LXNpemU6IDFyZW07XG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICBhbGlnbi1pdGVtczogY2VudGVyO1xuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgY3Vyc29yOiBwb2ludGVyO1xuICAtd2Via2l0LWFwcGVhcmFuY2U6IG5vbmUgIWltcG9ydGFudDtcbiAgYm9yZGVyLXdpZHRoOiAwO1xufVxuXG46aG9zdCBidXR0b246Zm9jdXMge1xuICBvdXRsaW5lOiBub25lO1xufVxuXG46aG9zdCBwLnRvcnVzLWRldGFpbHMge1xuICBtYXJnaW4tdG9wOiAwLjVyZW07XG4gIG1hcmdpbi1ib3R0b206IDA7XG59XG5cbjpob3N0IGJ1dHRvbi5wdXJwbGUge1xuICBjb2xvcjogd2hpdGU7XG4gIGJhY2tncm91bmQ6ICM1OTYzRkY7XG4gIGJveC1zaGFkb3c6IDBweCAwcHggMXB4IHJnYmEoODksIDk5LCAyNTUsIDAuMDQpLCAwcHggMnB4IDZweCByZ2JhKDg5LCA5OSwgMjU1LCAwLjA0KSwgMHB4IDE2cHggMjRweCByZ2JhKDg5LCA5OSwgMjU1LCAwLjI0KTtcbiAgdHJhbnNpdGlvbjogbWFyZ2luLXRvcCAwLjFzIGVhc2UtaW4sIG1hcmdpbi1ib3R0b20gMC4xcyBlYXNlLWluO1xufVxuXG5kaXYua3VrYWktbW9kYWwgdGFibGUge1xuICBkaXNwbGF5OiBibG9jaztcbiAgbWFyZ2luLXRvcDogMXJlbTtcbiAgd2lkdGg6IDEwMCU7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBkaXYua20tYm9keSA+IGRpdi5ncm91cCBzZWxlY3Quc2VsZWN0LWNzcyB7XG4gIHdpZHRoOiA5LjVyZW07XG4gIGhlaWdodDogMnJlbTtcbiAgbGluZS1oZWlnaHQ6IDJyZW07XG4gIG9wYWNpdHk6IDAuNjtcbiAgYm9yZGVyLXJhZGl1czogMC41cmVtO1xufVxuXG5kaXYua3VrYWktbW9kYWwgZGl2LmttLWJvZHkgc2VsZWN0LnNlbGVjdC1jc3MucGFyYW1ldGVycyB7XG4gIG1hcmdpbjogMC41cmVtIDA7XG4gIGhlaWdodDogMi4yNXJlbTtcbiAgbGluZS1oZWlnaHQ6IDIuMjVyZW07XG59XG5cbmRpdi5rdWthaS1tb2RhbCB0YWJsZSA+IHRoZWFkLFxuZGl2Lmt1a2FpLW1vZGFsIHRhYmxlID4gdGhlYWQge1xuICB3aWR0aDogMTAwJTtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIHRhYmxlID4gdGhlYWQgPiB0ciA+IHRoIHtcbiAgcGFkZGluZy1ib3R0b206IDAuMjVyZW07XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC13ZWlnaHQ6IDUwMDtcbiAgZm9udC1zaXplOiAwLjg3NXJlbTtcbiAgbGluZS1oZWlnaHQ6IDFyZW07XG4gIGNvbG9yOiAjQThBOEE4O1xufVxuXG5kaXYua3VrYWktbW9kYWwgdGFibGUgPiB0Ym9keSA+IHRyID4gdGQudHhBbW91bnQsXG5kaXYua3VrYWktbW9kYWwgdGFibGUgPiB0aGVhZCA+IHRyID4gdGg6bGFzdC1jaGlsZCB7XG4gIHRleHQtYWxpZ246IHJpZ2h0O1xuICB3aWR0aDogMTAwJTtcbn1cblxuc21hbGwge1xuICBtYXJnaW4tYm90dG9tOiAwO1xufVxuXG5kaXYuc3dpdGNoLWNvbnRhaW5lciB7XG4gIG1hcmdpbi10b3A6IDAuNXJlbTtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGlucHV0LnRleHQucmVhZC1vbmx5IHtcbiAgYmFja2dyb3VuZDogI2YyZjJmMjtcbn1cblxuaW5wdXQuY3VzdG9tLXRleHRib3gge1xuICBwYWRkaW5nLWxlZnQ6IDAuNzVyZW07XG59XG5cbmRpdi5rdWthaS1tb2RhbC5jb25maXJtIGRpdi5hZHZhbmNlZCB7XG4gIG1hcmdpbi10b3A6IDAuNXJlbTtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGRpdi5hZHZhbmNlZC1mb3JtIGlucHV0LnRleHQ6OnBsYWNlaG9sZGVyIHtcbiAgY29sb3I6IGJsYWNrO1xuICBvcGFjaXR5OiAxO1xufVxuXG5kaXYua3VrYWktbW9kYWwgZGl2LmFkdmFuY2VkLWZvcm0gaW5wdXQudGV4dDo6LXdlYmtpdC1pbnB1dC1wbGFjZWhvbGRlcixcbmRpdi5rdWthaS1tb2RhbCBkaXYuYWR2YW5jZWQtZm9ybSBpbnB1dC50ZXh0Oi1tcy1pbnB1dC1wbGFjZWhvbGRlciB7XG4gIGNvbG9yOiBibGFjaztcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGRpdi5hZHZhbmNlZC1mb3JtIGlucHV0LnRleHQucmVhZC1vbmx5OjpwbGFjZWhvbGRlciB7XG4gIGNvbG9yOiAjODA4MDgwO1xuICBvcGFjaXR5OiAxO1xufVxuXG5kaXYua3VrYWktbW9kYWwgZGl2LmFkdmFuY2VkLWZvcm0gaW5wdXQudGV4dC5yZWFkLW9ubHk6Oi13ZWJraXQtaW5wdXQtcGxhY2Vob2xkZXIsXG5kaXYua3VrYWktbW9kYWwgZGl2LmFkdmFuY2VkLWZvcm0gaW5wdXQudGV4dC5yZWFkLW9ubHk6LW1zLWlucHV0LXBsYWNlaG9sZGVyIHtcbiAgY29sb3I6ICM4MDgwODA7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBkaXYuYWR2YW5jZWQtZm9ybSBpbnB1dC50ZXh0LnJlYWQtb25seSB7XG4gIGNvbG9yOiAjODA4MDgwO1xufVxuXG5kaXYua3VrYWktbW9kYWwgPiBkaXYua20tY29udGVudCA+IGRpdi5rbS1ib2R5ID4gZGl2Lmdyb3VwID4gaW5wdXQudGV4dCxcbmRpdi5rdWthaS1tb2RhbCA+IGRpdi5rbS1jb250ZW50ID4gZGl2LmttLWJvZHkgPiBkaXYuZ3JvdXAgPiB0ZXh0YXJlYSB7XG4gIGZvbnQtc2l6ZTogMC44MTI1cmVtO1xufVxuXG5kaXYua3VrYWktbW9kYWwgPiBkaXYua20tY29udGVudCB7XG4gIHdpZHRoOiAzMHJlbTtcbn1cblxuOmhvc3Qgc3Bhbi50b2tlbi1zZW5kIHtcbiAgY3Vyc29yOiBwb2ludGVyO1xuICBjb2xvcjogIzU5NjNGRjtcbiAgbGluZS1oZWlnaHQ6IDIuNzVyZW07XG4gIHBhZGRpbmc6IDAuOTM3NXJlbSAxcmVtO1xuICBmb250LXNpemU6IDAuODc1cmVtO1xufVxuXG46aG9zdCBzcGFuLnRva2VuLXNlbmQ6aG92ZXIge1xuICB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTtcbn1cblxuQHN1cHBvcnRzICgtd2Via2l0LXRvdWNoLWNhbGxvdXQ6IG5vbmUpIHtcbiAgZGl2Lmt1a2FpLW1vZGFsID4gZGl2LmttLWNvbnRlbnQgPiBkaXYua20tYm9keSA+IGRpdi5ncm91cCA+IGlucHV0LnRleHQsXG5kaXYua3VrYWktbW9kYWwgPiBkaXYua20tY29udGVudCA+IGRpdi5rbS1ib2R5ID4gZGl2Lmdyb3VwID4gdGV4dGFyZWEge1xuICAgIGZvbnQtc2l6ZTogMXJlbTtcbiAgfVxufVxuQG1lZGlhIHNjcmVlbiBhbmQgKG1heC13aWR0aDogMzIuMjVyZW0pIHtcbiAgZGl2Lmt1a2FpLW1vZGFsID4gZGl2LmttLWNvbnRlbnQge1xuICAgIHdpZHRoOiAyNXJlbTtcbiAgfVxufVxuQG1lZGlhIHNjcmVlbiBhbmQgKG1heC13aWR0aDogMjVyZW0pIHtcbiAgaW5wdXQjdG9BZGRyZXNzLCBpbnB1dC5jdXN0b20tdGV4dGJveCB7XG4gICAgZm9udC1zaXplOiAwLjgxMjVyZW07XG4gIH1cblxuICBkaXYua3VrYWktbW9kYWwgPiBkaXYua20tY29udGVudCB7XG4gICAgd2lkdGg6IDIycmVtO1xuICB9XG59XG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiAyMnJlbSkge1xuICBpbnB1dCN0b0FkZHJlc3MsIGlucHV0LmN1c3RvbS10ZXh0Ym94IHtcbiAgICBmb250LXNpemU6IDAuNzVyZW07XG4gIH1cbn1cbnNwYW4uYmF0Y2hJbmZvIHtcbiAgbWFyZ2luLWxlZnQ6IGF1dG87XG4gIGZvbnQtc2l6ZTogMC43NXJlbTtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGRpdi5wcmV2aWV3LWFtb3VudCB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gIG1hcmdpbi1ib3R0b206IDAuNXJlbTtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGRpdi5wcmV2aWV3LXRvcCB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiByb3c7XG4gIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2Vlbjtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGRpdi5wcmV2aWV3LWFtb3VudCA+IHNwYW4uYW1vdW50LXRleiB7XG4gIG1hcmdpbjogMC41cmVtIDAgMC4yNXJlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LXdlaWdodDogNTAwO1xuICBmb250LXNpemU6IDEuNXJlbTtcbiAgbGluZS1oZWlnaHQ6IDEuNXJlbTtcbiAgY29sb3I6ICMxNjE2MTY7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBkaXYucHJldmlldy1hbW91bnQgPiBzcGFuLmFtb3VudC11c2Qge1xuICBtYXJnaW4tYm90dG9tOiAwLjc1cmVtO1xuICBmb250LXN0eWxlOiBub3JtYWw7XG4gIGZvbnQtd2VpZ2h0OiBub3JtYWw7XG4gIGZvbnQtc2l6ZTogMC44NzVyZW07XG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xuICBjb2xvcjogIzUyNTI1Mjtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGRpdi5rbS1ib2R5IHNwYW4uc2luZ2xlLXRvIHtcbiAgZGlzcGxheTogZmxleDtcbiAgbWFyZ2luOiAwcmVtIDAgMC41cmVtO1xuICB3b3JkLWJyZWFrOiBicmVhay1hbGw7XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC13ZWlnaHQ6IG5vcm1hbDtcbiAgZm9udC1zaXplOiAxcmVtO1xuICBsaW5lLWhlaWdodDogMXJlbTtcbiAgY29sb3I6ICMxNjE2MTY7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBkaXYua20tYm9keSBzcGFuLnRvcnVzLXRvIHtcbiAgZGlzcGxheTogYmxvY2s7XG4gIG1hcmdpbi1ib3R0b206IDAuMjVyZW07XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC13ZWlnaHQ6IG5vcm1hbDtcbiAgZm9udC1zaXplOiAwLjg3NXJlbTtcbiAgbGluZS1oZWlnaHQ6IDFyZW07XG4gIGNvbG9yOiAjMTYxNjE2O1xufVxuXG5kaXYua3VrYWktbW9kYWwgZGl2LnNlcGVyYXRvciB7XG4gIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCByZ2JhKDAsIDAsIDAsIDAuMDgpO1xuICBtYXJnaW46IDAuNXJlbSAwO1xufVxuXG5kaXYua3VrYWktbW9kYWwgZGl2LnByZXZpZXctcm93IHtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxleC1kaXJlY3Rpb246IHJvdztcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xufVxuXG5kaXYua3VrYWktbW9kYWwgZGl2LnByZXZpZXctcm93ID4gc3BhbiB7XG4gIG1hcmdpbjogMC4yNXJlbSAwO1xuICBmb250LXdlaWdodDogbm9ybWFsO1xuICBmb250LXNpemU6IDAuODc1cmVtO1xuICBsaW5lLWhlaWdodDogMXJlbTtcbiAgY29sb3I6ICM1MjUyNTI7XG59XG5cbmRpdi5rdWthaS1tb2RhbCBkaXYua20tYm9keSBzcGFuLnNlY3Rpb24sXG5kaXYua3VrYWktbW9kYWwgZGl2LnByZXZpZXctcm93ID4gc3BhbjpmaXJzdC1jaGlsZCB7XG4gIGZvbnQtd2VpZ2h0OiA1MDA7XG4gIGZvbnQtd2VpZ2h0OiBub3JtYWw7XG4gIGZvbnQtc2l6ZTogMC44NzVyZW07XG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xuICBjb2xvcjogI0E4QThBODtcbn1cblxuZGl2Lmt1a2FpLW1vZGFsIGRpdi5wcmV2aWV3LXJvdyA+IHNwYW46bGFzdC1jaGlsZCB7XG4gIHdvcmQtYnJlYWs6IGJyZWFrLWFsbDtcbiAgcGFkZGluZy1sZWZ0OiAwLjVyZW07XG59XG5cbmRpdi5rdWthaS1tb2RhbCBkaXYucHJldmlldy1yb3cgaW1nLFxuZGl2Lmt1a2FpLW1vZGFsIGRpdi5rbS1ib2R5IHNwYW4udG9ydXMtdG8gaW1nIHtcbiAgaGVpZ2h0OiAwLjc1cmVtO1xuICBtYXJnaW4tYm90dG9tOiAwLjA2MjVyZW07XG59XG5cbmRpdi50YWJzLWNvbnRhaW5lciB7XG4gIG1hcmdpbi10b3A6IDAuNXJlbTtcbn1cblxuZGl2LnRhYnMtY29udGFpbmVyID4gdWwudGFicyB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGxpc3Qtc3R5bGUtdHlwZTogbm9uZTtcbiAgbWFyZ2luOiAwO1xuICBwYWRkaW5nOiAwO1xufVxuXG5kaXYudGFicy1jb250YWluZXIgPiB1bC50YWJzID4gbGkudGFiIHtcbiAgd2lkdGg6IDEwMCU7XG4gIGNvbG9yOiAjNzg3ODc4O1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIGN1cnNvcjogcG9pbnRlcjtcbiAgcGFkZGluZzogMXJlbSBhdXRvO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjZmNmY2O1xufVxuXG5kaXYudGFicy1jb250YWluZXIuYmx1ZSA+IHVsLnRhYnMgPiBsaS50YWIge1xuICBjb2xvcjogYmxhY2s7XG4gIGJhY2tncm91bmQtY29sb3I6IHJnYmEoODksIDk5LCAyNTUsIDAuNCk7XG4gIGJvcmRlci1ib3R0b206IDAuMDYyNSBzb2xpZCAjNTk2M2ZmO1xufVxuXG5kaXYudGFicy1jb250YWluZXI6bm90KC5ibHVlKSA+IHVsLnRhYnMgPiBsaS50YWI6Zmlyc3QtY2hpbGQge1xuICBib3JkZXItdG9wLWxlZnQtcmFkaXVzOiAwLjc1cmVtO1xufVxuXG5kaXYudGFicy1jb250YWluZXI6bm90KC5ibHVlKSA+IHVsLnRhYnMgPiBsaS50YWI6bGFzdC1jaGlsZCB7XG4gIGJvcmRlci10b3AtcmlnaHQtcmFkaXVzOiAwLjc1cmVtO1xufVxuXG5kaXYudGFicy1jb250YWluZXIgPiB1bC50YWJzID4gbGkudGFiLmFjdGl2ZSB7XG4gIGJhY2tncm91bmQtY29sb3I6ICNkOWQ5ZDk7XG4gIGNvbG9yOiAjNDg0ODQ4O1xufVxuXG5kaXYudGFicy1jb250YWluZXIgPiB1bC50YWJzID4gbGkudGFiOmhvdmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI0MwQzBDMDtcbiAgY29sb3I6ICM0ODQ4NDg7XG59XG5cbmRpdi50YWJzLWNvbnRhaW5lci5ibHVlID4gdWwudGFicyA+IGxpLnRhYi5hY3RpdmUge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjNTk2M0ZGO1xuICBjb2xvcjogI2YzZjNmMztcbn1cblxuZGl2LnRhYnMtY29udGFpbmVyLmJsdWUgPiB1bC50YWJzID4gbGkudGFiOmhvdmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSg4OSwgOTksIDI1NSwgMC43KTtcbiAgY29sb3I6ICNmM2YzZjM7XG59XG5cbmRpdi5zaW1wbGUtdGFicyA+IHVsLnRhYnMge1xuICBkaXNwbGF5OiBmbGV4O1xuICBsaXN0LXN0eWxlLXR5cGU6IG5vbmU7XG4gIG1hcmdpbjogMC41cmVtIDA7XG4gIHBhZGRpbmc6IDA7XG59XG5cbmRpdi5zaW1wbGUtdGFicyA+IHVsLnRhYnMgPiBsaS50YWIge1xuICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDAsIDAsIDAsIDApO1xuICBjb2xvcjogIzgwODA4MDtcbiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIGN1cnNvcjogcG9pbnRlcjtcbiAgcGFkZGluZzogMC4yNXJlbSAwLjc1cmVtO1xufVxuXG5kaXYuc2ltcGxlLXRhYnMgPiB1bC50YWJzID4gbGkudGFiLmFjdGl2ZSB7XG4gIGJvcmRlcjogMXB4IHNvbGlkO1xuICBjb2xvcjogIzE2MTYxNjtcbiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkIHJnYmEoMCwgMCwgMCwgMCk7XG59XG5cbmRpdi5zaW1wbGUtdGFicyA+IHVsLnRhYnMgPiBsaS50YWIucmVzdCB7XG4gIHdpZHRoOiAxMDAlO1xuICBwYWRkaW5nOiAwO1xuICBib3JkZXItbGVmdDogbm9uZTtcbiAgYm9yZGVyLXJpZ2h0OiBub25lO1xufSIsIi5zd2l0Y2gge1xyXG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgd2lkdGg6IDNyZW07XHJcbiAgaGVpZ2h0OiAxLjVyZW07XHJcbiAgbWFyZ2luLWJvdHRvbTogMDtcclxufVxyXG5cclxuLnN3aXRjaCBpbnB1dCB7IFxyXG4gIG9wYWNpdHk6IDA7XHJcbiAgLXdlYmtpdC1vcGFjaXR5OiAwO1xyXG4gIC1raHRtbC1vcGFjaXR5OiAwO1xyXG4gIHdpZHRoOiAwO1xyXG4gIGhlaWdodDogMDtcclxufVxyXG5cclxuLnNsaWRlciB7XHJcbiAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gIGN1cnNvcjogcG9pbnRlcjtcclxuICB0b3A6IDA7XHJcbiAgbGVmdDogMDtcclxuICByaWdodDogMDtcclxuICBib3R0b206IDA7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2Q5ZDlkOTtcclxuICAtd2Via2l0LXRyYW5zaXRpb246IC40cztcclxuICB0cmFuc2l0aW9uOiAuNHM7XHJcbn1cclxuXHJcbi5zbGlkZXI6YmVmb3JlIHtcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgY29udGVudDogXCJcIjtcclxuICBoZWlnaHQ6IDEuMTI1cmVtO1xyXG4gIHdpZHRoOiAxLjEyNXJlbTtcclxuICBsZWZ0OiAwLjE4NzVyZW07XHJcbiAgYm90dG9tOiAwLjE4NzVyZW07XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogIzdCN0I3QjtcclxuICAtd2Via2l0LXRyYW5zaXRpb246IC40cztcclxuICB0cmFuc2l0aW9uOiAuNHM7XHJcbn1cclxuXHJcbmlucHV0OmNoZWNrZWQgKyAuc2xpZGVyIHtcclxuICBib3gtc2hhZG93OiAwcHggMHB4IDFweCByZ2JhKDg5LCA5OSwgMjU1LCAwLjA0KSwgMHB4IDJweCA2cHggcmdiYSg4OSwgOTksIDI1NSwgMC4wNCksIDBweCAxNnB4IDI0cHggcmdiYSg4OSwgOTksIDI1NSwgMC4yNCk7XHJcbn1cclxuXHJcbmlucHV0OmNoZWNrZWQgKyAuc2xpZGVyOmJlZm9yZSB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogIzU5NjNGRjtcclxuICAtd2Via2l0LXRyYW5zZm9ybTogdHJhbnNsYXRlWCgxLjVyZW0pO1xyXG4gIC1tcy10cmFuc2Zvcm06IHRyYW5zbGF0ZVgoMS41cmVtKTtcclxuICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoMS41cmVtKTtcclxufVxyXG5cclxuLnNsaWRlci5yb3VuZCB7XHJcbiAgYm9yZGVyLXJhZGl1czogMi4xMjVyZW07XHJcbn1cclxuLnNsaWRlci5yb3VuZDpiZWZvcmUge1xyXG4gIGJvcmRlci1yYWRpdXM6IDUwJTtcclxufVxyXG5pbnB1dDpjaGVja2VkICsgLnNsaWRlciB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSg4OSwgOTksIDI1NSwgMC40KTs7XHJcbn1cclxuZGl2Lmt1a2FpLWNhcmQgPiBkaXYuZ3JleS1jYXJkID4gZGl2LnN3aXRjaC1jb250YWluZXIgPiBzcGFuLnN3aXRjaC1kZXNjLFxyXG5zcGFuLnN3aXRjaC1kZXNjIHtcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IG5vcm1hbDtcclxuICBmb250LXNpemU6IDE0cHg7XHJcbiAgbGluZS1oZWlnaHQ6IDE4cHg7XHJcbiAgbGV0dGVyLXNwYWNpbmc6IDAuMTZweDtcclxuICBjb2xvcjogIzE2MTYxNjtcclxuICBtYXJnaW4tbGVmdDogMC41cmVtO1xyXG59XHJcbmRpdi5zd2l0Y2gtY29udGFpbmVyIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogZmxleC1zdGFydDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGZsZXgtZGlyZWN0aW9uOiByb3c7XHJcbiAgd2lkdGg6IDI4cmVtO1xyXG59XHJcbnNtYWxsIHtcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IG5vcm1hbDtcclxuICBmb250LXNpemU6IDAuNzVyZW07XHJcbiAgbGluZS1oZWlnaHQ6IDFyZW07XHJcbiAgbGV0dGVyLXNwYWNpbmc6IDAuMzJweDtcclxuICBjb2xvcjogIzM5MzkzOTtcclxuICBtYXJnaW4tdG9wOiAyLjVyZW07XHJcbiAgbWFyZ2luLWJvdHRvbTogMC41cmVtO1xyXG59XHJcbkBtZWRpYSBzY3JlZW4gYW5kIChtYXgtd2lkdGg6IDI5cmVtKSB7XHJcbiAgZGl2LnN3aXRjaC1jb250YWluZXIge1xyXG4gICAgICB3aWR0aDogMjByZW07XHJcbiAgfVxyXG59IiwiLyogZHJvcC1kb3duICovXHJcblxyXG4vKiBjbGFzcyBhcHBsaWVzIHRvIHNlbGVjdCBlbGVtZW50IGl0c2VsZiwgbm90IGEgd3JhcHBlciBlbGVtZW50ICovXHJcbi5zZWxlY3QtY3NzIHtcclxuICBib3JkZXItcmFkaXVzOiAwLjc1cmVtO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogbm9ybWFsO1xyXG4gIGZvbnQtc2l6ZTogMC44NzVyZW07XHJcbiAgbGV0dGVyLXNwYWNpbmc6IDAuMTZweDtcclxuICBjb2xvcjogIzAwMDAwMDtcclxuICBwYWRkaW5nLWxlZnQ6IDFyZW07XHJcbiAgcGFkZGluZy1yaWdodDogMXJlbTtcclxuICBib3JkZXI6IDA7XHJcblx0d2lkdGg6IDEwMCU7XHJcbiAgbWF4LXdpZHRoOiAxMDAlOyAvKiB1c2VmdWwgd2hlbiB3aWR0aCBpcyBzZXQgdG8gYW55dGhpbmcgb3RoZXIgdGhhbiAxMDAlICovXHJcbiAgaGVpZ2h0OiAzcmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAzcmVtO1xyXG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XHJcblx0bWFyZ2luOiAwO1xyXG5cdC1tb3otYXBwZWFyYW5jZTogbm9uZTtcclxuXHQtd2Via2l0LWFwcGVhcmFuY2U6IG5vbmU7XHJcbiAgYXBwZWFyYW5jZTogbm9uZTtcclxuICBvcGFjaXR5OiAxO1xyXG5cdGJhY2tncm91bmQtY29sb3I6ICNlMWUxZTE7XHJcblx0Lyogbm90ZTogYmcgaW1hZ2UgYmVsb3cgdXNlcyAyIHVybHMuIFRoZSBmaXJzdCBpcyBhbiBzdmcgZGF0YSB1cmkgZm9yIHRoZSBhcnJvdyBpY29uLCBhbmQgdGhlIHNlY29uZCBpcyB0aGUgZ3JhZGllbnQuIFxyXG5cdFx0Zm9yIHRoZSBpY29uLCBpZiB5b3Ugd2FudCB0byBjaGFuZ2UgdGhlIGNvbG9yLCBiZSBzdXJlIHRvIHVzZSBgJTIzYCBpbnN0ZWFkIG9mIGAjYCwgc2luY2UgaXQncyBhIHVybC4gWW91IGNhbiBhbHNvIHN3YXAgaW4gYSBkaWZmZXJlbnQgc3ZnIGljb24gb3IgYW4gZXh0ZXJuYWwgaW1hZ2UgcmVmZXJlbmNlXHJcblx0XHRcclxuXHQqL1xyXG5cdGJhY2tncm91bmQtaW1hZ2U6IHVybCgnZGF0YTppbWFnZS9zdmcreG1sO2NoYXJzZXQ9VVMtQVNDSUksJTNDc3ZnJTIweG1sbnMlM0QlMjJodHRwJTNBJTJGJTJGd3d3LnczLm9yZyUyRjIwMDAlMkZzdmclMjIlMjB3aWR0aCUzRCUyMjI5Mi40JTIyJTIwaGVpZ2h0JTNEJTIyMjkyLjQlMjIlM0UlM0NwYXRoJTIwZmlsbCUzRCUyMiUyMzAwN0NCMiUyMiUyMGQlM0QlMjJNMjg3JTIwNjkuNGExNy42JTIwMTcuNiUyMDAlMjAwJTIwMC0xMy01LjRIMTguNGMtNSUyMDAtOS4zJTIwMS44LTEyLjklMjA1LjRBMTcuNiUyMDE3LjYlMjAwJTIwMCUyMDAlMjAwJTIwODIuMmMwJTIwNSUyMDEuOCUyMDkuMyUyMDUuNCUyMDEyLjlsMTI4JTIwMTI3LjljMy42JTIwMy42JTIwNy44JTIwNS40JTIwMTIuOCUyMDUuNHM5LjItMS44JTIwMTIuOC01LjRMMjg3JTIwOTVjMy41LTMuNSUyMDUuNC03LjglMjA1LjQtMTIuOCUyMDAtNS0xLjktOS4yLTUuNS0xMi44eiUyMiUyRiUzRSUzQyUyRnN2ZyUzRScpO1xyXG5cdGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQsIHJlcGVhdDtcclxuXHQvKiBhcnJvdyBpY29uIHBvc2l0aW9uICgxZW0gZnJvbSB0aGUgcmlnaHQsIDUwJSB2ZXJ0aWNhbCkgLCB0aGVuIGdyYWRpZW50IHBvc2l0aW9uKi9cclxuXHRiYWNrZ3JvdW5kLXBvc2l0aW9uOiByaWdodCAuN2VtIHRvcCA1MCUsIDAgMDtcclxuXHQvKiBpY29uIHNpemUsIHRoZW4gZ3JhZGllbnQgKi9cclxuXHRiYWNrZ3JvdW5kLXNpemU6IC42NWVtIGF1dG8sIDEwMCU7XHJcbn1cclxuLyogSGlkZSBhcnJvdyBpY29uIGluIElFIGJyb3dzZXJzICovXHJcbi5zZWxlY3QtY3NzOjotbXMtZXhwYW5kIHtcclxuXHRkaXNwbGF5OiBub25lO1xyXG59XHJcbi8qIEhvdmVyIHN0eWxlICovXHJcbi5zZWxlY3QtY3NzOmhvdmVyIHtcclxuXHRib3JkZXItY29sb3I6ICM4ODg7XHJcbn1cclxuLyogRm9jdXMgc3R5bGUgKi9cclxuLnNlbGVjdC1jc3M6Zm9jdXMge1xyXG5cdG91dGxpbmU6IG5vbmU7XHJcbn1cclxuXHJcbi8qIFNldCBvcHRpb25zIHRvIG5vcm1hbCB3ZWlnaHQgKi9cclxuLnNlbGVjdC1jc3Mgb3B0aW9uIHtcclxuXHRmb250LXdlaWdodDpub3JtYWw7XHJcbn1cclxuXHJcbi8qIFN1cHBvcnQgZm9yIHJ0bCB0ZXh0LCBleHBsaWNpdCBzdXBwb3J0IGZvciBBcmFiaWMgYW5kIEhlYnJldyAqL1xyXG4qW2Rpcj1cInJ0bFwiXSAuc2VsZWN0LWNzcywgOnJvb3Q6bGFuZyhhcikgLnNlbGVjdC1jc3MsIDpyb290OmxhbmcoaXcpIC5zZWxlY3QtY3NzIHtcclxuXHRiYWNrZ3JvdW5kLXBvc2l0aW9uOiBsZWZ0IC43ZW0gdG9wIDUwJSwgMCAwO1xyXG5cdHBhZGRpbmc6IC42ZW0gLjhlbSAuNWVtIDEuNGVtO1xyXG59XHJcblxyXG4vKiBEaXNhYmxlZCBzdHlsZXMgKi9cclxuLnNlbGVjdC1jc3M6ZGlzYWJsZWQsIC5zZWxlY3QtY3NzW2FyaWEtZGlzYWJsZWQ9dHJ1ZV0ge1xyXG5cdGNvbG9yOiBncmF5dGV4dDtcclxuXHRiYWNrZ3JvdW5kLWltYWdlOiB1cmwoJ2RhdGE6aW1hZ2Uvc3ZnK3htbDtjaGFyc2V0PVVTLUFTQ0lJLCUzQ3N2ZyUyMHhtbG5zJTNEJTIyaHR0cCUzQSUyRiUyRnd3dy53My5vcmclMkYyMDAwJTJGc3ZnJTIyJTIwd2lkdGglM0QlMjIyOTIuNCUyMiUyMGhlaWdodCUzRCUyMjI5Mi40JTIyJTNFJTNDcGF0aCUyMGZpbGwlM0QlMjJncmF5dGV4dCUyMiUyMGQlM0QlMjJNMjg3JTIwNjkuNGExNy42JTIwMTcuNiUyMDAlMjAwJTIwMC0xMy01LjRIMTguNGMtNSUyMDAtOS4zJTIwMS44LTEyLjklMjA1LjRBMTcuNiUyMDE3LjYlMjAwJTIwMCUyMDAlMjAwJTIwODIuMmMwJTIwNSUyMDEuOCUyMDkuMyUyMDUuNCUyMDEyLjlsMTI4JTIwMTI3LjljMy42JTIwMy42JTIwNy44JTIwNS40JTIwMTIuOCUyMDUuNHM5LjItMS44JTIwMTIuOC01LjRMMjg3JTIwOTVjMy41LTMuNSUyMDUuNC03LjglMjA1LjQtMTIuOCUyMDAtNS0xLjktOS4yLTUuNS0xMi44eiUyMiUyRiUzRSUzQyUyRnN2ZyUzRScpO1xyXG59XHJcblxyXG4uc2VsZWN0LWNzczpkaXNhYmxlZDpob3ZlciwgLnNlbGVjdC1jc3NbYXJpYS1kaXNhYmxlZD10cnVlXSB7XHJcblx0Ym9yZGVyLWNvbG9yOiAjYWFhO1xyXG59Il19 */"]
       });
 
@@ -9518,6 +9800,10 @@
             type: _services_message_message_service__WEBPACK_IMPORTED_MODULE_5__["MessageService"]
           }, {
             type: _services_operation_operation_service__WEBPACK_IMPORTED_MODULE_7__["OperationService"]
+          }, {
+            type: _services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_9__["WalletService"]
+          }, {
+            type: _services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_10__["CoordinatorService"]
           }];
         }, {
           activeAccount: [{
@@ -9530,6 +9816,9 @@
             type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
           }],
           operationRequest: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+          }],
+          template: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
           }],
           operationResponse: [{
@@ -9683,14 +9972,14 @@
         }, {
           key: "check",
           value: function check(address) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee36() {
-              var _this27 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee38() {
+              var _this29 = this;
 
               var _this$index2, x;
 
-              return regeneratorRuntime.wrap(function _callee36$(_context36) {
+              return regeneratorRuntime.wrap(function _callee38$(_context38) {
                 while (1) {
-                  switch (_context36.prev = _context36.next) {
+                  switch (_context38.prev = _context38.next) {
                     case 0:
                       this.initCheck();
 
@@ -9700,20 +9989,20 @@
                         if (!this.pendingLookups[address] && x === -1) {
                           this.pendingLookups[address] = true;
                           this.operationService.torusKeyLookup(address).subscribe(function (ans) {
-                            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this27, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee35() {
+                            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this29, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee37() {
                               var keys, verifierMap, _i3, _keys, key, verifierId, verifierArray, twitterId, _yield$this$torusServ2, username;
 
-                              return regeneratorRuntime.wrap(function _callee35$(_context35) {
+                              return regeneratorRuntime.wrap(function _callee37$(_context37) {
                                 while (1) {
-                                  switch (_context35.prev = _context35.next) {
+                                  switch (_context37.prev = _context37.next) {
                                     case 0:
                                       if (!ans) {
-                                        _context35.next = 35;
+                                        _context37.next = 35;
                                         break;
                                       }
 
                                       if (!(ans.result && ans.result.Verifiers)) {
-                                        _context35.next = 34;
+                                        _context37.next = 34;
                                         break;
                                       }
 
@@ -9723,34 +10012,34 @@
 
                                     case 5:
                                       if (!(_i3 < _keys.length)) {
-                                        _context35.next = 31;
+                                        _context37.next = 31;
                                         break;
                                       }
 
                                       key = _keys[_i3];
 
                                       if (!(key === verifierMap['google'].verifier)) {
-                                        _context35.next = 11;
+                                        _context37.next = 11;
                                         break;
                                       }
 
                                       this.add(address, ans.result.Verifiers[verifierMap['google'].verifier][0], LookupType.Google);
-                                      _context35.next = 28;
+                                      _context37.next = 28;
                                       break;
 
                                     case 11:
                                       if (!(key === verifierMap['reddit'].verifier)) {
-                                        _context35.next = 15;
+                                        _context37.next = 15;
                                         break;
                                       }
 
                                       this.add(address, ans.result.Verifiers[verifierMap['reddit'].verifier][0], LookupType.Reddit);
-                                      _context35.next = 28;
+                                      _context37.next = 28;
                                       break;
 
                                     case 15:
                                       if (!(key === verifierMap['twitter'].verifier)) {
-                                        _context35.next = 27;
+                                        _context37.next = 27;
                                         break;
                                       }
 
@@ -9758,16 +10047,16 @@
                                       verifierArray = verifierId.split('|');
 
                                       if (!(verifierArray[0] === 'twitter' && this.inputValidationService.twitterId(verifierArray[1]))) {
-                                        _context35.next = 25;
+                                        _context37.next = 25;
                                         break;
                                       }
 
                                       twitterId = verifierArray[1];
-                                      _context35.next = 22;
+                                      _context37.next = 22;
                                       return this.torusService.twitterLookup(undefined, twitterId);
 
                                     case 22:
-                                      _yield$this$torusServ2 = _context35.sent;
+                                      _yield$this$torusServ2 = _context37.sent;
                                       username = _yield$this$torusServ2.username;
 
                                       if (username) {
@@ -9775,7 +10064,7 @@
                                       }
 
                                     case 25:
-                                      _context35.next = 28;
+                                      _context37.next = 28;
                                       break;
 
                                     case 27:
@@ -9783,12 +10072,12 @@
 
                                     case 28:
                                       _i3++;
-                                      _context35.next = 5;
+                                      _context37.next = 5;
                                       break;
 
                                     case 31:
                                       this.pendingLookups[address] = false;
-                                      _context35.next = 35;
+                                      _context37.next = 35;
                                       break;
 
                                     case 34:
@@ -9798,10 +10087,10 @@
 
                                     case 35:
                                     case "end":
-                                      return _context35.stop();
+                                      return _context37.stop();
                                   }
                                 }
-                              }, _callee35, this);
+                              }, _callee37, this);
                             }));
                           });
                         }
@@ -9809,10 +10098,10 @@
 
                     case 2:
                     case "end":
-                      return _context36.stop();
+                      return _context38.stop();
                   }
                 }
-              }, _callee36, this);
+              }, _callee38, this);
             }));
           }
         }, {
@@ -9821,21 +10110,21 @@
             var record = this.records[address];
 
             if (record) {
-              var _iterator7 = _createForOfIteratorHelper(record),
-                  _step7;
+              var _iterator10 = _createForOfIteratorHelper(record),
+                  _step10;
 
               try {
-                for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
-                  var entry = _step7.value;
+                for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+                  var entry = _step10.value;
 
                   if (entry.lookupType > 1) {
                     return true;
                   }
                 }
               } catch (err) {
-                _iterator7.e(err);
+                _iterator10.e(err);
               } finally {
-                _iterator7.f();
+                _iterator10.f();
               }
             }
 
@@ -9950,6 +10239,455 @@
             type: _services_input_validation_input_validation_service__WEBPACK_IMPORTED_MODULE_5__["InputValidationService"]
           }];
         }, null);
+      })();
+      /***/
+
+    },
+
+    /***/
+    "QU+B":
+    /*!******************************************************************************************!*\
+      !*** ./src/app/components/send/confirm-send-template/confirm-send-template.component.ts ***!
+      \******************************************************************************************/
+
+    /*! exports provided: ConfirmSendTemplateComponent */
+
+    /***/
+    function QUB(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "ConfirmSendTemplateComponent", function () {
+        return ConfirmSendTemplateComponent;
+      });
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @angular/core */
+      "fXoL");
+      /* harmony import */
+
+
+      var _services_estimate_estimate_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! ../../../services/estimate/estimate.service */
+      "ds67");
+      /* harmony import */
+
+
+      var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @angular/common */
+      "ofXK");
+
+      function ConfirmSendTemplateComponent_div_0_div_1_b_3_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "b");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", ctx_r2.templateRequest.template.action, ":");
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_div_1_ng_template_4_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "b");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "send:");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_div_1_img_6_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "img", 14);
+        }
+
+        if (rf & 2) {
+          var ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("src", ctx_r5.templateRequest.template.description[0].imgUrl, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_div_1_p_7_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p", 15);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r6.templateRequest.template.description[0].text);
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_div_1_p_8_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r7 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r7.templateRequest.template.description[1]);
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_div_1_p_9_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p", 15);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r8 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r8.templateRequest.template.description[2].text);
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_div_1_img_10_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "img", 14);
+        }
+
+        if (rf & 2) {
+          var ctx_r9 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("src", ctx_r9.templateRequest.template.description[2].imgUrl, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_div_1_p_11_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p", 16);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "Estimated Fee: ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "b");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](4, "img", 17);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r10 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", ctx_r10.templateRequest.fee.total, " tez");
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_div_1_ng_container_16_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](0);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r11 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r11.templateRequest.template.button);
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_div_1_ng_template_17_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](0, "Send");
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_div_1_Template(rf, ctx) {
+        if (rf & 1) {
+          var _r15 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "H1");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "You are about to ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](3, ConfirmSendTemplateComponent_div_0_div_1_b_3_Template, 2, 1, "b", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](4, ConfirmSendTemplateComponent_div_0_div_1_ng_template_4_Template, 2, 0, "ng-template", null, 5, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](6, ConfirmSendTemplateComponent_div_0_div_1_img_6_Template, 1, 1, "img", 6);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](7, ConfirmSendTemplateComponent_div_0_div_1_p_7_Template, 2, 1, "p", 7);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](8, ConfirmSendTemplateComponent_div_0_div_1_p_8_Template, 2, 1, "p", 8);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](9, ConfirmSendTemplateComponent_div_0_div_1_p_9_Template, 2, 1, "p", 7);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](10, ConfirmSendTemplateComponent_div_0_div_1_img_10_Template, 1, 1, "img", 6);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, ConfirmSendTemplateComponent_div_0_div_1_p_11_Template, 5, 1, "p", 9);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "div", 10);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "button", 11);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ConfirmSendTemplateComponent_div_0_div_1_Template_button_click_13_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r15);
+
+            var ctx_r14 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+
+            return ctx_r14.cancel();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](14, "Cancel");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "button", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ConfirmSendTemplateComponent_div_0_div_1_Template_button_click_15_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r15);
+
+            var ctx_r16 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+
+            return ctx_r16.approve();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](16, ConfirmSendTemplateComponent_div_0_div_1_ng_container_16_Template, 2, 1, "ng-container", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](17, ConfirmSendTemplateComponent_div_0_div_1_ng_template_17_Template, 1, 0, "ng-template", null, 13, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](5);
+
+          var _r12 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](18);
+
+          var ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.action)("ngIfElse", _r3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.description[0] && ctx_r1.templateRequest.template.description[0].imgUrl);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.description[0]);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.description[1]);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.description[2]);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.description[2] && ctx_r1.templateRequest.template.description[2].imgUrl);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.fee);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.button)("ngIfElse", _r12);
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, ConfirmSendTemplateComponent_div_0_div_1_Template, 19, 10, "div", 2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r0.templateRequest.template);
+        }
+      }
+
+      var ConfirmSendTemplateComponent = /*#__PURE__*/function () {
+        function ConfirmSendTemplateComponent(estimateService) {
+          _classCallCheck(this, ConfirmSendTemplateComponent);
+
+          this.estimateService = estimateService;
+          this.templateRequest = null;
+          this.isApproved = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+          this.active = false;
+        }
+
+        _createClass(ConfirmSendTemplateComponent, [{
+          key: "ngOnInit",
+          value: function ngOnInit() {}
+        }, {
+          key: "ngOnChanges",
+          value: function ngOnChanges(changes) {
+            var _a;
+
+            if (((_a = changes === null || changes === void 0 ? void 0 : changes.templateRequest) === null || _a === void 0 ? void 0 : _a.currentValue) && !changes.templateRequest.previousValue) {
+              if (this.templateRequest.template.description) {
+                this.hideScrollbar();
+
+                if (this.templateRequest.template.description[0] && typeof this.templateRequest.template.description[0] === 'string') {
+                  this.templateRequest.template.description[0] = {
+                    text: this.templateRequest.template.description[0]
+                  };
+                }
+
+                if (this.templateRequest.template.description[2] && typeof this.templateRequest.template.description[2] === 'string') {
+                  this.templateRequest.template.description[2] = {
+                    text: this.templateRequest.template.description[2]
+                  };
+                }
+
+                this.active = true;
+              } else {
+                this.isApproved.emit(null);
+              }
+            }
+          }
+        }, {
+          key: "cancel",
+          value: function cancel() {
+            this.reset();
+            this.isApproved.emit(null);
+          }
+        }, {
+          key: "approve",
+          value: function approve() {
+            this.isApproved.emit(this.templateRequest.ops);
+            this.reset();
+          }
+        }, {
+          key: "reset",
+          value: function reset() {
+            this.resetScrollbar();
+            this.active = false;
+          }
+        }, {
+          key: "hideScrollbar",
+          value: function hideScrollbar() {
+            var scrollBarWidth = window.innerWidth - document.body.offsetWidth;
+            document.body.style.marginRight = scrollBarWidth.toString();
+            document.body.style.overflow = 'hidden';
+          }
+        }, {
+          key: "resetScrollbar",
+          value: function resetScrollbar() {
+            document.body.style.marginRight = '';
+            document.body.style.overflow = '';
+          }
+        }]);
+
+        return ConfirmSendTemplateComponent;
+      }();
+
+      ConfirmSendTemplateComponent.ɵfac = function ConfirmSendTemplateComponent_Factory(t) {
+        return new (t || ConfirmSendTemplateComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_estimate_estimate_service__WEBPACK_IMPORTED_MODULE_1__["EstimateService"]));
+      };
+
+      ConfirmSendTemplateComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
+        type: ConfirmSendTemplateComponent,
+        selectors: [["app-confirm-send-template"]],
+        inputs: {
+          templateRequest: "templateRequest"
+        },
+        outputs: {
+          isApproved: "isApproved"
+        },
+        features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵNgOnChangesFeature"]],
+        decls: 1,
+        vars: 1,
+        consts: [["class", "kukai-template", 4, "ngIf"], [1, "kukai-template"], ["class", "card", 4, "ngIf"], [1, "card"], [4, "ngIf", "ngIfElse"], ["defaultAction", ""], ["height", "150", 3, "src", 4, "ngIf"], ["class", "blue", 4, "ngIf"], [4, "ngIf"], ["class", "fee", 4, "ngIf"], [1, "buttons"], [1, "secondary", 3, "click"], [3, "click"], ["defaultButtonText", ""], ["height", "150", 3, "src"], [1, "blue"], [1, "fee"], ["src", "../../../../assets/img/coolicon.svg"]],
+        template: function ConfirmSendTemplateComponent_Template(rf, ctx) {
+          if (rf & 1) {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, ConfirmSendTemplateComponent_div_0_Template, 2, 1, "div", 0);
+          }
+
+          if (rf & 2) {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.active);
+          }
+        },
+        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"]],
+        styles: ["@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tDMPKzSQ.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tMMPKzSQ.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tCMPI.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLucXtAKPY.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLufntAKPY.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLucHtA.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTucXtAKPY.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTufntAKPY.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTucHtA.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJbecmNE.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJnecmNE.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJfecg.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\ndiv.kukai-template[_ngcontent-%COMP%] {\n  position: fixed;\n  z-index: 100;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  padding: 0 0.525rem;\n  background-color: black;\n  background-color: rgba(0, 0, 0, 0.4);\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]    > div.card[_ngcontent-%COMP%] {\n  position: relative;\n  background-color: #f3f3f3;\n  margin: 5rem auto 2rem;\n  padding: 0.75rem 1.25rem;\n  border-radius: 0.625rem;\n  max-width: 25rem;\n  min-height: 6rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   p[_ngcontent-%COMP%], div.kukai-template[_ngcontent-%COMP%]   H1[_ngcontent-%COMP%] {\n  font-family: \"Poppins\";\n  font-weight: 500;\n  font-style: normal;\n  font-size: 1rem;\n  line-height: 1.25rem;\n  margin: 0.375rem 0;\n  text-align: center;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   H1[_ngcontent-%COMP%], div.kukai-template[_ngcontent-%COMP%]   H1[_ngcontent-%COMP%]    > b[_ngcontent-%COMP%] {\n  font-weight: 300;\n  font-size: 20px;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   H1[_ngcontent-%COMP%]    > b[_ngcontent-%COMP%] {\n  font-weight: bold;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   p.fee[_ngcontent-%COMP%] {\n  margin-bottom: 0.75rem;\n  font-weight: 300;\n  font-size: 0.75rem;\n  line-height: 1rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   p.fee[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  position: relative;\n  top: -0.0625rem;\n  left: 0.125rem;\n  width: 0.75rem;\n  height: 0.75rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   .blue[_ngcontent-%COMP%] {\n  color: #5B63F7;\n  font-style: medium;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   div.buttons[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-between;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  all: unset;\n  cursor: pointer;\n  \n  font-weight: 500;\n  font-style: normal;\n  font-size: 1rem;\n  color: #f3f3f3;\n  -webkit-text-fill-color: #f3f3f3;\n  background: #5B63F7;\n  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);\n  border-radius: 1.25rem;\n  border: 1px solid #5B63F7;\n  height: 2rem;\n  width: 100%;\n  text-align: center;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   button.secondary[_ngcontent-%COMP%] {\n  color: #5B63F7;\n  -webkit-text-fill-color: #5B63F7;\n  background: #f3f3f3;\n  border-color: #5B63F7;\n  margin-right: 1.25rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]    > div.card[_ngcontent-%COMP%]    > img[_ngcontent-%COMP%] {\n  margin: 1rem 0;\n  max-height: 150px;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2Fzc2V0cy9mb250cy9Qb3BwaW5zL3N0eWxlc2hlZXQuY3NzIiwiLi5cXC4uXFwuLlxcLi5cXC4uXFxjb25maXJtLXNlbmQtdGVtcGxhdGUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHNHQUFzRztFQUN0RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsc0dBQXNHO0VBQ3RHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixtR0FBbUc7RUFDbkcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG1HQUFtRztFQUNuRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsbUdBQW1HO0VBQ25HLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnR0FBZ0c7RUFDaEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG1HQUFtRztFQUNuRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsbUdBQW1HO0VBQ25HLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnR0FBZ0c7RUFDaEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLGdHQUFnRztFQUNoRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsZ0dBQWdHO0VBQ2hHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQiw4RkFBOEY7RUFDOUYseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FDcGVBO0VBQ0UsZUFBQTtFQUNBLFlBQUE7RUFDQSxPQUFBO0VBQ0EsTUFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0VBQ0EsY0FBQTtFQUNBLG1CQUFBO0VBQ0EsdUJBQUE7RUFDQSxvQ0FBQTtBQUNGO0FBQ0E7RUFDRSxrQkFBQTtFQUNBLHlCQUFBO0VBQ0Esc0JBQUE7RUFDQSx3QkFBQTtFQUNBLHVCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxnQkFBQTtBQUVGO0FBRUE7O0VBRUUsc0JBQUE7RUFDQSxnQkFBQTtFQUNBLGtCQUFBO0VBQ0EsZUFBQTtFQUNBLG9CQUFBO0VBQ0Esa0JBQUE7RUFDQSxrQkFBQTtBQUNGO0FBQ0E7O0VBRUUsZ0JBQUE7RUFDQSxlQUFBO0FBRUY7QUFBQTtFQUNFLGlCQUFBO0FBR0Y7QUFEQTtFQUNFLHNCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxrQkFBQTtFQUNBLGlCQUFBO0FBSUY7QUFGQTtFQUNFLGtCQUFBO0VBQ0EsZUFBQTtFQUNBLGNBQUE7RUFDQSxjQUFBO0VBQ0EsZUFBQTtBQUtGO0FBSEE7RUFDRSxjQUFBO0VBQ0Esa0JBQUE7QUFNRjtBQUpBO0VBQ0UsYUFBQTtFQUNBLDhCQUFBO0FBT0Y7QUFMQTtFQUNFLFVBQUE7RUFDQSxlQUFBO0VBRUMsMEJBQUE7RUFDQSxnQkFBQTtFQUNBLGtCQUFBO0VBQ0EsZUFBQTtFQUVELGNBQUE7RUFDQSxnQ0FBQTtFQUNBLG1CQUFBO0VBRUEsMkNBQUE7RUFDQSxzQkFBQTtFQUNBLHlCQUFBO0VBQ0EsWUFBQTtFQUNBLFdBQUE7RUFDQSxrQkFBQTtBQUtGO0FBSEE7RUFDRSxjQUFBO0VBQ0EsZ0NBQUE7RUFDQSxtQkFBQTtFQUNBLHFCQUFBO0VBQ0EscUJBQUE7QUFNRjtBQUpBO0VBQ0UsY0FBQTtFQUNBLGlCQUFBO0VBQ0Esc0JBQUE7S0FBQSxtQkFBQTtBQU9GIiwiZmlsZSI6ImNvbmZpcm0tc2VuZC10ZW1wbGF0ZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDEwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUF5cDhrdjhKSGdGVnJKSkxtRTB0RE1QS3pTUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlBeXA4a3Y4SkhnRlZySkpMbUUwdE1NUEt6U1Eud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlBeXA4a3Y4SkhnRlZySkpMbUUwdENNUEkud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtdjFwVkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG12MXBWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtdjFwVkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMjFsVkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG0yMWxWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMjFsVkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUd5cDhrdjhKSGdGVnJKSkx1Y1h0QUtQWS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZySkpMdWZudEFLUFkud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZySkpMdWNIdEEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtZzFoVkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG1nMWhWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtZzFoVkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtcjE5VkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG1yMTlWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtcjE5VkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxteTE1VkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG15MTVWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxteTE1VkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMTExVkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogODAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG0xMTFWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMTExVkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtODF4VkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogOTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG04MXhWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtODF4VkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDEwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUd5cDhrdjhKSGdGVnJMUFR1Y1h0QUtQWS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZyTFBUdWZudEFLUFkud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZyTFBUdWNIdEEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRmpfWjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxGal9aMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRmpfWjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTER6OFoxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRHo4WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTER6OFoxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNDAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRXlwOGt2OEpIZ0ZWckpKYmVjbU5FLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUV5cDhrdjhKSGdGVnJKSm5lY21ORS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUV5cDhrdjhKSGdGVnJKSmZlY2cud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMR1Q5WjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxHVDlaMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMR1Q5WjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEVqNloxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRWo2WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEVqNloxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxDejdaMTFsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA3MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEN6N1oxSmxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxDejdaMXhsRlEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMREQ0WjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogODAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxERDRaMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMREQ0WjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA5MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEJUNVoxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMQlQ1WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA5MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEJUNVoxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn0iLCJAaW1wb3J0ICcuLi8uLi8uLi8uLi9hc3NldHMvZm9udHMvUG9wcGlucy9zdHlsZXNoZWV0LmNzcyc7XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSB7XHJcbiAgcG9zaXRpb246IGZpeGVkO1xyXG4gIHotaW5kZXg6IDEwMDtcclxuICBsZWZ0OiAwO1xyXG4gIHRvcDogMDtcclxuICB3aWR0aDogMTAwJTtcclxuICBoZWlnaHQ6IDEwMCU7XHJcbiAgb3ZlcmZsb3c6IGF1dG87XHJcbiAgcGFkZGluZzogMCAwLjUyNXJlbTtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMCwgMCwgMCk7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgwLCAwLCAwLCAwLjQpO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSA+IGRpdi5jYXJkIHtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2YzZjNmMztcclxuICBtYXJnaW46IDVyZW0gYXV0byAycmVtO1xyXG4gIHBhZGRpbmc6IDAuNzVyZW0gMS4yNXJlbTtcclxuICBib3JkZXItcmFkaXVzOiAwLjYyNXJlbTtcclxuICBtYXgtd2lkdGg6IDI1cmVtO1xyXG4gIG1pbi1oZWlnaHQ6IDZyZW07XHJcbn1cclxuXHJcblxyXG5kaXYua3VrYWktdGVtcGxhdGUgcCxcclxuZGl2Lmt1a2FpLXRlbXBsYXRlIEgxIHtcclxuICBmb250LWZhbWlseTogXCJQb3BwaW5zXCI7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LXN0eWxlOiBub3JtYWw7IFxyXG4gIGZvbnQtc2l6ZTogMXJlbTtcclxuICBsaW5lLWhlaWdodDogMS4yNXJlbTtcclxuICBtYXJnaW46IDAuMzc1cmVtIDA7XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBIMSxcclxuZGl2Lmt1a2FpLXRlbXBsYXRlIEgxID4gYiB7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LXNpemU6IDIwcHg7XHJcbn1cclxuZGl2Lmt1a2FpLXRlbXBsYXRlIEgxID4gYiB7XHJcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbn1cclxuZGl2Lmt1a2FpLXRlbXBsYXRlIHAuZmVlIHtcclxuICBtYXJnaW4tYm90dG9tOiAwLjc1cmVtO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1zaXplOiAwLjc1cmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBwLmZlZSBpbWcge1xyXG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICB0b3A6IC0wLjA2MjVyZW07XHJcbiAgbGVmdDogMC4xMjVyZW07XHJcbiAgd2lkdGg6IDAuNzVyZW07XHJcbiAgaGVpZ2h0OiAwLjc1cmVtO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSAuYmx1ZSB7XHJcbiAgY29sb3I6ICM1QjYzRjc7XHJcbiAgZm9udC1zdHlsZTogbWVkaXVtO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBkaXYuYnV0dG9ucyB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6ICBzcGFjZS1iZXR3ZWVuO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBidXR0b24ge1xyXG4gIGFsbDogdW5zZXQ7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG5cclxuICAgLypmb250LWZhbWlseTogXCJQb3BwaW5zXCI7Ki9cclxuICAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICAgZm9udC1zdHlsZTogbm9ybWFsOyBcclxuICAgZm9udC1zaXplOiAxcmVtO1xyXG5cclxuICBjb2xvcjogI2YzZjNmMztcclxuICAtd2Via2l0LXRleHQtZmlsbC1jb2xvcjogI2YzZjNmMztcclxuICBiYWNrZ3JvdW5kOiAjNUI2M0Y3O1xyXG5cclxuICBib3gtc2hhZG93OiAwcHggNHB4IDRweCByZ2JhKDAsIDAsIDAsIDAuMjUpO1xyXG4gIGJvcmRlci1yYWRpdXM6IDEuMjVyZW07XHJcbiAgYm9yZGVyOiAxcHggc29saWQgIzVCNjNGNztcclxuICBoZWlnaHQ6IDJyZW07XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBidXR0b24uc2Vjb25kYXJ5IHtcclxuICBjb2xvcjogIzVCNjNGNztcclxuICAtd2Via2l0LXRleHQtZmlsbC1jb2xvcjogIzVCNjNGNztcclxuICBiYWNrZ3JvdW5kOiAjZjNmM2YzO1xyXG4gIGJvcmRlci1jb2xvcjogIzVCNjNGNztcclxuICBtYXJnaW4tcmlnaHQ6IDEuMjVyZW07XHJcbn1cclxuZGl2Lmt1a2FpLXRlbXBsYXRlID4gZGl2LmNhcmQgPiBpbWcge1xyXG4gIG1hcmdpbjogMXJlbSAwO1xyXG4gIG1heC1oZWlnaHQ6IDE1MHB4O1xyXG4gIG9iamVjdC1maXQ6IGNvbnRhaW47XHJcbn0iXX0= */"]
+      });
+
+      (function () {
+        (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ConfirmSendTemplateComponent, [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+          args: [{
+            selector: 'app-confirm-send-template',
+            templateUrl: './confirm-send-template.component.html',
+            styleUrls: ['./confirm-send-template.component.scss']
+          }]
+        }], function () {
+          return [{
+            type: _services_estimate_estimate_service__WEBPACK_IMPORTED_MODULE_1__["EstimateService"]
+          }];
+        }, {
+          templateRequest: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
+          }],
+          isApproved: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"]
+          }]
+        });
       })();
       /***/
 
@@ -11377,7 +12115,7 @@
         _createClass(AppComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this28 = this;
+            var _this30 = this;
 
             this.checkEmbedded();
 
@@ -11391,31 +12129,31 @@
 
             this.router.events.subscribe(function (event) {
               if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
-                _this28.checkEmbedded();
+                _this30.checkEmbedded();
 
                 window.scrollTo(0, 0);
               }
             });
             window.addEventListener('storage', function (e) {
-              _this28.handleStorageEvent(e);
+              _this30.handleStorageEvent(e);
             });
           }
         }, {
           key: "handleStorageEvent",
           value: function handleStorageEvent(e) {
-            var _this29 = this;
+            var _this31 = this;
 
             if (e.key === 'kukai-wallet') {
               if (e.oldValue && !e.newValue) {
                 window.location.reload();
               } else if (!e.oldValue && e.newValue) {
                 setTimeout(function () {
-                  return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this29, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee37() {
-                    return regeneratorRuntime.wrap(function _callee37$(_context37) {
+                  return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this31, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee39() {
+                    return regeneratorRuntime.wrap(function _callee39$(_context39) {
                       while (1) {
-                        switch (_context37.prev = _context37.next) {
+                        switch (_context39.prev = _context39.next) {
                           case 0:
-                            _context37.next = 2;
+                            _context39.next = 2;
                             return this.router.navigate(['']);
 
                           case 2:
@@ -11423,10 +12161,10 @@
 
                           case 3:
                           case "end":
-                            return _context37.stop();
+                            return _context39.stop();
                         }
                       }
-                    }, _callee37, this);
+                    }, _callee39, this);
                   }));
                 }, 10000);
               }
@@ -11618,13 +12356,13 @@
             key: "encrypt",
             value: function encrypt(plaintext, password, version) {
               var salt = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee38() {
-                return regeneratorRuntime.wrap(function _callee38$(_context38) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee40() {
+                return regeneratorRuntime.wrap(function _callee40$(_context40) {
                   while (1) {
-                    switch (_context38.prev = _context38.next) {
+                    switch (_context40.prev = _context40.next) {
                       case 0:
                         if (!(version === 1)) {
-                          _context38.next = 4;
+                          _context40.next = 4;
                           break;
                         }
 
@@ -11632,75 +12370,75 @@
 
                       case 4:
                         if (!(version === 2)) {
-                          _context38.next = 8;
+                          _context40.next = 8;
                           break;
                         }
 
-                        return _context38.abrupt("return", this.encrypt_v2(plaintext, password));
+                        return _context40.abrupt("return", this.encrypt_v2(plaintext, password));
 
                       case 8:
                         if (!(version === 3)) {
-                          _context38.next = 12;
+                          _context40.next = 12;
                           break;
                         }
 
-                        return _context38.abrupt("return", this.encrypt_v2(plaintext, password, salt));
+                        return _context40.abrupt("return", this.encrypt_v2(plaintext, password, salt));
 
                       case 12:
                         throw new Error('Unrecognized encryption format');
 
                       case 13:
                       case "end":
-                        return _context38.stop();
+                        return _context40.stop();
                     }
                   }
-                }, _callee38, this);
+                }, _callee40, this);
               }));
             }
           }, {
             key: "decrypt",
             value: function decrypt(chiphertext, password, salt, version) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee39() {
-                return regeneratorRuntime.wrap(function _callee39$(_context39) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee41() {
+                return regeneratorRuntime.wrap(function _callee41$(_context41) {
                   while (1) {
-                    switch (_context39.prev = _context39.next) {
+                    switch (_context41.prev = _context41.next) {
                       case 0:
                         if (!(version === 1)) {
-                          _context39.next = 4;
+                          _context41.next = 4;
                           break;
                         }
 
-                        return _context39.abrupt("return", this.decrypt_v1(chiphertext, password, salt));
+                        return _context41.abrupt("return", this.decrypt_v1(chiphertext, password, salt));
 
                       case 4:
                         if (!(version === 2 || version === 3)) {
-                          _context39.next = 8;
+                          _context41.next = 8;
                           break;
                         }
 
-                        return _context39.abrupt("return", this.decrypt_v2(chiphertext, password, salt));
+                        return _context41.abrupt("return", this.decrypt_v2(chiphertext, password, salt));
 
                       case 8:
                         throw new Error('Unrecognized encryption format');
 
                       case 9:
                       case "end":
-                        return _context39.stop();
+                        return _context41.stop();
                     }
                   }
-                }, _callee39, this);
+                }, _callee41, this);
               }));
             } // Version 1
 
           }, {
             key: "encrypt_v1",
             value: function encrypt_v1(plaintext, password, salt) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee40() {
-                return regeneratorRuntime.wrap(function _callee40$(_context40) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee42() {
+                return regeneratorRuntime.wrap(function _callee42$(_context42) {
                   while (1) {
-                    switch (_context40.prev = _context40.next) {
+                    switch (_context42.prev = _context42.next) {
                       case 0:
-                        return _context40.abrupt("return", new Promise(function (resolve) {
+                        return _context42.abrupt("return", new Promise(function (resolve) {
                           try {
                             if (!password || !salt) {
                               throw new Error('Missing password or salt');
@@ -11724,21 +12462,21 @@
 
                       case 1:
                       case "end":
-                        return _context40.stop();
+                        return _context42.stop();
                     }
                   }
-                }, _callee40);
+                }, _callee42);
               }));
             }
           }, {
             key: "decrypt_v1",
             value: function decrypt_v1(chiphertext, password, salt) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee41() {
-                return regeneratorRuntime.wrap(function _callee41$(_context41) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee43() {
+                return regeneratorRuntime.wrap(function _callee43$(_context43) {
                   while (1) {
-                    switch (_context41.prev = _context41.next) {
+                    switch (_context43.prev = _context43.next) {
                       case 0:
-                        return _context41.abrupt("return", new Promise(function (resolve) {
+                        return _context43.abrupt("return", new Promise(function (resolve) {
                           try {
                             if (!password || !salt) {
                               throw new Error('Missing password or salt');
@@ -11761,24 +12499,24 @@
 
                       case 1:
                       case "end":
-                        return _context41.stop();
+                        return _context43.stop();
                     }
                   }
-                }, _callee41);
+                }, _callee43);
               }));
             } // Version 2
 
           }, {
             key: "encrypt_v2",
             value: function encrypt_v2(plaintext, password, salt) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee42() {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee44() {
                 var salty, key, cipher, byteStringBuffer, chiphertext;
-                return regeneratorRuntime.wrap(function _callee42$(_context42) {
+                return regeneratorRuntime.wrap(function _callee44$(_context44) {
                   while (1) {
-                    switch (_context42.prev = _context42.next) {
+                    switch (_context44.prev = _context44.next) {
                       case 0:
                         if (password) {
-                          _context42.next = 2;
+                          _context44.next = 2;
                           break;
                         }
 
@@ -11791,11 +12529,11 @@
                           salty = crypto_browserify__WEBPACK_IMPORTED_MODULE_5__["randomBytes"](16);
                         }
 
-                        _context42.next = 5;
+                        _context44.next = 5;
                         return scryptsy__WEBPACK_IMPORTED_MODULE_4__["async"](password, salty, 65536, 8, 1, 32);
 
                       case 5:
-                        key = _context42.sent;
+                        key = _context44.sent;
                         cipher = node_forge__WEBPACK_IMPORTED_MODULE_6__["cipher"].createCipher('AES-GCM', key.toString('binary'));
                         cipher.start({
                           iv: salty
@@ -11804,32 +12542,32 @@
                         cipher.update(byteStringBuffer);
                         cipher.finish();
                         chiphertext = cipher.output.toHex() + '==' + cipher.mode.tag.toHex();
-                        return _context42.abrupt("return", {
+                        return _context44.abrupt("return", {
                           chiphertext: chiphertext,
                           iv: salty.toString('hex')
                         });
 
                       case 13:
                       case "end":
-                        return _context42.stop();
+                        return _context44.stop();
                     }
                   }
-                }, _callee42);
+                }, _callee44);
               }));
             }
           }, {
             key: "decrypt_v2",
             value: function decrypt_v2(chipher, password, salt) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee43() {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee45() {
                 var parts, chiphertext, tag, key, decipher, pass;
-                return regeneratorRuntime.wrap(function _callee43$(_context43) {
+                return regeneratorRuntime.wrap(function _callee45$(_context45) {
                   while (1) {
-                    switch (_context43.prev = _context43.next) {
+                    switch (_context45.prev = _context45.next) {
                       case 0:
-                        _context43.prev = 0;
+                        _context45.prev = 0;
 
                         if (!(!password || !salt)) {
-                          _context43.next = 3;
+                          _context45.next = 3;
                           break;
                         }
 
@@ -11839,11 +12577,11 @@
                         parts = chipher.split('==');
                         chiphertext = parts[0];
                         tag = parts[1];
-                        _context43.next = 8;
+                        _context45.next = 8;
                         return scryptsy__WEBPACK_IMPORTED_MODULE_4__["async"](password, new Buffer(salt, 'hex'), 65536, 8, 1, 32);
 
                       case 8:
-                        key = _context43.sent;
+                        key = _context45.sent;
                         decipher = node_forge__WEBPACK_IMPORTED_MODULE_6__["cipher"].createDecipher('AES-GCM', key.toString('binary'));
                         decipher.start({
                           iv: new Buffer(salt, 'hex'),
@@ -11853,30 +12591,30 @@
                         pass = decipher.finish();
 
                         if (!pass) {
-                          _context43.next = 17;
+                          _context45.next = 17;
                           break;
                         }
 
-                        return _context43.abrupt("return", new Buffer(decipher.output.toHex(), 'hex'));
+                        return _context45.abrupt("return", new Buffer(decipher.output.toHex(), 'hex'));
 
                       case 17:
-                        return _context43.abrupt("return", null);
+                        return _context45.abrupt("return", null);
 
                       case 18:
-                        _context43.next = 23;
+                        _context45.next = 23;
                         break;
 
                       case 20:
-                        _context43.prev = 20;
-                        _context43.t0 = _context43["catch"](0);
-                        return _context43.abrupt("return", null);
+                        _context45.prev = 20;
+                        _context45.t0 = _context45["catch"](0);
+                        return _context45.abrupt("return", null);
 
                       case 23:
                       case "end":
-                        return _context43.stop();
+                        return _context45.stop();
                     }
                   }
-                }, _callee43, null, [[0, 20]]);
+                }, _callee45, null, [[0, 20]]);
               }));
             }
           }, {
@@ -12918,29 +13656,29 @@
           key: "getDelegates",
           value: function getDelegates() {
             if (this.walletService.wallet && this.walletService.wallet.implicitAccounts) {
-              var _iterator8 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
-                  _step8;
+              var _iterator11 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
+                  _step11;
 
               try {
-                for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
-                  var account = _step8.value;
+                for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+                  var account = _step11.value;
                   this.getDelegate(account);
                 }
               } catch (err) {
-                _iterator8.e(err);
+                _iterator11.e(err);
               } finally {
-                _iterator8.f();
+                _iterator11.f();
               }
             }
           }
         }, {
           key: "getDelegate",
           value: function getDelegate(account) {
-            var _this30 = this;
+            var _this32 = this;
 
             this.operationService.getDelegate(account.address).subscribe(function (data) {
               if (data.success) {
-                _this30.handleDelegateResponse(account, data.payload.delegate);
+                _this32.handleDelegateResponse(account, data.payload.delegate);
               }
             }, function (err) {
               return console.log(JSON.stringify(err));
@@ -13940,243 +14678,255 @@
       /* harmony import */
 
 
-      var _components_start_start_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(
+      var _services_embedded_auth_embedded_auth_service__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(
+      /*! ./services/embedded-auth/embedded-auth.service */
+      "JJGL");
+      /* harmony import */
+
+
+      var _components_start_start_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(
       /*! ./components/start/start.component */
       "+PL+");
       /* harmony import */
 
 
-      var _components_send_send_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(
+      var _components_send_send_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(
       /*! ./components/send/send.component */
       "MlEp");
       /* harmony import */
 
 
-      var _components_new_wallet_new_wallet_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(
+      var _components_new_wallet_new_wallet_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(
       /*! ./components/new-wallet/new-wallet.component */
       "wJtM");
       /* harmony import */
 
 
-      var _components_receive_receive_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(
+      var _components_receive_receive_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(
       /*! ./components/receive/receive.component */
       "igOa");
       /* harmony import */
 
 
-      var _components_delegate_delegate_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(
+      var _components_delegate_delegate_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(
       /*! ./components/delegate/delegate.component */
       "gHuO");
       /* harmony import */
 
 
-      var ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(
+      var ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(
       /*! ngx-bootstrap/positioning */
       "WyaX");
       /* harmony import */
 
 
-      var _components_mnemonic_import_mnemonic_import_component__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(
+      var _components_mnemonic_import_mnemonic_import_component__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(
       /*! ./components/mnemonic-import/mnemonic-import.component */
       "plM+");
       /* harmony import */
 
 
-      var _services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(
+      var _services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(
       /*! ./services/coordinator/coordinator.service */
       "3OJ0");
       /* harmony import */
 
 
-      var _services_operation_operation_service__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(
+      var _services_operation_operation_service__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(
       /*! ./services/operation/operation.service */
       "2imr");
       /* harmony import */
 
 
-      var _components_activate_activate_component__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(
+      var _components_activate_activate_component__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(
       /*! ./components/activate/activate.component */
       "qewA");
       /* harmony import */
 
 
-      var _components_messages_messages_component__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(
+      var _components_messages_messages_component__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(
       /*! ./components/messages/messages.component */
       "wa57");
       /* harmony import */
 
 
-      var _components_header_header_component__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(
+      var _components_header_header_component__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(
       /*! ./components/header/header.component */
       "2MiI");
       /* harmony import */
 
 
-      var _views_error_404_component__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(
+      var _views_error_404_component__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(
       /*! ./views/error/404.component */
       "8gg5");
       /* harmony import */
 
 
-      var _views_error_500_component__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(
+      var _views_error_500_component__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(
       /*! ./views/error/500.component */
       "dxhq");
       /* harmony import */
 
 
-      var _pipes_error_handling_pipe__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(
+      var _pipes_error_handling_pipe__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(
       /*! ./pipes/error-handling.pipe */
       "8ZjU");
       /* harmony import */
 
 
-      var _pipes_delegator_name_pipe__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(
+      var _pipes_delegator_name_pipe__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(
       /*! ./pipes/delegator-name.pipe */
       "Y1ZK");
       /* harmony import */
 
 
-      var _pipes_truncate_pipe__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(
+      var _pipes_truncate_pipe__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(
       /*! ./pipes/truncate.pipe */
       "h/Hl");
       /* harmony import */
 
 
-      var _pipes_time_ago_pipe__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(
+      var _pipes_time_ago_pipe__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(
       /*! ./pipes/time-ago.pipe */
       "R4nH");
       /* harmony import */
 
 
-      var _components_connect_ledger_connect_ledger_component__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(
+      var _components_connect_ledger_connect_ledger_component__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(
       /*! ./components/connect-ledger/connect-ledger.component */
       "A93K");
       /* harmony import */
 
 
-      var _components_footer_footer_component__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(
+      var _components_footer_footer_component__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(
       /*! ./components/footer/footer.component */
       "LmEr");
       /* harmony import */
 
 
-      var _components_accounts_accounts_component__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(
+      var _components_accounts_accounts_component__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(
       /*! ./components/accounts/accounts.component */
       "SMiD");
       /* harmony import */
 
 
-      var _components_account_view_account_view_component__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(
+      var _components_account_view_account_view_component__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(
       /*! ./components/account-view/account-view.component */
       "mtKc");
       /* harmony import */
 
 
-      var _components_new_implicit_new_implicit_component__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(
+      var _components_new_implicit_new_implicit_component__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(
       /*! ./components/new-implicit/new-implicit.component */
       "3HUr");
       /* harmony import */
 
 
-      var _components_spinner_spinner_component__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(
+      var _components_spinner_spinner_component__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(
       /*! ./components/spinner/spinner.component */
       "e5sC");
       /* harmony import */
 
 
-      var _components_agreement_agreement_component__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(
+      var _components_agreement_agreement_component__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(
       /*! ./components/agreement/agreement.component */
       "s34g");
       /* harmony import */
 
 
-      var _components_agreement_terms_of_use_terms_of_use_component__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(
+      var _components_agreement_terms_of_use_terms_of_use_component__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(
       /*! ./components/agreement/terms-of-use/terms-of-use.component */
       "W12l");
       /* harmony import */
 
 
-      var _components_agreement_privacy_policy_privacy_policy_component__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(
+      var _components_agreement_privacy_policy_privacy_policy_component__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(
       /*! ./components/agreement/privacy-policy/privacy-policy.component */
       "galO");
       /* harmony import */
 
 
-      var _components_torus_torus_component__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(
+      var _components_torus_torus_component__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(
       /*! ./components/torus/torus.component */
       "8kLz");
       /* harmony import */
 
 
-      var _components_token_token_component__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(
+      var _components_token_token_component__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(
       /*! ./components/token/token.component */
       "bA5H");
       /* harmony import */
 
 
-      var _components_uri_handler_uri_handler_component__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(
+      var _components_uri_handler_uri_handler_component__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(
       /*! ./components/uri-handler/uri-handler.component */
       "vOZ/");
       /* harmony import */
 
 
-      var _components_permission_request_permission_request_component__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(
+      var _components_permission_request_permission_request_component__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(
       /*! ./components/permission-request/permission-request.component */
       "ScAI");
       /* harmony import */
 
 
-      var _components_logged_in_logged_in_component__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(
+      var _components_logged_in_logged_in_component__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(
       /*! ./components/logged-in/logged-in.component */
       "WjaR");
       /* harmony import */
 
 
-      var _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(
+      var _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(
       /*! ./components/settings/settings.component */
       "1U8w");
       /* harmony import */
 
 
-      var _components_qr_scanner_qr_scanner_component__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(
+      var _components_qr_scanner_qr_scanner_component__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(
       /*! ./components/qr-scanner/qr-scanner.component */
       "obcE");
       /* harmony import */
 
 
-      var _components_embedded_embedded_component__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(
+      var _components_embedded_embedded_component__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(
       /*! ./components/embedded/embedded.component */
       "fYcN");
       /* harmony import */
 
 
-      var _components_embedded_signin_signin_component__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(
+      var _components_embedded_signin_signin_component__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(
       /*! ./components/embedded/signin/signin.component */
       "HlfV");
       /* harmony import */
 
 
-      var _components_sign_expr_sign_expr_component__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(
+      var _components_sign_expr_sign_expr_component__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(
       /*! ./components/sign-expr/sign-expr.component */
       "vTwM");
       /* harmony import */
 
 
-      var _components_card_card_component__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(
+      var _components_card_card_component__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(
       /*! ./components/card/card.component */
       "lXt9");
       /* harmony import */
 
 
-      var _components_send_prepare_send_prepare_send_component__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(
+      var _components_send_prepare_send_prepare_send_component__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(
       /*! ./components/send/prepare-send/prepare-send.component */
       "iZs2");
       /* harmony import */
 
 
-      var _components_send_confirm_send_confirm_send_component__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(
+      var _components_send_confirm_send_confirm_send_component__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(
       /*! ./components/send/confirm-send/confirm-send.component */
-      "r94U"); // From Angular Material
+      "r94U");
+      /* harmony import */
+
+
+      var _components_send_confirm_send_template_confirm_send_template_component__WEBPACK_IMPORTED_MODULE_70__ = __webpack_require__(
+      /*! ./components/send/confirm-send-template/confirm-send-template.component */
+      "QU+B"); // From Angular Material
       // For translation
       // External libraries
       // Services
@@ -14205,8 +14955,8 @@
           return new (t || AppModule)();
         },
         providers: [// Services
-        _services_message_message_service__WEBPACK_IMPORTED_MODULE_15__["MessageService"], _services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_16__["WalletService"], _services_activity_activity_service__WEBPACK_IMPORTED_MODULE_17__["ActivityService"], _services_encryption_encryption_service__WEBPACK_IMPORTED_MODULE_19__["EncryptionService"], _services_balance_balance_service__WEBPACK_IMPORTED_MODULE_18__["BalanceService"], _services_import_import_service__WEBPACK_IMPORTED_MODULE_20__["ImportService"], ngx_bootstrap_component_loader__WEBPACK_IMPORTED_MODULE_10__["ComponentLoaderFactory"], ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_34__["PositioningService"], _services_tzrate_tzrate_service__WEBPACK_IMPORTED_MODULE_21__["TzrateService"], _services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_36__["CoordinatorService"], _services_operation_operation_service__WEBPACK_IMPORTED_MODULE_37__["OperationService"], _services_export_export_service__WEBPACK_IMPORTED_MODULE_22__["ExportService"], _services_delegate_delegate_service__WEBPACK_IMPORTED_MODULE_23__["DelegateService"], _services_input_validation_input_validation_service__WEBPACK_IMPORTED_MODULE_24__["InputValidationService"], _services_ledger_ledger_service__WEBPACK_IMPORTED_MODULE_25__["LedgerService"], _services_estimate_estimate_service__WEBPACK_IMPORTED_MODULE_26__["EstimateService"], _services_beacon_beacon_service__WEBPACK_IMPORTED_MODULE_27__["BeaconService"], _services_torus_torus_service__WEBPACK_IMPORTED_MODULE_28__["TorusService"], // Pipes
-        _pipes_error_handling_pipe__WEBPACK_IMPORTED_MODULE_43__["ErrorHandlingPipe"], _pipes_delegator_name_pipe__WEBPACK_IMPORTED_MODULE_44__["DelegatorNamePipe"], _pipes_truncate_pipe__WEBPACK_IMPORTED_MODULE_45__["TruncatePipe"], _pipes_time_ago_pipe__WEBPACK_IMPORTED_MODULE_46__["TimeAgoPipe"]],
+        _services_message_message_service__WEBPACK_IMPORTED_MODULE_15__["MessageService"], _services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_16__["WalletService"], _services_activity_activity_service__WEBPACK_IMPORTED_MODULE_17__["ActivityService"], _services_encryption_encryption_service__WEBPACK_IMPORTED_MODULE_19__["EncryptionService"], _services_balance_balance_service__WEBPACK_IMPORTED_MODULE_18__["BalanceService"], _services_import_import_service__WEBPACK_IMPORTED_MODULE_20__["ImportService"], ngx_bootstrap_component_loader__WEBPACK_IMPORTED_MODULE_10__["ComponentLoaderFactory"], ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_35__["PositioningService"], _services_tzrate_tzrate_service__WEBPACK_IMPORTED_MODULE_21__["TzrateService"], _services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_37__["CoordinatorService"], _services_operation_operation_service__WEBPACK_IMPORTED_MODULE_38__["OperationService"], _services_export_export_service__WEBPACK_IMPORTED_MODULE_22__["ExportService"], _services_delegate_delegate_service__WEBPACK_IMPORTED_MODULE_23__["DelegateService"], _services_input_validation_input_validation_service__WEBPACK_IMPORTED_MODULE_24__["InputValidationService"], _services_ledger_ledger_service__WEBPACK_IMPORTED_MODULE_25__["LedgerService"], _services_estimate_estimate_service__WEBPACK_IMPORTED_MODULE_26__["EstimateService"], _services_beacon_beacon_service__WEBPACK_IMPORTED_MODULE_27__["BeaconService"], _services_torus_torus_service__WEBPACK_IMPORTED_MODULE_28__["TorusService"], _services_embedded_auth_embedded_auth_service__WEBPACK_IMPORTED_MODULE_29__["EmbeddedAuthService"], // Pipes
+        _pipes_error_handling_pipe__WEBPACK_IMPORTED_MODULE_44__["ErrorHandlingPipe"], _pipes_delegator_name_pipe__WEBPACK_IMPORTED_MODULE_45__["DelegatorNamePipe"], _pipes_truncate_pipe__WEBPACK_IMPORTED_MODULE_46__["TruncatePipe"], _pipes_time_ago_pipe__WEBPACK_IMPORTED_MODULE_47__["TimeAgoPipe"]],
         imports: [[_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_7__["BrowserAnimationsModule"], _angular_material_tabs__WEBPACK_IMPORTED_MODULE_6__["MatTabsModule"], _angular_material_sort__WEBPACK_IMPORTED_MODULE_5__["MatSortModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"], ngx_bootstrap_collapse__WEBPACK_IMPORTED_MODULE_12__["CollapseModule"].forRoot(), ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["ModalModule"].forRoot(), ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["AlertModule"].forRoot(), ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_14__["PerfectScrollbarModule"], ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["ProgressbarModule"].forRoot(), ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["ButtonsModule"].forRoot(), ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["BsDropdownModule"].forRoot(), ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["TabsModule"].forRoot(), _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateModule"].forRoot({
           loader: {
             provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateLoader"],
@@ -14220,8 +14970,8 @@
       (function () {
         (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsetNgModuleScope"](AppModule, {
           declarations: [_app_component__WEBPACK_IMPORTED_MODULE_13__["AppComponent"], // View components
-          _components_new_wallet_new_wallet_component__WEBPACK_IMPORTED_MODULE_31__["NewWalletComponent"], _components_start_start_component__WEBPACK_IMPORTED_MODULE_29__["StartComponent"], _components_send_send_component__WEBPACK_IMPORTED_MODULE_30__["SendComponent"], _components_receive_receive_component__WEBPACK_IMPORTED_MODULE_32__["ReceiveComponent"], _components_delegate_delegate_component__WEBPACK_IMPORTED_MODULE_33__["DelegateComponent"], _components_mnemonic_import_mnemonic_import_component__WEBPACK_IMPORTED_MODULE_35__["MnemonicImportComponent"], _components_activate_activate_component__WEBPACK_IMPORTED_MODULE_38__["ActivateComponent"], _components_messages_messages_component__WEBPACK_IMPORTED_MODULE_39__["MessagesComponent"], _components_header_header_component__WEBPACK_IMPORTED_MODULE_40__["HeaderComponent"], _views_error_404_component__WEBPACK_IMPORTED_MODULE_41__["P404Component"], _views_error_500_component__WEBPACK_IMPORTED_MODULE_42__["P500Component"], // Pipes
-          _pipes_error_handling_pipe__WEBPACK_IMPORTED_MODULE_43__["ErrorHandlingPipe"], _pipes_delegator_name_pipe__WEBPACK_IMPORTED_MODULE_44__["DelegatorNamePipe"], _pipes_truncate_pipe__WEBPACK_IMPORTED_MODULE_45__["TruncatePipe"], _pipes_time_ago_pipe__WEBPACK_IMPORTED_MODULE_46__["TimeAgoPipe"], _components_connect_ledger_connect_ledger_component__WEBPACK_IMPORTED_MODULE_47__["ConnectLedgerComponent"], _components_footer_footer_component__WEBPACK_IMPORTED_MODULE_48__["FooterComponent"], _components_accounts_accounts_component__WEBPACK_IMPORTED_MODULE_49__["AccountsComponent"], _components_account_view_account_view_component__WEBPACK_IMPORTED_MODULE_50__["AccountViewComponent"], _components_new_implicit_new_implicit_component__WEBPACK_IMPORTED_MODULE_51__["NewImplicitComponent"], _components_spinner_spinner_component__WEBPACK_IMPORTED_MODULE_52__["SpinnerComponent"], _components_agreement_agreement_component__WEBPACK_IMPORTED_MODULE_53__["AgreementComponent"], _components_agreement_terms_of_use_terms_of_use_component__WEBPACK_IMPORTED_MODULE_54__["TermsOfUseComponent"], _components_agreement_privacy_policy_privacy_policy_component__WEBPACK_IMPORTED_MODULE_55__["PrivacyPolicyComponent"], _components_torus_torus_component__WEBPACK_IMPORTED_MODULE_56__["TorusComponent"], _components_token_token_component__WEBPACK_IMPORTED_MODULE_57__["TokenComponent"], _components_uri_handler_uri_handler_component__WEBPACK_IMPORTED_MODULE_58__["UriHandlerComponent"], _components_permission_request_permission_request_component__WEBPACK_IMPORTED_MODULE_59__["PermissionRequestComponent"], _components_logged_in_logged_in_component__WEBPACK_IMPORTED_MODULE_60__["LoggedInComponent"], _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_61__["SettingsComponent"], _components_qr_scanner_qr_scanner_component__WEBPACK_IMPORTED_MODULE_62__["QrScannerComponent"], _components_embedded_embedded_component__WEBPACK_IMPORTED_MODULE_63__["EmbeddedComponent"], _components_embedded_signin_signin_component__WEBPACK_IMPORTED_MODULE_64__["SigninComponent"], _components_sign_expr_sign_expr_component__WEBPACK_IMPORTED_MODULE_65__["SignExprComponent"], _components_card_card_component__WEBPACK_IMPORTED_MODULE_66__["CardComponent"], _components_send_prepare_send_prepare_send_component__WEBPACK_IMPORTED_MODULE_67__["PrepareSendComponent"], _components_send_confirm_send_confirm_send_component__WEBPACK_IMPORTED_MODULE_68__["ConfirmSendComponent"]],
+          _components_new_wallet_new_wallet_component__WEBPACK_IMPORTED_MODULE_32__["NewWalletComponent"], _components_start_start_component__WEBPACK_IMPORTED_MODULE_30__["StartComponent"], _components_send_send_component__WEBPACK_IMPORTED_MODULE_31__["SendComponent"], _components_receive_receive_component__WEBPACK_IMPORTED_MODULE_33__["ReceiveComponent"], _components_delegate_delegate_component__WEBPACK_IMPORTED_MODULE_34__["DelegateComponent"], _components_mnemonic_import_mnemonic_import_component__WEBPACK_IMPORTED_MODULE_36__["MnemonicImportComponent"], _components_activate_activate_component__WEBPACK_IMPORTED_MODULE_39__["ActivateComponent"], _components_messages_messages_component__WEBPACK_IMPORTED_MODULE_40__["MessagesComponent"], _components_header_header_component__WEBPACK_IMPORTED_MODULE_41__["HeaderComponent"], _views_error_404_component__WEBPACK_IMPORTED_MODULE_42__["P404Component"], _views_error_500_component__WEBPACK_IMPORTED_MODULE_43__["P500Component"], // Pipes
+          _pipes_error_handling_pipe__WEBPACK_IMPORTED_MODULE_44__["ErrorHandlingPipe"], _pipes_delegator_name_pipe__WEBPACK_IMPORTED_MODULE_45__["DelegatorNamePipe"], _pipes_truncate_pipe__WEBPACK_IMPORTED_MODULE_46__["TruncatePipe"], _pipes_time_ago_pipe__WEBPACK_IMPORTED_MODULE_47__["TimeAgoPipe"], _components_connect_ledger_connect_ledger_component__WEBPACK_IMPORTED_MODULE_48__["ConnectLedgerComponent"], _components_footer_footer_component__WEBPACK_IMPORTED_MODULE_49__["FooterComponent"], _components_accounts_accounts_component__WEBPACK_IMPORTED_MODULE_50__["AccountsComponent"], _components_account_view_account_view_component__WEBPACK_IMPORTED_MODULE_51__["AccountViewComponent"], _components_new_implicit_new_implicit_component__WEBPACK_IMPORTED_MODULE_52__["NewImplicitComponent"], _components_spinner_spinner_component__WEBPACK_IMPORTED_MODULE_53__["SpinnerComponent"], _components_agreement_agreement_component__WEBPACK_IMPORTED_MODULE_54__["AgreementComponent"], _components_agreement_terms_of_use_terms_of_use_component__WEBPACK_IMPORTED_MODULE_55__["TermsOfUseComponent"], _components_agreement_privacy_policy_privacy_policy_component__WEBPACK_IMPORTED_MODULE_56__["PrivacyPolicyComponent"], _components_torus_torus_component__WEBPACK_IMPORTED_MODULE_57__["TorusComponent"], _components_token_token_component__WEBPACK_IMPORTED_MODULE_58__["TokenComponent"], _components_uri_handler_uri_handler_component__WEBPACK_IMPORTED_MODULE_59__["UriHandlerComponent"], _components_permission_request_permission_request_component__WEBPACK_IMPORTED_MODULE_60__["PermissionRequestComponent"], _components_logged_in_logged_in_component__WEBPACK_IMPORTED_MODULE_61__["LoggedInComponent"], _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_62__["SettingsComponent"], _components_qr_scanner_qr_scanner_component__WEBPACK_IMPORTED_MODULE_63__["QrScannerComponent"], _components_embedded_embedded_component__WEBPACK_IMPORTED_MODULE_64__["EmbeddedComponent"], _components_embedded_signin_signin_component__WEBPACK_IMPORTED_MODULE_65__["SigninComponent"], _components_sign_expr_sign_expr_component__WEBPACK_IMPORTED_MODULE_66__["SignExprComponent"], _components_card_card_component__WEBPACK_IMPORTED_MODULE_67__["CardComponent"], _components_send_prepare_send_prepare_send_component__WEBPACK_IMPORTED_MODULE_68__["PrepareSendComponent"], _components_send_confirm_send_confirm_send_component__WEBPACK_IMPORTED_MODULE_69__["ConfirmSendComponent"], _components_send_confirm_send_template_confirm_send_template_component__WEBPACK_IMPORTED_MODULE_70__["ConfirmSendTemplateComponent"]],
           imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_7__["BrowserAnimationsModule"], _angular_material_tabs__WEBPACK_IMPORTED_MODULE_6__["MatTabsModule"], _angular_material_sort__WEBPACK_IMPORTED_MODULE_5__["MatSortModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"], ngx_bootstrap_collapse__WEBPACK_IMPORTED_MODULE_12__["CollapseModule"], ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["ModalModule"], ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["AlertModule"], ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_14__["PerfectScrollbarModule"], ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["ProgressbarModule"], ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["ButtonsModule"], ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["BsDropdownModule"], ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["TabsModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateModule"]]
         });
       })();
@@ -14231,8 +14981,8 @@
           type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"],
           args: [{
             declarations: [_app_component__WEBPACK_IMPORTED_MODULE_13__["AppComponent"], // View components
-            _components_new_wallet_new_wallet_component__WEBPACK_IMPORTED_MODULE_31__["NewWalletComponent"], _components_start_start_component__WEBPACK_IMPORTED_MODULE_29__["StartComponent"], _components_send_send_component__WEBPACK_IMPORTED_MODULE_30__["SendComponent"], _components_receive_receive_component__WEBPACK_IMPORTED_MODULE_32__["ReceiveComponent"], _components_delegate_delegate_component__WEBPACK_IMPORTED_MODULE_33__["DelegateComponent"], _components_mnemonic_import_mnemonic_import_component__WEBPACK_IMPORTED_MODULE_35__["MnemonicImportComponent"], _components_activate_activate_component__WEBPACK_IMPORTED_MODULE_38__["ActivateComponent"], _components_messages_messages_component__WEBPACK_IMPORTED_MODULE_39__["MessagesComponent"], _components_header_header_component__WEBPACK_IMPORTED_MODULE_40__["HeaderComponent"], _views_error_404_component__WEBPACK_IMPORTED_MODULE_41__["P404Component"], _views_error_500_component__WEBPACK_IMPORTED_MODULE_42__["P500Component"], // Pipes
-            _pipes_error_handling_pipe__WEBPACK_IMPORTED_MODULE_43__["ErrorHandlingPipe"], _pipes_delegator_name_pipe__WEBPACK_IMPORTED_MODULE_44__["DelegatorNamePipe"], _pipes_truncate_pipe__WEBPACK_IMPORTED_MODULE_45__["TruncatePipe"], _pipes_time_ago_pipe__WEBPACK_IMPORTED_MODULE_46__["TimeAgoPipe"], _components_connect_ledger_connect_ledger_component__WEBPACK_IMPORTED_MODULE_47__["ConnectLedgerComponent"], _components_footer_footer_component__WEBPACK_IMPORTED_MODULE_48__["FooterComponent"], _components_accounts_accounts_component__WEBPACK_IMPORTED_MODULE_49__["AccountsComponent"], _components_account_view_account_view_component__WEBPACK_IMPORTED_MODULE_50__["AccountViewComponent"], _components_new_implicit_new_implicit_component__WEBPACK_IMPORTED_MODULE_51__["NewImplicitComponent"], _components_spinner_spinner_component__WEBPACK_IMPORTED_MODULE_52__["SpinnerComponent"], _components_agreement_agreement_component__WEBPACK_IMPORTED_MODULE_53__["AgreementComponent"], _components_agreement_terms_of_use_terms_of_use_component__WEBPACK_IMPORTED_MODULE_54__["TermsOfUseComponent"], _components_agreement_privacy_policy_privacy_policy_component__WEBPACK_IMPORTED_MODULE_55__["PrivacyPolicyComponent"], _components_torus_torus_component__WEBPACK_IMPORTED_MODULE_56__["TorusComponent"], _components_token_token_component__WEBPACK_IMPORTED_MODULE_57__["TokenComponent"], _components_uri_handler_uri_handler_component__WEBPACK_IMPORTED_MODULE_58__["UriHandlerComponent"], _components_permission_request_permission_request_component__WEBPACK_IMPORTED_MODULE_59__["PermissionRequestComponent"], _components_logged_in_logged_in_component__WEBPACK_IMPORTED_MODULE_60__["LoggedInComponent"], _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_61__["SettingsComponent"], _components_qr_scanner_qr_scanner_component__WEBPACK_IMPORTED_MODULE_62__["QrScannerComponent"], _components_embedded_embedded_component__WEBPACK_IMPORTED_MODULE_63__["EmbeddedComponent"], _components_embedded_signin_signin_component__WEBPACK_IMPORTED_MODULE_64__["SigninComponent"], _components_sign_expr_sign_expr_component__WEBPACK_IMPORTED_MODULE_65__["SignExprComponent"], _components_card_card_component__WEBPACK_IMPORTED_MODULE_66__["CardComponent"], _components_send_prepare_send_prepare_send_component__WEBPACK_IMPORTED_MODULE_67__["PrepareSendComponent"], _components_send_confirm_send_confirm_send_component__WEBPACK_IMPORTED_MODULE_68__["ConfirmSendComponent"]],
+            _components_new_wallet_new_wallet_component__WEBPACK_IMPORTED_MODULE_32__["NewWalletComponent"], _components_start_start_component__WEBPACK_IMPORTED_MODULE_30__["StartComponent"], _components_send_send_component__WEBPACK_IMPORTED_MODULE_31__["SendComponent"], _components_receive_receive_component__WEBPACK_IMPORTED_MODULE_33__["ReceiveComponent"], _components_delegate_delegate_component__WEBPACK_IMPORTED_MODULE_34__["DelegateComponent"], _components_mnemonic_import_mnemonic_import_component__WEBPACK_IMPORTED_MODULE_36__["MnemonicImportComponent"], _components_activate_activate_component__WEBPACK_IMPORTED_MODULE_39__["ActivateComponent"], _components_messages_messages_component__WEBPACK_IMPORTED_MODULE_40__["MessagesComponent"], _components_header_header_component__WEBPACK_IMPORTED_MODULE_41__["HeaderComponent"], _views_error_404_component__WEBPACK_IMPORTED_MODULE_42__["P404Component"], _views_error_500_component__WEBPACK_IMPORTED_MODULE_43__["P500Component"], // Pipes
+            _pipes_error_handling_pipe__WEBPACK_IMPORTED_MODULE_44__["ErrorHandlingPipe"], _pipes_delegator_name_pipe__WEBPACK_IMPORTED_MODULE_45__["DelegatorNamePipe"], _pipes_truncate_pipe__WEBPACK_IMPORTED_MODULE_46__["TruncatePipe"], _pipes_time_ago_pipe__WEBPACK_IMPORTED_MODULE_47__["TimeAgoPipe"], _components_connect_ledger_connect_ledger_component__WEBPACK_IMPORTED_MODULE_48__["ConnectLedgerComponent"], _components_footer_footer_component__WEBPACK_IMPORTED_MODULE_49__["FooterComponent"], _components_accounts_accounts_component__WEBPACK_IMPORTED_MODULE_50__["AccountsComponent"], _components_account_view_account_view_component__WEBPACK_IMPORTED_MODULE_51__["AccountViewComponent"], _components_new_implicit_new_implicit_component__WEBPACK_IMPORTED_MODULE_52__["NewImplicitComponent"], _components_spinner_spinner_component__WEBPACK_IMPORTED_MODULE_53__["SpinnerComponent"], _components_agreement_agreement_component__WEBPACK_IMPORTED_MODULE_54__["AgreementComponent"], _components_agreement_terms_of_use_terms_of_use_component__WEBPACK_IMPORTED_MODULE_55__["TermsOfUseComponent"], _components_agreement_privacy_policy_privacy_policy_component__WEBPACK_IMPORTED_MODULE_56__["PrivacyPolicyComponent"], _components_torus_torus_component__WEBPACK_IMPORTED_MODULE_57__["TorusComponent"], _components_token_token_component__WEBPACK_IMPORTED_MODULE_58__["TokenComponent"], _components_uri_handler_uri_handler_component__WEBPACK_IMPORTED_MODULE_59__["UriHandlerComponent"], _components_permission_request_permission_request_component__WEBPACK_IMPORTED_MODULE_60__["PermissionRequestComponent"], _components_logged_in_logged_in_component__WEBPACK_IMPORTED_MODULE_61__["LoggedInComponent"], _components_settings_settings_component__WEBPACK_IMPORTED_MODULE_62__["SettingsComponent"], _components_qr_scanner_qr_scanner_component__WEBPACK_IMPORTED_MODULE_63__["QrScannerComponent"], _components_embedded_embedded_component__WEBPACK_IMPORTED_MODULE_64__["EmbeddedComponent"], _components_embedded_signin_signin_component__WEBPACK_IMPORTED_MODULE_65__["SigninComponent"], _components_sign_expr_sign_expr_component__WEBPACK_IMPORTED_MODULE_66__["SignExprComponent"], _components_card_card_component__WEBPACK_IMPORTED_MODULE_67__["CardComponent"], _components_send_prepare_send_prepare_send_component__WEBPACK_IMPORTED_MODULE_68__["PrepareSendComponent"], _components_send_confirm_send_confirm_send_component__WEBPACK_IMPORTED_MODULE_69__["ConfirmSendComponent"], _components_send_confirm_send_template_confirm_send_template_component__WEBPACK_IMPORTED_MODULE_70__["ConfirmSendTemplateComponent"]],
             imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_7__["BrowserAnimationsModule"], _angular_material_tabs__WEBPACK_IMPORTED_MODULE_6__["MatTabsModule"], _angular_material_sort__WEBPACK_IMPORTED_MODULE_5__["MatSortModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"], ngx_bootstrap_collapse__WEBPACK_IMPORTED_MODULE_12__["CollapseModule"].forRoot(), ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["ModalModule"].forRoot(), ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["AlertModule"].forRoot(), ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_14__["PerfectScrollbarModule"], ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["ProgressbarModule"].forRoot(), ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["ButtonsModule"].forRoot(), ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["BsDropdownModule"].forRoot(), ngx_bootstrap__WEBPACK_IMPORTED_MODULE_11__["TabsModule"].forRoot(), _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateModule"].forRoot({
               loader: {
                 provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateLoader"],
@@ -14242,8 +14992,8 @@
             }) // lazy loading will need TranslateModule.forChild() in the lazy loaded modules
             ],
             providers: [// Services
-            _services_message_message_service__WEBPACK_IMPORTED_MODULE_15__["MessageService"], _services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_16__["WalletService"], _services_activity_activity_service__WEBPACK_IMPORTED_MODULE_17__["ActivityService"], _services_encryption_encryption_service__WEBPACK_IMPORTED_MODULE_19__["EncryptionService"], _services_balance_balance_service__WEBPACK_IMPORTED_MODULE_18__["BalanceService"], _services_import_import_service__WEBPACK_IMPORTED_MODULE_20__["ImportService"], ngx_bootstrap_component_loader__WEBPACK_IMPORTED_MODULE_10__["ComponentLoaderFactory"], ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_34__["PositioningService"], _services_tzrate_tzrate_service__WEBPACK_IMPORTED_MODULE_21__["TzrateService"], _services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_36__["CoordinatorService"], _services_operation_operation_service__WEBPACK_IMPORTED_MODULE_37__["OperationService"], _services_export_export_service__WEBPACK_IMPORTED_MODULE_22__["ExportService"], _services_delegate_delegate_service__WEBPACK_IMPORTED_MODULE_23__["DelegateService"], _services_input_validation_input_validation_service__WEBPACK_IMPORTED_MODULE_24__["InputValidationService"], _services_ledger_ledger_service__WEBPACK_IMPORTED_MODULE_25__["LedgerService"], _services_estimate_estimate_service__WEBPACK_IMPORTED_MODULE_26__["EstimateService"], _services_beacon_beacon_service__WEBPACK_IMPORTED_MODULE_27__["BeaconService"], _services_torus_torus_service__WEBPACK_IMPORTED_MODULE_28__["TorusService"], // Pipes
-            _pipes_error_handling_pipe__WEBPACK_IMPORTED_MODULE_43__["ErrorHandlingPipe"], _pipes_delegator_name_pipe__WEBPACK_IMPORTED_MODULE_44__["DelegatorNamePipe"], _pipes_truncate_pipe__WEBPACK_IMPORTED_MODULE_45__["TruncatePipe"], _pipes_time_ago_pipe__WEBPACK_IMPORTED_MODULE_46__["TimeAgoPipe"]],
+            _services_message_message_service__WEBPACK_IMPORTED_MODULE_15__["MessageService"], _services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_16__["WalletService"], _services_activity_activity_service__WEBPACK_IMPORTED_MODULE_17__["ActivityService"], _services_encryption_encryption_service__WEBPACK_IMPORTED_MODULE_19__["EncryptionService"], _services_balance_balance_service__WEBPACK_IMPORTED_MODULE_18__["BalanceService"], _services_import_import_service__WEBPACK_IMPORTED_MODULE_20__["ImportService"], ngx_bootstrap_component_loader__WEBPACK_IMPORTED_MODULE_10__["ComponentLoaderFactory"], ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_35__["PositioningService"], _services_tzrate_tzrate_service__WEBPACK_IMPORTED_MODULE_21__["TzrateService"], _services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_37__["CoordinatorService"], _services_operation_operation_service__WEBPACK_IMPORTED_MODULE_38__["OperationService"], _services_export_export_service__WEBPACK_IMPORTED_MODULE_22__["ExportService"], _services_delegate_delegate_service__WEBPACK_IMPORTED_MODULE_23__["DelegateService"], _services_input_validation_input_validation_service__WEBPACK_IMPORTED_MODULE_24__["InputValidationService"], _services_ledger_ledger_service__WEBPACK_IMPORTED_MODULE_25__["LedgerService"], _services_estimate_estimate_service__WEBPACK_IMPORTED_MODULE_26__["EstimateService"], _services_beacon_beacon_service__WEBPACK_IMPORTED_MODULE_27__["BeaconService"], _services_torus_torus_service__WEBPACK_IMPORTED_MODULE_28__["TorusService"], _services_embedded_auth_embedded_auth_service__WEBPACK_IMPORTED_MODULE_29__["EmbeddedAuthService"], // Pipes
+            _pipes_error_handling_pipe__WEBPACK_IMPORTED_MODULE_44__["ErrorHandlingPipe"], _pipes_delegator_name_pipe__WEBPACK_IMPORTED_MODULE_45__["DelegatorNamePipe"], _pipes_truncate_pipe__WEBPACK_IMPORTED_MODULE_46__["TruncatePipe"], _pipes_time_ago_pipe__WEBPACK_IMPORTED_MODULE_47__["TimeAgoPipe"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_13__["AppComponent"]]
           }]
         }], null, null);
@@ -14313,12 +15063,12 @@
           _createClass(TzktService, [{
             key: "getContractAddresses",
             value: function getContractAddresses(pkh) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee44() {
-                return regeneratorRuntime.wrap(function _callee44$(_context44) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee46() {
+                return regeneratorRuntime.wrap(function _callee46$(_context46) {
                   while (1) {
-                    switch (_context44.prev = _context44.next) {
+                    switch (_context46.prev = _context46.next) {
                       case 0:
-                        return _context44.abrupt("return", fetch("https://api.".concat(this.network, ".tzkt.io/v1/operations/originations?contractManager=").concat(pkh)).then(function (response) {
+                        return _context46.abrupt("return", fetch("https://api.".concat(this.network, ".tzkt.io/v1/operations/originations?contractManager=").concat(pkh)).then(function (response) {
                           return response.json();
                         }).then(function (data) {
                           return data.map(function (op) {
@@ -14332,37 +15082,37 @@
 
                       case 1:
                       case "end":
-                        return _context44.stop();
+                        return _context46.stop();
                     }
                   }
-                }, _callee44, this);
+                }, _callee46, this);
               }));
             }
           }, {
             key: "accountInfo",
             value: function accountInfo(address) {
               var knownTokenIds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee45() {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee47() {
                 var tokens, unknownTokenIds;
-                return regeneratorRuntime.wrap(function _callee45$(_context45) {
+                return regeneratorRuntime.wrap(function _callee47$(_context47) {
                   while (1) {
-                    switch (_context45.prev = _context45.next) {
+                    switch (_context47.prev = _context47.next) {
                       case 0:
                         tokens = [];
                         unknownTokenIds = [];
-                        return _context45.abrupt("return", fetch("".concat(this.bcd, "/account/").concat(this.network, "/").concat(address)).then(function (response) {
+                        return _context47.abrupt("return", fetch("".concat(this.bcd, "/account/").concat(this.network, "/").concat(address)).then(function (response) {
                           return response.json();
                         }).then(function (data) {
                           var _a;
 
                           if (data) {
                             if ((_a = data === null || data === void 0 ? void 0 : data.tokens) === null || _a === void 0 ? void 0 : _a.length) {
-                              var _iterator9 = _createForOfIteratorHelper(data.tokens),
-                                  _step9;
+                              var _iterator12 = _createForOfIteratorHelper(data.tokens),
+                                  _step12;
 
                               try {
-                                for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
-                                  var token = _step9.value;
+                                for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
+                                  var token = _step12.value;
                                   tokens.push(token);
 
                                   if (!knownTokenIds.includes("".concat(token.contract, ":").concat(token.token_id))) {
@@ -14370,9 +15120,9 @@
                                   }
                                 }
                               } catch (err) {
-                                _iterator9.e(err);
+                                _iterator12.e(err);
                               } finally {
-                                _iterator9.f();
+                                _iterator12.f();
                               }
                             }
 
@@ -14405,10 +15155,10 @@
 
                       case 3:
                       case "end":
-                        return _context45.stop();
+                        return _context47.stop();
                     }
                   }
-                }, _callee45, this);
+                }, _callee47, this);
               }));
             }
           }, {
@@ -14416,15 +15166,15 @@
             value: function getOperations(address) {
               var knownTokenIds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
               var wallet = arguments.length > 2 ? arguments[2] : undefined;
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee46() {
-                var _this31 = this;
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee48() {
+                var _this33 = this;
 
                 var ops, unknownTokenIds, tokenTxs, operations;
-                return regeneratorRuntime.wrap(function _callee46$(_context46) {
+                return regeneratorRuntime.wrap(function _callee48$(_context48) {
                   while (1) {
-                    switch (_context46.prev = _context46.next) {
+                    switch (_context48.prev = _context48.next) {
                       case 0:
-                        _context46.next = 2;
+                        _context48.next = 2;
                         return fetch("https://api.".concat(this.network, ".tzkt.io/v1/accounts/").concat(address, "/operations?limit=20&type=delegation,origination,transaction")).then(function (response) {
                           return response.json();
                         }).then(function (data) {
@@ -14444,7 +15194,7 @@
 
                                   destination = op.target;
                                   amount = op.amount.toString();
-                                  entrypoint = _this31.extractEntrypoint(op);
+                                  entrypoint = _this33.extractEntrypoint(op);
                                   break;
 
                                 case 'delegation':
@@ -14491,9 +15241,9 @@
                         });
 
                       case 2:
-                        ops = _context46.sent;
+                        ops = _context48.sent;
                         unknownTokenIds = [];
-                        _context46.next = 6;
+                        _context48.next = 6;
                         return fetch("".concat(this.bcd, "/tokens/").concat(this.network, "/transfers/").concat(address, "?size=20")).then(function (response) {
                           return response.json();
                         }).then(function (data) {
@@ -14548,21 +15298,21 @@
                         });
 
                       case 6:
-                        tokenTxs = _context46.sent;
+                        tokenTxs = _context48.sent;
                         operations = ops.concat(tokenTxs).sort(function (a, b) {
                           return b.timestamp - a.timestamp;
                         });
-                        return _context46.abrupt("return", {
+                        return _context48.abrupt("return", {
                           operations: operations,
                           unknownTokenIds: unknownTokenIds
                         });
 
                       case 9:
                       case "end":
-                        return _context46.stop();
+                        return _context48.stop();
                     }
                   }
-                }, _callee46, this);
+                }, _callee48, this);
               }));
             }
           }, {
@@ -14589,13 +15339,13 @@
           }, {
             key: "getTokenMetadata",
             value: function getTokenMetadata(contractAddress, id) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee47() {
-                var _this32 = this;
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee49() {
+                var _this34 = this;
 
                 var tokenKind, contractMetadata, tokenMetadata, ans;
-                return regeneratorRuntime.wrap(function _callee47$(_context47) {
+                return regeneratorRuntime.wrap(function _callee49$(_context49) {
                   while (1) {
-                    switch (_context47.prev = _context47.next) {
+                    switch (_context49.prev = _context49.next) {
                       case 0:
                         tokenKind = fetch("".concat(this.bcd, "/contract/").concat(this.network, "/").concat(contractAddress)).then(function (response) {
                           return response.json();
@@ -14666,50 +15416,50 @@
                             type: 'boolean'
                           }];
 
-                          var _iterator10 = _createForOfIteratorHelper(datas),
-                              _step10;
+                          var _iterator13 = _createForOfIteratorHelper(datas),
+                              _step13;
 
                           try {
-                            for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
-                              var data = _step10.value;
+                            for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
+                              var data = _step13.value;
 
                               if ((data === null || data === void 0 ? void 0 : data.token_id) === Number(id)) {
-                                _this32.flattern(data);
+                                _this34.flattern(data);
 
                                 var metadata = {};
 
-                                var _iterator11 = _createForOfIteratorHelper(keys),
-                                    _step11;
+                                var _iterator14 = _createForOfIteratorHelper(keys),
+                                    _step14;
 
                                 try {
-                                  for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
-                                    var a = _step11.value;
+                                  for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
+                                    var a = _step14.value;
 
                                     if (typeof data[a.key] === a.type) {
                                       metadata[a.key] = data[a.key];
                                     }
                                   }
                                 } catch (err) {
-                                  _iterator11.e(err);
+                                  _iterator14.e(err);
                                 } finally {
-                                  _iterator11.f();
+                                  _iterator14.f();
                                 }
 
                                 if (metadata.displayUri) {
-                                  metadata.displayUri = _this32.uriToUrl(metadata.displayUri);
+                                  metadata.displayUri = _this34.uriToUrl(metadata.displayUri);
                                 }
 
                                 if (metadata.thumbnailUri) {
-                                  metadata.thumbnailUri = _this32.uriToUrl(metadata.thumbnailUri);
+                                  metadata.thumbnailUri = _this34.uriToUrl(metadata.thumbnailUri);
                                 }
 
                                 return metadata;
                               }
                             }
                           } catch (err) {
-                            _iterator10.e(err);
+                            _iterator13.e(err);
                           } finally {
-                            _iterator10.f();
+                            _iterator13.f();
                           }
 
                           console.log("No token metadata found for ".concat(contractAddress, ":").concat(id));
@@ -14717,7 +15467,7 @@
                         })["catch"](function (e) {
                           return {};
                         });
-                        _context47.next = 5;
+                        _context49.next = 5;
                         return Promise.all([contractMetadata, tokenMetadata, tokenKind]).then(function (res) {
                           var merged = Object.assign(Object.assign({}, res[0]), res[1]);
 
@@ -14729,15 +15479,15 @@
                         });
 
                       case 5:
-                        ans = _context47.sent;
-                        return _context47.abrupt("return", ans ? ans : null);
+                        ans = _context49.sent;
+                        return _context49.abrupt("return", ans ? ans : null);
 
                       case 7:
                       case "end":
-                        return _context47.stop();
+                        return _context49.stop();
                     }
                   }
-                }, _callee47, this);
+                }, _callee49, this);
               }));
             }
           }, {
@@ -14766,63 +15516,63 @@
           }, {
             key: "getTokenMetadataDepricated",
             value: function getTokenMetadataDepricated(contractAddress, id) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee48() {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee50() {
                 var bigMapId, tokenMetadata, contractMetadata, metadata;
-                return regeneratorRuntime.wrap(function _callee48$(_context48) {
+                return regeneratorRuntime.wrap(function _callee50$(_context50) {
                   while (1) {
-                    switch (_context48.prev = _context48.next) {
+                    switch (_context50.prev = _context50.next) {
                       case 0:
                         console.log(contractAddress + ':' + id);
-                        _context48.next = 3;
+                        _context50.next = 3;
                         return this.getBigMapIds(contractAddress);
 
                       case 3:
-                        bigMapId = _context48.sent;
+                        bigMapId = _context50.sent;
 
                         if (!(bigMapId.token !== -1)) {
-                          _context48.next = 13;
+                          _context50.next = 13;
                           break;
                         }
 
-                        _context48.next = 7;
+                        _context50.next = 7;
                         return this.extractTokenMetadata(bigMapId.token, id);
 
                       case 7:
-                        tokenMetadata = _context48.sent;
-                        _context48.next = 10;
+                        tokenMetadata = _context50.sent;
+                        _context50.next = 10;
                         return this.extractContractMetadata(bigMapId.contract);
 
                       case 10:
-                        contractMetadata = _context48.sent;
+                        contractMetadata = _context50.sent;
                         metadata = Object.assign(Object.assign({}, tokenMetadata), contractMetadata);
-                        return _context48.abrupt("return", metadata);
+                        return _context50.abrupt("return", metadata);
 
                       case 13:
-                        return _context48.abrupt("return", null);
+                        return _context50.abrupt("return", null);
 
                       case 14:
                       case "end":
-                        return _context48.stop();
+                        return _context50.stop();
                     }
                   }
-                }, _callee48, this);
+                }, _callee50, this);
               }));
             }
           }, {
             key: "extractTokenMetadata",
             value: function extractTokenMetadata(bigMapId, id) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee49() {
-                var tokenBigMap, url, metadata, lookFor, _iterator12, _step12, child, _iterator13, _step13, child2, _iterator14, _step14, child3, _iterator15, _step15, key, _iterator16, _step16, _key, _iterator17, _step17, _key2, offChainMeta, _iterator18, _step18, _key3, _iterator19, _step19, _key4, _iterator20, _step20, _key5;
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee51() {
+                var tokenBigMap, url, metadata, lookFor, _iterator15, _step15, child, _iterator16, _step16, child2, _iterator17, _step17, child3, _iterator18, _step18, key, _iterator19, _step19, _key, _iterator20, _step20, _key2, offChainMeta, _iterator21, _step21, _key3, _iterator22, _step22, _key4, _iterator23, _step23, _key5;
 
-                return regeneratorRuntime.wrap(function _callee49$(_context49) {
+                return regeneratorRuntime.wrap(function _callee51$(_context51) {
                   while (1) {
-                    switch (_context49.prev = _context49.next) {
+                    switch (_context51.prev = _context51.next) {
                       case 0:
-                        _context49.next = 2;
+                        _context51.next = 2;
                         return this.fetchApi("".concat(this.bcd, "/bigmap/").concat(this.network, "/").concat(bigMapId, "/keys?size=1000"));
 
                       case 2:
-                        tokenBigMap = _context49.sent;
+                        tokenBigMap = _context51.sent;
                         console.log("".concat(this.bcd, "/bigmap/").concat(this.network, "/").concat(bigMapId, "/keys"));
                         url = '';
                         metadata = {};
@@ -14831,90 +15581,90 @@
                           numbers: ['decimals'],
                           booleans: ['nonTransferable', 'booleanAmount', 'symbolPreference']
                         };
-                        _context49.prev = 7;
-                        _iterator12 = _createForOfIteratorHelper(tokenBigMap);
-                        _context49.prev = 9;
+                        _context51.prev = 7;
+                        _iterator15 = _createForOfIteratorHelper(tokenBigMap);
+                        _context51.prev = 9;
 
-                        _iterator12.s();
+                        _iterator15.s();
 
                       case 11:
-                        if ((_step12 = _iterator12.n()).done) {
-                          _context49.next = 37;
+                        if ((_step15 = _iterator15.n()).done) {
+                          _context51.next = 37;
                           break;
                         }
 
-                        child = _step12.value;
+                        child = _step15.value;
 
                         if (!(child.data.key.value === id.toString())) {
-                          _context49.next = 35;
+                          _context51.next = 35;
                           break;
                         }
 
-                        _iterator13 = _createForOfIteratorHelper(child.data.value.children);
-                        _context49.prev = 15;
+                        _iterator16 = _createForOfIteratorHelper(child.data.value.children);
+                        _context51.prev = 15;
 
-                        _iterator13.s();
+                        _iterator16.s();
 
                       case 17:
-                        if ((_step13 = _iterator13.n()).done) {
-                          _context49.next = 26;
+                        if ((_step16 = _iterator16.n()).done) {
+                          _context51.next = 26;
                           break;
                         }
 
-                        child2 = _step13.value;
+                        child2 = _step16.value;
 
                         if (!(child2.name === 'token_metadata_map')) {
-                          _context49.next = 24;
+                          _context51.next = 24;
                           break;
                         }
 
                         console.log('token_metadata_map', child2.children);
-                        _iterator14 = _createForOfIteratorHelper(child2.children);
+                        _iterator17 = _createForOfIteratorHelper(child2.children);
 
                         try {
-                          for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
-                            child3 = _step14.value;
+                          for (_iterator17.s(); !(_step17 = _iterator17.n()).done;) {
+                            child3 = _step17.value;
 
                             if (!child3.name || child3.name === '""') {
                               url = this.uriToUrl(child3.value);
                             } else {
-                              _iterator15 = _createForOfIteratorHelper(lookFor.strings);
+                              _iterator18 = _createForOfIteratorHelper(lookFor.strings);
 
                               try {
-                                for (_iterator15.s(); !(_step15 = _iterator15.n()).done;) {
-                                  key = _step15.value;
+                                for (_iterator18.s(); !(_step18 = _iterator18.n()).done;) {
+                                  key = _step18.value;
 
                                   if (child3.name === key) {
                                     metadata[key] = child3.value;
                                   }
                                 }
                               } catch (err) {
-                                _iterator15.e(err);
+                                _iterator18.e(err);
                               } finally {
-                                _iterator15.f();
+                                _iterator18.f();
                               }
 
-                              _iterator16 = _createForOfIteratorHelper(lookFor.numbers);
+                              _iterator19 = _createForOfIteratorHelper(lookFor.numbers);
 
                               try {
-                                for (_iterator16.s(); !(_step16 = _iterator16.n()).done;) {
-                                  _key = _step16.value;
+                                for (_iterator19.s(); !(_step19 = _iterator19.n()).done;) {
+                                  _key = _step19.value;
 
                                   if (child3.name === _key) {
                                     metadata[_key] = Number(child3.value);
                                   }
                                 }
                               } catch (err) {
-                                _iterator16.e(err);
+                                _iterator19.e(err);
                               } finally {
-                                _iterator16.f();
+                                _iterator19.f();
                               }
 
-                              _iterator17 = _createForOfIteratorHelper(lookFor.booleans);
+                              _iterator20 = _createForOfIteratorHelper(lookFor.booleans);
 
                               try {
-                                for (_iterator17.s(); !(_step17 = _iterator17.n()).done;) {
-                                  _key2 = _step17.value;
+                                for (_iterator20.s(); !(_step20 = _iterator20.n()).done;) {
+                                  _key2 = _step20.value;
 
                                   if (child3.name === _key2) {
                                     if (child3.value === '00') {
@@ -14925,81 +15675,81 @@
                                   }
                                 }
                               } catch (err) {
-                                _iterator17.e(err);
+                                _iterator20.e(err);
                               } finally {
-                                _iterator17.f();
+                                _iterator20.f();
                               }
                             }
                           }
                         } catch (err) {
-                          _iterator14.e(err);
+                          _iterator17.e(err);
                         } finally {
-                          _iterator14.f();
+                          _iterator17.f();
                         }
 
-                        return _context49.abrupt("break", 26);
+                        return _context51.abrupt("break", 26);
 
                       case 24:
-                        _context49.next = 17;
+                        _context51.next = 17;
                         break;
 
                       case 26:
-                        _context49.next = 31;
+                        _context51.next = 31;
                         break;
 
                       case 28:
-                        _context49.prev = 28;
-                        _context49.t0 = _context49["catch"](15);
+                        _context51.prev = 28;
+                        _context51.t0 = _context51["catch"](15);
 
-                        _iterator13.e(_context49.t0);
+                        _iterator16.e(_context51.t0);
 
                       case 31:
-                        _context49.prev = 31;
+                        _context51.prev = 31;
 
-                        _iterator13.f();
+                        _iterator16.f();
 
-                        return _context49.finish(31);
+                        return _context51.finish(31);
 
                       case 34:
-                        return _context49.abrupt("break", 37);
+                        return _context51.abrupt("break", 37);
 
                       case 35:
-                        _context49.next = 11;
+                        _context51.next = 11;
                         break;
 
                       case 37:
-                        _context49.next = 42;
+                        _context51.next = 42;
                         break;
 
                       case 39:
-                        _context49.prev = 39;
-                        _context49.t1 = _context49["catch"](9);
+                        _context51.prev = 39;
+                        _context51.t1 = _context51["catch"](9);
 
-                        _iterator12.e(_context49.t1);
+                        _iterator15.e(_context51.t1);
 
                       case 42:
-                        _context49.prev = 42;
+                        _context51.prev = 42;
 
-                        _iterator12.f();
+                        _iterator15.f();
 
-                        return _context49.finish(42);
+                        return _context51.finish(42);
 
                       case 45:
-                        _context49.next = 51;
+                        _context51.next = 51;
                         break;
 
                       case 47:
-                        _context49.prev = 47;
-                        _context49.t2 = _context49["catch"](7);
-                        console.warn(_context49.t2);
-                        return _context49.abrupt("return", null);
+                        _context51.prev = 47;
+                        _context51.t2 = _context51["catch"](7);
+                        console.warn(_context51.t2);
+                        return _context51.abrupt("return", null);
 
                       case 51:
                         console.log(metadata);
                         console.log(url);
 
                         if (url) {
-                          _context49.next = 58;
+                          _context51.next = 58;
                           break;
                         }
 
@@ -15014,46 +15764,46 @@
                           metadata['displayUri'] = this.uriToUrl(metadata['displayUri']);
                         }
 
-                        return _context49.abrupt("return", metadata);
+                        return _context51.abrupt("return", metadata);
 
                       case 58:
-                        _context49.next = 60;
+                        _context51.next = 60;
                         return this.fetchApi("".concat(url));
 
                       case 60:
-                        offChainMeta = _context49.sent;
+                        offChainMeta = _context51.sent;
 
                         if (offChainMeta) {
-                          _context49.next = 64;
+                          _context51.next = 64;
                           break;
                         }
 
                         console.warn('Failed to fetch offchain metadata');
-                        return _context49.abrupt("return", null);
+                        return _context51.abrupt("return", null);
 
                       case 64:
                         console.log(offChainMeta);
-                        _iterator18 = _createForOfIteratorHelper(lookFor.strings);
+                        _iterator21 = _createForOfIteratorHelper(lookFor.strings);
 
                         try {
-                          for (_iterator18.s(); !(_step18 = _iterator18.n()).done;) {
-                            _key3 = _step18.value;
+                          for (_iterator21.s(); !(_step21 = _iterator21.n()).done;) {
+                            _key3 = _step21.value;
 
                             if (offChainMeta[_key3] && typeof offChainMeta[_key3] === 'string' && typeof metadata[_key3] === 'undefined') {
                               metadata[_key3] = offChainMeta[_key3];
                             }
                           }
                         } catch (err) {
-                          _iterator18.e(err);
+                          _iterator21.e(err);
                         } finally {
-                          _iterator18.f();
+                          _iterator21.f();
                         }
 
-                        _iterator19 = _createForOfIteratorHelper(lookFor.numbers);
+                        _iterator22 = _createForOfIteratorHelper(lookFor.numbers);
 
                         try {
-                          for (_iterator19.s(); !(_step19 = _iterator19.n()).done;) {
-                            _key4 = _step19.value;
+                          for (_iterator22.s(); !(_step22 = _iterator22.n()).done;) {
+                            _key4 = _step22.value;
 
                             if (typeof offChainMeta[_key4] !== 'undefined' && typeof metadata[_key4] === 'undefined') {
                               if (typeof offChainMeta[_key4] === 'string') {
@@ -15064,25 +15814,25 @@
                             }
                           }
                         } catch (err) {
-                          _iterator19.e(err);
+                          _iterator22.e(err);
                         } finally {
-                          _iterator19.f();
+                          _iterator22.f();
                         }
 
-                        _iterator20 = _createForOfIteratorHelper(lookFor.booleans);
+                        _iterator23 = _createForOfIteratorHelper(lookFor.booleans);
 
                         try {
-                          for (_iterator20.s(); !(_step20 = _iterator20.n()).done;) {
-                            _key5 = _step20.value;
+                          for (_iterator23.s(); !(_step23 = _iterator23.n()).done;) {
+                            _key5 = _step23.value;
 
                             if (typeof offChainMeta[_key5] !== 'undefined' && typeof offChainMeta[_key5] === 'boolean' && typeof metadata[_key5] === 'undefined') {
                               metadata[_key5] = offChainMeta[_key5];
                             }
                           }
                         } catch (err) {
-                          _iterator20.e(err);
+                          _iterator23.e(err);
                         } finally {
-                          _iterator20.f();
+                          _iterator23.f();
                         }
 
                         if (!metadata['displayUri'] && metadata['displayURI']) {
@@ -15099,105 +15849,105 @@
                         }
 
                         console.log(metadata);
-                        return _context49.abrupt("return", metadata);
+                        return _context51.abrupt("return", metadata);
 
                       case 76:
                       case "end":
-                        return _context49.stop();
+                        return _context51.stop();
                     }
                   }
-                }, _callee49, this, [[7, 47], [9, 39, 42, 45], [15, 28, 31, 34]]);
+                }, _callee51, this, [[7, 47], [9, 39, 42, 45], [15, 28, 31, 34]]);
               }));
             }
           }, {
             key: "extractContractMetadata",
             value: function extractContractMetadata(bigMapId) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee50() {
-                var contractBigMap, url, _iterator21, _step21, child, metadata, contractMeta;
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee52() {
+                var contractBigMap, url, _iterator24, _step24, child, metadata, contractMeta;
 
-                return regeneratorRuntime.wrap(function _callee50$(_context50) {
+                return regeneratorRuntime.wrap(function _callee52$(_context52) {
                   while (1) {
-                    switch (_context50.prev = _context50.next) {
+                    switch (_context52.prev = _context52.next) {
                       case 0:
-                        _context50.next = 2;
+                        _context52.next = 2;
                         return this.fetchApi("".concat(this.bcd, "/bigmap/").concat(this.network, "/").concat(bigMapId, "/keys"));
 
                       case 2:
-                        contractBigMap = _context50.sent;
+                        contractBigMap = _context52.sent;
                         url = '';
-                        _context50.prev = 4;
-                        _iterator21 = _createForOfIteratorHelper(contractBigMap);
-                        _context50.prev = 6;
+                        _context52.prev = 4;
+                        _iterator24 = _createForOfIteratorHelper(contractBigMap);
+                        _context52.prev = 6;
 
-                        _iterator21.s();
+                        _iterator24.s();
 
                       case 8:
-                        if ((_step21 = _iterator21.n()).done) {
-                          _context50.next = 15;
+                        if ((_step24 = _iterator24.n()).done) {
+                          _context52.next = 15;
                           break;
                         }
 
-                        child = _step21.value;
+                        child = _step24.value;
 
                         if (!(child.data.key.value === '')) {
-                          _context50.next = 13;
+                          _context52.next = 13;
                           break;
                         }
 
                         url = this.uriToUrl(child.data.value.value);
-                        return _context50.abrupt("break", 15);
+                        return _context52.abrupt("break", 15);
 
                       case 13:
-                        _context50.next = 8;
+                        _context52.next = 8;
                         break;
 
                       case 15:
-                        _context50.next = 20;
+                        _context52.next = 20;
                         break;
 
                       case 17:
-                        _context50.prev = 17;
-                        _context50.t0 = _context50["catch"](6);
+                        _context52.prev = 17;
+                        _context52.t0 = _context52["catch"](6);
 
-                        _iterator21.e(_context50.t0);
+                        _iterator24.e(_context52.t0);
 
                       case 20:
-                        _context50.prev = 20;
+                        _context52.prev = 20;
 
-                        _iterator21.f();
+                        _iterator24.f();
 
-                        return _context50.finish(20);
+                        return _context52.finish(20);
 
                       case 23:
-                        _context50.next = 28;
+                        _context52.next = 28;
                         break;
 
                       case 25:
-                        _context50.prev = 25;
-                        _context50.t1 = _context50["catch"](4);
-                        return _context50.abrupt("return", null);
+                        _context52.prev = 25;
+                        _context52.t1 = _context52["catch"](4);
+                        return _context52.abrupt("return", null);
 
                       case 28:
                         if (url) {
-                          _context50.next = 30;
+                          _context52.next = 30;
                           break;
                         }
 
-                        return _context50.abrupt("return", null);
+                        return _context52.abrupt("return", null);
 
                       case 30:
                         if (!(bigMapId !== -1)) {
-                          _context50.next = 44;
+                          _context52.next = 44;
                           break;
                         }
 
-                        _context50.prev = 31;
+                        _context52.prev = 31;
                         metadata = {};
-                        _context50.next = 35;
+                        _context52.next = 35;
                         return this.fetchApi("".concat(url));
 
                       case 35:
-                        contractMeta = _context50.sent;
+                        contractMeta = _context52.sent;
 
                         if (contractMeta.interfaces) {
                           if (contractMeta.interfaces.includes('TZIP-12')) {
@@ -15212,82 +15962,82 @@
                         }
 
                         console.log('contract metadata', metadata);
-                        return _context50.abrupt("return", metadata);
+                        return _context52.abrupt("return", metadata);
 
                       case 42:
-                        _context50.prev = 42;
-                        _context50.t2 = _context50["catch"](31);
+                        _context52.prev = 42;
+                        _context52.t2 = _context52["catch"](31);
 
                       case 44:
-                        return _context50.abrupt("return", null);
+                        return _context52.abrupt("return", null);
 
                       case 45:
                       case "end":
-                        return _context50.stop();
+                        return _context52.stop();
                     }
                   }
-                }, _callee50, this, [[4, 25], [6, 17, 20, 23], [31, 42]]);
+                }, _callee52, this, [[4, 25], [6, 17, 20, 23], [31, 42]]);
               }));
             }
           }, {
             key: "getBigMapIds",
             value: function getBigMapIds(contractAddress) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee51() {
-                var storage, token, contract, _iterator22, _step22, child, _iterator23, _step23, admin, _iterator24, _step24, asset;
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee53() {
+                var storage, token, contract, _iterator25, _step25, child, _iterator26, _step26, admin, _iterator27, _step27, asset;
 
-                return regeneratorRuntime.wrap(function _callee51$(_context51) {
+                return regeneratorRuntime.wrap(function _callee53$(_context53) {
                   while (1) {
-                    switch (_context51.prev = _context51.next) {
+                    switch (_context53.prev = _context53.next) {
                       case 0:
-                        _context51.next = 2;
+                        _context53.next = 2;
                         return this.fetchApi("".concat(this.bcd, "/contract/").concat(this.network, "/").concat(contractAddress, "/storage"));
 
                       case 2:
-                        storage = _context51.sent;
+                        storage = _context53.sent;
                         token = -1;
                         contract = -1;
 
                         try {
-                          _iterator22 = _createForOfIteratorHelper(storage.children);
+                          _iterator25 = _createForOfIteratorHelper(storage.children);
 
                           try {
-                            for (_iterator22.s(); !(_step22 = _iterator22.n()).done;) {
-                              child = _step22.value;
+                            for (_iterator25.s(); !(_step25 = _iterator25.n()).done;) {
+                              child = _step25.value;
 
                               if ((child === null || child === void 0 ? void 0 : child.name) === 'admin') {
                                 if (child.children) {
-                                  _iterator23 = _createForOfIteratorHelper(child.children);
+                                  _iterator26 = _createForOfIteratorHelper(child.children);
 
                                   try {
-                                    for (_iterator23.s(); !(_step23 = _iterator23.n()).done;) {
-                                      admin = _step23.value;
+                                    for (_iterator26.s(); !(_step26 = _iterator26.n()).done;) {
+                                      admin = _step26.value;
 
                                       if ((admin === null || admin === void 0 ? void 0 : admin.name) === 'metadata') {
                                         contract = admin.value;
                                       }
                                     }
                                   } catch (err) {
-                                    _iterator23.e(err);
+                                    _iterator26.e(err);
                                   } finally {
-                                    _iterator23.f();
+                                    _iterator26.f();
                                   }
                                 }
                               } else if ((child === null || child === void 0 ? void 0 : child.name) === 'assets') {
                                 if (child.children) {
-                                  _iterator24 = _createForOfIteratorHelper(child.children);
+                                  _iterator27 = _createForOfIteratorHelper(child.children);
 
                                   try {
-                                    for (_iterator24.s(); !(_step24 = _iterator24.n()).done;) {
-                                      asset = _step24.value;
+                                    for (_iterator27.s(); !(_step27 = _iterator27.n()).done;) {
+                                      asset = _step27.value;
 
                                       if ((asset === null || asset === void 0 ? void 0 : asset.name) === 'token_metadata') {
                                         token = asset.value;
                                       }
                                     }
                                   } catch (err) {
-                                    _iterator24.e(err);
+                                    _iterator27.e(err);
                                   } finally {
-                                    _iterator24.f();
+                                    _iterator27.f();
                                   }
                                 }
                               } else if ((child === null || child === void 0 ? void 0 : child.name) === 'metadata') {
@@ -15295,25 +16045,25 @@
                               }
                             }
                           } catch (err) {
-                            _iterator22.e(err);
+                            _iterator25.e(err);
                           } finally {
-                            _iterator22.f();
+                            _iterator25.f();
                           }
                         } catch (e) {
                           console.log(e);
                         }
 
-                        return _context51.abrupt("return", {
+                        return _context53.abrupt("return", {
                           contract: contract,
                           token: token
                         });
 
                       case 7:
                       case "end":
-                        return _context51.stop();
+                        return _context53.stop();
                     }
                   }
-                }, _callee51, this);
+                }, _callee53, this);
               }));
             }
           }, {
@@ -15338,12 +16088,12 @@
           }, {
             key: "fetchApi",
             value: function fetchApi(url) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee52() {
-                return regeneratorRuntime.wrap(function _callee52$(_context52) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee54() {
+                return regeneratorRuntime.wrap(function _callee54$(_context54) {
                   while (1) {
-                    switch (_context52.prev = _context52.next) {
+                    switch (_context54.prev = _context54.next) {
                       case 0:
-                        return _context52.abrupt("return", fetch(url).then(function (response) {
+                        return _context54.abrupt("return", fetch(url).then(function (response) {
                           return response.json();
                         }).then(function (data) {
                           return data;
@@ -15351,10 +16101,10 @@
 
                       case 1:
                       case "end":
-                        return _context52.stop();
+                        return _context54.stop();
                     }
                   }
-                }, _callee52);
+                }, _callee54);
               }));
             }
           }]);
@@ -15855,28 +16605,28 @@
         }, {
           key: "preLoadData",
           value: function preLoadData(pkh, pk) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee53() {
-              var _this33 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee55() {
+              var _this35 = this;
 
-              return regeneratorRuntime.wrap(function _callee53$(_context53) {
+              return regeneratorRuntime.wrap(function _callee55$(_context55) {
                 while (1) {
-                  switch (_context53.prev = _context53.next) {
+                  switch (_context55.prev = _context55.next) {
                     case 0:
                       this.pkh = pkh;
                       this.pk = pk;
-                      _context53.next = 4;
+                      _context55.next = 4;
                       return Promise.all([this.operationService.getHeader().toPromise(), this.getCounter(pkh), this.getManager(pkh)]).then(function (req) {
                         if (req[0] && req[1] && req[2] || req[2] === null) {
-                          _this33.init(req[0].hash, req[0].chain_id, req[1], req[2], pk, pkh);
+                          _this35.init(req[0].hash, req[0].chain_id, req[1], req[2], pk, pkh);
                         }
                       });
 
                     case 4:
                     case "end":
-                      return _context53.stop();
+                      return _context55.stop();
                   }
                 }
-              }, _callee53, this);
+              }, _callee55, this);
             }));
           }
         }, {
@@ -15884,14 +16634,14 @@
           value: function estimate(transactions, from) {
             var tokenTransfer = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
             var callback = arguments.length > 3 ? arguments[3] : undefined;
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee55() {
-              var _this34 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee57() {
+              var _this36 = this;
 
               var _loop;
 
-              return regeneratorRuntime.wrap(function _callee55$(_context56) {
+              return regeneratorRuntime.wrap(function _callee57$(_context58) {
                 while (1) {
-                  switch (_context56.prev = _context56.next) {
+                  switch (_context58.prev = _context58.next) {
                     case 0:
                       this.queue.push({
                         transactions: transactions,
@@ -15900,20 +16650,20 @@
                       });
 
                       if (!(this.queue.length === 1)) {
-                        _context56.next = 7;
+                        _context58.next = 7;
                         break;
                       }
 
                       _loop = /*#__PURE__*/regeneratorRuntime.mark(function _loop() {
                         var retry, i;
-                        return regeneratorRuntime.wrap(function _loop$(_context55) {
+                        return regeneratorRuntime.wrap(function _loop$(_context57) {
                           while (1) {
-                            switch (_context55.prev = _context55.next) {
+                            switch (_context57.prev = _context57.next) {
                               case 0:
-                                while (_this34.queue.length > 1) {
-                                  _this34.queue[0].callback(null);
+                                while (_this36.queue.length > 1) {
+                                  _this36.queue[0].callback(null);
 
-                                  _this34.queue.shift();
+                                  _this36.queue.shift();
                                 }
 
                                 retry = false;
@@ -15921,31 +16671,31 @@
 
                               case 3:
                                 if (!(i < 1 || retry && i < 2)) {
-                                  _context55.next = 9;
+                                  _context57.next = 9;
                                   break;
                                 }
 
-                                _context55.next = 6;
-                                return _this34._estimate(_this34.queue[0].transactions, _this34.queue[0].from, tokenTransfer).then(function (res) {
-                                  _this34.queue[0].callback(res);
+                                _context57.next = 6;
+                                return _this36._estimate(_this36.queue[0].transactions, _this36.queue[0].from, tokenTransfer).then(function (res) {
+                                  _this36.queue[0].callback(res);
                                 })["catch"](function (error) {
-                                  return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this34, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee54() {
-                                    return regeneratorRuntime.wrap(function _callee54$(_context54) {
+                                  return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this36, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee56() {
+                                    return regeneratorRuntime.wrap(function _callee56$(_context56) {
                                       while (1) {
-                                        switch (_context54.prev = _context54.next) {
+                                        switch (_context56.prev = _context56.next) {
                                           case 0:
                                             if (!(error.message && error.message === 'An operation assumed a contract counter in the past' && !retry)) {
-                                              _context54.next = 7;
+                                              _context56.next = 7;
                                               break;
                                             }
 
                                             console.log('Update counter');
-                                            _context54.next = 4;
+                                            _context56.next = 4;
                                             return this.preLoadData(this.pkh, this.pk);
 
                                           case 4:
                                             retry = true;
-                                            _context54.next = 8;
+                                            _context56.next = 8;
                                             break;
 
                                           case 7:
@@ -15955,24 +16705,24 @@
 
                                           case 8:
                                           case "end":
-                                            return _context54.stop();
+                                            return _context56.stop();
                                         }
                                       }
-                                    }, _callee54, this);
+                                    }, _callee56, this);
                                   }));
                                 });
 
                               case 6:
                                 i++;
-                                _context55.next = 3;
+                                _context57.next = 3;
                                 break;
 
                               case 9:
-                                _this34.queue.shift();
+                                _this36.queue.shift();
 
                               case 10:
                               case "end":
-                                return _context55.stop();
+                                return _context57.stop();
                             }
                           }
                         }, _loop);
@@ -15980,44 +16730,44 @@
 
                     case 3:
                       if (!(this.queue.length > 0)) {
-                        _context56.next = 7;
+                        _context58.next = 7;
                         break;
                       }
 
-                      return _context56.delegateYield(_loop(), "t0", 5);
+                      return _context58.delegateYield(_loop(), "t0", 5);
 
                     case 5:
-                      _context56.next = 3;
+                      _context58.next = 3;
                       break;
 
                     case 7:
                     case "end":
-                      return _context56.stop();
+                      return _context58.stop();
                   }
                 }
-              }, _callee55, this);
+              }, _callee57, this);
             }));
           }
         }, {
           key: "_estimate",
           value: function _estimate(transactions, from, tokenTransfer) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee56() {
-              var _this35 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee58() {
+              var _this37 = this;
 
-              var extraGas, simulation, _iterator25, _step25, tx, op, result, reveal, limits, _iterator26, _step26, content, _this$getOpUsage, gasUsage, storageUsage;
+              var extraGas, simulation, _iterator28, _step28, tx, op, result, reveal, limits, _iterator29, _step29, content, _this$getOpUsage, gasUsage, storageUsage;
 
-              return regeneratorRuntime.wrap(function _callee56$(_context57) {
+              return regeneratorRuntime.wrap(function _callee58$(_context59) {
                 while (1) {
-                  switch (_context57.prev = _context57.next) {
+                  switch (_context59.prev = _context59.next) {
                     case 0:
                       extraGas = 80;
 
                       if (this.hash) {
-                        _context57.next = 3;
+                        _context59.next = 3;
                         break;
                       }
 
-                      return _context57.abrupt("return", null);
+                      return _context59.abrupt("return", null);
 
                     case 3:
                       simulation = {
@@ -16025,11 +16775,11 @@
                         gasLimit: hardGasLimit,
                         storageLimit: hardStorageLimit
                       };
-                      _iterator25 = _createForOfIteratorHelper(transactions);
+                      _iterator28 = _createForOfIteratorHelper(transactions);
 
                       try {
-                        for (_iterator25.s(); !(_step25 = _iterator25.n()).done;) {
-                          tx = _step25.value;
+                        for (_iterator28.s(); !(_step28 = _iterator28.n()).done;) {
+                          tx = _step28.value;
 
                           if (!tx.amount) {
                             tx.amount = 0;
@@ -16043,58 +16793,58 @@
                           tx.storageLimit = simulation.storageLimit;
                         }
                       } catch (err) {
-                        _iterator25.e(err);
+                        _iterator28.e(err);
                       } finally {
-                        _iterator25.f();
+                        _iterator28.f();
                       }
 
                       if (!(this.hash && this.counter && (this.manager || this.manager === null))) {
-                        _context57.next = 47;
+                        _context59.next = 47;
                         break;
                       }
 
                       op = this.operationService.createTransactionObject(this.hash, this.counter, this.manager, transactions, this.pkh, this.pk, from, simulation.fee, tokenTransfer);
-                      _context57.next = 10;
+                      _context59.next = 10;
                       return this.simulate(op).toPromise()["catch"](function (e) {
                         console.warn(e);
                         return null;
                       });
 
                     case 10:
-                      result = _context57.sent;
+                      result = _context59.sent;
 
                       if (!(result && result.contents)) {
-                        _context57.next = 44;
+                        _context59.next = 44;
                         break;
                       }
 
                       reveal = false;
                       limits = [];
-                      _iterator26 = _createForOfIteratorHelper(result.contents);
-                      _context57.prev = 15;
+                      _iterator29 = _createForOfIteratorHelper(result.contents);
+                      _context59.prev = 15;
 
-                      _iterator26.s();
+                      _iterator29.s();
 
                     case 17:
-                      if ((_step26 = _iterator26.n()).done) {
-                        _context57.next = 31;
+                      if ((_step29 = _iterator29.n()).done) {
+                        _context59.next = 31;
                         break;
                       }
 
-                      content = _step26.value;
+                      content = _step29.value;
 
                       if (!(content.kind === 'reveal')) {
-                        _context57.next = 23;
+                        _context59.next = 23;
                         break;
                       }
 
                       reveal = true;
-                      _context57.next = 29;
+                      _context59.next = 29;
                       break;
 
                     case 23:
                       if (!(content.kind === 'transaction' && content.metadata.operation_result.status === 'applied')) {
-                        _context57.next = 28;
+                        _context59.next = 28;
                         break;
                       }
 
@@ -16103,46 +16853,46 @@
                         gasLimit: gasUsage + extraGas,
                         storageLimit: storageUsage
                       });
-                      _context57.next = 29;
+                      _context59.next = 29;
                       break;
 
                     case 28:
-                      return _context57.abrupt("return", null);
+                      return _context59.abrupt("return", null);
 
                     case 29:
-                      _context57.next = 17;
+                      _context59.next = 17;
                       break;
 
                     case 31:
-                      _context57.next = 36;
+                      _context59.next = 36;
                       break;
 
                     case 33:
-                      _context57.prev = 33;
-                      _context57.t0 = _context57["catch"](15);
+                      _context59.prev = 33;
+                      _context59.t0 = _context59["catch"](15);
 
-                      _iterator26.e(_context57.t0);
+                      _iterator29.e(_context59.t0);
 
                     case 36:
-                      _context57.prev = 36;
+                      _context59.prev = 36;
 
-                      _iterator26.f();
+                      _iterator29.f();
 
-                      return _context57.finish(36);
+                      return _context59.finish(36);
 
                     case 39:
-                      _context57.next = 41;
+                      _context59.next = 41;
                       return this.operationService.localForge(op).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (fop) {
                         var bytes = fop.length / 2 + 64;
 
-                        var gas = _this35.averageGasLimit(limits);
+                        var gas = _this37.averageGasLimit(limits);
 
-                        var storage = _this35.averageStorageLimit(limits);
+                        var storage = _this37.averageStorageLimit(limits);
 
                         var dtp = {
                           customLimits: limits,
-                          fee: _this35.recommendFee(limits, reveal, bytes),
-                          burn: _this35.burnFee(limits),
+                          fee: _this37.recommendFee(limits, reveal, bytes),
+                          burn: _this37.burnFee(limits),
                           gas: gas,
                           storage: storage,
                           reveal: reveal
@@ -16152,11 +16902,11 @@
                       })).toPromise();
 
                     case 41:
-                      return _context57.abrupt("return", _context57.sent);
+                      return _context59.abrupt("return", _context59.sent);
 
                     case 44:
                       if (!(typeof result.success === 'boolean' && result.success === false)) {
-                        _context57.next = 47;
+                        _context59.next = 47;
                         break;
                       }
 
@@ -16164,14 +16914,14 @@
                       throw new Error(result.payload.msg);
 
                     case 47:
-                      return _context57.abrupt("return", null);
+                      return _context59.abrupt("return", null);
 
                     case 48:
                     case "end":
-                      return _context57.stop();
+                      return _context59.stop();
                   }
                 }
-              }, _callee56, this, [[15, 33, 36, 39]]);
+              }, _callee58, this, [[15, 33, 36, 39]]);
             }));
           }
         }, {
@@ -16190,52 +16940,52 @@
             }
 
             if (content.metadata.operation_result.balance_updates) {
-              var _iterator27 = _createForOfIteratorHelper(content.metadata.operation_result.balance_updates),
-                  _step27;
+              var _iterator30 = _createForOfIteratorHelper(content.metadata.operation_result.balance_updates),
+                  _step30;
 
               try {
-                for (_iterator27.s(); !(_step27 = _iterator27.n()).done;) {
-                  var balanceUpdate = _step27.value;
+                for (_iterator30.s(); !(_step30 = _iterator30.n()).done;) {
+                  var balanceUpdate = _step30.value;
 
                   if (balanceUpdate.contract === this.pkh) {
                     burn = burn.minus(balanceUpdate.change);
                   }
                 }
               } catch (err) {
-                _iterator27.e(err);
+                _iterator30.e(err);
               } finally {
-                _iterator27.f();
+                _iterator30.f();
               }
             }
 
             if (content.metadata.balance_updates) {
-              var _iterator28 = _createForOfIteratorHelper(content.metadata.balance_updates),
-                  _step28;
+              var _iterator31 = _createForOfIteratorHelper(content.metadata.balance_updates),
+                  _step31;
 
               try {
-                for (_iterator28.s(); !(_step28 = _iterator28.n()).done;) {
-                  var _balanceUpdate = _step28.value;
+                for (_iterator31.s(); !(_step31 = _iterator31.n()).done;) {
+                  var _balanceUpdate = _step31.value;
 
                   if (_balanceUpdate.contract === this.pkh) {
                     burn = burn.minus(_balanceUpdate.change);
                   }
                 }
               } catch (err) {
-                _iterator28.e(err);
+                _iterator31.e(err);
               } finally {
-                _iterator28.f();
+                _iterator31.f();
               }
             }
 
             gasUsage += content.metadata.operation_result.consumed_gas ? Number(content.metadata.operation_result.consumed_gas) : 0;
 
             if (content.metadata.internal_operation_results) {
-              var _iterator29 = _createForOfIteratorHelper(content.metadata.internal_operation_results),
-                  _step29;
+              var _iterator32 = _createForOfIteratorHelper(content.metadata.internal_operation_results),
+                  _step32;
 
               try {
-                for (_iterator29.s(); !(_step29 = _iterator29.n()).done;) {
-                  var internalResult = _step29.value;
+                for (_iterator32.s(); !(_step32 = _iterator32.n()).done;) {
+                  var internalResult = _step32.value;
 
                   if (internalResult.result) {
                     if (internalResult.result.consumed_gas) {
@@ -16243,29 +16993,29 @@
                     }
 
                     if (internalResult.result.balance_updates) {
-                      var _iterator30 = _createForOfIteratorHelper(internalResult.result.balance_updates),
-                          _step30;
+                      var _iterator33 = _createForOfIteratorHelper(internalResult.result.balance_updates),
+                          _step33;
 
                       try {
-                        for (_iterator30.s(); !(_step30 = _iterator30.n()).done;) {
-                          var _balanceUpdate2 = _step30.value;
+                        for (_iterator33.s(); !(_step33 = _iterator33.n()).done;) {
+                          var _balanceUpdate2 = _step33.value;
 
                           if (_balanceUpdate2.contract === this.pkh && _balanceUpdate2.change.slice(0, 1) === '-') {
                             burn = burn.minus(_balanceUpdate2.change);
                           }
                         }
                       } catch (err) {
-                        _iterator30.e(err);
+                        _iterator33.e(err);
                       } finally {
-                        _iterator30.f();
+                        _iterator33.f();
                       }
                     }
                   }
                 }
               } catch (err) {
-                _iterator29.e(err);
+                _iterator32.e(err);
               } finally {
-                _iterator29.f();
+                _iterator32.f();
               }
             }
 
@@ -16304,19 +17054,19 @@
               numberOfOperations++;
             }
 
-            var _iterator31 = _createForOfIteratorHelper(limits),
-                _step31;
+            var _iterator34 = _createForOfIteratorHelper(limits),
+                _step34;
 
             try {
-              for (_iterator31.s(); !(_step31 = _iterator31.n()).done;) {
-                var data = _step31.value;
+              for (_iterator34.s(); !(_step34 = _iterator34.n()).done;) {
+                var data = _step34.value;
                 gasUnits += data.gasLimit;
                 numberOfOperations++;
               }
             } catch (err) {
-              _iterator31.e(err);
+              _iterator34.e(err);
             } finally {
-              _iterator31.f();
+              _iterator34.f();
             }
 
             bytes += 10 * numberOfOperations; // add 10 extra bytes for variation in amount & fee
@@ -16328,18 +17078,18 @@
           value: function averageGasLimit(limits) {
             var totalGasLimit = 0;
 
-            var _iterator32 = _createForOfIteratorHelper(limits),
-                _step32;
+            var _iterator35 = _createForOfIteratorHelper(limits),
+                _step35;
 
             try {
-              for (_iterator32.s(); !(_step32 = _iterator32.n()).done;) {
-                var data = _step32.value;
+              for (_iterator35.s(); !(_step35 = _iterator35.n()).done;) {
+                var data = _step35.value;
                 totalGasLimit += data.gasLimit;
               }
             } catch (err) {
-              _iterator32.e(err);
+              _iterator35.e(err);
             } finally {
-              _iterator32.f();
+              _iterator35.f();
             }
 
             return Math.ceil(totalGasLimit / limits.length);
@@ -16349,18 +17099,18 @@
           value: function averageStorageLimit(limits) {
             var totalStorageLimit = 0;
 
-            var _iterator33 = _createForOfIteratorHelper(limits),
-                _step33;
+            var _iterator36 = _createForOfIteratorHelper(limits),
+                _step36;
 
             try {
-              for (_iterator33.s(); !(_step33 = _iterator33.n()).done;) {
-                var data = _step33.value;
+              for (_iterator36.s(); !(_step36 = _iterator36.n()).done;) {
+                var data = _step36.value;
                 totalStorageLimit += data.storageLimit;
               }
             } catch (err) {
-              _iterator33.e(err);
+              _iterator36.e(err);
             } finally {
-              _iterator33.f();
+              _iterator36.f();
             }
 
             return Math.ceil(totalStorageLimit / limits.length);
@@ -16370,18 +17120,18 @@
           value: function burnFee(limits) {
             var totalStorageLimit = big_js__WEBPACK_IMPORTED_MODULE_6___default()(0);
 
-            var _iterator34 = _createForOfIteratorHelper(limits),
-                _step34;
+            var _iterator37 = _createForOfIteratorHelper(limits),
+                _step37;
 
             try {
-              for (_iterator34.s(); !(_step34 = _iterator34.n()).done;) {
-                var data = _step34.value;
+              for (_iterator37.s(); !(_step37 = _iterator37.n()).done;) {
+                var data = _step37.value;
                 totalStorageLimit = totalStorageLimit.plus(data.storageLimit);
               }
             } catch (err) {
-              _iterator34.e(err);
+              _iterator37.e(err);
             } finally {
-              _iterator34.f();
+              _iterator37.f();
             }
 
             return Number(big_js__WEBPACK_IMPORTED_MODULE_6___default()(totalStorageLimit).times(this.costPerByte).div('1000000').toString());
@@ -16389,18 +17139,18 @@
         }, {
           key: "simulate",
           value: function simulate(op) {
-            var _this36 = this;
+            var _this38 = this;
 
             op.signature = 'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q';
             return this.http.post(this.nodeURL + '/chains/main/blocks/head/helpers/scripts/run_operation', {
               operation: op,
               chain_id: this.chainId
             }, httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (res) {
-              _this36.operationService.checkApplied([res]);
+              _this38.operationService.checkApplied([res]);
 
               return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(res);
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this36.operationService.errHandler(err);
+              return _this38.operationService.errHandler(err);
             }));
           }
         }, {
@@ -16438,41 +17188,41 @@
         }, {
           key: "getCounter",
           value: function getCounter(pkh) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee57() {
-              return regeneratorRuntime.wrap(function _callee57$(_context58) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee59() {
+              return regeneratorRuntime.wrap(function _callee59$(_context60) {
                 while (1) {
-                  switch (_context58.prev = _context58.next) {
+                  switch (_context60.prev = _context60.next) {
                     case 0:
-                      return _context58.abrupt("return", fetch(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/counter', {}).then(function (response) {
+                      return _context60.abrupt("return", fetch(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/counter', {}).then(function (response) {
                         return response.json();
                       }));
 
                     case 1:
                     case "end":
-                      return _context58.stop();
+                      return _context60.stop();
                   }
                 }
-              }, _callee57, this);
+              }, _callee59, this);
             }));
           }
         }, {
           key: "getManager",
           value: function getManager(pkh) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee58() {
-              return regeneratorRuntime.wrap(function _callee58$(_context59) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee60() {
+              return regeneratorRuntime.wrap(function _callee60$(_context61) {
                 while (1) {
-                  switch (_context59.prev = _context59.next) {
+                  switch (_context61.prev = _context61.next) {
                     case 0:
-                      return _context59.abrupt("return", fetch(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/manager_key', {}).then(function (response) {
+                      return _context61.abrupt("return", fetch(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/manager_key', {}).then(function (response) {
                         return response.json();
                       }));
 
                     case 1:
                     case "end":
-                      return _context59.stop();
+                      return _context61.stop();
                   }
                 }
-              }, _callee58, this);
+              }, _callee60, this);
             }));
           }
         }]);
@@ -16875,9 +17625,9 @@
       /* harmony import */
 
 
-      var kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
-      /*! kukai-embed/dist/types */
-      "OFNV");
+      var kukai_embed__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+      /*! kukai-embed */
+      "ztwt");
       /* harmony import */
 
 
@@ -16941,7 +17691,7 @@
         if (rf & 2) {
           var ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("headless", true)("operationRequest", ctx_r1.operationRequests)("activeAccount", ctx_r1.activeAccount);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("headless", true)("operationRequest", ctx_r1.operationRequests)("template", ctx_r1.template)("activeAccount", ctx_r1.activeAccount);
         }
       }
 
@@ -16959,7 +17709,7 @@
 
       var EmbeddedComponent = /*#__PURE__*/function () {
         function EmbeddedComponent(torusService, importService, walletService, coordinatorService, route, lookupService, activityService, embeddedAuthService) {
-          var _this37 = this;
+          var _this39 = this;
 
           _classCallCheck(this, EmbeddedComponent);
 
@@ -16975,45 +17725,51 @@
           this.pendingOps = [];
           this.origin = '';
           this.login = false;
-          this.blockCard = false;
+          this.blockCard = true;
           this.activeAccount = null;
+          this.template = null;
           this.operationRequests = null;
 
           this.handleRequest = function (evt) {
             try {
               var data = JSON.parse(evt.data);
 
-              if (!_environments_environment__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].MAINNET || _this37.allowedOrigins.includes(evt.origin)) {
+              if (!_environments_environment__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].MAINNET || _this39.allowedOrigins.includes(evt.origin)) {
                 console.log("Received ".concat(evt.data, " from ").concat(evt.origin));
 
                 if (data && data.type &&
                 /* restricted to dev enviroment for now */
                 !_environments_environment__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].MAINNET) {
-                  _this37.origin = evt.origin;
+                  _this39.origin = evt.origin;
 
                   switch (data.type) {
-                    case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].loginRequest:
-                      _this37.handleLoginRequest(data);
+                    case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].loginRequest:
+                      _this39.handleLoginRequest(data);
 
                       break;
 
-                    case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].operationRequest:
-                      _this37.handleOperationRequest(data);
+                    case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].operationRequest:
+                      _this39.handleOperationRequest(data);
 
                       break;
 
-                    case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].trackRequest:
-                      _this37.handleTrackRequest(data);
+                    case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].trackRequest:
+                      _this39.handleTrackRequest(data);
 
                       break;
 
-                    case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].logoutRequest:
-                      _this37.handleLogoutRequest(data);
+                    case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].logoutRequest:
+                      _this39.handleLogoutRequest(data);
 
                       break;
 
-                    case kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].authRequest:
-                      _this37.handleAuthRequest(data);
+                    case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].authRequest:
+                      _this39.handleAuthRequest(data);
+
+                      break;
+
+                    case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].cardRequest:
+                      _this39.handleCardRequest(data);
 
                       break;
 
@@ -17029,16 +17785,9 @@
         }
 
         _createClass(EmbeddedComponent, [{
-          key: "onResize",
-          value: function onResize(event) {
-            if (event.target.innerWidth === 400) {
-              this.blockCard = false;
-            }
-          }
-        }, {
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this38 = this;
+            var _this40 = this;
 
             document.body.style.background = 'none';
             this.torusService.initTorus();
@@ -17053,31 +17802,34 @@
             this.route.queryParams.filter(function (params) {
               return params.instanceId;
             }).subscribe(function (params) {
-              _this38.walletService.loadStoredWallet(params.instanceId);
+              _this40.walletService.loadStoredWallet(params.instanceId);
 
-              if (_this38.walletService.wallet instanceof _services_wallet_wallet__WEBPACK_IMPORTED_MODULE_6__["EmbeddedTorusWallet"]) {
-                _this38.origin = _this38.walletService.wallet.origin;
-                _this38.activeAccount = _this38.walletService.wallet.implicitAccounts[0];
+              if (_this40.walletService.wallet instanceof _services_wallet_wallet__WEBPACK_IMPORTED_MODULE_6__["EmbeddedTorusWallet"]) {
+                _this40.origin = _this40.walletService.wallet.origin;
+                _this40.activeAccount = _this40.walletService.wallet.implicitAccounts[0];
 
-                _this38.coordinatorService.startAll();
+                _this40.coordinatorService.startAll();
 
-                _this38.subscribeToConfirmedOps();
+                _this40.subscribeToConfirmedOps();
               }
             });
+            window.parent.window.postMessage(JSON.stringify({
+              type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].initComplete,
+              failed: false
+            }), this.origin || '*');
           }
         }, {
           key: "handleLoginRequest",
           value: function handleLoginRequest(req) {
             if (this.activeAccount) {
               var response = {
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].loginResponse,
+                type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].loginResponse,
                 failed: true,
                 error: 'ALREADY_LOGGED_IN'
               };
               this.sendResponse(response);
             } else {
               this.login = true;
-              this.sendResizeReady();
             }
           }
         }, {
@@ -17085,21 +17837,19 @@
           value: function handleOperationRequest(req) {
             if (this.walletService.wallet instanceof _services_wallet_wallet__WEBPACK_IMPORTED_MODULE_6__["EmbeddedTorusWallet"] && req.operations) {
               if (this.isValidOperation(req.operations)) {
+                this.template = req.ui ? req.ui : null;
                 this.operationRequests = req.operations;
-                this.sendResizeReady();
               } else {
                 this.operationRequests = null;
-                this.sendResizeFailed('INVALID_SEND');
                 this.sendResponse({
-                  type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
+                  type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
                   failed: true,
                   error: 'INVALID_TRANSACTION'
                 });
               }
             } else {
-              this.sendResizeFailed('INVALID_SEND');
               this.sendResponse({
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
+                type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
                 failed: true,
                 error: 'NO_WALLET_FOUND'
               });
@@ -17108,19 +17858,19 @@
         }, {
           key: "handleTrackRequest",
           value: function handleTrackRequest(req) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee59() {
-              return regeneratorRuntime.wrap(function _callee59$(_context60) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee61() {
+              return regeneratorRuntime.wrap(function _callee61$(_context62) {
                 while (1) {
-                  switch (_context60.prev = _context60.next) {
+                  switch (_context62.prev = _context62.next) {
                     case 0:
                       this.pendingOps.push(req.opHash);
 
                     case 1:
                     case "end":
-                      return _context60.stop();
+                      return _context62.stop();
                   }
                 }
-              }, _callee59, this);
+              }, _callee61, this);
             }));
           }
         }, {
@@ -17130,7 +17880,7 @@
               var instanceId = this.walletService.wallet.instanceId;
               this.logout(instanceId);
               this.sendResponse({
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].logoutResponse,
+                type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].logoutResponse,
                 instanceId: instanceId,
                 failed: false
               });
@@ -17141,9 +17891,10 @@
         }, {
           key: "loginResponse",
           value: function loginResponse(loginData) {
-            var _this39 = this;
+            var _this41 = this;
 
             var response;
+            var toImport;
 
             if (loginData) {
               var keyPair = loginData.keyPair,
@@ -17159,17 +17910,21 @@
 
               var instanceId = this.generateInstanceId();
               response = {
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].loginResponse,
+                type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].loginResponse,
                 instanceId: instanceId,
                 pk: keyPair.pk,
                 pkh: keyPair.pkh,
                 userData: filteredUserInfo,
                 failed: false
               };
-              this.importAccount(keyPair, userInfo, instanceId);
+              toImport = {
+                keyPair: keyPair,
+                userInfo: userInfo,
+                instanceId: instanceId
+              };
             } else {
               response = {
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].loginResponse,
+                type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].loginResponse,
                 failed: true,
                 error: 'ABORTED_BY_USER'
               };
@@ -17177,29 +17932,33 @@
 
             this.login = false;
             setTimeout(function () {
-              _this39.sendResponse(response);
+              _this41.sendResponse(response);
+
+              if (toImport) {
+                _this41.importAccount(toImport.keyPair, toImport.userInfo, toImport.instanceId);
+              }
             }, 0);
           }
         }, {
           key: "handleAuthRequest",
           value: function handleAuthRequest(authReq) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee60() {
-              var _this40 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee62() {
+              var _this42 = this;
 
-              return regeneratorRuntime.wrap(function _callee60$(_context61) {
+              return regeneratorRuntime.wrap(function _callee62$(_context63) {
                 while (1) {
-                  switch (_context61.prev = _context61.next) {
+                  switch (_context63.prev = _context63.next) {
                     case 0:
                       this.embeddedAuthService.authenticate(authReq, this.origin).then(function (authResponse) {
-                        _this40.sendResponse({
-                          type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].authResponse,
+                        _this42.sendResponse({
+                          type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].authResponse,
                           failed: false,
                           message: authResponse.message,
                           signature: authResponse.signature
                         });
                       })["catch"](function (e) {
-                        _this40.sendResponse({
-                          type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].authResponse,
+                        _this42.sendResponse({
+                          type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].authResponse,
                           failed: true,
                           error: e.message ? e.message : 'UNKNOWN_ERROR'
                         });
@@ -17207,17 +17966,27 @@
 
                     case 1:
                     case "end":
-                      return _context61.stop();
+                      return _context63.stop();
                   }
                 }
-              }, _callee60, this);
+              }, _callee62, this);
             }));
+          }
+        }, {
+          key: "handleCardRequest",
+          value: function handleCardRequest(req) {
+            this.blockCard = !req.show;
+            var response = {
+              type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].cardResponse,
+              failed: false
+            };
+            this.sendResponse(response);
           }
         }, {
           key: "noWalletError",
           value: function noWalletError() {
             this.sendResponse({
-              type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].logoutResponse,
+              type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].logoutResponse,
               failed: true,
               error: 'NO_WALLET_FOUND'
             });
@@ -17225,39 +17994,47 @@
         }, {
           key: "operationResponse",
           value: function operationResponse(opHash) {
-            var _this41 = this;
+            var _this43 = this;
 
             var response;
 
             if (!opHash) {
               response = {
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
+                type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
                 failed: true,
                 error: 'ABORTED_BY_USER'
               };
             } else if (opHash === 'broadcast_error') {
               response = {
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
+                type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
                 failed: true,
                 error: 'BROADCAST_ERROR'
               };
             } else if (opHash === 'invalid_parameters') {
               response = {
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
+                type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
                 failed: true,
                 error: 'INVALID_PARAMETERS'
               };
-            } else {
+            } else if (_tezos_core_tools_crypto_utils__WEBPACK_IMPORTED_MODULE_8__["utils"].validOperationHash(opHash)) {
               response = {
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
+                type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
                 opHash: opHash,
                 failed: false
               };
+            } else {
+              console.warn('Unknown operation response:', opHash);
+              response = {
+                type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
+                failed: true,
+                error: 'UNKNOWN_ERROR'
+              };
             }
 
+            this.template = null;
             this.operationRequests = null;
             setTimeout(function () {
-              _this41.sendResponse(response);
+              _this43.sendResponse(response);
             }, 0);
           }
         }, {
@@ -17266,48 +18043,21 @@
             window.parent.window.postMessage(JSON.stringify(resp), this.origin);
           }
         }, {
-          key: "sendResizeFailed",
-          value: function sendResizeFailed(error) {
-            var _this42 = this;
-
-            this.blockCard = false;
-            setTimeout(function () {
-              _this42.sendResponse({
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].resize,
-                failed: true,
-                error: error
-              });
-            }, 0);
-          }
-        }, {
-          key: "sendResizeReady",
-          value: function sendResizeReady() {
-            var _this43 = this;
-
-            this.blockCard = true;
-            setTimeout(function () {
-              _this43.sendResponse({
-                type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].resize,
-                failed: false
-              });
-            }, 0);
-          }
-        }, {
           key: "importAccount",
           value: function importAccount(keyPair, userInfo, instanceId) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee61() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee63() {
               var _this44 = this;
 
-              return regeneratorRuntime.wrap(function _callee61$(_context62) {
+              return regeneratorRuntime.wrap(function _callee63$(_context64) {
                 while (1) {
-                  switch (_context62.prev = _context62.next) {
+                  switch (_context64.prev = _context64.next) {
                     case 0:
                       if (!keyPair) {
-                        _context62.next = 3;
+                        _context64.next = 3;
                         break;
                       }
 
-                      _context62.next = 3;
+                      _context64.next = 3;
                       return this.importService.importWalletFromPk(keyPair.pk, '', {
                         verifier: userInfo.typeOfLogin,
                         id: userInfo.verifierId,
@@ -17326,10 +18076,10 @@
 
                     case 3:
                     case "end":
-                      return _context62.stop();
+                      return _context64.stop();
                   }
                 }
-              }, _callee61, this);
+              }, _callee63, this);
             }));
           }
         }, {
@@ -17370,7 +18120,7 @@
             this.ophashSubscription = this.activityService.confirmedOp.subscribe(function (opHash) {
               if (_this45.pendingOps.includes(opHash)) {
                 _this45.sendResponse({
-                  type: kukai_embed_dist_types__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].trackResponse,
+                  type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].trackResponse,
                   opHash: opHash,
                   failed: false
                 });
@@ -17395,21 +18145,14 @@
       EmbeddedComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
         type: EmbeddedComponent,
         selectors: [["app-embedded"]],
-        hostBindings: function EmbeddedComponent_HostBindings(rf, ctx) {
-          if (rf & 1) {
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("resize", function EmbeddedComponent_resize_HostBindingHandler($event) {
-              return ctx.onResize($event);
-            }, false, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresolveWindow"]);
-          }
-        },
         decls: 3,
         vars: 3,
-        consts: [[3, "loginResponse", 4, "ngIf"], [3, "headless", "operationRequest", "activeAccount", "operationResponse", 4, "ngIf"], [3, "activeAccount", 4, "ngIf"], [3, "loginResponse"], [3, "headless", "operationRequest", "activeAccount", "operationResponse"], [3, "activeAccount"]],
+        consts: [[3, "loginResponse", 4, "ngIf"], [3, "headless", "operationRequest", "template", "activeAccount", "operationResponse", 4, "ngIf"], [3, "activeAccount", 4, "ngIf"], [3, "loginResponse"], [3, "headless", "operationRequest", "template", "activeAccount", "operationResponse"], [3, "activeAccount"]],
         template: function EmbeddedComponent_Template(rf, ctx) {
           if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, EmbeddedComponent_app_signin_0_Template, 1, 0, "app-signin", 0);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, EmbeddedComponent_app_send_1_Template, 1, 3, "app-send", 1);
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, EmbeddedComponent_app_send_1_Template, 1, 4, "app-send", 1);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](2, EmbeddedComponent_app_card_2_Template, 1, 1, "app-card", 2);
           }
@@ -17456,12 +18199,7 @@
           }, {
             type: _services_embedded_auth_embedded_auth_service__WEBPACK_IMPORTED_MODULE_12__["EmbeddedAuthService"]
           }];
-        }, {
-          onResize: [{
-            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"],
-            args: ['window:resize', ['$event']]
-          }]
-        });
+        }, null);
       })();
       /***/
 
@@ -18163,10 +18901,10 @@
         }, {
           key: "openModal2",
           value: function openModal2() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee62() {
-              return regeneratorRuntime.wrap(function _callee62$(_context63) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee64() {
+              return regeneratorRuntime.wrap(function _callee64$(_context65) {
                 while (1) {
-                  switch (_context63.prev = _context63.next) {
+                  switch (_context65.prev = _context65.next) {
                     case 0:
                       this.formInvalid = this.invalidInput();
 
@@ -18186,36 +18924,36 @@
 
                     case 2:
                     case "end":
-                      return _context63.stop();
+                      return _context65.stop();
                   }
                 }
-              }, _callee62, this);
+              }, _callee64, this);
             }));
           }
         }, {
           key: "inject",
           value: function inject() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee63() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee65() {
               var pwd, keys;
-              return regeneratorRuntime.wrap(function _callee63$(_context64) {
+              return regeneratorRuntime.wrap(function _callee65$(_context66) {
                 while (1) {
-                  switch (_context64.prev = _context64.next) {
+                  switch (_context66.prev = _context66.next) {
                     case 0:
                       pwd = this.password;
                       this.password = '';
                       this.messageService.startSpinner('Signing operation...');
-                      _context64.prev = 3;
-                      _context64.next = 6;
+                      _context66.prev = 3;
+                      _context66.next = 6;
                       return this.walletService.getKeys(pwd, this.activeAccount.pkh);
 
                     case 6:
-                      keys = _context64.sent;
-                      _context64.next = 12;
+                      keys = _context66.sent;
+                      _context66.next = 12;
                       break;
 
                     case 9:
-                      _context64.prev = 9;
-                      _context64.t0 = _context64["catch"](3);
+                      _context66.prev = 9;
+                      _context66.t0 = _context66["catch"](3);
                       this.messageService.stopSpinner();
 
                     case 12:
@@ -18241,26 +18979,26 @@
 
                     case 13:
                     case "end":
-                      return _context64.stop();
+                      return _context66.stop();
                   }
                 }
-              }, _callee63, this, [[3, 9]]);
+              }, _callee65, this, [[3, 9]]);
             }));
           }
         }, {
           key: "ledgerSign",
           value: function ledgerSign() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee64() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee66() {
               var keys;
-              return regeneratorRuntime.wrap(function _callee64$(_context65) {
+              return regeneratorRuntime.wrap(function _callee66$(_context67) {
                 while (1) {
-                  switch (_context65.prev = _context65.next) {
+                  switch (_context67.prev = _context67.next) {
                     case 0:
-                      _context65.next = 2;
+                      _context67.next = 2;
                       return this.walletService.getKeys('');
 
                     case 2:
-                      keys = _context65.sent;
+                      keys = _context67.sent;
 
                       if (keys) {
                         this.sendDelegation(keys);
@@ -18268,10 +19006,10 @@
 
                     case 4:
                     case "end":
-                      return _context65.stop();
+                      return _context67.stop();
                   }
                 }
-              }, _callee64, this);
+              }, _callee66, this);
             }));
           }
         }, {
@@ -18295,13 +19033,13 @@
         }, {
           key: "sendDelegation",
           value: function sendDelegation(keys) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee66() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee68() {
               var _this47 = this;
 
               var fee;
-              return regeneratorRuntime.wrap(function _callee66$(_context67) {
+              return regeneratorRuntime.wrap(function _callee68$(_context69) {
                 while (1) {
-                  switch (_context67.prev = _context67.next) {
+                  switch (_context69.prev = _context69.next) {
                     case 0:
                       fee = this.storedFee;
                       this.fee = '';
@@ -18311,11 +19049,11 @@
                       }
 
                       this.operationService.delegate(this.activeAccount.address, this.getDelegate(), Number(fee), keys).subscribe(function (ans) {
-                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this47, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee65() {
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this47, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee67() {
                           var metadata;
-                          return regeneratorRuntime.wrap(function _callee65$(_context66) {
+                          return regeneratorRuntime.wrap(function _callee67$(_context68) {
                             while (1) {
-                              switch (_context66.prev = _context66.next) {
+                              switch (_context68.prev = _context68.next) {
                                 case 0:
                                   this.sendResponse = ans;
                                   console.log(JSON.stringify(ans));
@@ -18344,10 +19082,10 @@
 
                                 case 3:
                                 case "end":
-                                  return _context66.stop();
+                                  return _context68.stop();
                               }
                             }
-                          }, _callee65, this);
+                          }, _callee67, this);
                         }));
                       }, function (err) {
                         console.log('Error Message ', JSON.stringify(err));
@@ -18356,39 +19094,39 @@
 
                     case 4:
                     case "end":
-                      return _context67.stop();
+                      return _context69.stop();
                   }
                 }
-              }, _callee66, this);
+              }, _callee68, this);
             }));
           }
         }, {
           key: "requestLedgerSignature",
           value: function requestLedgerSignature() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee67() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee69() {
               var op, signature, signedOp;
-              return regeneratorRuntime.wrap(function _callee67$(_context68) {
+              return regeneratorRuntime.wrap(function _callee69$(_context70) {
                 while (1) {
-                  switch (_context68.prev = _context68.next) {
+                  switch (_context70.prev = _context70.next) {
                     case 0:
                       if (!(this.walletService.wallet instanceof _services_wallet_wallet__WEBPACK_IMPORTED_MODULE_9__["LedgerWallet"])) {
-                        _context68.next = 11;
+                        _context70.next = 11;
                         break;
                       }
 
                       op = this.sendResponse.payload.unsignedOperation;
                       this.messageService.startSpinner('Waiting for Ledger signature');
-                      _context68.prev = 3;
-                      _context68.next = 6;
+                      _context70.prev = 3;
+                      _context70.next = 6;
                       return this.ledgerService.signOperation('03' + op, this.walletService.wallet.implicitAccounts[0].derivationPath);
 
                     case 6:
-                      signature = _context68.sent;
+                      signature = _context70.sent;
 
                     case 7:
-                      _context68.prev = 7;
+                      _context70.prev = 7;
                       this.messageService.stopSpinner();
-                      return _context68.finish(7);
+                      return _context70.finish(7);
 
                     case 10:
                       if (signature) {
@@ -18402,21 +19140,21 @@
 
                     case 11:
                     case "end":
-                      return _context68.stop();
+                      return _context70.stop();
                   }
                 }
-              }, _callee67, this, [[3,, 7, 10]]);
+              }, _callee69, this, [[3,, 7, 10]]);
             }));
           }
         }, {
           key: "broadCastLedgerTransaction",
           value: function broadCastLedgerTransaction() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee68() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee70() {
               var _this48 = this;
 
-              return regeneratorRuntime.wrap(function _callee68$(_context69) {
+              return regeneratorRuntime.wrap(function _callee70$(_context71) {
                 while (1) {
-                  switch (_context69.prev = _context69.next) {
+                  switch (_context71.prev = _context71.next) {
                     case 0:
                       this.messageService.startSpinner('Broadcasting operation');
                       this.operationService.broadcast(this.sendResponse.payload.signedOperation).subscribe(function (ans) {
@@ -18448,10 +19186,10 @@
 
                     case 2:
                     case "end":
-                      return _context69.stop();
+                      return _context71.stop();
                   }
                 }
-              }, _callee68, this);
+              }, _callee70, this);
             }));
           }
         }, {
@@ -19041,54 +19779,54 @@
         _createClass(LedgerService, [{
           key: "setTransport",
           value: function setTransport() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee69() {
-              return regeneratorRuntime.wrap(function _callee69$(_context70) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee71() {
+              return regeneratorRuntime.wrap(function _callee71$(_context72) {
                 while (1) {
-                  switch (_context70.prev = _context70.next) {
+                  switch (_context72.prev = _context72.next) {
                     case 0:
                       if (this.transport) {
-                        _context70.next = 12;
+                        _context72.next = 12;
                         break;
                       }
 
                       console.log('Trying to use U2F for transport...');
-                      _context70.prev = 2;
-                      _context70.next = 5;
+                      _context72.prev = 2;
+                      _context72.next = 5;
                       return _ledgerhq_hw_transport_u2f__WEBPACK_IMPORTED_MODULE_3__["default"].create();
 
                     case 5:
-                      this.transport = _context70.sent;
+                      this.transport = _context72.sent;
                       console.log('Transport is now set to use U2F!');
-                      _context70.next = 12;
+                      _context72.next = 12;
                       break;
 
                     case 9:
-                      _context70.prev = 9;
-                      _context70.t0 = _context70["catch"](2);
+                      _context72.prev = 9;
+                      _context72.t0 = _context72["catch"](2);
                       console.log('Couldn\'t use U2F for transport!');
 
                     case 12:
                     case "end":
-                      return _context70.stop();
+                      return _context72.stop();
                   }
                 }
-              }, _callee69, this, [[2, 9]]);
+              }, _callee71, this, [[2, 9]]);
             }));
           }
         }, {
           key: "transportCheck",
           value: function transportCheck() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee70() {
-              return regeneratorRuntime.wrap(function _callee70$(_context71) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee72() {
+              return regeneratorRuntime.wrap(function _callee72$(_context73) {
                 while (1) {
-                  switch (_context71.prev = _context71.next) {
+                  switch (_context73.prev = _context73.next) {
                     case 0:
                       if (this.transport) {
-                        _context71.next = 3;
+                        _context73.next = 3;
                         break;
                       }
 
-                      _context71.next = 3;
+                      _context73.next = 3;
                       return this.setTransport();
 
                     case 3:
@@ -19098,29 +19836,29 @@
 
                     case 4:
                     case "end":
-                      return _context71.stop();
+                      return _context73.stop();
                   }
                 }
-              }, _callee70, this);
+              }, _callee72, this);
             }));
           }
         }, {
           key: "getPublicAddress",
           value: function getPublicAddress(path) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee71() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee73() {
               var _this50 = this;
 
               var xtz, result, pk;
-              return regeneratorRuntime.wrap(function _callee71$(_context72) {
+              return regeneratorRuntime.wrap(function _callee73$(_context74) {
                 while (1) {
-                  switch (_context72.prev = _context72.next) {
+                  switch (_context74.prev = _context74.next) {
                     case 0:
-                      _context72.next = 2;
+                      _context74.next = 2;
                       return this.transportCheck();
 
                     case 2:
                       xtz = new _obsidiansystems_hw_app_xtz__WEBPACK_IMPORTED_MODULE_4___default.a(this.transport);
-                      _context72.next = 5;
+                      _context74.next = 5;
                       return xtz.getAddress(path, true)["catch"](function (e) {
                         if (e.message) {
                           _this50.messageService.addError(e.message);
@@ -19132,44 +19870,44 @@
                       });
 
                     case 5:
-                      result = _context72.sent;
+                      result = _context74.sent;
                       pk = this.operationService.hex2pk(result.publicKey);
-                      return _context72.abrupt("return", pk);
+                      return _context74.abrupt("return", pk);
 
                     case 8:
                     case "end":
-                      return _context72.stop();
+                      return _context74.stop();
                   }
                 }
-              }, _callee71, this);
+              }, _callee73, this);
             }));
           }
         }, {
           key: "signOperation",
           value: function signOperation(op, path) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee72() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee74() {
               var _this51 = this;
 
               var xtz, result;
-              return regeneratorRuntime.wrap(function _callee72$(_context73) {
+              return regeneratorRuntime.wrap(function _callee74$(_context75) {
                 while (1) {
-                  switch (_context73.prev = _context73.next) {
+                  switch (_context75.prev = _context75.next) {
                     case 0:
                       if (['03', '05'].includes(op.slice(0, 2))) {
-                        _context73.next = 2;
+                        _context75.next = 2;
                         break;
                       }
 
                       throw new Error('Invalid prefix');
 
                     case 2:
-                      _context73.next = 4;
+                      _context75.next = 4;
                       return this.transportCheck();
 
                     case 4:
                       xtz = new _obsidiansystems_hw_app_xtz__WEBPACK_IMPORTED_MODULE_4___default.a(this.transport);
                       console.log('op', op);
-                      _context73.next = 8;
+                      _context75.next = 8;
                       return xtz.signOperation(path, op)["catch"](function (e) {
                         console.warn(e);
 
@@ -19177,76 +19915,76 @@
                       });
 
                     case 8:
-                      result = _context73.sent;
+                      result = _context75.sent;
                       console.log(JSON.stringify(result));
 
                       if (!(result && result.signature)) {
-                        _context73.next = 12;
+                        _context75.next = 12;
                         break;
                       }
 
-                      return _context73.abrupt("return", result.signature);
+                      return _context75.abrupt("return", result.signature);
 
                     case 12:
-                      return _context73.abrupt("return", null);
+                      return _context75.abrupt("return", null);
 
                     case 13:
                     case "end":
-                      return _context73.stop();
+                      return _context75.stop();
                   }
                 }
-              }, _callee72, this);
+              }, _callee74, this);
             }));
           }
         }, {
           key: "signHash",
           value: function signHash(hash, path) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee73() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee75() {
               var _this52 = this;
 
               var xtz, result;
-              return regeneratorRuntime.wrap(function _callee73$(_context74) {
+              return regeneratorRuntime.wrap(function _callee75$(_context76) {
                 while (1) {
-                  switch (_context74.prev = _context74.next) {
+                  switch (_context76.prev = _context76.next) {
                     case 0:
                       if (!(hash.length !== 64)) {
-                        _context74.next = 2;
+                        _context76.next = 2;
                         break;
                       }
 
                       throw new Error('Invalid hash!');
 
                     case 2:
-                      _context74.next = 4;
+                      _context76.next = 4;
                       return this.transportCheck();
 
                     case 4:
                       xtz = new _obsidiansystems_hw_app_xtz__WEBPACK_IMPORTED_MODULE_4___default.a(this.transport);
-                      _context74.next = 7;
+                      _context76.next = 7;
                       return xtz.signHash(path, hash)["catch"](function (e) {
                         _this52.messageService.addError(e, 0);
                       });
 
                     case 7:
-                      result = _context74.sent;
+                      result = _context76.sent;
                       console.log(JSON.stringify(result));
 
                       if (!(result && result.signature)) {
-                        _context74.next = 11;
+                        _context76.next = 11;
                         break;
                       }
 
-                      return _context74.abrupt("return", result.signature);
+                      return _context76.abrupt("return", result.signature);
 
                     case 11:
-                      return _context74.abrupt("return", null);
+                      return _context76.abrupt("return", null);
 
                     case 12:
                     case "end":
-                      return _context74.stop();
+                      return _context76.stop();
                   }
                 }
-              }, _callee73, this);
+              }, _callee75, this);
             }));
           }
         }]);
@@ -20296,11 +21034,11 @@
         }, {
           key: "openModal",
           value: function openModal() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee74() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee76() {
               var scrollBarWidth;
-              return regeneratorRuntime.wrap(function _callee74$(_context75) {
+              return regeneratorRuntime.wrap(function _callee76$(_context77) {
                 while (1) {
-                  switch (_context75.prev = _context75.next) {
+                  switch (_context77.prev = _context77.next) {
                     case 0:
                       scrollBarWidth = window.innerWidth - document.body.offsetWidth;
                       document.body.style.marginRight = scrollBarWidth.toString();
@@ -20310,10 +21048,10 @@
 
                     case 5:
                     case "end":
-                      return _context75.stop();
+                      return _context77.stop();
                   }
                 }
-              }, _callee74, this);
+              }, _callee76, this);
             }));
           }
         }, {
@@ -20376,18 +21114,18 @@
           value: function getTotalAmount() {
             var totalSent = big_js__WEBPACK_IMPORTED_MODULE_6___default()(0);
 
-            var _iterator35 = _createForOfIteratorHelper(this.transactions),
-                _step35;
+            var _iterator38 = _createForOfIteratorHelper(this.transactions),
+                _step38;
 
             try {
-              for (_iterator35.s(); !(_step35 = _iterator35.n()).done;) {
-                var tx = _step35.value;
+              for (_iterator38.s(); !(_step38 = _iterator38.n()).done;) {
+                var tx = _step38.value;
                 totalSent = totalSent.add(tx.amount);
               }
             } catch (err) {
-              _iterator35.e(err);
+              _iterator38.e(err);
             } finally {
-              _iterator35.f();
+              _iterator38.f();
             }
 
             return totalSent.toFixed();
@@ -20441,13 +21179,13 @@
         }, {
           key: "estimateFees",
           value: function estimateFees() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee75() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee77() {
               var _this53 = this;
 
               var prevSimError, txs, equiClass, callback;
-              return regeneratorRuntime.wrap(function _callee75$(_context76) {
+              return regeneratorRuntime.wrap(function _callee77$(_context78) {
                 while (1) {
-                  switch (_context76.prev = _context76.next) {
+                  switch (_context78.prev = _context78.next) {
                     case 0:
                       console.log('estimate..');
                       prevSimError = this.latestSimError;
@@ -20505,10 +21243,10 @@
 
                     case 6:
                     case "end":
-                      return _context76.stop();
+                      return _context78.stop();
                   }
                 }
-              }, _callee75, this);
+              }, _callee77, this);
             }));
           }
         }, {
@@ -20519,18 +21257,18 @@
             if (this.tokenTransfer) {
               data += transactions[0].to + transactions[0].amount.toString();
             } else {
-              var _iterator36 = _createForOfIteratorHelper(transactions),
-                  _step36;
+              var _iterator39 = _createForOfIteratorHelper(transactions),
+                  _step39;
 
               try {
-                for (_iterator36.s(); !(_step36 = _iterator36.n()).done;) {
-                  var tx = _step36.value;
+                for (_iterator39.s(); !(_step39 = _iterator39.n()).done;) {
+                  var tx = _step39.value;
                   data += tx.to;
                 }
               } catch (err) {
-                _iterator36.e(err);
+                _iterator39.e(err);
               } finally {
-                _iterator36.f();
+                _iterator39.f();
               }
             }
 
@@ -20732,18 +21470,18 @@
                 var max = big_js__WEBPACK_IMPORTED_MODULE_6___default()(this.maxToSend(this.activeAccount)).plus(this.tokenTransfer ? 0 : 0.000001);
                 var amount = big_js__WEBPACK_IMPORTED_MODULE_6___default()(0);
 
-                var _iterator37 = _createForOfIteratorHelper(this.transactions),
-                    _step37;
+                var _iterator40 = _createForOfIteratorHelper(this.transactions),
+                    _step40;
 
                 try {
-                  for (_iterator37.s(); !(_step37 = _iterator37.n()).done;) {
-                    var tx = _step37.value;
+                  for (_iterator40.s(); !(_step40 = _iterator40.n()).done;) {
+                    var tx = _step40.value;
                     amount = amount.plus(big_js__WEBPACK_IMPORTED_MODULE_6___default()(tx.amount));
                   }
                 } catch (err) {
-                  _iterator37.e(err);
+                  _iterator40.e(err);
                 } finally {
-                  _iterator37.f();
+                  _iterator40.f();
                 }
 
                 if (amount.gt(max)) {
@@ -20755,18 +21493,18 @@
 
                 var _amount2 = big_js__WEBPACK_IMPORTED_MODULE_6___default()(0);
 
-                var _iterator38 = _createForOfIteratorHelper(this.transactions),
-                    _step38;
+                var _iterator41 = _createForOfIteratorHelper(this.transactions),
+                    _step41;
 
                 try {
-                  for (_iterator38.s(); !(_step38 = _iterator38.n()).done;) {
-                    var _tx = _step38.value;
+                  for (_iterator41.s(); !(_step41 = _iterator41.n()).done;) {
+                    var _tx = _step41.value;
                     _amount2 = _amount2.plus(big_js__WEBPACK_IMPORTED_MODULE_6___default()(_tx.amount));
                   }
                 } catch (err) {
-                  _iterator38.e(err);
+                  _iterator41.e(err);
                 } finally {
-                  _iterator38.f();
+                  _iterator41.f();
                 }
 
                 if (_amount2.gt(maxKt)) {
@@ -20824,10 +21562,10 @@
         }, {
           key: "verifierChange",
           value: function verifierChange() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee76() {
-              return regeneratorRuntime.wrap(function _callee76$(_context77) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee78() {
+              return regeneratorRuntime.wrap(function _callee78$(_context79) {
                 while (1) {
-                  switch (_context77.prev = _context77.next) {
+                  switch (_context79.prev = _context79.next) {
                     case 0:
                       this.torusLookupAddress = '';
 
@@ -20841,52 +21579,52 @@
 
                     case 2:
                     case "end":
-                      return _context77.stop();
+                      return _context79.stop();
                   }
                 }
-              }, _callee76, this);
+              }, _callee78, this);
             }));
           }
         }, {
           key: "torusLookup",
           value: function torusLookup() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee77() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee79() {
               var _this55 = this;
 
               var _yield$this$torusServ3, pkh, twitterId;
 
-              return regeneratorRuntime.wrap(function _callee77$(_context78) {
+              return regeneratorRuntime.wrap(function _callee79$(_context80) {
                 while (1) {
-                  switch (_context78.prev = _context78.next) {
+                  switch (_context80.prev = _context80.next) {
                     case 0:
                       if (this.torusService.verifierMapKeys.includes(this.torusVerifier)) {
-                        _context78.next = 4;
+                        _context80.next = 4;
                         break;
                       }
 
                       this.formInvalid = 'Invalid verifier';
-                      _context78.next = 18;
+                      _context80.next = 18;
                       break;
 
                     case 4:
                       if (!this.invalidTorusAccount()) {
-                        _context78.next = 8;
+                        _context80.next = 8;
                         break;
                       }
 
                       this.formInvalid = this.invalidTorusAccount();
-                      _context78.next = 18;
+                      _context80.next = 18;
                       break;
 
                     case 8:
                       if (!this.toPkh) {
-                        _context78.next = 18;
+                        _context80.next = 18;
                         break;
                       }
 
                       this.torusPendingLookup = true;
                       this.torusLookupId = this.toPkh;
-                      _context78.next = 13;
+                      _context80.next = 13;
                       return this.torusService.lookupPkh(this.torusVerifier, this.toPkh)["catch"](function (e) {
                         console.error(e);
                         _this55.formInvalid = e;
@@ -20894,7 +21632,7 @@
                       });
 
                     case 13:
-                      _yield$this$torusServ3 = _context78.sent;
+                      _yield$this$torusServ3 = _context80.sent;
                       pkh = _yield$this$torusServ3.pkh;
                       twitterId = _yield$this$torusServ3.twitterId;
                       this.torusPendingLookup = false;
@@ -20909,10 +21647,10 @@
 
                     case 18:
                     case "end":
-                      return _context78.stop();
+                      return _context80.stop();
                   }
                 }
-              }, _callee77, this);
+              }, _callee79, this);
             }));
           }
         }, {
@@ -21428,12 +22166,12 @@
             var tot = 0;
             var change = false;
 
-            var _iterator39 = _createForOfIteratorHelper(accounts),
-                _step39;
+            var _iterator42 = _createForOfIteratorHelper(accounts),
+                _step42;
 
             try {
-              for (_iterator39.s(); !(_step39 = _iterator39.n()).done;) {
-                var account = _step39.value;
+              for (_iterator42.s(); !(_step42 = _iterator42.n()).done;) {
+                var account = _step42.value;
 
                 if (account.balanceXTZ !== null) {
                   account.balanceUSD = Number(account.balanceXTZ / 1000000 * this.walletService.wallet.XTZrate);
@@ -21442,9 +22180,9 @@
                 }
               }
             } catch (err) {
-              _iterator39.e(err);
+              _iterator42.e(err);
             } finally {
-              _iterator39.f();
+              _iterator42.f();
             }
 
             if (change) {
@@ -23206,34 +23944,34 @@
             var accounts = [];
 
             if (this.implicitAccounts.length) {
-              var _iterator40 = _createForOfIteratorHelper(this.implicitAccounts),
-                  _step40;
+              var _iterator43 = _createForOfIteratorHelper(this.implicitAccounts),
+                  _step43;
 
               try {
-                for (_iterator40.s(); !(_step40 = _iterator40.n()).done;) {
-                  var implicitAccount = _step40.value;
+                for (_iterator43.s(); !(_step43 = _iterator43.n()).done;) {
+                  var implicitAccount = _step43.value;
                   accounts.push(implicitAccount);
 
                   if (implicitAccount.originatedAccounts.length) {
-                    var _iterator41 = _createForOfIteratorHelper(implicitAccount.originatedAccounts),
-                        _step41;
+                    var _iterator44 = _createForOfIteratorHelper(implicitAccount.originatedAccounts),
+                        _step44;
 
                     try {
-                      for (_iterator41.s(); !(_step41 = _iterator41.n()).done;) {
-                        var originatedAccount = _step41.value;
+                      for (_iterator44.s(); !(_step44 = _iterator44.n()).done;) {
+                        var originatedAccount = _step44.value;
                         accounts.push(originatedAccount);
                       }
                     } catch (err) {
-                      _iterator41.e(err);
+                      _iterator44.e(err);
                     } finally {
-                      _iterator41.f();
+                      _iterator44.f();
                     }
                   }
                 }
               } catch (err) {
-                _iterator40.e(err);
+                _iterator43.e(err);
               } finally {
-                _iterator40.f();
+                _iterator43.f();
               }
             }
 
@@ -23248,40 +23986,40 @@
           key: "getAccount",
           value: function getAccount(address) {
             if (this.implicitAccounts.length) {
-              var _iterator42 = _createForOfIteratorHelper(this.implicitAccounts),
-                  _step42;
+              var _iterator45 = _createForOfIteratorHelper(this.implicitAccounts),
+                  _step45;
 
               try {
-                for (_iterator42.s(); !(_step42 = _iterator42.n()).done;) {
-                  var implicitAccount = _step42.value;
+                for (_iterator45.s(); !(_step45 = _iterator45.n()).done;) {
+                  var implicitAccount = _step45.value;
 
                   if (implicitAccount.address === address) {
                     return implicitAccount;
                   }
 
                   if (implicitAccount.originatedAccounts.length) {
-                    var _iterator43 = _createForOfIteratorHelper(implicitAccount.originatedAccounts),
-                        _step43;
+                    var _iterator46 = _createForOfIteratorHelper(implicitAccount.originatedAccounts),
+                        _step46;
 
                     try {
-                      for (_iterator43.s(); !(_step43 = _iterator43.n()).done;) {
-                        var originatedAccount = _step43.value;
+                      for (_iterator46.s(); !(_step46 = _iterator46.n()).done;) {
+                        var originatedAccount = _step46.value;
 
                         if (originatedAccount.address === address) {
                           return originatedAccount;
                         }
                       }
                     } catch (err) {
-                      _iterator43.e(err);
+                      _iterator46.e(err);
                     } finally {
-                      _iterator43.f();
+                      _iterator46.f();
                     }
                   }
                 }
               } catch (err) {
-                _iterator42.e(err);
+                _iterator45.e(err);
               } finally {
-                _iterator42.f();
+                _iterator45.f();
               }
             }
 
@@ -23291,21 +24029,21 @@
           key: "getImplicitAccount",
           value: function getImplicitAccount(pkh) {
             if (this.implicitAccounts.length) {
-              var _iterator44 = _createForOfIteratorHelper(this.implicitAccounts),
-                  _step44;
+              var _iterator47 = _createForOfIteratorHelper(this.implicitAccounts),
+                  _step47;
 
               try {
-                for (_iterator44.s(); !(_step44 = _iterator44.n()).done;) {
-                  var implicitAccount = _step44.value;
+                for (_iterator47.s(); !(_step47 = _iterator47.n()).done;) {
+                  var implicitAccount = _step47.value;
 
                   if (implicitAccount.pkh === pkh) {
                     return implicitAccount;
                   }
                 }
               } catch (err) {
-                _iterator44.e(err);
+                _iterator47.e(err);
               } finally {
-                _iterator44.f();
+                _iterator47.f();
               }
             }
 
@@ -23499,21 +24237,21 @@
           key: "getTokenBalance",
           value: function getTokenBalance(tokenId) {
             if (this.tokens.length) {
-              var _iterator45 = _createForOfIteratorHelper(this.tokens),
-                  _step45;
+              var _iterator48 = _createForOfIteratorHelper(this.tokens),
+                  _step48;
 
               try {
-                for (_iterator45.s(); !(_step45 = _iterator45.n()).done;) {
-                  var token = _step45.value;
+                for (_iterator48.s(); !(_step48 = _iterator48.n()).done;) {
+                  var token = _step48.value;
 
                   if (tokenId === token.tokenId) {
                     return token.balance;
                   }
                 }
               } catch (err) {
-                _iterator45.e(err);
+                _iterator48.e(err);
               } finally {
-                _iterator45.f();
+                _iterator48.f();
               }
             }
 
@@ -23822,22 +24560,22 @@
         }, {
           key: "scan",
           value: function scan() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee78() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee80() {
               var _this68 = this;
 
               var hasCamera;
-              return regeneratorRuntime.wrap(function _callee78$(_context79) {
+              return regeneratorRuntime.wrap(function _callee80$(_context81) {
                 while (1) {
-                  switch (_context79.prev = _context79.next) {
+                  switch (_context81.prev = _context81.next) {
                     case 0:
-                      _context79.next = 2;
+                      _context81.next = 2;
                       return qr_scanner__WEBPACK_IMPORTED_MODULE_3__["default"].hasCamera();
 
                     case 2:
-                      hasCamera = _context79.sent;
+                      hasCamera = _context81.sent;
 
                       if (!hasCamera) {
-                        _context79.next = 10;
+                        _context81.next = 10;
                         break;
                       }
 
@@ -23845,11 +24583,11 @@
                       this.qrScanner = new qr_scanner__WEBPACK_IMPORTED_MODULE_3__["default"](this.videoplayer.nativeElement, function (result) {
                         return _this68.handleQrCode(result);
                       });
-                      _context79.next = 8;
+                      _context81.next = 8;
                       return this.qrScanner.start();
 
                     case 8:
-                      _context79.next = 11;
+                      _context81.next = 11;
                       break;
 
                     case 10:
@@ -23857,10 +24595,10 @@
 
                     case 11:
                     case "end":
-                      return _context79.stop();
+                      return _context81.stop();
                   }
                 }
-              }, _callee78, this);
+              }, _callee80, this);
             }));
           }
         }, {
@@ -24969,35 +25707,35 @@
         }, {
           key: "setPwd",
           value: function setPwd() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee79() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee81() {
               var password;
-              return regeneratorRuntime.wrap(function _callee79$(_context80) {
+              return regeneratorRuntime.wrap(function _callee81$(_context82) {
                 while (1) {
-                  switch (_context80.prev = _context80.next) {
+                  switch (_context82.prev = _context82.next) {
                     case 0:
                       if (!this.validPwd()) {
-                        _context80.next = 19;
+                        _context82.next = 19;
                         break;
                       }
 
                       password = this.pwd1;
                       this.pwd1 = '';
                       this.pwd2 = '';
-                      _context80.next = 6;
+                      _context82.next = 6;
                       return this.messageService.startSpinner('Encrypting wallet...');
 
                     case 6:
-                      _context80.prev = 6;
-                      _context80.next = 9;
+                      _context82.prev = 6;
+                      _context82.next = 9;
                       return this.walletService.createEncryptedWallet(this.mnemonic, password, this.passphrase, this.importOption === 1 && this.hdImport);
 
                     case 9:
-                      this.wallet = _context80.sent;
+                      this.wallet = _context82.sent;
 
                     case 10:
-                      _context80.prev = 10;
+                      _context82.prev = 10;
                       this.messageService.stopSpinner();
-                      return _context80.finish(10);
+                      return _context82.finish(10);
 
                     case 13:
                       this.mnemonic = '';
@@ -25012,10 +25750,10 @@
 
                     case 19:
                     case "end":
-                      return _context80.stop();
+                      return _context82.stop();
                   }
                 }
-              }, _callee79, this, [[6,, 10, 13]]);
+              }, _callee81, this, [[6,, 10, 13]]);
             }));
           }
         }, {
@@ -25063,25 +25801,25 @@
         }, {
           key: "done",
           value: function done() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee80() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee82() {
               var _this71 = this;
 
-              return regeneratorRuntime.wrap(function _callee80$(_context81) {
+              return regeneratorRuntime.wrap(function _callee82$(_context83) {
                 while (1) {
-                  switch (_context81.prev = _context81.next) {
+                  switch (_context83.prev = _context83.next) {
                     case 0:
-                      _context81.next = 2;
+                      _context83.next = 2;
                       return this.messageService.startSpinner('Loading wallet...');
 
                     case 2:
-                      _context81.prev = 2;
-                      _context81.next = 5;
+                      _context83.prev = 2;
+                      _context83.next = 5;
                       return this.importService.importWalletFromObject(this.wallet.data, this.wallet.seed);
 
                     case 5:
-                      _context81.prev = 5;
+                      _context83.prev = 5;
                       this.messageService.stopSpinner();
-                      return _context81.finish(5);
+                      return _context83.finish(5);
 
                     case 8:
                       this.wallet = null;
@@ -25098,10 +25836,10 @@
 
                     case 11:
                     case "end":
-                      return _context81.stop();
+                      return _context83.stop();
                   }
                 }
-              }, _callee80, this, [[2,, 5, 8]]);
+              }, _callee82, this, [[2,, 5, 8]]);
             }));
           }
           /* Keystore handling */
@@ -25163,34 +25901,34 @@
         }, {
           key: "checkImportPwd",
           value: function checkImportPwd() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee81() {
-              return regeneratorRuntime.wrap(function _callee81$(_context82) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee83() {
+              return regeneratorRuntime.wrap(function _callee83$(_context84) {
                 while (1) {
-                  switch (_context82.prev = _context82.next) {
+                  switch (_context84.prev = _context84.next) {
                     case 0:
                       if (!this.pwd) {
-                        _context82.next = 12;
+                        _context84.next = 12;
                         break;
                       }
 
-                      _context82.next = 3;
+                      _context84.next = 3;
                       return this.messageService.startSpinner('Importing wallet...');
 
                     case 3:
-                      _context82.prev = 3;
-                      _context82.next = 6;
+                      _context84.prev = 3;
+                      _context84.next = 6;
                       return this["import"](this.walletJson, this.pwd);
 
                     case 6:
                       this.pwd = '';
 
                     case 7:
-                      _context82.prev = 7;
+                      _context84.prev = 7;
                       this.messageService.stopSpinner();
-                      return _context82.finish(7);
+                      return _context84.finish(7);
 
                     case 10:
-                      _context82.next = 13;
+                      _context84.next = 13;
                       break;
 
                     case 12:
@@ -25198,24 +25936,24 @@
 
                     case 13:
                     case "end":
-                      return _context82.stop();
+                      return _context84.stop();
                   }
                 }
-              }, _callee81, this, [[3,, 7, 10]]);
+              }, _callee83, this, [[3,, 7, 10]]);
             }));
           }
         }, {
           key: "import",
           value: function _import(keyFile, pwd) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee82() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee84() {
               var _this72 = this;
 
-              return regeneratorRuntime.wrap(function _callee82$(_context83) {
+              return regeneratorRuntime.wrap(function _callee84$(_context85) {
                 while (1) {
-                  switch (_context83.prev = _context83.next) {
+                  switch (_context85.prev = _context85.next) {
                     case 0:
                       this.typeCheckFile(keyFile);
-                      _context83.next = 3;
+                      _context85.next = 3;
                       return this.importService.importWalletFromJson(keyFile, pwd).then(function (success) {
                         if (success) {
                           if (_this72.walletService.wallet.implicitAccounts.length === 1 && _this72.walletService.wallet.implicitAccounts[0].originatedAccounts.length === 0) {
@@ -25234,10 +25972,10 @@
 
                     case 3:
                     case "end":
-                      return _context83.stop();
+                      return _context85.stop();
                   }
                 }
-              }, _callee82, this);
+              }, _callee84, this);
             }));
           }
         }, {
@@ -25447,12 +26185,12 @@
               var peers = JSON.parse(peersJson);
 
               if (peers && peers.length > 0 && pairInfo.publicKey) {
-                var _iterator46 = _createForOfIteratorHelper(peers),
-                    _step46;
+                var _iterator49 = _createForOfIteratorHelper(peers),
+                    _step49;
 
                 try {
-                  for (_iterator46.s(); !(_step46 = _iterator46.n()).done;) {
-                    var peer = _step46.value;
+                  for (_iterator49.s(); !(_step49 = _iterator49.n()).done;) {
+                    var peer = _step49.value;
 
                     if (peer.publicKey && peer.publicKey === pairInfo.publicKey) {
                       newPublicKey = false;
@@ -25461,9 +26199,9 @@
                     }
                   }
                 } catch (err) {
-                  _iterator46.e(err);
+                  _iterator49.e(err);
                 } finally {
-                  _iterator46.f();
+                  _iterator49.f();
                 }
               }
             }
@@ -25475,15 +26213,15 @@
         }, {
           key: "addPeer",
           value: function addPeer(pairInfoJson) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee83() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee85() {
               var pairInfo;
-              return regeneratorRuntime.wrap(function _callee83$(_context84) {
+              return regeneratorRuntime.wrap(function _callee85$(_context86) {
                 while (1) {
-                  switch (_context84.prev = _context84.next) {
+                  switch (_context86.prev = _context86.next) {
                     case 0:
                       pairInfo = JSON.parse(pairInfoJson);
                       console.log('PairInfo', pairInfo);
-                      _context84.next = 4;
+                      _context86.next = 4;
                       return this.client.addPeer(pairInfo);
 
                     case 4:
@@ -25492,61 +26230,6 @@
 
                     case 6:
                     case "end":
-                      return _context84.stop();
-                  }
-                }
-              }, _callee83, this);
-            }));
-          }
-        }, {
-          key: "syncBeaconState",
-          value: function syncBeaconState() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee84() {
-              return regeneratorRuntime.wrap(function _callee84$(_context85) {
-                while (1) {
-                  switch (_context85.prev = _context85.next) {
-                    case 0:
-                      _context85.next = 2;
-                      return this.getPeers();
-
-                    case 2:
-                      this.peers = _context85.sent;
-                      _context85.next = 5;
-                      return this.getPermissions();
-
-                    case 5:
-                      this.permissions = _context85.sent;
-
-                    case 6:
-                    case "end":
-                      return _context85.stop();
-                  }
-                }
-              }, _callee84, this);
-            }));
-          }
-        }, {
-          key: "removePeers",
-          value: function removePeers() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee85() {
-              return regeneratorRuntime.wrap(function _callee85$(_context86) {
-                while (1) {
-                  switch (_context86.prev = _context86.next) {
-                    case 0:
-                      if (!(this.peers.length > 0)) {
-                        _context86.next = 5;
-                        break;
-                      }
-
-                      _context86.next = 3;
-                      return this.removePeer(0);
-
-                    case 3:
-                      _context86.next = 0;
-                      break;
-
-                    case 5:
-                    case "end":
                       return _context86.stop();
                   }
                 }
@@ -25554,35 +26237,25 @@
             }));
           }
         }, {
-          key: "removePeer",
-          value: function removePeer(index) {
+          key: "syncBeaconState",
+          value: function syncBeaconState() {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee86() {
-              var pairInfo, senderId, peerResponse;
               return regeneratorRuntime.wrap(function _callee86$(_context87) {
                 while (1) {
                   switch (_context87.prev = _context87.next) {
                     case 0:
-                      pairInfo = this.peers[index];
-                      _context87.next = 3;
-                      return Object(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["getSenderId"])(pairInfo.publicKey);
+                      _context87.next = 2;
+                      return this.getPeers();
 
-                    case 3:
-                      senderId = _context87.sent;
-                      peerResponse = Object.assign(Object.assign({}, pairInfo), {
-                        type: 'p2p-pairing-response',
-                        senderId: senderId
-                      });
-                      _context87.next = 7;
-                      return this.client.removePeer(peerResponse);
+                    case 2:
+                      this.peers = _context87.sent;
+                      _context87.next = 5;
+                      return this.getPermissions();
 
-                    case 7:
-                      _context87.next = 9;
-                      return this.client.removeAppMetadata(senderId);
+                    case 5:
+                      this.permissions = _context87.sent;
 
-                    case 9:
-                      this.syncBeaconState();
-
-                    case 10:
+                    case 6:
                     case "end":
                       return _context87.stop();
                   }
@@ -25591,20 +26264,26 @@
             }));
           }
         }, {
-          key: "removePermissions",
-          value: function removePermissions() {
+          key: "removePeers",
+          value: function removePeers() {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee87() {
               return regeneratorRuntime.wrap(function _callee87$(_context88) {
                 while (1) {
                   switch (_context88.prev = _context88.next) {
                     case 0:
-                      _context88.next = 2;
-                      return this.client.removeAllPermissions();
+                      if (!(this.peers.length > 0)) {
+                        _context88.next = 5;
+                        break;
+                      }
 
-                    case 2:
-                      this.syncBeaconState();
+                      _context88.next = 3;
+                      return this.removePeer(0);
 
                     case 3:
+                      _context88.next = 0;
+                      break;
+
+                    case 5:
                     case "end":
                       return _context88.stop();
                   }
@@ -25613,20 +26292,35 @@
             }));
           }
         }, {
-          key: "removePermission",
-          value: function removePermission(index) {
+          key: "removePeer",
+          value: function removePeer(index) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee88() {
+              var pairInfo, senderId, peerResponse;
               return regeneratorRuntime.wrap(function _callee88$(_context89) {
                 while (1) {
                   switch (_context89.prev = _context89.next) {
                     case 0:
-                      _context89.next = 2;
-                      return this.client.removePermission(this.permissions[index].accountIdentifier);
-
-                    case 2:
-                      this.syncBeaconState();
+                      pairInfo = this.peers[index];
+                      _context89.next = 3;
+                      return Object(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["getSenderId"])(pairInfo.publicKey);
 
                     case 3:
+                      senderId = _context89.sent;
+                      peerResponse = Object.assign(Object.assign({}, pairInfo), {
+                        type: 'p2p-pairing-response',
+                        senderId: senderId
+                      });
+                      _context89.next = 7;
+                      return this.client.removePeer(peerResponse);
+
+                    case 7:
+                      _context89.next = 9;
+                      return this.client.removeAppMetadata(senderId);
+
+                    case 9:
+                      this.syncBeaconState();
+
+                    case 10:
                     case "end":
                       return _context89.stop();
                   }
@@ -25635,18 +26329,18 @@
             }));
           }
         }, {
-          key: "getPeers",
-          value: function getPeers() {
+          key: "removePermissions",
+          value: function removePermissions() {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee89() {
               return regeneratorRuntime.wrap(function _callee89$(_context90) {
                 while (1) {
                   switch (_context90.prev = _context90.next) {
                     case 0:
                       _context90.next = 2;
-                      return this.client.getPeers();
+                      return this.client.removeAllPermissions();
 
                     case 2:
-                      return _context90.abrupt("return", _context90.sent);
+                      this.syncBeaconState();
 
                     case 3:
                     case "end":
@@ -25657,18 +26351,18 @@
             }));
           }
         }, {
-          key: "getPermissions",
-          value: function getPermissions() {
+          key: "removePermission",
+          value: function removePermission(index) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee90() {
               return regeneratorRuntime.wrap(function _callee90$(_context91) {
                 while (1) {
                   switch (_context91.prev = _context91.next) {
                     case 0:
                       _context91.next = 2;
-                      return this.client.getPermissions();
+                      return this.client.removePermission(this.permissions[index].accountIdentifier);
 
                     case 2:
-                      return _context91.abrupt("return", _context91.sent);
+                      this.syncBeaconState();
 
                     case 3:
                     case "end":
@@ -25679,17 +26373,20 @@
             }));
           }
         }, {
-          key: "rejectOnPermission",
-          value: function rejectOnPermission(message) {
+          key: "getPeers",
+          value: function getPeers() {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee91() {
               return regeneratorRuntime.wrap(function _callee91$(_context92) {
                 while (1) {
                   switch (_context92.prev = _context92.next) {
                     case 0:
                       _context92.next = 2;
-                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].NOT_GRANTED_ERROR, message);
+                      return this.client.getPeers();
 
                     case 2:
+                      return _context92.abrupt("return", _context92.sent);
+
+                    case 3:
                     case "end":
                       return _context92.stop();
                   }
@@ -25698,17 +26395,20 @@
             }));
           }
         }, {
-          key: "rejectOnNetwork",
-          value: function rejectOnNetwork(message) {
+          key: "getPermissions",
+          value: function getPermissions() {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee92() {
               return regeneratorRuntime.wrap(function _callee92$(_context93) {
                 while (1) {
                   switch (_context93.prev = _context93.next) {
                     case 0:
                       _context93.next = 2;
-                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].NETWORK_NOT_SUPPORTED, message);
+                      return this.client.getPermissions();
 
                     case 2:
+                      return _context93.abrupt("return", _context93.sent);
+
+                    case 3:
                     case "end":
                       return _context93.stop();
                   }
@@ -25717,15 +26417,15 @@
             }));
           }
         }, {
-          key: "rejectOnUserAbort",
-          value: function rejectOnUserAbort(message) {
+          key: "rejectOnPermission",
+          value: function rejectOnPermission(message) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee93() {
               return regeneratorRuntime.wrap(function _callee93$(_context94) {
                 while (1) {
                   switch (_context94.prev = _context94.next) {
                     case 0:
                       _context94.next = 2;
-                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].ABORTED_ERROR, message);
+                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].NOT_GRANTED_ERROR, message);
 
                     case 2:
                     case "end":
@@ -25736,15 +26436,15 @@
             }));
           }
         }, {
-          key: "rejectOnSourceAddress",
-          value: function rejectOnSourceAddress(message) {
+          key: "rejectOnNetwork",
+          value: function rejectOnNetwork(message) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee94() {
               return regeneratorRuntime.wrap(function _callee94$(_context95) {
                 while (1) {
                   switch (_context95.prev = _context95.next) {
                     case 0:
                       _context95.next = 2;
-                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].NO_PRIVATE_KEY_FOUND_ERROR, message);
+                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].NETWORK_NOT_SUPPORTED, message);
 
                     case 2:
                     case "end":
@@ -25755,15 +26455,15 @@
             }));
           }
         }, {
-          key: "rejectOnTooManyOps",
-          value: function rejectOnTooManyOps(message) {
+          key: "rejectOnUserAbort",
+          value: function rejectOnUserAbort(message) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee95() {
               return regeneratorRuntime.wrap(function _callee95$(_context96) {
                 while (1) {
                   switch (_context96.prev = _context96.next) {
                     case 0:
                       _context96.next = 2;
-                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].TOO_MANY_OPERATIONS, message);
+                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].ABORTED_ERROR, message);
 
                     case 2:
                     case "end":
@@ -25774,15 +26474,15 @@
             }));
           }
         }, {
-          key: "rejectOnUnknown",
-          value: function rejectOnUnknown(message) {
+          key: "rejectOnSourceAddress",
+          value: function rejectOnSourceAddress(message) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee96() {
               return regeneratorRuntime.wrap(function _callee96$(_context97) {
                 while (1) {
                   switch (_context97.prev = _context97.next) {
                     case 0:
                       _context97.next = 2;
-                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].UNKNOWN_ERROR, message);
+                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].NO_PRIVATE_KEY_FOUND_ERROR, message);
 
                     case 2:
                     case "end":
@@ -25793,15 +26493,15 @@
             }));
           }
         }, {
-          key: "rejectOnParameters",
-          value: function rejectOnParameters(message) {
+          key: "rejectOnTooManyOps",
+          value: function rejectOnTooManyOps(message) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee97() {
               return regeneratorRuntime.wrap(function _callee97$(_context98) {
                 while (1) {
                   switch (_context98.prev = _context98.next) {
                     case 0:
                       _context98.next = 2;
-                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].PARAMETERS_INVALID_ERROR, message);
+                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].TOO_MANY_OPERATIONS, message);
 
                     case 2:
                     case "end":
@@ -25812,15 +26512,15 @@
             }));
           }
         }, {
-          key: "rejectOnBroadcastError",
-          value: function rejectOnBroadcastError(message) {
+          key: "rejectOnUnknown",
+          value: function rejectOnUnknown(message) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee98() {
               return regeneratorRuntime.wrap(function _callee98$(_context99) {
                 while (1) {
                   switch (_context99.prev = _context99.next) {
                     case 0:
                       _context99.next = 2;
-                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].BROADCAST_ERROR, message);
+                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].UNKNOWN_ERROR, message);
 
                     case 2:
                     case "end":
@@ -25831,39 +26531,17 @@
             }));
           }
         }, {
-          key: "respondWithError",
-          value: function respondWithError(errorType, requestMessage) {
+          key: "rejectOnParameters",
+          value: function rejectOnParameters(message) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee99() {
-              var response;
               return regeneratorRuntime.wrap(function _callee99$(_context100) {
                 while (1) {
                   switch (_context100.prev = _context100.next) {
                     case 0:
-                      if (!requestMessage) {
-                        _context100.next = 11;
-                        break;
-                      }
+                      _context100.next = 2;
+                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].PARAMETERS_INVALID_ERROR, message);
 
-                      _context100.t0 = _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconMessageType"].Error;
-                      _context100.t1 = errorType;
-                      _context100.t2 = _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BEACON_VERSION"];
-                      _context100.t3 = requestMessage.id;
-                      _context100.next = 7;
-                      return this.client.beaconId;
-
-                    case 7:
-                      _context100.t4 = _context100.sent;
-                      response = {
-                        type: _context100.t0,
-                        errorType: _context100.t1,
-                        version: _context100.t2,
-                        id: _context100.t3,
-                        senderId: _context100.t4
-                      };
-                      _context100.next = 11;
-                      return this.client.respond(response);
-
-                    case 11:
+                    case 2:
                     case "end":
                       return _context100.stop();
                   }
@@ -25872,25 +26550,17 @@
             }));
           }
         }, {
-          key: "approvePermissionRequest",
-          value: function approvePermissionRequest(message, publicKey) {
+          key: "rejectOnBroadcastError",
+          value: function rejectOnBroadcastError(message) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee100() {
-              var response;
               return regeneratorRuntime.wrap(function _callee100$(_context101) {
                 while (1) {
                   switch (_context101.prev = _context101.next) {
                     case 0:
-                      response = {
-                        type: _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconMessageType"].PermissionResponse,
-                        network: message.network,
-                        scopes: message.scopes,
-                        id: message.id,
-                        publicKey: publicKey
-                      };
-                      _context101.next = 3;
-                      return this.client.respond(response);
+                      _context101.next = 2;
+                      return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].BROADCAST_ERROR, message);
 
-                    case 3:
+                    case 2:
                     case "end":
                       return _context101.stop();
                   }
@@ -25899,13 +26569,81 @@
             }));
           }
         }, {
-          key: "approveSignPayloadRequest",
-          value: function approveSignPayloadRequest(message, signature) {
+          key: "respondWithError",
+          value: function respondWithError(errorType, requestMessage) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee101() {
               var response;
               return regeneratorRuntime.wrap(function _callee101$(_context102) {
                 while (1) {
                   switch (_context102.prev = _context102.next) {
+                    case 0:
+                      if (!requestMessage) {
+                        _context102.next = 11;
+                        break;
+                      }
+
+                      _context102.t0 = _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconMessageType"].Error;
+                      _context102.t1 = errorType;
+                      _context102.t2 = _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BEACON_VERSION"];
+                      _context102.t3 = requestMessage.id;
+                      _context102.next = 7;
+                      return this.client.beaconId;
+
+                    case 7:
+                      _context102.t4 = _context102.sent;
+                      response = {
+                        type: _context102.t0,
+                        errorType: _context102.t1,
+                        version: _context102.t2,
+                        id: _context102.t3,
+                        senderId: _context102.t4
+                      };
+                      _context102.next = 11;
+                      return this.client.respond(response);
+
+                    case 11:
+                    case "end":
+                      return _context102.stop();
+                  }
+                }
+              }, _callee101, this);
+            }));
+          }
+        }, {
+          key: "approvePermissionRequest",
+          value: function approvePermissionRequest(message, publicKey) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee102() {
+              var response;
+              return regeneratorRuntime.wrap(function _callee102$(_context103) {
+                while (1) {
+                  switch (_context103.prev = _context103.next) {
+                    case 0:
+                      response = {
+                        type: _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconMessageType"].PermissionResponse,
+                        network: message.network,
+                        scopes: message.scopes,
+                        id: message.id,
+                        publicKey: publicKey
+                      };
+                      _context103.next = 3;
+                      return this.client.respond(response);
+
+                    case 3:
+                    case "end":
+                      return _context103.stop();
+                  }
+                }
+              }, _callee102, this);
+            }));
+          }
+        }, {
+          key: "approveSignPayloadRequest",
+          value: function approveSignPayloadRequest(message, signature) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee103() {
+              var response;
+              return regeneratorRuntime.wrap(function _callee103$(_context104) {
+                while (1) {
+                  switch (_context104.prev = _context104.next) {
                     case 0:
                       response = {
                         type: _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconMessageType"].SignPayloadResponse,
@@ -25913,15 +26651,15 @@
                         signingType: message.signingType,
                         signature: signature
                       };
-                      _context102.next = 3;
+                      _context104.next = 3;
                       return this.client.respond(response);
 
                     case 3:
                     case "end":
-                      return _context102.stop();
+                      return _context104.stop();
                   }
                 }
-              }, _callee101, this);
+              }, _callee103, this);
             }));
           }
         }]);
@@ -27684,16 +28422,16 @@
         }, {
           key: "init",
           value: function init() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee102() {
-              return regeneratorRuntime.wrap(function _callee102$(_context103) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee104() {
+              return regeneratorRuntime.wrap(function _callee104$(_context105) {
                 while (1) {
-                  switch (_context103.prev = _context103.next) {
+                  switch (_context105.prev = _context105.next) {
                     case 0:
-                      _context103.next = 2;
+                      _context105.next = 2;
                       return this.openModal();
 
                     case 2:
-                      _context103.next = 4;
+                      _context105.next = 4;
                       return this.loadParameters();
 
                     case 4:
@@ -27703,28 +28441,28 @@
 
                     case 5:
                     case "end":
-                      return _context103.stop();
+                      return _context105.stop();
                   }
                 }
-              }, _callee102, this);
+              }, _callee104, this);
             }));
           }
         }, {
           key: "loadParameters",
           value: function loadParameters() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee103() {
-              var _iterator47, _step47, _step47$value, i, op;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee105() {
+              var _iterator50, _step50, _step50$value, i, op;
 
-              return regeneratorRuntime.wrap(function _callee103$(_context104) {
+              return regeneratorRuntime.wrap(function _callee105$(_context106) {
                 while (1) {
-                  switch (_context104.prev = _context104.next) {
+                  switch (_context106.prev = _context106.next) {
                     case 0:
                       if (this.transactions.length > 1) {
-                        _iterator47 = _createForOfIteratorHelper(this.transactions.entries());
+                        _iterator50 = _createForOfIteratorHelper(this.transactions.entries());
 
                         try {
-                          for (_iterator47.s(); !(_step47 = _iterator47.n()).done;) {
-                            _step47$value = _slicedToArray(_step47.value, 2), i = _step47$value[0], op = _step47$value[1];
+                          for (_iterator50.s(); !(_step50 = _iterator50.n()).done;) {
+                            _step50$value = _slicedToArray(_step50.value, 2), i = _step50$value[0], op = _step50$value[1];
 
                             if (op.parameters) {
                               this.batchParameters.push({
@@ -27738,9 +28476,9 @@
                             }
                           }
                         } catch (err) {
-                          _iterator47.e(err);
+                          _iterator50.e(err);
                         } finally {
-                          _iterator47.f();
+                          _iterator50.f();
                         }
                       } else if (this.transactions[0].parameters) {
                         this.updateParameters(0, this.transactions[0].parameters);
@@ -27748,10 +28486,10 @@
 
                     case 1:
                     case "end":
-                      return _context104.stop();
+                      return _context106.stop();
                   }
                 }
-              }, _callee103, this);
+              }, _callee105, this);
             }));
           }
         }, {
@@ -27807,11 +28545,11 @@
         }, {
           key: "openModal",
           value: function openModal() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee104() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee106() {
               var scrollBarWidth;
-              return regeneratorRuntime.wrap(function _callee104$(_context105) {
+              return regeneratorRuntime.wrap(function _callee106$(_context107) {
                 while (1) {
-                  switch (_context105.prev = _context105.next) {
+                  switch (_context107.prev = _context107.next) {
                     case 0:
                       scrollBarWidth = window.innerWidth - document.body.offsetWidth;
                       document.body.style.marginRight = scrollBarWidth.toString();
@@ -27820,10 +28558,10 @@
 
                     case 4:
                     case "end":
-                      return _context105.stop();
+                      return _context107.stop();
                   }
                 }
-              }, _callee104, this);
+              }, _callee106, this);
             }));
           }
         }, {
@@ -27831,18 +28569,18 @@
           value: function totalAmount() {
             var totalSent = big_js__WEBPACK_IMPORTED_MODULE_12___default()(0);
 
-            var _iterator48 = _createForOfIteratorHelper(this.transactions),
-                _step48;
+            var _iterator51 = _createForOfIteratorHelper(this.transactions),
+                _step51;
 
             try {
-              for (_iterator48.s(); !(_step48 = _iterator48.n()).done;) {
-                var tx = _step48.value;
+              for (_iterator51.s(); !(_step51 = _iterator51.n()).done;) {
+                var tx = _step51.value;
                 totalSent = totalSent.add(tx.amount);
               }
             } catch (err) {
-              _iterator48.e(err);
+              _iterator51.e(err);
             } finally {
-              _iterator48.f();
+              _iterator51.f();
             }
 
             return totalSent.toFixed();
@@ -27856,18 +28594,18 @@
 
             var totalFee = big_js__WEBPACK_IMPORTED_MODULE_12___default()(0);
 
-            var _iterator49 = _createForOfIteratorHelper(this.transactions),
-                _step49;
+            var _iterator52 = _createForOfIteratorHelper(this.transactions),
+                _step52;
 
             try {
-              for (_iterator49.s(); !(_step49 = _iterator49.n()).done;) {
-                var tx = _step49.value;
+              for (_iterator52.s(); !(_step52 = _iterator52.n()).done;) {
+                var tx = _step52.value;
                 totalFee = totalFee.add(tx.fee ? tx.fee : 0);
               }
             } catch (err) {
-              _iterator49.e(err);
+              _iterator52.e(err);
             } finally {
-              _iterator49.f();
+              _iterator52.f();
             }
 
             return totalFee.toFixed();
@@ -27877,18 +28615,18 @@
           value: function getTotalBurn() {
             var totalBurn = big_js__WEBPACK_IMPORTED_MODULE_12___default()(0);
 
-            var _iterator50 = _createForOfIteratorHelper(this.transactions),
-                _step50;
+            var _iterator53 = _createForOfIteratorHelper(this.transactions),
+                _step53;
 
             try {
-              for (_iterator50.s(); !(_step50 = _iterator50.n()).done;) {
-                var tx = _step50.value;
+              for (_iterator53.s(); !(_step53 = _iterator53.n()).done;) {
+                var tx = _step53.value;
                 totalBurn = totalBurn.add(tx.storageLimit ? tx.storageLimit : 0);
               }
             } catch (err) {
-              _iterator50.e(err);
+              _iterator53.e(err);
             } finally {
-              _iterator50.f();
+              _iterator53.f();
             }
 
             totalBurn = totalBurn.mul(this.transactions.length).times(this.costPerByte).div(1000000).toFixed();
@@ -27897,38 +28635,38 @@
         }, {
           key: "ledgerRetry",
           value: function ledgerRetry() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee105() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee107() {
               var keys;
-              return regeneratorRuntime.wrap(function _callee105$(_context106) {
+              return regeneratorRuntime.wrap(function _callee107$(_context108) {
                 while (1) {
-                  switch (_context106.prev = _context106.next) {
+                  switch (_context108.prev = _context108.next) {
                     case 0:
                       if (this.inputValidationService.fee(this.getTotalFee())) {
-                        _context106.next = 3;
+                        _context108.next = 3;
                         break;
                       }
 
                       this.messageService.addError('Invalid fee');
-                      return _context106.abrupt("return");
+                      return _context108.abrupt("return");
 
                     case 3:
                       this.messageService.startSpinner('Preparing transaction...');
-                      _context106.next = 6;
+                      _context108.next = 6;
                       return this.walletService.getKeys('');
 
                     case 6:
-                      keys = _context106.sent;
+                      keys = _context108.sent;
 
                       if (!keys) {
-                        _context106.next = 12;
+                        _context108.next = 12;
                         break;
                       }
 
-                      _context106.next = 10;
+                      _context108.next = 10;
                       return this.sendTransaction(keys);
 
                     case 10:
-                      _context106.next = 13;
+                      _context108.next = 13;
                       break;
 
                     case 12:
@@ -27936,57 +28674,57 @@
 
                     case 13:
                     case "end":
-                      return _context106.stop();
+                      return _context108.stop();
                   }
                 }
-              }, _callee105, this);
+              }, _callee107, this);
             }));
           }
         }, {
           key: "inject",
           value: function inject() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee106() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee108() {
               var pwd, keys;
-              return regeneratorRuntime.wrap(function _callee106$(_context107) {
+              return regeneratorRuntime.wrap(function _callee108$(_context109) {
                 while (1) {
-                  switch (_context107.prev = _context107.next) {
+                  switch (_context109.prev = _context109.next) {
                     case 0:
                       if (!this.walletService.isLedgerWallet()) {
-                        _context107.next = 6;
+                        _context109.next = 6;
                         break;
                       }
 
                       this.broadCastLedgerTransaction();
                       this.sendResponse = null;
                       this.closeModal();
-                      _context107.next = 22;
+                      _context109.next = 22;
                       break;
 
                     case 6:
                       if (this.inputValidationService.fee(this.getTotalFee())) {
-                        _context107.next = 9;
+                        _context109.next = 9;
                         break;
                       }
 
                       this.messageService.addError('Invalid fee');
-                      return _context107.abrupt("return");
+                      return _context109.abrupt("return");
 
                     case 9:
                       pwd = this.password;
                       this.password = '';
                       this.messageService.startSpinner('Signing transaction...');
-                      _context107.prev = 12;
-                      _context107.next = 15;
+                      _context109.prev = 12;
+                      _context109.next = 15;
                       return this.walletService.getKeys(pwd, this.activeAccount.pkh);
 
                     case 15:
-                      keys = _context107.sent;
-                      _context107.next = 21;
+                      keys = _context109.sent;
+                      _context109.next = 21;
                       break;
 
                     case 18:
-                      _context107.prev = 18;
-                      _context107.t0 = _context107["catch"](12);
+                      _context109.prev = 18;
+                      _context109.t0 = _context109["catch"](12);
                       this.messageService.stopSpinner();
 
                     case 21:
@@ -28007,45 +28745,45 @@
 
                     case 22:
                     case "end":
-                      return _context107.stop();
+                      return _context109.stop();
                   }
                 }
-              }, _callee106, this, [[12, 18]]);
+              }, _callee108, this, [[12, 18]]);
             }));
           }
         }, {
           key: "sendTransaction",
           value: function sendTransaction(keys) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee108() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee110() {
               var _this75 = this;
 
-              return regeneratorRuntime.wrap(function _callee108$(_context109) {
+              return regeneratorRuntime.wrap(function _callee110$(_context111) {
                 while (1) {
-                  switch (_context109.prev = _context109.next) {
+                  switch (_context111.prev = _context111.next) {
                     case 0:
                       this.operationService.transfer(this.activeAccount.address, this.transactions, Number(this.getTotalFee()), keys, this.tokenTransfer).subscribe(function (ans) {
-                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this75, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee107() {
-                          var metadata, _iterator51, _step51, transaction;
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this75, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee109() {
+                          var metadata, _iterator54, _step54, transaction;
 
-                          return regeneratorRuntime.wrap(function _callee107$(_context108) {
+                          return regeneratorRuntime.wrap(function _callee109$(_context110) {
                             while (1) {
-                              switch (_context108.prev = _context108.next) {
+                              switch (_context110.prev = _context110.next) {
                                 case 0:
                                   this.sendResponse = ans;
 
                                   if (!(ans.success === true)) {
-                                    _context108.next = 37;
+                                    _context110.next = 37;
                                     break;
                                   }
 
                                   console.log('Transaction successful ', ans);
 
                                   if (!ans.payload.opHash) {
-                                    _context108.next = 31;
+                                    _context110.next = 31;
                                     break;
                                   }
 
-                                  _context108.next = 6;
+                                  _context110.next = 6;
                                   return this.messageService.stopSpinner();
 
                                 case 6:
@@ -28055,7 +28793,7 @@
                                     opHash: ans.payload.opHash,
                                     tokenTransfer: this.tokenTransfer
                                   };
-                                  _context108.next = 10;
+                                  _context110.next = 10;
                                   return this.coordinatorService.boost(this.activeAccount.address, metadata);
 
                                 case 10:
@@ -28063,70 +28801,70 @@
                                     this.torusNotification(this.transactions[0]);
                                   }
 
-                                  _iterator51 = _createForOfIteratorHelper(this.transactions);
-                                  _context108.prev = 12;
+                                  _iterator54 = _createForOfIteratorHelper(this.transactions);
+                                  _context110.prev = 12;
 
-                                  _iterator51.s();
+                                  _iterator54.s();
 
                                 case 14:
-                                  if ((_step51 = _iterator51.n()).done) {
-                                    _context108.next = 21;
+                                  if ((_step54 = _iterator54.n()).done) {
+                                    _context110.next = 21;
                                     break;
                                   }
 
-                                  transaction = _step51.value;
+                                  transaction = _step54.value;
 
                                   if (!this.walletService.addressExists(transaction.destination)) {
-                                    _context108.next = 19;
+                                    _context110.next = 19;
                                     break;
                                   }
 
-                                  _context108.next = 19;
+                                  _context110.next = 19;
                                   return this.coordinatorService.boost(transaction.destination);
 
                                 case 19:
-                                  _context108.next = 14;
+                                  _context110.next = 14;
                                   break;
 
                                 case 21:
-                                  _context108.next = 26;
+                                  _context110.next = 26;
                                   break;
 
                                 case 23:
-                                  _context108.prev = 23;
-                                  _context108.t0 = _context108["catch"](12);
+                                  _context110.prev = 23;
+                                  _context110.t0 = _context110["catch"](12);
 
-                                  _iterator51.e(_context108.t0);
+                                  _iterator54.e(_context110.t0);
 
                                 case 26:
-                                  _context108.prev = 26;
+                                  _context110.prev = 26;
 
-                                  _iterator51.f();
+                                  _iterator54.f();
 
-                                  return _context108.finish(26);
+                                  return _context110.finish(26);
 
                                 case 29:
-                                  _context108.next = 35;
+                                  _context110.next = 35;
                                   break;
 
                                 case 31:
                                   if (!(this.walletService.wallet instanceof _services_wallet_wallet__WEBPACK_IMPORTED_MODULE_13__["LedgerWallet"])) {
-                                    _context108.next = 35;
+                                    _context110.next = 35;
                                     break;
                                   }
 
-                                  _context108.next = 34;
+                                  _context110.next = 34;
                                   return this.requestLedgerSignature();
 
                                 case 34:
-                                  return _context108.abrupt("return");
+                                  return _context110.abrupt("return");
 
                                 case 35:
-                                  _context108.next = 42;
+                                  _context110.next = 42;
                                   break;
 
                                 case 37:
-                                  _context108.next = 39;
+                                  _context110.next = 39;
                                   return this.messageService.stopSpinner();
 
                                 case 39:
@@ -28139,10 +28877,10 @@
 
                                 case 43:
                                 case "end":
-                                  return _context108.stop();
+                                  return _context110.stop();
                               }
                             }
-                          }, _callee107, this, [[12, 23, 26, 29]]);
+                          }, _callee109, this, [[12, 23, 26, 29]]);
                         }));
                       }, function (err) {
                         _this75.messageService.stopSpinner();
@@ -28160,53 +28898,53 @@
 
                     case 1:
                     case "end":
-                      return _context109.stop();
+                      return _context111.stop();
                   }
                 }
-              }, _callee108, this);
+              }, _callee110, this);
             }));
           }
         }, {
           key: "requestLedgerSignature",
           value: function requestLedgerSignature() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee109() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee111() {
               var op, signature, signedOp;
-              return regeneratorRuntime.wrap(function _callee109$(_context110) {
+              return regeneratorRuntime.wrap(function _callee111$(_context112) {
                 while (1) {
-                  switch (_context110.prev = _context110.next) {
+                  switch (_context112.prev = _context112.next) {
                     case 0:
                       if (!(this.walletService.wallet instanceof _services_wallet_wallet__WEBPACK_IMPORTED_MODULE_13__["LedgerWallet"])) {
-                        _context110.next = 19;
+                        _context112.next = 19;
                         break;
                       }
 
-                      _context110.next = 3;
+                      _context112.next = 3;
                       return this.messageService.startSpinner('Waiting for Ledger signature...');
 
                     case 3:
-                      _context110.prev = 3;
+                      _context112.prev = 3;
                       op = this.sendResponse.payload.unsignedOperation;
                       signature = '';
 
                       if (!(op.length <= 2290)) {
-                        _context110.next = 12;
+                        _context112.next = 12;
                         break;
                       }
 
-                      _context110.next = 9;
+                      _context112.next = 9;
                       return this.ledgerService.signOperation('03' + op, this.walletService.wallet.implicitAccounts[0].derivationPath);
 
                     case 9:
-                      signature = _context110.sent;
-                      _context110.next = 15;
+                      signature = _context112.sent;
+                      _context112.next = 15;
                       break;
 
                     case 12:
-                      _context110.next = 14;
+                      _context112.next = 14;
                       return this.ledgerService.signHash(this.operationService.ledgerPreHash('03' + op), this.walletService.wallet.implicitAccounts[0].derivationPath);
 
                     case 14:
-                      signature = _context110.sent;
+                      signature = _context112.sent;
 
                     case 15:
                       if (signature) {
@@ -28218,39 +28956,39 @@
                       }
 
                     case 16:
-                      _context110.prev = 16;
+                      _context112.prev = 16;
                       this.messageService.stopSpinner();
-                      return _context110.finish(16);
+                      return _context112.finish(16);
 
                     case 19:
                     case "end":
-                      return _context110.stop();
+                      return _context112.stop();
                   }
                 }
-              }, _callee109, this, [[3,, 16, 19]]);
+              }, _callee111, this, [[3,, 16, 19]]);
             }));
           }
         }, {
           key: "broadCastLedgerTransaction",
           value: function broadCastLedgerTransaction() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee111() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee113() {
               var _this76 = this;
 
-              return regeneratorRuntime.wrap(function _callee111$(_context112) {
+              return regeneratorRuntime.wrap(function _callee113$(_context114) {
                 while (1) {
-                  switch (_context112.prev = _context112.next) {
+                  switch (_context114.prev = _context114.next) {
                     case 0:
                       this.operationService.broadcast(this.sendResponse.payload.signedOperation).subscribe(function (ans) {
-                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this76, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee110() {
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this76, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee112() {
                           var metadata;
-                          return regeneratorRuntime.wrap(function _callee110$(_context111) {
+                          return regeneratorRuntime.wrap(function _callee112$(_context113) {
                             while (1) {
-                              switch (_context111.prev = _context111.next) {
+                              switch (_context113.prev = _context113.next) {
                                 case 0:
                                   this.sendResponse = ans;
 
                                   if (!(ans.success && this.activeAccount)) {
-                                    _context111.next = 12;
+                                    _context113.next = 12;
                                     break;
                                   }
 
@@ -28264,21 +29002,21 @@
                                     this.torusNotification(this.transactions[0]);
                                   }
 
-                                  _context111.next = 6;
+                                  _context113.next = 6;
                                   return this.coordinatorService.boost(this.activeAccount.address, metadata);
 
                                 case 6:
                                   if (!this.walletService.addressExists(this.transactions[0].destination)) {
-                                    _context111.next = 9;
+                                    _context113.next = 9;
                                     break;
                                   }
 
-                                  _context111.next = 9;
+                                  _context113.next = 9;
                                   return this.coordinatorService.boost(this.transactions[0].destination);
 
                                 case 9:
                                   this.operationResponse.emit(ans.payload.opHash);
-                                  _context111.next = 14;
+                                  _context113.next = 14;
                                   break;
 
                                 case 12:
@@ -28291,29 +29029,29 @@
 
                                 case 16:
                                 case "end":
-                                  return _context111.stop();
+                                  return _context113.stop();
                               }
                             }
-                          }, _callee110, this);
+                          }, _callee112, this);
                         }));
                       });
 
                     case 1:
                     case "end":
-                      return _context112.stop();
+                      return _context114.stop();
                   }
                 }
-              }, _callee111, this);
+              }, _callee113, this);
             }));
           }
         }, {
           key: "torusNotification",
           value: function torusNotification(transaction) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee112() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee114() {
               var amount;
-              return regeneratorRuntime.wrap(function _callee112$(_context113) {
+              return regeneratorRuntime.wrap(function _callee114$(_context115) {
                 while (1) {
-                  switch (_context113.prev = _context113.next) {
+                  switch (_context115.prev = _context115.next) {
                     case 0:
                       if (transaction.meta) {
                         amount = this.tokenService.formatAmount(this.tokenTransfer, transaction.amount.toString(), false);
@@ -28332,10 +29070,10 @@
 
                     case 1:
                     case "end":
-                      return _context113.stop();
+                      return _context115.stop();
                   }
                 }
-              }, _callee112, this);
+              }, _callee114, this);
             }));
           }
         }, {
@@ -28843,38 +29581,38 @@
           key: "handleUnknownTokenIds",
           value: function handleUnknownTokenIds(unknownTokenIds) {
             if (unknownTokenIds.length) {
-              var _iterator52 = _createForOfIteratorHelper(unknownTokenIds),
-                  _step52;
+              var _iterator55 = _createForOfIteratorHelper(unknownTokenIds),
+                  _step55;
 
               try {
-                for (_iterator52.s(); !(_step52 = _iterator52.n()).done;) {
-                  var tokenId = _step52.value;
+                for (_iterator55.s(); !(_step55 = _iterator55.n()).done;) {
+                  var tokenId = _step55.value;
                   var tok = tokenId.split(':');
                   this.tokenService.searchMetadata(tok[0], tok[1]);
                 }
               } catch (err) {
-                _iterator52.e(err);
+                _iterator55.e(err);
               } finally {
-                _iterator52.f();
+                _iterator55.f();
               }
             }
           }
         }, {
           key: "updateTokenBalances",
           value: function updateTokenBalances(account, tokens) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee113() {
-              var _iterator53, _step53, token, tokenId;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee115() {
+              var _iterator56, _step56, token, tokenId;
 
-              return regeneratorRuntime.wrap(function _callee113$(_context114) {
+              return regeneratorRuntime.wrap(function _callee115$(_context116) {
                 while (1) {
-                  switch (_context114.prev = _context114.next) {
+                  switch (_context116.prev = _context116.next) {
                     case 0:
                       if (tokens && tokens.length) {
-                        _iterator53 = _createForOfIteratorHelper(tokens);
+                        _iterator56 = _createForOfIteratorHelper(tokens);
 
                         try {
-                          for (_iterator53.s(); !(_step53 = _iterator53.n()).done;) {
-                            token = _step53.value;
+                          for (_iterator56.s(); !(_step56 = _iterator56.n()).done;) {
+                            token = _step56.value;
                             tokenId = "".concat(token.contract, ":").concat(token.token_id);
 
                             if (tokenId) {
@@ -28882,9 +29620,9 @@
                             }
                           }
                         } catch (err) {
-                          _iterator53.e(err);
+                          _iterator56.e(err);
                         } finally {
-                          _iterator53.f();
+                          _iterator56.f();
                         }
                       }
 
@@ -28892,10 +29630,10 @@
 
                     case 2:
                     case "end":
-                      return _context114.stop();
+                      return _context116.stop();
                   }
                 }
-              }, _callee113, this);
+              }, _callee115, this);
             }));
           }
         }, {
@@ -28924,21 +29662,21 @@
                   console.log('# Excluded ' + counter);
                 }
 
-                var _iterator54 = _createForOfIteratorHelper(operations),
-                    _step54;
+                var _iterator57 = _createForOfIteratorHelper(operations),
+                    _step57;
 
                 try {
-                  for (_iterator54.s(); !(_step54 = _iterator54.n()).done;) {
-                    var activity = _step54.value;
+                  for (_iterator57.s(); !(_step57 = _iterator57.n()).done;) {
+                    var activity = _step57.value;
 
                     var counterParty = _this78.getCounterparty(activity, account, false);
 
                     _this78.lookupService.check(counterParty);
                   }
                 } catch (err) {
-                  _iterator54.e(err);
+                  _iterator57.e(err);
                 } finally {
-                  _iterator54.f();
+                  _iterator57.f();
                 }
               } else {
                 console.log(operations);
@@ -28954,12 +29692,12 @@
           value: function promptNewActivities(account, oldActivities, newActivities) {
             var _this79 = this;
 
-            var _iterator55 = _createForOfIteratorHelper(newActivities),
-                _step55;
+            var _iterator58 = _createForOfIteratorHelper(newActivities),
+                _step58;
 
             try {
               var _loop2 = function _loop2() {
-                var activity = _step55.value;
+                var activity = _step58.value;
                 var index = oldActivities.findIndex(function (a) {
                   return a.hash === activity.hash;
                 });
@@ -28993,13 +29731,13 @@
                 }
               };
 
-              for (_iterator55.s(); !(_step55 = _iterator55.n()).done;) {
+              for (_iterator58.s(); !(_step58 = _iterator58.n()).done;) {
                 _loop2();
               }
             } catch (err) {
-              _iterator55.e(err);
+              _iterator58.e(err);
             } finally {
-              _iterator55.f();
+              _iterator58.f();
             }
           }
         }, {
@@ -29185,82 +29923,82 @@
         }, {
           key: "importWalletFromJson",
           value: function importWalletFromJson(json, pwd) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee114() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee116() {
               var seed, walletData;
-              return regeneratorRuntime.wrap(function _callee114$(_context115) {
+              return regeneratorRuntime.wrap(function _callee116$(_context117) {
                 while (1) {
-                  switch (_context115.prev = _context115.next) {
+                  switch (_context117.prev = _context117.next) {
                     case 0:
-                      _context115.prev = 0;
+                      _context117.prev = 0;
                       walletData = JSON.parse(json);
 
                       if (!(walletData.walletType === 4 && walletData.version === 3)) {
-                        _context115.next = 8;
+                        _context117.next = 8;
                         break;
                       }
 
-                      _context115.next = 5;
+                      _context117.next = 5;
                       return this.encryptionService.decrypt(walletData.encryptedSeed, pwd, walletData.iv, 3);
 
                     case 5:
-                      seed = _context115.sent;
-                      _context115.next = 21;
+                      seed = _context117.sent;
+                      _context117.next = 21;
                       break;
 
                     case 8:
                       if (!(walletData.walletType === 0)) {
-                        _context115.next = 21;
+                        _context117.next = 21;
                         break;
                       }
 
                       if (!(walletData.version === 1)) {
-                        _context115.next = 17;
+                        _context117.next = 17;
                         break;
                       }
 
                       console.log('v1');
-                      _context115.next = 13;
+                      _context117.next = 13;
                       return this.encryptionService.decrypt(walletData.encryptedSeed, pwd, walletData.pkh.slice(3, 19), 1);
 
                     case 13:
-                      seed = _context115.sent;
+                      seed = _context117.sent;
 
                       if (_tezos_core_tools_crypto_utils__WEBPACK_IMPORTED_MODULE_5__["utils"].seedToKeyPair(seed).pkh !== walletData.pkh) {
                         seed = '';
                       }
 
-                      _context115.next = 21;
+                      _context117.next = 21;
                       break;
 
                     case 17:
                       if (!(walletData.version === 2 || walletData.version === 3)) {
-                        _context115.next = 21;
+                        _context117.next = 21;
                         break;
                       }
 
-                      _context115.next = 20;
+                      _context117.next = 20;
                       return this.encryptionService.decrypt(walletData.encryptedSeed, pwd, walletData.iv, walletData.version);
 
                     case 20:
-                      seed = _context115.sent;
+                      seed = _context117.sent;
 
                     case 21:
-                      _context115.next = 27;
+                      _context117.next = 27;
                       break;
 
                     case 23:
-                      _context115.prev = 23;
-                      _context115.t0 = _context115["catch"](0);
-                      console.error(_context115.t0);
+                      _context117.prev = 23;
+                      _context117.t0 = _context117["catch"](0);
+                      console.error(_context117.t0);
                       throw new Error('Failed to decrypt keystore file');
 
                     case 27:
                       if (!seed) {
-                        _context115.next = 31;
+                        _context117.next = 31;
                         break;
                       }
 
-                      return _context115.abrupt("return", this.importWalletFromObject(walletData, seed).then(function (ans) {
+                      return _context117.abrupt("return", this.importWalletFromObject(walletData, seed).then(function (ans) {
                         return ans;
                       }, function (e) {
                         console.error(e);
@@ -29272,10 +30010,10 @@
 
                     case 32:
                     case "end":
-                      return _context115.stop();
+                      return _context117.stop();
                   }
                 }
-              }, _callee114, this, [[0, 23]]);
+              }, _callee116, this, [[0, 23]]);
             }));
           }
         }, {
@@ -29283,64 +30021,64 @@
           value: function importWalletFromObject(data, seed) {
             var _a;
 
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee115() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee117() {
               var keys, index, state, accountInfo;
-              return regeneratorRuntime.wrap(function _callee115$(_context116) {
+              return regeneratorRuntime.wrap(function _callee117$(_context118) {
                 while (1) {
-                  switch (_context116.prev = _context116.next) {
+                  switch (_context118.prev = _context118.next) {
                     case 0:
                       this.coordinatorService.stopAll();
 
                       if (!(data.walletType === 4 && data.version === 3)) {
-                        _context116.next = 5;
+                        _context118.next = 5;
                         break;
                       }
 
                       // HD
                       this.walletService.wallet = new _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["HdWallet"](data.iv, data.encryptedSeed, data.encryptedEntropy);
-                      _context116.next = 22;
+                      _context118.next = 22;
                       break;
 
                     case 5:
                       if (!(data.walletType === 0)) {
-                        _context116.next = 21;
+                        _context118.next = 21;
                         break;
                       }
 
                       if (!(data.version === 3)) {
-                        _context116.next = 10;
+                        _context118.next = 10;
                         break;
                       }
 
                       this.walletService.wallet = new _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["LegacyWalletV3"](data.iv, data.encryptedSeed, data.encryptedEntropy);
-                      _context116.next = 19;
+                      _context118.next = 19;
                       break;
 
                     case 10:
                       if (!(data.version === 2)) {
-                        _context116.next = 14;
+                        _context118.next = 14;
                         break;
                       }
 
                       this.walletService.wallet = new _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["LegacyWalletV2"](data.iv, data.encryptedSeed);
-                      _context116.next = 19;
+                      _context118.next = 19;
                       break;
 
                     case 14:
                       if (!(data.version === 1)) {
-                        _context116.next = 18;
+                        _context118.next = 18;
                         break;
                       }
 
                       this.walletService.wallet = new _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["LegacyWalletV1"](data.pkh.slice(3, 19), data.encryptedSeed);
-                      _context116.next = 19;
+                      _context118.next = 19;
                       break;
 
                     case 18:
                       throw new Error('Unsupported wallet file');
 
                     case 19:
-                      _context116.next = 22;
+                      _context118.next = 22;
                       break;
 
                     case 21:
@@ -29348,22 +30086,22 @@
 
                     case 22:
                       if (!(seed.length === 32)) {
-                        _context116.next = 26;
+                        _context118.next = 26;
                         break;
                       }
 
                       keys = _tezos_core_tools_crypto_utils__WEBPACK_IMPORTED_MODULE_5__["utils"].seedToKeyPair(seed);
-                      _context116.next = 31;
+                      _context118.next = 31;
                       break;
 
                     case 26:
                       if (!(seed.length === 64)) {
-                        _context116.next = 30;
+                        _context118.next = 30;
                         break;
                       }
 
                       keys = _tezos_core_tools_crypto_utils__WEBPACK_IMPORTED_MODULE_5__["hd"].keyPairFromAccountIndex(seed, 0);
-                      _context116.next = 31;
+                      _context118.next = 31;
                       break;
 
                     case 30:
@@ -29373,7 +30111,7 @@
                       this.walletService.initStorage();
 
                       if (!(this.walletService.wallet instanceof _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["HdWallet"])) {
-                        _context116.next = 52;
+                        _context118.next = 52;
                         break;
                       }
 
@@ -29382,16 +30120,16 @@
 
                     case 35:
                       if (!state) {
-                        _context116.next = 49;
+                        _context118.next = 49;
                         break;
                       }
 
                       keys = _tezos_core_tools_crypto_utils__WEBPACK_IMPORTED_MODULE_5__["hd"].keyPairFromAccountIndex(seed, index);
-                      _context116.next = 39;
+                      _context118.next = 39;
                       return this.indexerService.accountInfo(keys.pkh);
 
                     case 39:
-                      accountInfo = _context116.sent;
+                      accountInfo = _context118.sent;
                       state = accountInfo.counter;
                       console.log(accountInfo);
 
@@ -29400,37 +30138,37 @@
                       }
 
                       if (!(state || index === 0)) {
-                        _context116.next = 47;
+                        _context118.next = 47;
                         break;
                       }
 
                       this.walletService.addImplicitAccount(keys.pk, index++);
-                      _context116.next = 47;
+                      _context118.next = 47;
                       return this.findContracts(keys.pkh);
 
                     case 47:
-                      _context116.next = 35;
+                      _context118.next = 35;
                       break;
 
                     case 49:
                       this.walletService.wallet.index = index;
-                      _context116.next = 55;
+                      _context118.next = 55;
                       break;
 
                     case 52:
                       this.walletService.addImplicitAccount(keys.pk);
-                      _context116.next = 55;
+                      _context118.next = 55;
                       return this.findContracts(keys.pkh);
 
                     case 55:
-                      return _context116.abrupt("return", true);
+                      return _context118.abrupt("return", true);
 
                     case 56:
                     case "end":
-                      return _context116.stop();
+                      return _context118.stop();
                   }
                 }
-              }, _callee115, this);
+              }, _callee117, this);
             }));
           }
         }, {
@@ -29439,67 +30177,67 @@
             var verifierDetails = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
             var sk = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
             var instanceId = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee116() {
-              return regeneratorRuntime.wrap(function _callee116$(_context117) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee118() {
+              return regeneratorRuntime.wrap(function _callee118$(_context119) {
                 while (1) {
-                  switch (_context117.prev = _context117.next) {
+                  switch (_context119.prev = _context119.next) {
                     case 0:
                       this.coordinatorService.stopAll();
 
                       if (!derivationPath) {
-                        _context117.next = 5;
+                        _context119.next = 5;
                         break;
                       }
 
-                      return _context117.abrupt("return", this.ledgerImport(pk, derivationPath));
+                      return _context119.abrupt("return", this.ledgerImport(pk, derivationPath));
 
                     case 5:
                       if (!verifierDetails) {
-                        _context117.next = 7;
+                        _context119.next = 7;
                         break;
                       }
 
-                      return _context117.abrupt("return", this.torusImport(pk, verifierDetails, sk, instanceId));
+                      return _context119.abrupt("return", this.torusImport(pk, verifierDetails, sk, instanceId));
 
                     case 7:
                     case "end":
-                      return _context117.stop();
+                      return _context119.stop();
                   }
                 }
-              }, _callee116, this);
+              }, _callee118, this);
             }));
           }
         }, {
           key: "ledgerImport",
           value: function ledgerImport(pk, derivationPath) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee117() {
-              return regeneratorRuntime.wrap(function _callee117$(_context118) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee119() {
+              return regeneratorRuntime.wrap(function _callee119$(_context120) {
                 while (1) {
-                  switch (_context118.prev = _context118.next) {
+                  switch (_context120.prev = _context120.next) {
                     case 0:
-                      _context118.prev = 0;
+                      _context120.prev = 0;
                       this.walletService.initStorage();
                       this.walletService.wallet = new _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["LedgerWallet"]();
                       this.walletService.addImplicitAccount(pk, derivationPath);
-                      _context118.next = 6;
+                      _context120.next = 6;
                       return this.findContracts(this.walletService.wallet.implicitAccounts[0].pkh);
 
                     case 6:
-                      return _context118.abrupt("return", true);
+                      return _context120.abrupt("return", true);
 
                     case 9:
-                      _context118.prev = 9;
-                      _context118.t0 = _context118["catch"](0);
-                      console.warn(_context118.t0);
+                      _context120.prev = 9;
+                      _context120.t0 = _context120["catch"](0);
+                      console.warn(_context120.t0);
                       this.walletService.clearWallet();
-                      return _context118.abrupt("return", false);
+                      return _context120.abrupt("return", false);
 
                     case 14:
                     case "end":
-                      return _context118.stop();
+                      return _context120.stop();
                   }
                 }
-              }, _callee117, this, [[0, 9]]);
+              }, _callee119, this, [[0, 9]]);
             }));
           }
         }, {
@@ -29507,12 +30245,12 @@
           value: function torusImport(pk, verifierDetails) {
             var sk = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
             var instanceId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee118() {
-              return regeneratorRuntime.wrap(function _callee118$(_context119) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee120() {
+              return regeneratorRuntime.wrap(function _callee120$(_context121) {
                 while (1) {
-                  switch (_context119.prev = _context119.next) {
+                  switch (_context121.prev = _context121.next) {
                     case 0:
-                      _context119.prev = 0;
+                      _context121.prev = 0;
 
                       if (verifierDetails.embedded) {
                         this.walletService.initStorage(instanceId);
@@ -29527,39 +30265,39 @@
                       }
 
                       this.walletService.addImplicitAccount(pk);
-                      return _context119.abrupt("return", true);
+                      return _context121.abrupt("return", true);
 
                     case 7:
-                      _context119.prev = 7;
-                      _context119.t0 = _context119["catch"](0);
-                      console.warn(_context119.t0);
+                      _context121.prev = 7;
+                      _context121.t0 = _context121["catch"](0);
+                      console.warn(_context121.t0);
                       this.walletService.clearWallet(instanceId);
-                      return _context119.abrupt("return", false);
+                      return _context121.abrupt("return", false);
 
                     case 12:
                     case "end":
-                      return _context119.stop();
+                      return _context121.stop();
                   }
                 }
-              }, _callee118, this, [[0, 7]]);
+              }, _callee120, this, [[0, 7]]);
             }));
           }
         }, {
           key: "updateTwitterName",
           value: function updateTwitterName(verifierId) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee119() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee121() {
               var twitterId, _yield$this$torusServ4, username;
 
-              return regeneratorRuntime.wrap(function _callee119$(_context120) {
+              return regeneratorRuntime.wrap(function _callee121$(_context122) {
                 while (1) {
-                  switch (_context120.prev = _context120.next) {
+                  switch (_context122.prev = _context122.next) {
                     case 0:
                       twitterId = verifierId.split('|')[1];
-                      _context120.next = 3;
+                      _context122.next = 3;
                       return this.torusService.twitterLookup(undefined, twitterId);
 
                     case 3:
-                      _yield$this$torusServ4 = _context120.sent;
+                      _yield$this$torusServ4 = _context122.sent;
                       username = _yield$this$torusServ4.username;
 
                       if (username && this.walletService.wallet instanceof _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["TorusWallet"]) {
@@ -29568,49 +30306,49 @@
 
                     case 6:
                     case "end":
-                      return _context120.stop();
+                      return _context122.stop();
                   }
                 }
-              }, _callee119, this);
+              }, _callee121, this);
             }));
           }
         }, {
           key: "findContracts",
           value: function findContracts(pkh) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee120() {
-              var addresses, _iterator56, _step56, KT;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee122() {
+              var addresses, _iterator59, _step59, KT;
 
-              return regeneratorRuntime.wrap(function _callee120$(_context121) {
+              return regeneratorRuntime.wrap(function _callee122$(_context123) {
                 while (1) {
-                  switch (_context121.prev = _context121.next) {
+                  switch (_context123.prev = _context123.next) {
                     case 0:
-                      _context121.next = 2;
+                      _context123.next = 2;
                       return this.indexerService.getContractAddresses(pkh);
 
                     case 2:
-                      addresses = _context121.sent;
-                      _iterator56 = _createForOfIteratorHelper(addresses);
+                      addresses = _context123.sent;
+                      _iterator59 = _createForOfIteratorHelper(addresses);
 
                       try {
-                        for (_iterator56.s(); !(_step56 = _iterator56.n()).done;) {
-                          KT = _step56.value;
+                        for (_iterator59.s(); !(_step59 = _iterator59.n()).done;) {
+                          KT = _step59.value;
                           console.log('Found KT: ' + KT);
                           this.walletService.addOriginatedAccount(KT, pkh);
                         }
                       } catch (err) {
-                        _iterator56.e(err);
+                        _iterator59.e(err);
                       } finally {
-                        _iterator56.f();
+                        _iterator59.f();
                       }
 
                       this.walletService.storeWallet();
 
                     case 6:
                     case "end":
-                      return _context121.stop();
+                      return _context123.stop();
                   }
                 }
-              }, _callee120, this);
+              }, _callee122, this);
             }));
           }
         }]);
@@ -29803,12 +30541,12 @@
           /* https://docs.walletbeacon.io/beacon/03.getting-started-wallet.html#setup */
 
           this.connectApp = function () {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this80, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee122() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this80, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee124() {
               var _this81 = this;
 
-              return regeneratorRuntime.wrap(function _callee122$(_context123) {
+              return regeneratorRuntime.wrap(function _callee124$(_context125) {
                 while (1) {
-                  switch (_context123.prev = _context123.next) {
+                  switch (_context125.prev = _context125.next) {
                     case 0:
                       if (!this.beaconService.client) {
                         this.beaconService.client = new _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["WalletClient"]({
@@ -29816,18 +30554,18 @@
                         });
                       }
 
-                      _context123.next = 3;
+                      _context125.next = 3;
                       return this.beaconService.client.init();
 
                     case 3:
                       // Establish P2P connection
                       this.beaconService.client.connect(function (message) {
-                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this81, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee121() {
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this81, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee123() {
                           var _a;
 
-                          return regeneratorRuntime.wrap(function _callee121$(_context122) {
+                          return regeneratorRuntime.wrap(function _callee123$(_context124) {
                             while (1) {
-                              switch (_context122.prev = _context122.next) {
+                              switch (_context124.prev = _context124.next) {
                                 case 0:
                                   console.log('### beacon message', message);
 
@@ -29836,86 +30574,86 @@
                                   }
 
                                   if (!(message.type !== _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].SignPayloadRequest && message.network.type !== _environments_environment__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].NETWORK)) {
-                                    _context122.next = 8;
+                                    _context124.next = 8;
                                     break;
                                   }
 
                                   console.warn("Rejecting Beacon message because of network. Expected ".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].NETWORK, " instead of ").concat(message.network.type), message);
-                                  _context122.next = 6;
+                                  _context124.next = 6;
                                   return this.beaconService.rejectOnNetwork(message);
 
                                 case 6:
-                                  _context122.next = 39;
+                                  _context124.next = 39;
                                   break;
 
                                 case 8:
                                   if (!(!this.permissionRequest && !this.operationRequest && !this.signRequest)) {
-                                    _context122.next = 38;
+                                    _context124.next = 38;
                                     break;
                                   }
 
-                                  _context122.t0 = message.type;
-                                  _context122.next = _context122.t0 === _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].PermissionRequest ? 12 : _context122.t0 === _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].OperationRequest ? 15 : _context122.t0 === _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].SignPayloadRequest ? 24 : 33;
+                                  _context124.t0 = message.type;
+                                  _context124.next = _context124.t0 === _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].PermissionRequest ? 12 : _context124.t0 === _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].OperationRequest ? 15 : _context124.t0 === _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].SignPayloadRequest ? 24 : 33;
                                   break;
 
                                 case 12:
-                                  _context122.next = 14;
+                                  _context124.next = 14;
                                   return this.handlePermissionRequest(message);
 
                                 case 14:
-                                  return _context122.abrupt("break", 36);
+                                  return _context124.abrupt("break", 36);
 
                                 case 15:
-                                  _context122.next = 17;
+                                  _context124.next = 17;
                                   return this.isSupportedOperationRequest(message);
 
                                 case 17:
-                                  if (!_context122.sent) {
-                                    _context122.next = 21;
+                                  if (!_context124.sent) {
+                                    _context124.next = 21;
                                     break;
                                   }
 
                                   this.operationRequest = message;
-                                  _context122.next = 23;
+                                  _context124.next = 23;
                                   break;
 
                                 case 21:
-                                  _context122.next = 23;
+                                  _context124.next = 23;
                                   return this.beaconService.rejectOnUnknown(message);
 
                                 case 23:
-                                  return _context122.abrupt("break", 36);
+                                  return _context124.abrupt("break", 36);
 
                                 case 24:
-                                  _context122.next = 26;
+                                  _context124.next = 26;
                                   return this.isSupportedSignPayload(message);
 
                                 case 26:
-                                  if (!_context122.sent) {
-                                    _context122.next = 30;
+                                  if (!_context124.sent) {
+                                    _context124.next = 30;
                                     break;
                                   }
 
                                   this.signRequest = message;
-                                  _context122.next = 32;
+                                  _context124.next = 32;
                                   break;
 
                                 case 30:
-                                  _context122.next = 32;
+                                  _context124.next = 32;
                                   return this.beaconService.rejectOnUnknown(message);
 
                                 case 32:
-                                  return _context122.abrupt("break", 36);
+                                  return _context124.abrupt("break", 36);
 
                                 case 33:
-                                  _context122.next = 35;
+                                  _context124.next = 35;
                                   return this.beaconService.rejectOnUnknown(message);
 
                                 case 35:
                                   console.warn('Unknown message type', message);
 
                                 case 36:
-                                  _context122.next = 39;
+                                  _context124.next = 39;
                                   break;
 
                                 case 38:
@@ -29923,10 +30661,10 @@
 
                                 case 39:
                                 case "end":
-                                  return _context122.stop();
+                                  return _context124.stop();
                               }
                             }
-                          }, _callee121, this);
+                          }, _callee123, this);
                         }));
                       })["catch"](function (error) {
                         return console.error('connect error', error);
@@ -29934,10 +30672,10 @@
 
                     case 4:
                     case "end":
-                      return _context123.stop();
+                      return _context125.stop();
                   }
                 }
-              }, _callee122, this);
+              }, _callee124, this);
             }));
           };
         }
@@ -29952,11 +30690,11 @@
         }, {
           key: "init",
           value: function init() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee123() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee125() {
               var pairingString;
-              return regeneratorRuntime.wrap(function _callee123$(_context124) {
+              return regeneratorRuntime.wrap(function _callee125$(_context126) {
                 while (1) {
-                  switch (_context124.prev = _context124.next) {
+                  switch (_context126.prev = _context126.next) {
                     case 0:
                       pairingString = this.deeplinkService.popPairingJson();
 
@@ -29965,18 +30703,18 @@
                         this.beaconService.preNotifyPairing(pairingString);
                       }
 
-                      _context124.next = 4;
+                      _context126.next = 4;
                       return this.connectApp()["catch"](function (error) {
                         return console.error('connect error', error);
                       });
 
                     case 4:
                       if (!pairingString) {
-                        _context124.next = 8;
+                        _context126.next = 8;
                         break;
                       }
 
-                      _context124.next = 7;
+                      _context126.next = 7;
                       return this.beaconService.client.isConnected;
 
                     case 7:
@@ -29984,19 +30722,19 @@
 
                     case 8:
                     case "end":
-                      return _context124.stop();
+                      return _context126.stop();
                   }
                 }
-              }, _callee123, this);
+              }, _callee125, this);
             }));
           }
         }, {
           key: "handlePermissionRequest",
           value: function handlePermissionRequest(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee124() {
-              return regeneratorRuntime.wrap(function _callee124$(_context125) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee126() {
+              return regeneratorRuntime.wrap(function _callee126$(_context127) {
                 while (1) {
-                  switch (_context125.prev = _context125.next) {
+                  switch (_context127.prev = _context127.next) {
                     case 0:
                       console.log('## permission request');
                       message.scopes = message.scopes.filter(function (scope) {
@@ -30004,26 +30742,26 @@
                       });
 
                       if (!message.scopes.length) {
-                        _context125.next = 12;
+                        _context127.next = 12;
                         break;
                       }
 
                       if (!this.walletService.wallet) {
-                        _context125.next = 7;
+                        _context127.next = 7;
                         break;
                       }
 
                       this.permissionRequest = message;
-                      _context125.next = 10;
+                      _context127.next = 10;
                       break;
 
                     case 7:
                       console.warn('No wallet found');
-                      _context125.next = 10;
+                      _context127.next = 10;
                       return this.beaconService.rejectOnSourceAddress(message);
 
                     case 10:
-                      _context125.next = 13;
+                      _context127.next = 13;
                       break;
 
                     case 12:
@@ -30031,98 +30769,98 @@
 
                     case 13:
                     case "end":
-                      return _context125.stop();
+                      return _context127.stop();
                   }
                 }
-              }, _callee124, this);
+              }, _callee126, this);
             }));
           }
         }, {
           key: "isSupportedOperationRequest",
           value: function isSupportedOperationRequest(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee125() {
-              var _iterator57, _step57, op, i;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee127() {
+              var _iterator60, _step60, op, i;
 
-              return regeneratorRuntime.wrap(function _callee125$(_context126) {
+              return regeneratorRuntime.wrap(function _callee127$(_context128) {
                 while (1) {
-                  switch (_context126.prev = _context126.next) {
+                  switch (_context128.prev = _context128.next) {
                     case 0:
                       if (this.walletService.wallet) {
-                        _context126.next = 5;
+                        _context128.next = 5;
                         break;
                       }
 
                       console.log('No wallet found');
-                      return _context126.abrupt("return", false);
+                      return _context128.abrupt("return", false);
 
                     case 5:
                       if (this.walletService.wallet.getImplicitAccount(message.sourceAddress)) {
-                        _context126.next = 12;
+                        _context128.next = 12;
                         break;
                       }
 
                       console.warn('Source address not recogized');
-                      _context126.next = 9;
+                      _context128.next = 9;
                       return this.beaconService.rejectOnSourceAddress(message);
 
                     case 9:
-                      return _context126.abrupt("return", false);
+                      return _context128.abrupt("return", false);
 
                     case 12:
                       if (!(message.operationDetails.length > 1)) {
-                        _context126.next = 33;
+                        _context128.next = 33;
                         break;
                       }
 
-                      _iterator57 = _createForOfIteratorHelper(message.operationDetails);
-                      _context126.prev = 14;
+                      _iterator60 = _createForOfIteratorHelper(message.operationDetails);
+                      _context128.prev = 14;
 
-                      _iterator57.s();
+                      _iterator60.s();
 
                     case 16:
-                      if ((_step57 = _iterator57.n()).done) {
-                        _context126.next = 25;
+                      if ((_step60 = _iterator60.n()).done) {
+                        _context128.next = 25;
                         break;
                       }
 
-                      op = _step57.value;
+                      op = _step60.value;
 
                       if (!(op.kind !== 'transaction')) {
-                        _context126.next = 23;
+                        _context128.next = 23;
                         break;
                       }
 
                       console.warn('Only transaction batches supported');
-                      _context126.next = 22;
+                      _context128.next = 22;
                       return this.beaconService.rejectOnTooManyOps(message);
 
                     case 22:
-                      return _context126.abrupt("return", false);
+                      return _context128.abrupt("return", false);
 
                     case 23:
-                      _context126.next = 16;
+                      _context128.next = 16;
                       break;
 
                     case 25:
-                      _context126.next = 30;
+                      _context128.next = 30;
                       break;
 
                     case 27:
-                      _context126.prev = 27;
-                      _context126.t0 = _context126["catch"](14);
+                      _context128.prev = 27;
+                      _context128.t0 = _context128["catch"](14);
 
-                      _iterator57.e(_context126.t0);
+                      _iterator60.e(_context128.t0);
 
                     case 30:
-                      _context126.prev = 30;
+                      _context128.prev = 30;
 
-                      _iterator57.f();
+                      _iterator60.f();
 
-                      return _context126.finish(30);
+                      return _context128.finish(30);
 
                     case 33:
                       if (!(message.operationDetails[0].kind === 'transaction')) {
-                        _context126.next = 59;
+                        _context128.next = 59;
                         break;
                       }
 
@@ -30130,124 +30868,124 @@
 
                     case 35:
                       if (!(i < message.operationDetails.length)) {
-                        _context126.next = 57;
+                        _context128.next = 57;
                         break;
                       }
 
                       if (!(message.operationDetails[i].destination && message.operationDetails[i].parameters && this.walletService.wallet.getAccount(message.operationDetails[i].destination))) {
-                        _context126.next = 43;
+                        _context128.next = 43;
                         break;
                       }
 
                       console.warn('Invocation of user controlled contract is disabled');
-                      _context126.next = 40;
+                      _context128.next = 40;
                       return this.beaconService.rejectOnPermission(message);
 
                     case 40:
-                      return _context126.abrupt("return", false);
+                      return _context128.abrupt("return", false);
 
                     case 43:
                       if (!(!message.operationDetails[i].destination || !message.operationDetails[i].amount)) {
-                        _context126.next = 50;
+                        _context128.next = 50;
                         break;
                       }
 
                       console.warn('Missing destination or amount');
-                      _context126.next = 47;
+                      _context128.next = 47;
                       return this.beaconService.rejectOnUnknown(message);
 
                     case 47:
-                      return _context126.abrupt("return", false);
+                      return _context128.abrupt("return", false);
 
                     case 50:
                       if (!this.invalidParameters(message.operationDetails[i].parameters)) {
-                        _context126.next = 54;
+                        _context128.next = 54;
                         break;
                       }
 
-                      _context126.next = 53;
+                      _context128.next = 53;
                       return this.beaconService.rejectOnParameters(message);
 
                     case 53:
-                      return _context126.abrupt("return", false);
+                      return _context128.abrupt("return", false);
 
                     case 54:
                       i++;
-                      _context126.next = 35;
+                      _context128.next = 35;
                       break;
 
                     case 57:
-                      _context126.next = 70;
+                      _context128.next = 70;
                       break;
 
                     case 59:
                       if (!(message.operationDetails[0].kind === 'delegation')) {
-                        _context126.next = 66;
+                        _context128.next = 66;
                         break;
                       }
 
                       if (message.operationDetails[0].delegate) {
-                        _context126.next = 64;
+                        _context128.next = 64;
                         break;
                       }
 
                       console.warn('Invalid delegate');
-                      _context126.next = 64;
+                      _context128.next = 64;
                       return this.beaconService.rejectOnUnknown(message);
 
                     case 64:
-                      _context126.next = 70;
+                      _context128.next = 70;
                       break;
 
                     case 66:
                       console.warn('Unsupported operation kind');
-                      _context126.next = 69;
+                      _context128.next = 69;
                       return this.beaconService.rejectOnUnknown(message);
 
                     case 69:
-                      return _context126.abrupt("return", false);
+                      return _context128.abrupt("return", false);
 
                     case 70:
                       this.activeAccount = this.walletService.wallet.getImplicitAccount(message.sourceAddress);
-                      return _context126.abrupt("return", true);
+                      return _context128.abrupt("return", true);
 
                     case 72:
                     case "end":
-                      return _context126.stop();
+                      return _context128.stop();
                   }
                 }
-              }, _callee125, this, [[14, 27, 30, 33]]);
+              }, _callee127, this, [[14, 27, 30, 33]]);
             }));
           }
         }, {
           key: "isSupportedSignPayload",
           value: function isSupportedSignPayload(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee126() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee128() {
               var hexString, parsedPayload;
-              return regeneratorRuntime.wrap(function _callee126$(_context127) {
+              return regeneratorRuntime.wrap(function _callee128$(_context129) {
                 while (1) {
-                  switch (_context127.prev = _context127.next) {
+                  switch (_context129.prev = _context129.next) {
                     case 0:
                       if (this.walletService.wallet) {
-                        _context127.next = 5;
+                        _context129.next = 5;
                         break;
                       }
 
                       console.log('No wallet found');
-                      return _context127.abrupt("return", false);
+                      return _context129.abrupt("return", false);
 
                     case 5:
                       if (this.walletService.wallet.getImplicitAccount(message.sourceAddress)) {
-                        _context127.next = 10;
+                        _context129.next = 10;
                         break;
                       }
 
                       console.warn('Source address not recogized');
-                      _context127.next = 9;
+                      _context129.next = 9;
                       return this.beaconService.rejectOnSourceAddress(message);
 
                     case 9:
-                      return _context127.abrupt("return", false);
+                      return _context129.abrupt("return", false);
 
                     case 10:
                       if (message.payload.slice(0, 2) === '0x') {
@@ -30259,57 +30997,57 @@
                       console.log('hex', hexString);
 
                       if (!(message.signingType !== 'raw' && message.signingType !== 'micheline' || !this.inputValidationService.hexString(hexString))) {
-                        _context127.next = 21;
+                        _context129.next = 21;
                         break;
                       }
 
                       console.warn('Invalid sign payload');
-                      _context127.next = 18;
+                      _context129.next = 18;
                       return this.beaconService.rejectOnUnknown(message);
 
                     case 18:
-                      return _context127.abrupt("return", false);
+                      return _context129.abrupt("return", false);
 
                     case 21:
                       if (!(hexString.slice(0, 2) !== '05')) {
-                        _context127.next = 26;
+                        _context129.next = 26;
                         break;
                       }
 
                       console.warn('Unsupported prefix (expected 05)');
-                      _context127.next = 25;
+                      _context129.next = 25;
                       return this.beaconService.rejectOnUnknown(message);
 
                     case 25:
-                      return _context127.abrupt("return", false);
+                      return _context129.abrupt("return", false);
 
                     case 26:
-                      _context127.prev = 26;
+                      _context129.prev = 26;
                       parsedPayload = Object(_taquito_local_forging_dist_lib_michelson_codec__WEBPACK_IMPORTED_MODULE_11__["valueDecoder"])(_taquito_local_forging_dist_lib_uint8array_consumer__WEBPACK_IMPORTED_MODULE_12__["Uint8ArrayConsumer"].fromHexString(hexString.slice(2)));
                       console.log('Parsed sign payload', parsedPayload);
-                      _context127.next = 37;
+                      _context129.next = 37;
                       break;
 
                     case 31:
-                      _context127.prev = 31;
-                      _context127.t0 = _context127["catch"](26);
-                      console.warn(_context127.t0.message ? 'Decoding: ' + _context127.t0.message : _context127.t0);
-                      _context127.next = 36;
+                      _context129.prev = 31;
+                      _context129.t0 = _context129["catch"](26);
+                      console.warn(_context129.t0.message ? 'Decoding: ' + _context129.t0.message : _context129.t0);
+                      _context129.next = 36;
                       return this.beaconService.rejectOnUnknown(message);
 
                     case 36:
-                      return _context127.abrupt("return", false);
+                      return _context129.abrupt("return", false);
 
                     case 37:
                       this.activeAccount = this.walletService.wallet.getImplicitAccount(message.sourceAddress);
-                      return _context127.abrupt("return", true);
+                      return _context129.abrupt("return", true);
 
                     case 39:
                     case "end":
-                      return _context127.stop();
+                      return _context129.stop();
                   }
                 }
-              }, _callee126, this, [[26, 31]]);
+              }, _callee128, this, [[26, 31]]);
             }));
           }
         }, {
@@ -30334,48 +31072,48 @@
         }, {
           key: "operationResponse",
           value: function operationResponse(opHash) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee127() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee129() {
               var response;
-              return regeneratorRuntime.wrap(function _callee127$(_context128) {
+              return regeneratorRuntime.wrap(function _callee129$(_context130) {
                 while (1) {
-                  switch (_context128.prev = _context128.next) {
+                  switch (_context130.prev = _context130.next) {
                     case 0:
                       if (opHash) {
-                        _context128.next = 5;
+                        _context130.next = 5;
                         break;
                       }
 
-                      _context128.next = 3;
+                      _context130.next = 3;
                       return this.beaconService.rejectOnUserAbort(this.operationRequest);
 
                     case 3:
-                      _context128.next = 18;
+                      _context130.next = 18;
                       break;
 
                     case 5:
                       if (!(opHash === 'broadcast_error')) {
-                        _context128.next = 10;
+                        _context130.next = 10;
                         break;
                       }
 
-                      _context128.next = 8;
+                      _context130.next = 8;
                       return this.beaconService.rejectOnBroadcastError(this.operationRequest);
 
                     case 8:
-                      _context128.next = 18;
+                      _context130.next = 18;
                       break;
 
                     case 10:
                       if (!(opHash === 'invalid_parameters')) {
-                        _context128.next = 15;
+                        _context130.next = 15;
                         break;
                       }
 
-                      _context128.next = 13;
+                      _context130.next = 13;
                       return this.beaconService.rejectOnParameters(this.operationRequest);
 
                     case 13:
-                      _context128.next = 18;
+                      _context130.next = 18;
                       break;
 
                     case 15:
@@ -30384,7 +31122,7 @@
                         transactionHash: opHash,
                         id: this.operationRequest.id
                       };
-                      _context128.next = 18;
+                      _context130.next = 18;
                       return this.beaconService.client.respond(response);
 
                     case 18:
@@ -30392,10 +31130,10 @@
 
                     case 19:
                     case "end":
-                      return _context128.stop();
+                      return _context130.stop();
                   }
                 }
-              }, _callee127, this);
+              }, _callee129, this);
             }));
           }
           /* permission handling */
@@ -30403,25 +31141,25 @@
         }, {
           key: "permissionResponse",
           value: function permissionResponse(publicKey) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee128() {
-              return regeneratorRuntime.wrap(function _callee128$(_context129) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee130() {
+              return regeneratorRuntime.wrap(function _callee130$(_context131) {
                 while (1) {
-                  switch (_context129.prev = _context129.next) {
+                  switch (_context131.prev = _context131.next) {
                     case 0:
                       if (publicKey) {
-                        _context129.next = 5;
+                        _context131.next = 5;
                         break;
                       }
 
-                      _context129.next = 3;
+                      _context131.next = 3;
                       return this.beaconService.rejectOnUserAbort(this.permissionRequest);
 
                     case 3:
-                      _context129.next = 8;
+                      _context131.next = 8;
                       break;
 
                     case 5:
-                      _context129.next = 7;
+                      _context131.next = 7;
                       return this.beaconService.approvePermissionRequest(this.permissionRequest, publicKey);
 
                     case 7:
@@ -30432,10 +31170,10 @@
 
                     case 9:
                     case "end":
-                      return _context129.stop();
+                      return _context131.stop();
                   }
                 }
-              }, _callee128, this);
+              }, _callee130, this);
             }));
           }
           /* sign payload handling */
@@ -30443,25 +31181,25 @@
         }, {
           key: "signResponse",
           value: function signResponse(signature) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee129() {
-              return regeneratorRuntime.wrap(function _callee129$(_context130) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee131() {
+              return regeneratorRuntime.wrap(function _callee131$(_context132) {
                 while (1) {
-                  switch (_context130.prev = _context130.next) {
+                  switch (_context132.prev = _context132.next) {
                     case 0:
                       if (signature) {
-                        _context130.next = 5;
+                        _context132.next = 5;
                         break;
                       }
 
-                      _context130.next = 3;
+                      _context132.next = 3;
                       return this.beaconService.rejectOnUserAbort(this.signRequest);
 
                     case 3:
-                      _context130.next = 7;
+                      _context132.next = 7;
                       break;
 
                     case 5:
-                      _context130.next = 7;
+                      _context132.next = 7;
                       return this.beaconService.approveSignPayloadRequest(this.signRequest, signature);
 
                     case 7:
@@ -30470,10 +31208,10 @@
 
                     case 9:
                     case "end":
-                      return _context130.stop();
+                      return _context132.stop();
                   }
                 }
-              }, _callee129, this);
+              }, _callee131, this);
             }));
           }
         }]);
@@ -30951,41 +31689,41 @@
         }, {
           key: "sign",
           value: function sign() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee130() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee132() {
               var pwd, keys, signature;
-              return regeneratorRuntime.wrap(function _callee130$(_context131) {
+              return regeneratorRuntime.wrap(function _callee132$(_context133) {
                 while (1) {
-                  switch (_context131.prev = _context131.next) {
+                  switch (_context133.prev = _context133.next) {
                     case 0:
                       if (!this.walletService.isLedgerWallet()) {
-                        _context131.next = 4;
+                        _context133.next = 4;
                         break;
                       }
 
                       this.requestLedgerSignature();
-                      _context131.next = 19;
+                      _context133.next = 19;
                       break;
 
                     case 4:
                       pwd = this.password;
                       this.password = '';
-                      _context131.next = 8;
+                      _context133.next = 8;
                       return this.messageService.startSpinner("Signing ".concat(this.isMessage ? 'message' : 'payload', "..."));
 
                     case 8:
-                      _context131.prev = 8;
-                      _context131.next = 11;
+                      _context133.prev = 8;
+                      _context133.next = 11;
                       return this.walletService.getKeys(pwd, this.activeAccount.pkh);
 
                     case 11:
-                      keys = _context131.sent;
-                      _context131.next = 18;
+                      keys = _context133.sent;
+                      _context133.next = 18;
                       break;
 
                     case 14:
-                      _context131.prev = 14;
-                      _context131.t0 = _context131["catch"](8);
-                      console.warn(_context131.t0);
+                      _context133.prev = 14;
+                      _context133.t0 = _context133["catch"](8);
+                      console.warn(_context133.t0);
                       this.messageService.stopSpinner();
 
                     case 18:
@@ -31013,48 +31751,48 @@
 
                     case 19:
                     case "end":
-                      return _context131.stop();
+                      return _context133.stop();
                   }
                 }
-              }, _callee130, this, [[8, 14]]);
+              }, _callee132, this, [[8, 14]]);
             }));
           }
         }, {
           key: "requestLedgerSignature",
           value: function requestLedgerSignature() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee131() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee133() {
               var payload, signature;
-              return regeneratorRuntime.wrap(function _callee131$(_context132) {
+              return regeneratorRuntime.wrap(function _callee133$(_context134) {
                 while (1) {
-                  switch (_context132.prev = _context132.next) {
+                  switch (_context134.prev = _context134.next) {
                     case 0:
-                      _context132.next = 2;
+                      _context134.next = 2;
                       return this.messageService.startSpinner('Waiting for Ledger signature...');
 
                     case 2:
-                      _context132.prev = 2;
+                      _context134.prev = 2;
                       payload = this.signRequest.payload;
                       signature = '';
 
                       if (!(payload.length <= 2290)) {
-                        _context132.next = 11;
+                        _context134.next = 11;
                         break;
                       }
 
-                      _context132.next = 8;
+                      _context134.next = 8;
                       return this.ledgerService.signOperation(payload, this.walletService.wallet.implicitAccounts[0].derivationPath);
 
                     case 8:
-                      signature = _context132.sent;
-                      _context132.next = 14;
+                      signature = _context134.sent;
+                      _context134.next = 14;
                       break;
 
                     case 11:
-                      _context132.next = 13;
+                      _context134.next = 13;
                       return this.ledgerService.signHash(this.operationService.ledgerPreHash(payload), this.walletService.wallet.implicitAccounts[0].derivationPath);
 
                     case 13:
-                      signature = _context132.sent;
+                      signature = _context134.sent;
 
                     case 14:
                       if (signature) {
@@ -31064,16 +31802,16 @@
                       }
 
                     case 15:
-                      _context132.prev = 15;
+                      _context134.prev = 15;
                       this.messageService.stopSpinner();
-                      return _context132.finish(15);
+                      return _context134.finish(15);
 
                     case 18:
                     case "end":
-                      return _context132.stop();
+                      return _context134.stop();
                   }
                 }
-              }, _callee131, this, [[2,, 15, 18]]);
+              }, _callee133, this, [[2,, 15, 18]]);
             }));
           }
         }, {
@@ -32172,14 +32910,14 @@
         }, {
           key: "encryptWallet",
           value: function encryptWallet() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee132() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee134() {
               var pwd, ans;
-              return regeneratorRuntime.wrap(function _callee132$(_context133) {
+              return regeneratorRuntime.wrap(function _callee134$(_context135) {
                 while (1) {
-                  switch (_context133.prev = _context133.next) {
+                  switch (_context135.prev = _context135.next) {
                     case 0:
                       if (!this.validPwd()) {
-                        _context133.next = 18;
+                        _context135.next = 18;
                         break;
                       }
 
@@ -32187,11 +32925,11 @@
                       pwd = this.pwd1;
                       this.pwd1 = '';
                       this.pwd2 = '';
-                      _context133.next = 7;
+                      _context135.next = 7;
                       return this.walletService.createEncryptedWallet(this.MNEMONIC.string, pwd, '', true);
 
                     case 7:
-                      ans = _context133.sent;
+                      ans = _context135.sent;
                       this.seed = ans.seed;
                       this.data = ans.data;
                       this.pkh = ans.pkh;
@@ -32208,10 +32946,10 @@
 
                     case 18:
                     case "end":
-                      return _context133.stop();
+                      return _context135.stop();
                   }
                 }
-              }, _callee132, this);
+              }, _callee134, this);
             }));
           }
         }, {
@@ -32235,15 +32973,15 @@
         }, {
           key: "done",
           value: function done() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee133() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee135() {
               var seed;
-              return regeneratorRuntime.wrap(function _callee133$(_context134) {
+              return regeneratorRuntime.wrap(function _callee135$(_context136) {
                 while (1) {
-                  switch (_context134.prev = _context134.next) {
+                  switch (_context136.prev = _context136.next) {
                     case 0:
                       seed = this.seed;
                       this.seed = null;
-                      _context134.next = 4;
+                      _context136.next = 4;
                       return this.importService.importWalletFromObject(this.data, seed);
 
                     case 4:
@@ -32254,10 +32992,10 @@
 
                     case 8:
                     case "end":
-                      return _context134.stop();
+                      return _context136.stop();
                   }
                 }
-              }, _callee133, this);
+              }, _callee135, this);
             }));
           }
         }, {
@@ -32826,18 +33564,18 @@
         _createClass(BalanceService, [{
           key: "getBalanceAll",
           value: function getBalanceAll() {
-            var _iterator58 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
-                _step58;
+            var _iterator61 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
+                _step61;
 
             try {
-              for (_iterator58.s(); !(_step58 = _iterator58.n()).done;) {
-                var account = _step58.value;
+              for (_iterator61.s(); !(_step61 = _iterator61.n()).done;) {
+                var account = _step61.value;
                 this.getAccountBalance(account);
               }
             } catch (err) {
-              _iterator58.e(err);
+              _iterator61.e(err);
             } finally {
-              _iterator58.f();
+              _iterator61.f();
             }
           }
         }, {
@@ -32870,12 +33608,12 @@
             var balance = 0;
             var change = false;
 
-            var _iterator59 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
-                _step59;
+            var _iterator62 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
+                _step62;
 
             try {
-              for (_iterator59.s(); !(_step59 = _iterator59.n()).done;) {
-                var account = _step59.value;
+              for (_iterator62.s(); !(_step62 = _iterator62.n()).done;) {
+                var account = _step62.value;
 
                 if (!(account.balanceXTZ === null || account.balanceXTZ === undefined)) {
                   balance = balance + Number(account.balanceXTZ);
@@ -32883,9 +33621,9 @@
                 }
               }
             } catch (err) {
-              _iterator59.e(err);
+              _iterator62.e(err);
             } finally {
-              _iterator59.f();
+              _iterator62.f();
             }
 
             if (change) {
