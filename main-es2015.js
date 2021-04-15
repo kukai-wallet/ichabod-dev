@@ -5477,8 +5477,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
 function SigninComponent_div_4_ng_container_1_Template(rf, ctx) { if (rf & 1) {
     const _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
@@ -5515,6 +5513,13 @@ class SigninComponent {
     }
     ngOnInit() {
     }
+    ngOnChanges(changes) {
+        var _a;
+        console.log('changes', changes);
+        if (((_a = changes === null || changes === void 0 ? void 0 : changes.dismiss) === null || _a === void 0 ? void 0 : _a.currentValue) === true) {
+            this.messageService.stopSpinner().then(() => setTimeout(() => this.loginResponse.emit('dismiss'), 10));
+        }
+    }
     abort() {
         this.loginResponse.emit(null);
     }
@@ -5524,7 +5529,9 @@ class SigninComponent {
                 this.messageService.startSpinner('Loading wallet...');
                 //const loginData = await this.mockLogin(); // Mock locally
                 const loginData = yield this.torusService.loginTorus(typeOfLogin);
-                yield this.messageService.stopSpinner();
+                if (this.dismiss === null) {
+                    yield this.messageService.stopSpinner();
+                }
                 this.loginResponse.emit(loginData);
             }
             catch (_a) {
@@ -5555,7 +5562,7 @@ class SigninComponent {
 SigninComponent.ɵfac = function SigninComponent_Factory(t) { return new (t || SigninComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_message_message_service__WEBPACK_IMPORTED_MODULE_2__["MessageService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_torus_torus_service__WEBPACK_IMPORTED_MODULE_3__["TorusService"])); };
 SigninComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: SigninComponent, selectors: [["app-signin"]], hostBindings: function SigninComponent_HostBindings(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function SigninComponent_click_HostBindingHandler($event) { return ctx.onClick($event); });
-    } }, outputs: { loginResponse: "loginResponse" }, decls: 9, vars: 1, consts: [[1, "direct-auth-login"], [1, "body"], ["class", "login-options", 4, "ngIf"], [1, "footer"], ["src", "../../../../assets/img/kukai-logo-black.svg", 1, "logo"], [1, "login-options"], [4, "ngFor", "ngForOf"], [1, "login-option", 3, "click"], ["width", "24", 3, "src"]], template: function SigninComponent_Template(rf, ctx) { if (rf & 1) {
+    } }, inputs: { dismiss: "dismiss" }, outputs: { loginResponse: "loginResponse" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]], decls: 9, vars: 1, consts: [[1, "direct-auth-login"], [1, "body"], ["class", "login-options", 4, "ngIf"], [1, "footer"], ["src", "../../../../assets/img/kukai-logo-black.svg", 1, "logo"], [1, "login-options"], [4, "ngFor", "ngForOf"], [1, "login-option", 3, "click"], ["width", "24", 3, "src"]], template: function SigninComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "H2");
@@ -5581,7 +5588,9 @@ SigninComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineCo
                 templateUrl: './signin.component.html',
                 styleUrls: ['./signin.component.scss']
             }]
-    }], function () { return [{ type: _services_message_message_service__WEBPACK_IMPORTED_MODULE_2__["MessageService"] }, { type: _services_torus_torus_service__WEBPACK_IMPORTED_MODULE_3__["TorusService"] }]; }, { loginResponse: [{
+    }], function () { return [{ type: _services_message_message_service__WEBPACK_IMPORTED_MODULE_2__["MessageService"] }, { type: _services_torus_torus_service__WEBPACK_IMPORTED_MODULE_3__["TorusService"] }]; }, { dismiss: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], loginResponse: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"]
         }], onClick: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"],
@@ -10496,6 +10505,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_activity_activity_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../services/activity/activity.service */ "s6Pj");
 /* harmony import */ var _services_embedded_auth_embedded_auth_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../services/embedded-auth/embedded-auth.service */ "JJGL");
 /* harmony import */ var kukai_embed__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! kukai-embed */ "ztwt");
+/* harmony import */ var kukai_embed__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(kukai_embed__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common */ "ofXK");
 /* harmony import */ var _signin_signin_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./signin/signin.component */ "HlfV");
 /* harmony import */ var _send_send_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../send/send.component */ "MlEp");
@@ -10532,6 +10542,9 @@ function EmbeddedComponent_app_signin_0_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "app-signin", 3);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("loginResponse", function EmbeddedComponent_app_signin_0_Template_app_signin_loginResponse_0_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r4); const ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](); return ctx_r3.loginResponse($event); });
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("dismiss", ctx_r0.dismiss);
 } }
 function EmbeddedComponent_app_send_1_Template(rf, ctx) { if (rf & 1) {
     const _r6 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
@@ -10562,6 +10575,7 @@ class EmbeddedComponent {
         this.pendingOps = [];
         this.origin = '';
         this.login = false;
+        this.dismiss = null;
         this.blockCard = true;
         this.activeAccount = null;
         this.template = null;
@@ -10593,6 +10607,9 @@ class EmbeddedComponent {
                                 break;
                             case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].cardRequest:
                                 this.handleCardRequest(data);
+                                break;
+                            case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].dismissRequest:
+                                this.dismiss = true;
                                 break;
                             default:
                                 console.warn('Unknown request', data);
@@ -10630,11 +10647,15 @@ class EmbeddedComponent {
         window.parent.window.postMessage(JSON.stringify({ type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].initComplete, failed: false }), this.origin || '*');
     }
     handleLoginRequest(req) {
+        var _a;
         if (this.activeAccount) {
             const response = { type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].loginResponse, failed: true, error: 'ALREADY_LOGGED_IN' };
             this.sendResponse(response);
         }
         else {
+            if ((_a = req === null || req === void 0 ? void 0 : req.config) === null || _a === void 0 ? void 0 : _a.customSpinnerDismissal) {
+                this.dismiss = false;
+            }
             this.login = true;
         }
     }
@@ -10683,7 +10704,14 @@ class EmbeddedComponent {
     loginResponse(loginData) {
         let response;
         let toImport;
-        if (loginData) {
+        if (loginData === 'dismiss') {
+            this.dismiss = null;
+            response = {
+                type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].dismissResponse,
+                failed: false
+            };
+        }
+        else if (loginData) {
             const { keyPair, userInfo } = loginData;
             const _a = Object.assign({}, userInfo), { idToken = '', accessToken = '' } = _a, filteredUserInfo = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__rest"])(_a, ["idToken", "accessToken"]);
             // 160 bits of entropy, base58 encoded
@@ -10699,9 +10727,12 @@ class EmbeddedComponent {
             toImport = { keyPair, userInfo, instanceId };
         }
         else {
+            this.dismiss = null;
             response = { type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].loginResponse, failed: true, error: 'ABORTED_BY_USER' };
         }
-        this.login = false;
+        if (this.dismiss === null) {
+            this.login = false;
+        }
         setTimeout(() => {
             this.sendResponse(response);
             if (toImport) {
@@ -10825,8 +10856,8 @@ class EmbeddedComponent {
     }
 }
 EmbeddedComponent.ɵfac = function EmbeddedComponent_Factory(t) { return new (t || EmbeddedComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_torus_torus_service__WEBPACK_IMPORTED_MODULE_2__["TorusService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_import_import_service__WEBPACK_IMPORTED_MODULE_4__["ImportService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_5__["WalletService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_7__["CoordinatorService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_lookup_lookup_service__WEBPACK_IMPORTED_MODULE_10__["LookupService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_activity_activity_service__WEBPACK_IMPORTED_MODULE_11__["ActivityService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_embedded_auth_embedded_auth_service__WEBPACK_IMPORTED_MODULE_12__["EmbeddedAuthService"])); };
-EmbeddedComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: EmbeddedComponent, selectors: [["app-embedded"]], decls: 3, vars: 3, consts: [[3, "loginResponse", 4, "ngIf"], [3, "headless", "operationRequest", "template", "activeAccount", "operationResponse", 4, "ngIf"], [3, "activeAccount", 4, "ngIf"], [3, "loginResponse"], [3, "headless", "operationRequest", "template", "activeAccount", "operationResponse"], [3, "activeAccount"]], template: function EmbeddedComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, EmbeddedComponent_app_signin_0_Template, 1, 0, "app-signin", 0);
+EmbeddedComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: EmbeddedComponent, selectors: [["app-embedded"]], decls: 3, vars: 3, consts: [[3, "dismiss", "loginResponse", 4, "ngIf"], [3, "headless", "operationRequest", "template", "activeAccount", "operationResponse", 4, "ngIf"], [3, "activeAccount", 4, "ngIf"], [3, "dismiss", "loginResponse"], [3, "headless", "operationRequest", "template", "activeAccount", "operationResponse"], [3, "activeAccount"]], template: function EmbeddedComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, EmbeddedComponent_app_signin_0_Template, 1, 1, "app-signin", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, EmbeddedComponent_app_send_1_Template, 1, 4, "app-send", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](2, EmbeddedComponent_app_card_2_Template, 1, 1, "app-card", 2);
     } if (rf & 2) {
