@@ -29,9 +29,17 @@
 
   function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+  function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
   function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-  function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function (_e2) { function e(_x) { return _e2.apply(this, arguments); } e.toString = function () { return _e2.toString(); }; return e; }(function (e) { throw e; }), f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function (_e3) { function e(_x2) { return _e3.apply(this, arguments); } e.toString = function () { return _e3.toString(); }; return e; }(function (e) { didErr = true; err = e; }), f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+  function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function (_e2) { function e(_x22) { return _e2.apply(this, arguments); } e.toString = function () { return _e2.toString(); }; return e; }(function (e) { throw e; }), f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function (_e3) { function e(_x23) { return _e3.apply(this, arguments); } e.toString = function () { return _e3.toString(); }; return e; }(function (e) { didErr = true; err = e; }), f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
   function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
@@ -1250,6 +1258,738 @@
     },
 
     /***/
+    "/qKp":
+    /*!*******************************!*\
+      !*** ../icabod/dist/index.js ***!
+      \*******************************/
+
+    /*! no static exports found */
+
+    /***/
+    function qKp(module, exports, __webpack_require__) {
+      "use strict";
+
+      var __classPrivateFieldSet = this && this.__classPrivateFieldSet || function (receiver, privateMap, value) {
+        if (!privateMap.has(receiver)) {
+          throw new TypeError("attempted to set private field on non-instance");
+        }
+
+        privateMap.set(receiver, value);
+        return value;
+      };
+
+      var __classPrivateFieldGet = this && this.__classPrivateFieldGet || function (receiver, privateMap) {
+        if (!privateMap.has(receiver)) {
+          throw new TypeError("attempted to get private field on non-instance");
+        }
+
+        return privateMap.get(receiver);
+      };
+
+      function __export(m) {
+        for (var p in m) {
+          if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+        }
+      }
+
+      var _iframe, _messages, _icon, _user;
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+
+      var types_1 = __webpack_require__(
+      /*! ./types */
+      "874q");
+
+      exports.Networks = types_1.Networks;
+
+      var util_1 = __webpack_require__(
+      /*! ./util */
+      "D5E+");
+
+      var iframe_1 = __webpack_require__(
+      /*! ./iframe */
+      "I9fP");
+
+      var icon_1 = __webpack_require__(
+      /*! ./icon */
+      "PYrL");
+
+      var messages_1 = __webpack_require__(
+      /*! ./messages */
+      "d9S5");
+
+      __export(__webpack_require__(
+      /*! ./types */
+      "874q"));
+
+      var storeKey = 'kukai-embed-instance-id';
+
+      var KukaiEmbed = /*#__PURE__*/function () {
+        /**
+         * Constructs a {@link KukaiEmbed} instance, using the given network OR with override src
+         *
+         * @param network - The network which the Kukai instance will use, OR the source of the Kukai instance
+         */
+        function KukaiEmbed() {
+          var cfg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+          _classCallCheck(this, KukaiEmbed);
+
+          _iframe.set(this, void 0);
+
+          _messages.set(this, void 0);
+
+          _icon.set(this, null);
+
+          _user.set(this, null);
+
+          var fullCfg = _objectSpread({
+            net: types_1.Networks.mainnet,
+            icon: false
+          }, cfg);
+
+          var iframeSrc = util_1.networkToSrc(fullCfg.net);
+          var k = new iframe_1.IFrameKukai(iframeSrc);
+
+          __classPrivateFieldSet(this, _iframe, k);
+
+          __classPrivateFieldSet(this, _messages, new messages_1.KukaiMessaging(k, iframeSrc));
+
+          if (fullCfg.icon) {
+            __classPrivateFieldSet(this, _icon, new icon_1.IconUI());
+          }
+        }
+        /**
+         * Initializes the Kukai Embed in the page
+         *
+         * @remarks
+         * This method injects an IFrame into the document body which contains a Kukai instance. The returned
+         * promise resolves when the iframe content has finished loading and a message has been exchanged with
+         * the Kukai instance
+         */
+
+
+        _createClass(KukaiEmbed, [{
+          key: "init",
+          value: function () {
+            var _init2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
+              var _this2 = this;
+
+              var _a, id, instanceId, init, user;
+
+              return regeneratorRuntime.wrap(function _callee7$(_context7) {
+                while (1) {
+                  switch (_context7.prev = _context7.next) {
+                    case 0:
+                      if (!this.initialized) {
+                        _context7.next = 2;
+                        break;
+                      }
+
+                      throw new Error("Kukai-Embed Already Present");
+
+                    case 2:
+                      id = window.sessionStorage.getItem(storeKey);
+                      instanceId = id ? id : undefined;
+
+                      init = /*#__PURE__*/function () {
+                        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(id) {
+                          var p;
+                          return regeneratorRuntime.wrap(function _callee6$(_context6) {
+                            while (1) {
+                              switch (_context6.prev = _context6.next) {
+                                case 0:
+                                  // begin waiting for init message
+                                  p = __classPrivateFieldGet(_this2, _messages).init(window); // add iframe to document body, Kukai embedded component should send an init message once init is complete
+
+                                  __classPrivateFieldGet(_this2, _iframe).init(instanceId); // await the init message
+
+
+                                  _context6.next = 4;
+                                  return p;
+
+                                case 4:
+                                  return _context6.abrupt("return", _context6.sent);
+
+                                case 5:
+                                case "end":
+                                  return _context6.stop();
+                              }
+                            }
+                          }, _callee6);
+                        }));
+
+                        return function init(_x) {
+                          return _ref.apply(this, arguments);
+                        };
+                      }();
+
+                      if (!instanceId) {
+                        _context7.next = 20;
+                        break;
+                      }
+
+                      user = window.sessionStorage.getItem(instanceId);
+
+                      if (!user) {
+                        _context7.next = 16;
+                        break;
+                      }
+
+                      _context7.next = 10;
+                      return init(instanceId);
+
+                    case 10:
+                      __classPrivateFieldSet(this, _user, JSON.parse(user));
+
+                      __classPrivateFieldGet(this, _iframe).toCard();
+
+                      __classPrivateFieldGet(this, _iframe).hide();
+
+                      (_a = __classPrivateFieldGet(this, _icon)) === null || _a === void 0 ? void 0 : _a.init(function () {
+                        return _this2.toggle();
+                      }).then(function () {
+                        var _a;
+
+                        return (_a = __classPrivateFieldGet(_this2, _icon)) === null || _a === void 0 ? void 0 : _a.show();
+                      });
+                      _context7.next = 18;
+                      break;
+
+                    case 16:
+                      _context7.next = 18;
+                      return init();
+
+                    case 18:
+                      _context7.next = 22;
+                      break;
+
+                    case 20:
+                      _context7.next = 22;
+                      return init();
+
+                    case 22:
+                    case "end":
+                      return _context7.stop();
+                  }
+                }
+              }, _callee7, this);
+            }));
+
+            function init() {
+              return _init2.apply(this, arguments);
+            }
+
+            return init;
+          }()
+          /**
+           * Indicates whether the embed is fully initialized
+           *
+           * @returns the initialization state of the embed
+           */
+
+        }, {
+          key: "deinit",
+          value: function deinit() {
+            var _a;
+
+            __classPrivateFieldGet(this, _messages).deinit();
+
+            __classPrivateFieldGet(this, _iframe).deinit();
+
+            (_a = __classPrivateFieldGet(this, _icon)) === null || _a === void 0 ? void 0 : _a.deinit();
+          }
+        }, {
+          key: "login",
+
+          /**
+           * Initiates the User Login flow for the embed
+           *
+           * @remarks
+           * This will {@link KukaiEmbed.show | show} the embed containing a DirectAuth component
+           *
+           * @returns the Login information for the User
+           */
+          value: function () {
+            var _login2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
+              var _this3 = this;
+
+              var config,
+                  _args9 = arguments;
+              return regeneratorRuntime.wrap(function _callee9$(_context9) {
+                while (1) {
+                  switch (_context9.prev = _context9.next) {
+                    case 0:
+                      config = _args9.length > 0 && _args9[0] !== undefined ? _args9[0] : {};
+
+                      if (this.initialized) {
+                        _context9.next = 3;
+                        break;
+                      }
+
+                      throw new Error("Cannot login: Embed Uninitialized");
+
+                    case 3:
+                      if (!(this.user !== null)) {
+                        _context9.next = 5;
+                        break;
+                      }
+
+                      throw new Error("Already logged in");
+
+                    case 5:
+                      __classPrivateFieldGet(this, _iframe).toFullScreen();
+
+                      __classPrivateFieldGet(this, _iframe).show();
+
+                      _context9.next = 9;
+                      return __classPrivateFieldGet(this, _messages).login(config).then(function (_ref2) {
+                        var pk = _ref2.pk,
+                            pkh = _ref2.pkh,
+                            userData = _ref2.userData,
+                            instanceId = _ref2.instanceId;
+
+                        var _a;
+
+                        window.sessionStorage.setItem(storeKey, instanceId);
+                        window.sessionStorage.setItem(instanceId, JSON.stringify({
+                          pk: pk,
+                          pkh: pkh,
+                          userData: userData
+                        }));
+                        (_a = __classPrivateFieldGet(_this3, _icon)) === null || _a === void 0 ? void 0 : _a.init(function () {
+                          return _this3.toggle();
+                        }).then(function () {
+                          var _a;
+
+                          return (_a = __classPrivateFieldGet(_this3, _icon)) === null || _a === void 0 ? void 0 : _a.show();
+                        });
+
+                        __classPrivateFieldSet(_this3, _user, {
+                          pk: pk,
+                          pkh: pkh,
+                          userData: userData
+                        });
+
+                        var callback = /*#__PURE__*/function () {
+                          var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+                            return regeneratorRuntime.wrap(function _callee8$(_context8) {
+                              while (1) {
+                                switch (_context8.prev = _context8.next) {
+                                  case 0:
+                                    _context8.next = 2;
+                                    return __classPrivateFieldGet(_this3, _messages).dismiss()["finally"](function () {
+                                      __classPrivateFieldGet(_this3, _iframe).hide();
+
+                                      __classPrivateFieldGet(_this3, _iframe).toCard();
+                                    });
+
+                                  case 2:
+                                    return _context8.abrupt("return", _context8.sent);
+
+                                  case 3:
+                                  case "end":
+                                    return _context8.stop();
+                                }
+                              }
+                            }, _callee8);
+                          }));
+
+                          return function callback() {
+                            return _ref3.apply(this, arguments);
+                          };
+                        }();
+
+                        return !config.customSpinnerDismissal ? __classPrivateFieldGet(_this3, _user) : _objectSpread(_objectSpread({}, __classPrivateFieldGet(_this3, _user)), {}, {
+                          dismissCallback: callback
+                        });
+                      })["catch"](function (e) {
+                        config.customSpinnerDismissal = false;
+                        throw e;
+                      })["finally"](function () {
+                        if (!config.customSpinnerDismissal) {
+                          __classPrivateFieldGet(_this3, _iframe).hide();
+
+                          __classPrivateFieldGet(_this3, _iframe).toCard();
+                        }
+                      });
+
+                    case 9:
+                      return _context9.abrupt("return", _context9.sent);
+
+                    case 10:
+                    case "end":
+                      return _context9.stop();
+                  }
+                }
+              }, _callee9, this);
+            }));
+
+            function login() {
+              return _login2.apply(this, arguments);
+            }
+
+            return login;
+          }()
+          /**
+           * Logs out of the embedded Kukai instance
+           *
+           * @returns the Logout result with potential error info
+           */
+
+        }, {
+          key: "logout",
+          value: function () {
+            var _logout2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+              var _this4 = this;
+
+              return regeneratorRuntime.wrap(function _callee10$(_context10) {
+                while (1) {
+                  switch (_context10.prev = _context10.next) {
+                    case 0:
+                      if (this.initialized) {
+                        _context10.next = 2;
+                        break;
+                      }
+
+                      throw new Error("Cannot logout: Embed Uninitialized");
+
+                    case 2:
+                      if (!(__classPrivateFieldGet(this, _iframe).isCard() && !__classPrivateFieldGet(this, _iframe).isHidden())) {
+                        _context10.next = 5;
+                        break;
+                      }
+
+                      _context10.next = 5;
+                      return __classPrivateFieldGet(this, _messages).card(false);
+
+                    case 5:
+                      _context10.next = 7;
+                      return __classPrivateFieldGet(this, _messages).logout().then(function (res) {
+                        var _a, _b;
+
+                        window.sessionStorage.removeItem(storeKey);
+
+                        __classPrivateFieldGet(_this4, _iframe).hide();
+
+                        (_a = __classPrivateFieldGet(_this4, _icon)) === null || _a === void 0 ? void 0 : _a.hide();
+                        (_b = __classPrivateFieldGet(_this4, _icon)) === null || _b === void 0 ? void 0 : _b.deinit();
+
+                        __classPrivateFieldSet(_this4, _user, null);
+                      })["finally"](function () {
+                        return __classPrivateFieldGet(_this4, _iframe).hide();
+                      });
+
+                    case 7:
+                      return _context10.abrupt("return", _context10.sent);
+
+                    case 8:
+                    case "end":
+                      return _context10.stop();
+                  }
+                }
+              }, _callee10, this);
+            }));
+
+            function logout() {
+              return _logout2.apply(this, arguments);
+            }
+
+            return logout;
+          }()
+          /**
+           * Sends a transaction to be signed and broadcast
+           *
+           * @remarks
+           * Only one set of operations can be sent at a time. If send is called while a previous is still pending,
+           * an error will be thrown
+           *
+           * @param operations - A list of Tezos operations to sign and broadcast
+           * @returns the operation hash resulting from broadcasting the operations
+           */
+
+        }, {
+          key: "send",
+          value: function () {
+            var _send = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(operations, ui) {
+              var _this5 = this;
+
+              return regeneratorRuntime.wrap(function _callee11$(_context11) {
+                while (1) {
+                  switch (_context11.prev = _context11.next) {
+                    case 0:
+                      if (this.initialized) {
+                        _context11.next = 2;
+                        break;
+                      }
+
+                      throw new Error("Cannot send: Embed Uninitialized");
+
+                    case 2:
+                      if (!(__classPrivateFieldGet(this, _iframe).isCard() && !__classPrivateFieldGet(this, _iframe).isHidden())) {
+                        _context11.next = 5;
+                        break;
+                      }
+
+                      _context11.next = 5;
+                      return __classPrivateFieldGet(this, _messages).card(false);
+
+                    case 5:
+                      __classPrivateFieldGet(this, _iframe).toFullScreen();
+
+                      __classPrivateFieldGet(this, _iframe).show();
+
+                      _context11.next = 9;
+                      return __classPrivateFieldGet(this, _messages).operation(operations, ui).then(function (res) {
+                        return res.opHash;
+                      })["finally"](function () {
+                        __classPrivateFieldGet(_this5, _iframe).toCard();
+
+                        __classPrivateFieldGet(_this5, _iframe).hide();
+                      });
+
+                    case 9:
+                      return _context11.abrupt("return", _context11.sent);
+
+                    case 10:
+                    case "end":
+                      return _context11.stop();
+                  }
+                }
+              }, _callee11, this);
+            }));
+
+            function send(_x2, _x3) {
+              return _send.apply(this, arguments);
+            }
+
+            return send;
+          }()
+          /**
+           * Tracks the status of an operation in the network
+           *
+           * @param opHash - The operation hash used to track the status of the operation
+           * @returns the result of the transaction, either confirmation or rejection
+           */
+
+        }, {
+          key: "trackOperation",
+          value: function () {
+            var _trackOperation = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(opHash) {
+              return regeneratorRuntime.wrap(function _callee12$(_context12) {
+                while (1) {
+                  switch (_context12.prev = _context12.next) {
+                    case 0:
+                      if (this.initialized) {
+                        _context12.next = 2;
+                        break;
+                      }
+
+                      throw new Error("Cannot track: Embed Uninitialized");
+
+                    case 2:
+                      _context12.next = 4;
+                      return __classPrivateFieldGet(this, _messages).track(opHash);
+
+                    case 4:
+                      return _context12.abrupt("return", _context12.sent);
+
+                    case 5:
+                    case "end":
+                      return _context12.stop();
+                  }
+                }
+              }, _callee12, this);
+            }));
+
+            function trackOperation(_x4) {
+              return _trackOperation.apply(this, arguments);
+            }
+
+            return trackOperation;
+          }()
+          /**
+           * Signs a message with associated Kukai UI
+           *
+           * @param message - The message to create a signature with
+           * @returns the detached signature made over the given message, encoded as baes58check
+           */
+
+        }, {
+          key: "signMessage",
+          value: function () {
+            var _signMessage = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13(message) {
+              var _this6 = this;
+
+              return regeneratorRuntime.wrap(function _callee13$(_context13) {
+                while (1) {
+                  switch (_context13.prev = _context13.next) {
+                    case 0:
+                      if (this.initialized) {
+                        _context13.next = 2;
+                        break;
+                      }
+
+                      throw new Error("Cannot sign: Embed Uninitialized");
+
+                    case 2:
+                      if (!(__classPrivateFieldGet(this, _iframe).isCard() && !__classPrivateFieldGet(this, _iframe).isHidden())) {
+                        _context13.next = 5;
+                        break;
+                      }
+
+                      _context13.next = 5;
+                      return __classPrivateFieldGet(this, _messages).card(false);
+
+                    case 5:
+                      __classPrivateFieldGet(this, _iframe).toFullScreen();
+
+                      __classPrivateFieldGet(this, _iframe).show();
+
+                      _context13.next = 9;
+                      return __classPrivateFieldGet(this, _messages).sign(message).then(function (res) {
+                        return res.signature;
+                      })["finally"](function () {
+                        __classPrivateFieldGet(_this6, _iframe).hide();
+
+                        __classPrivateFieldGet(_this6, _iframe).toCard();
+                      });
+
+                    case 9:
+                      return _context13.abrupt("return", _context13.sent);
+
+                    case 10:
+                    case "end":
+                      return _context13.stop();
+                  }
+                }
+              }, _callee13, this);
+            }));
+
+            function signMessage(_x5) {
+              return _signMessage.apply(this, arguments);
+            }
+
+            return signMessage;
+          }()
+          /**
+           * Accepts a challenge and returns an auth token and signature
+           *
+           * @param requestId - The ID to represent this instance of authentication
+           * @param nonce - The challange string to sign
+           * @returns the
+           */
+
+        }, {
+          key: "authenticate",
+          value: function () {
+            var _authenticate = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee14(requestId, nonce) {
+              return regeneratorRuntime.wrap(function _callee14$(_context14) {
+                while (1) {
+                  switch (_context14.prev = _context14.next) {
+                    case 0:
+                      if (this.initialized) {
+                        _context14.next = 2;
+                        break;
+                      }
+
+                      throw new Error("Cannot authenticate: Embed Uninitialized");
+
+                    case 2:
+                      _context14.next = 4;
+                      return __classPrivateFieldGet(this, _messages).authenticate(requestId, nonce).then(function (_ref4) {
+                        var message = _ref4.message,
+                            signature = _ref4.signature;
+                        return {
+                          message: message,
+                          signature: signature
+                        };
+                      });
+
+                    case 4:
+                      return _context14.abrupt("return", _context14.sent);
+
+                    case 5:
+                    case "end":
+                      return _context14.stop();
+                  }
+                }
+              }, _callee14, this);
+            }));
+
+            function authenticate(_x6, _x7) {
+              return _authenticate.apply(this, arguments);
+            }
+
+            return authenticate;
+          }()
+        }, {
+          key: "toggle",
+          value: function () {
+            var _toggle = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee15() {
+              var _this7 = this;
+
+              return regeneratorRuntime.wrap(function _callee15$(_context15) {
+                while (1) {
+                  switch (_context15.prev = _context15.next) {
+                    case 0:
+                      if (!__classPrivateFieldGet(this, _iframe).isHidden()) {
+                        _context15.next = 6;
+                        break;
+                      }
+
+                      __classPrivateFieldGet(this, _iframe).toCard();
+
+                      __classPrivateFieldGet(this, _iframe).show();
+
+                      __classPrivateFieldGet(this, _messages).card(true);
+
+                      _context15.next = 8;
+                      break;
+
+                    case 6:
+                      _context15.next = 8;
+                      return __classPrivateFieldGet(this, _messages).card(false).then(function () {
+                        __classPrivateFieldGet(_this7, _iframe).hide();
+                      });
+
+                    case 8:
+                    case "end":
+                      return _context15.stop();
+                  }
+                }
+              }, _callee15, this);
+            }));
+
+            function toggle() {
+              return _toggle.apply(this, arguments);
+            }
+
+            return toggle;
+          }()
+        }, {
+          key: "initialized",
+          get: function get() {
+            return __classPrivateFieldGet(this, _iframe).isInit && __classPrivateFieldGet(this, _messages).isInit;
+          }
+        }, {
+          key: "user",
+          get: function get() {
+            return __classPrivateFieldGet(this, _user);
+          }
+        }]);
+
+        return KukaiEmbed;
+      }();
+
+      exports.KukaiEmbed = KukaiEmbed;
+      _iframe = new WeakMap(), _messages = new WeakMap(), _icon = new WeakMap(), _user = new WeakMap();
+      /***/
+    },
+
+    /***/
     0:
     /*!***************************!*\
       !*** multi ./src/main.ts ***!
@@ -1411,23 +2151,23 @@
           key: "removeBeaconMsg",
           value: function removeBeaconMsg() {
             var delay = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
-              var _this2 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee16() {
+              var _this8 = this;
 
-              return regeneratorRuntime.wrap(function _callee6$(_context6) {
+              return regeneratorRuntime.wrap(function _callee16$(_context16) {
                 while (1) {
-                  switch (_context6.prev = _context6.next) {
+                  switch (_context16.prev = _context16.next) {
                     case 0:
                       setTimeout(function () {
-                        for (var i = 0; i < _this2.messages.length; i++) {
-                          if (_this2.messages[i].loader) {
-                            _this2.messages.splice(i, 1);
+                        for (var i = 0; i < _this8.messages.length; i++) {
+                          if (_this8.messages[i].loader) {
+                            _this8.messages.splice(i, 1);
 
-                            _this2.addSuccess(_this2.pairingCompleteMsg, 10);
+                            _this8.addSuccess(_this8.pairingCompleteMsg, 10);
 
                             break;
-                          } else if (_this2.messages[i].msg === _this2.pairingCompleteMsg) {
-                            _this2.messages.splice(i, 1);
+                          } else if (_this8.messages[i].msg === _this8.pairingCompleteMsg) {
+                            _this8.messages.splice(i, 1);
 
                             break;
                           }
@@ -1436,10 +2176,10 @@
 
                     case 1:
                     case "end":
-                      return _context6.stop();
+                      return _context16.stop();
                   }
                 }
-              }, _callee6);
+              }, _callee16);
             }));
           }
         }, {
@@ -1451,40 +2191,40 @@
           key: "startSpinner",
           value: function startSpinner() {
             var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
-              return regeneratorRuntime.wrap(function _callee7$(_context7) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee17() {
+              return regeneratorRuntime.wrap(function _callee17$(_context17) {
                 while (1) {
-                  switch (_context7.prev = _context7.next) {
+                  switch (_context17.prev = _context17.next) {
                     case 0:
                       this.spinnerText = text;
                       this.spinnerOn = true;
 
                     case 2:
                     case "end":
-                      return _context7.stop();
+                      return _context17.stop();
                   }
                 }
-              }, _callee7, this);
+              }, _callee17, this);
             }));
           }
         }, {
           key: "stopSpinner",
           value: function stopSpinner() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
-              return regeneratorRuntime.wrap(function _callee8$(_context8) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
+              return regeneratorRuntime.wrap(function _callee18$(_context18) {
                 while (1) {
-                  switch (_context8.prev = _context8.next) {
+                  switch (_context18.prev = _context18.next) {
                     case 0:
                       this.spinnerText = '';
                       this.spinnerOn = false;
-                      return _context8.abrupt("return");
+                      return _context18.abrupt("return");
 
                     case 3:
                     case "end":
-                      return _context8.stop();
+                      return _context18.stop();
                   }
                 }
-              }, _callee8, this);
+              }, _callee18, this);
             }));
           }
         }]);
@@ -2796,7 +3536,7 @@
         _createClass(OperationService, [{
           key: "activate",
           value: function activate(pkh, secret) {
-            var _this3 = this;
+            var _this9 = this;
 
             return this.getHeader().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (header) {
               var fop = {
@@ -2807,19 +3547,19 @@
                   secret: secret
                 }]
               };
-              return _this3.http.post(_this3.nodeURL + '/chains/main/blocks/head/helpers/forge/operations', fop).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (opbytes) {
+              return _this9.http.post(_this9.nodeURL + '/chains/main/blocks/head/helpers/forge/operations', fop).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (opbytes) {
                 var sopbytes = opbytes + Array(129).join('0');
                 fop.protocol = header.protocol;
                 fop.signature = 'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q';
-                return _this3.http.post(_this3.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (preApplyResult) {
+                return _this9.http.post(_this9.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (preApplyResult) {
                   console.log(JSON.stringify(preApplyResult));
-                  return _this3.http.post(_this3.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (_final) {
-                    return _this3.opCheck(_final);
+                  return _this9.http.post(_this9.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (_final) {
+                    return _this9.opCheck(_final);
                   }));
                 }));
               }));
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this3.errHandler(err);
+              return _this9.errHandler(err);
             }));
           }
         }, {
@@ -2852,27 +3592,27 @@
         }, {
           key: "originate",
           value: function originate(origination) {
-            var _this4 = this;
+            var _this10 = this;
 
             var fee = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
             var keys = arguments.length > 2 ? arguments[2] : undefined;
             console.log(fee, origination);
             return this.getHeader().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (header) {
-              return _this4.http.get(_this4.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (actions) {
-                return _this4.http.get(_this4.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (manager) {
-                  if (fee >= _this4.feeHardCap) {
+              return _this10.http.get(_this10.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (actions) {
+                return _this10.http.get(_this10.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (manager) {
+                  if (fee >= _this10.feeHardCap) {
                     throw new Error('TooHighFee');
                   }
 
                   var counter = Number(actions);
 
-                  var fop = _this4.createOriginationObject(header.hash, counter, manager, origination, fee, keys.pk, keys.pkh);
+                  var fop = _this10.createOriginationObject(header.hash, counter, manager, origination, fee, keys.pk, keys.pkh);
 
-                  return _this4.operation(fop, header, keys, true);
+                  return _this10.operation(fop, header, keys, true);
                 }));
               }));
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this4.errHandler(err);
+              return _this10.errHandler(err);
             }));
           }
         }, {
@@ -2917,25 +3657,25 @@
         }, {
           key: "transfer",
           value: function transfer(from, transactions, fee, keys) {
-            var _this5 = this;
+            var _this11 = this;
 
             var tokenTransfer = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
             return this.getHeader().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (header) {
-              return _this5.http.get(_this5.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (actions) {
-                return _this5.http.get(_this5.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (manager) {
-                  if (fee >= _this5.feeHardCap) {
+              return _this11.http.get(_this11.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (actions) {
+                return _this11.http.get(_this11.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (manager) {
+                  if (fee >= _this11.feeHardCap) {
                     throw new Error('TooHighFee');
                   }
 
                   var counter = Number(actions);
 
-                  var fop = _this5.createTransactionObject(header.hash, counter, manager, transactions, keys.pkh, keys.pk, from, fee, tokenTransfer);
+                  var fop = _this11.createTransactionObject(header.hash, counter, manager, transactions, keys.pkh, keys.pk, from, fee, tokenTransfer);
 
-                  return _this5.operation(fop, header, keys);
+                  return _this11.operation(fop, header, keys);
                 }));
               }));
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this5.errHandler(err);
+              return _this11.errHandler(err);
             }));
           }
         }, {
@@ -3057,14 +3797,14 @@
         }, {
           key: "delegate",
           value: function delegate(from, to) {
-            var _this6 = this;
+            var _this12 = this;
 
             var fee = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
             var keys = arguments.length > 3 ? arguments[3] : undefined;
             return this.getHeader().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (header) {
-              return _this6.http.get(_this6.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (actions) {
-                return _this6.http.get(_this6.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (manager) {
-                  if (fee >= _this6.feeHardCap) {
+              return _this12.http.get(_this12.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (actions) {
+                return _this12.http.get(_this12.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (manager) {
+                  if (fee >= _this12.feeHardCap) {
                     throw new Error('TooHighFee');
                   }
 
@@ -3075,7 +3815,7 @@
                     delegationOp = {
                       kind: 'delegation',
                       source: from,
-                      fee: _this6.microTez.times(fee).toString(),
+                      fee: _this12.microTez.times(fee).toString(),
                       counter: (++counter).toString(),
                       gas_limit: '1000',
                       storage_limit: '0'
@@ -3088,13 +3828,13 @@
                     delegationOp = {
                       kind: 'transaction',
                       source: keys.pkh,
-                      fee: _this6.microTez.times(fee).toString(),
+                      fee: _this12.microTez.times(fee).toString(),
                       counter: (++counter).toString(),
                       gas_limit: '4380',
                       storage_limit: '0',
                       amount: '0',
                       destination: from,
-                      parameters: to !== '' ? _this6.getContractDelegation(to) : _this6.getContractUnDelegation()
+                      parameters: to !== '' ? _this12.getContractDelegation(to) : _this12.getContractUnDelegation()
                     };
                   }
 
@@ -3117,11 +3857,11 @@
                     fop.contents[1].counter = (Number(fop.contents[1].counter) + 1).toString();
                   }
 
-                  return _this6.operation(fop, header, keys);
+                  return _this12.operation(fop, header, keys);
                 }));
               }));
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this6.errHandler(err);
+              return _this12.errHandler(err);
             }));
           }
           /*
@@ -3131,25 +3871,25 @@
         }, {
           key: "operation",
           value: function operation(fop, header, keys) {
-            var _this7 = this;
+            var _this13 = this;
 
             var origination = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
             console.log('fop to send: ' + JSON.stringify(fop));
             return this.http.post(this.nodeURL + '/chains/main/blocks/head/helpers/forge/operations', fop).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (opbytes) {
-              return _this7.localForge(fop).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (localOpbytes) {
+              return _this13.localForge(fop).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (localOpbytes) {
                 if (opbytes !== localOpbytes) {
                   throw new Error('ValidationError');
                 }
 
                 if (!keys.sk) {
                   fop.signature = 'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q';
-                  return _this7.http.post(_this7.nodeURL + '/chains/main/blocks/head/helpers/scripts/run_operation', {
+                  return _this13.http.post(_this13.nodeURL + '/chains/main/blocks/head/helpers/scripts/run_operation', {
                     operation: fop,
                     chain_id: header.chain_id
                   }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (applied) {
                     console.log('applied: ' + JSON.stringify(applied));
 
-                    _this7.checkApplied([applied]);
+                    _this13.checkApplied([applied]);
 
                     return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
                       success: true,
@@ -3161,24 +3901,24 @@
                 } else {
                   fop.protocol = header.protocol;
 
-                  var signed = _this7.sign('03' + opbytes, keys.sk);
+                  var signed = _this13.sign('03' + opbytes, keys.sk);
 
                   var sopbytes = signed.sbytes;
                   fop.signature = signed.edsig;
-                  return _this7.http.post(_this7.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (applied) {
+                  return _this13.http.post(_this13.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (applied) {
                     console.log('applied: ' + JSON.stringify(applied));
 
-                    _this7.checkApplied(applied);
+                    _this13.checkApplied(applied);
 
                     console.log('sop: ' + sopbytes);
-                    return _this7.http.post(_this7.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["timeout"])(20000)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (_final3) {
+                    return _this13.http.post(_this13.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["timeout"])(20000)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (_final3) {
                       var newPkh = null;
 
                       if (origination) {
                         newPkh = applied[0].contents[fop.contents.length - 1].metadata.operation_result.originated_contracts[0];
                       }
 
-                      return _this7.opCheck(_final3, newPkh);
+                      return _this13.opCheck(_final3, newPkh);
                     }));
                   }));
                 }
@@ -3192,16 +3932,16 @@
         }, {
           key: "broadcast",
           value: function broadcast(sopbytes) {
-            var _this8 = this;
+            var _this14 = this;
 
             console.log('Broadcast...');
             var opbytes = sopbytes.slice(0, sopbytes.length - 128);
             var edsig = this.sig2edsig(sopbytes.slice(sopbytes.length - 128));
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["from"])(_taquito_local_forging__WEBPACK_IMPORTED_MODULE_10__["localForger"].parse(opbytes)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (fop) {
               fop.signature = edsig;
-              return _this8.getHeader().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (header) {
+              return _this14.getHeader().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (header) {
                 fop.protocol = header.protocol;
-                return _this8.http.post(_this8.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (parsed) {
+                return _this14.http.post(_this14.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (parsed) {
                   var newPkh = null;
 
                   for (var i = 0; i < parsed[0].contents.length; i++) {
@@ -3210,19 +3950,19 @@
                     }
                   }
 
-                  return _this8.http.post(_this8.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (_final4) {
-                    return _this8.opCheck(_final4, newPkh);
+                  return _this14.http.post(_this14.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (_final4) {
+                    return _this14.opCheck(_final4, newPkh);
                   }));
                 }));
               }));
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this8.errHandler(err);
+              return _this14.errHandler(err);
             }));
           }
         }, {
           key: "torusKeyLookup",
           value: function torusKeyLookup(tz2address) {
-            var _this9 = this;
+            var _this15 = this;
 
             // Make it into Promise
             // Zero padding
@@ -3236,7 +3976,7 @@
                   noReveal: true
                 });
               } else {
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["from"])(_this9.decompress(manager)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (pk) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["from"])(_this15.decompress(manager)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (pk) {
                   var torusReq = {
                     jsonrpc: '2.0',
                     method: 'KeyLookupRequest',
@@ -3247,7 +3987,7 @@
                     }
                   };
                   var url = _environments_environment__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NETWORK === 'mainnet' ? 'https://torus-19.torusnode.com/jrpc' : 'https://teal-15-1.torusnode.com/jrpc';
-                  return _this9.http.post(url, JSON.stringify(torusReq), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (ans) {
+                  return _this15.http.post(url, JSON.stringify(torusReq), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (ans) {
                     try {
                       if (ans.result.PublicKey.X === pk.X && ans.result.PublicKey.Y === pk.Y) {
                         return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(ans);
@@ -3336,7 +4076,7 @@
         }, {
           key: "getBalance",
           value: function getBalance(pkh) {
-            var _this10 = this;
+            var _this16 = this;
 
             return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/balance').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (balance) {
               return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
@@ -3346,13 +4086,13 @@
                 }
               });
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this10.errHandler(err);
+              return _this16.errHandler(err);
             }));
           }
         }, {
           key: "getDelegate",
           value: function getDelegate(pkh) {
-            var _this11 = this;
+            var _this17 = this;
 
             return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (contract) {
               var delegate = '';
@@ -3368,13 +4108,13 @@
                 }
               });
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this11.errHandler(err);
+              return _this17.errHandler(err);
             }));
           }
         }, {
           key: "getVotingRights",
           value: function getVotingRights() {
-            var _this12 = this;
+            var _this18 = this;
 
             return this.http.get(this.nodeURL + '/chains/main/blocks/head/votes/listings').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (listings) {
               return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
@@ -3382,7 +4122,7 @@
                 payload: listings
               });
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this12.errHandler(err);
+              return _this18.errHandler(err);
             }));
           }
         }, {
@@ -3401,7 +4141,7 @@
         }, {
           key: "getAccount",
           value: function getAccount(pkh) {
-            var _this13 = this;
+            var _this19 = this;
 
             return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (contract) {
               var delegate = '';
@@ -3420,19 +4160,19 @@
                 }
               });
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this13.errHandler(err);
+              return _this19.errHandler(err);
             }));
           }
         }, {
           key: "getVerifiedOpBytes",
           value: function getVerifiedOpBytes(operationLevel, operationHash, pkh, pk) {
-            var _this14 = this;
+            var _this20 = this;
 
             return this.http.get(this.nodeURL + '/chains/main/blocks/' + operationLevel + '/operation_hashes', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (opHashes) {
               var opIndex = opHashes[3].findIndex(function (a) {
                 return a === operationHash;
               });
-              return _this14.http.get(_this14.nodeURL + '/chains/main/blocks/' + operationLevel + '/operations', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (op) {
+              return _this20.http.get(_this20.nodeURL + '/chains/main/blocks/' + operationLevel + '/operations', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (op) {
                 var ans = '';
                 op = op[3][opIndex];
                 var sig = op.signature;
@@ -3451,10 +4191,10 @@
                   }
                 }
 
-                return _this14.http.post(_this14.nodeURL + '/chains/main/blocks/head/helpers/forge/operations', op).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (opBytes) {
-                  if (_this14.pk2pkh(pk) === pkh) {
-                    if (_this14.verify(opBytes, sig, pk)) {
-                      ans = opBytes + _this14.buf2hex(_this14.b58cdecode(sig, _this14.prefix.sig));
+                return _this20.http.post(_this20.nodeURL + '/chains/main/blocks/head/helpers/forge/operations', op).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (opBytes) {
+                  if (_this20.pk2pkh(pk) === pkh) {
+                    if (_this20.verify(opBytes, sig, pk)) {
+                      ans = opBytes + _this20.buf2hex(_this20.b58cdecode(sig, _this20.prefix.sig));
                     } else {
                       throw new Error('InvalidSignature');
                     }
@@ -3581,33 +4321,33 @@
         }, {
           key: "decompress",
           value: function decompress(pk) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee19() {
               var decodedPk, hexPk, secp256k1, compressed, uncompressed, xy;
-              return regeneratorRuntime.wrap(function _callee9$(_context9) {
+              return regeneratorRuntime.wrap(function _callee19$(_context19) {
                 while (1) {
-                  switch (_context9.prev = _context9.next) {
+                  switch (_context19.prev = _context19.next) {
                     case 0:
                       decodedPk = this.b58cdecode(pk, this.prefix.sppk);
                       hexPk = this.buf2hex(decodedPk);
-                      _context9.next = 4;
+                      _context19.next = 4;
                       return Object(_bitauth_libauth__WEBPACK_IMPORTED_MODULE_15__["instantiateSecp256k1"])();
 
                     case 4:
-                      secp256k1 = _context9.sent;
+                      secp256k1 = _context19.sent;
                       compressed = Object(_bitauth_libauth__WEBPACK_IMPORTED_MODULE_15__["hexToBin"])(hexPk);
                       uncompressed = secp256k1.uncompressPublicKey(compressed);
                       xy = Object(_bitauth_libauth__WEBPACK_IMPORTED_MODULE_15__["binToHex"])(uncompressed).slice(2);
-                      return _context9.abrupt("return", {
+                      return _context19.abrupt("return", {
                         X: xy.slice(0, 64),
                         Y: xy.slice(64, 128)
                       });
 
                     case 9:
                     case "end":
-                      return _context9.stop();
+                      return _context19.stop();
                   }
                 }
-              }, _callee9, this);
+              }, _callee19, this);
             }));
           }
         }, {
@@ -4393,7 +5133,7 @@
         _createClass(NewImplicitComponent, [{
           key: "openModal",
           value: function openModal() {
-            var _this15 = this;
+            var _this21 = this;
 
             if (this.openPkhSpot()) {
               // hide body scrollbar
@@ -4403,7 +5143,7 @@
               this.clear();
               this.modalOpen = true;
               setTimeout(function () {
-                var inputElem = _this15.pwdView.nativeElement;
+                var inputElem = _this21.pwdView.nativeElement;
                 inputElem.focus();
               }, 100);
             } else {
@@ -4425,23 +5165,23 @@
         }, {
           key: "addPkh",
           value: function addPkh() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee20() {
               var pkh;
-              return regeneratorRuntime.wrap(function _callee10$(_context10) {
+              return regeneratorRuntime.wrap(function _callee20$(_context20) {
                 while (1) {
-                  switch (_context10.prev = _context10.next) {
+                  switch (_context20.prev = _context20.next) {
                     case 0:
                       if (!this.openPkhSpot()) {
-                        _context10.next = 9;
+                        _context20.next = 9;
                         break;
                       }
 
                       this.messageService.startSpinner('Creating new account');
-                      _context10.next = 4;
+                      _context20.next = 4;
                       return this.walletService.incrementAccountIndex(this.password);
 
                     case 4:
-                      pkh = _context10.sent;
+                      pkh = _context20.sent;
 
                       if (pkh) {
                         this.coordinatorService.start(pkh);
@@ -4451,7 +5191,7 @@
                       }
 
                       this.messageService.stopSpinner();
-                      _context10.next = 10;
+                      _context20.next = 10;
                       break;
 
                     case 9:
@@ -4459,10 +5199,10 @@
 
                     case 10:
                     case "end":
-                      return _context10.stop();
+                      return _context20.stop();
                   }
                 }
-              }, _callee10, this);
+              }, _callee20, this);
             }));
           }
         }, {
@@ -4697,26 +5437,26 @@
         }, {
           key: "startXTZ",
           value: function startXTZ() {
-            var _this16 = this;
+            var _this22 = this;
 
             if (!this.tzrateInterval) {
               console.log('Start scheduler XTZ');
               this.tzrateService.getTzrate();
               this.tzrateInterval = setInterval(function () {
-                return _this16.tzrateService.getTzrate();
+                return _this22.tzrateService.getTzrate();
               }, this.defaultDelayPrice);
             }
           }
         }, {
           key: "start",
           value: function start(pkh) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
-              var _this17 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee21() {
+              var _this23 = this;
 
               var scheduleData;
-              return regeneratorRuntime.wrap(function _callee11$(_context11) {
+              return regeneratorRuntime.wrap(function _callee21$(_context21) {
                 while (1) {
-                  switch (_context11.prev = _context11.next) {
+                  switch (_context21.prev = _context21.next) {
                     case 0:
                       if (pkh && !this.scheduler.get(pkh)) {
                         this.accounts = this.walletService.wallet.getAccounts();
@@ -4725,7 +5465,7 @@
                           pkh: pkh,
                           state: State.UpToDate,
                           interval: setInterval(function () {
-                            return _this17.update(pkh);
+                            return _this23.update(pkh);
                           }, this.defaultDelayActivity),
                           stateCounter: 0
                         };
@@ -4736,29 +5476,29 @@
 
                     case 1:
                     case "end":
-                      return _context11.stop();
+                      return _context21.stop();
                   }
                 }
-              }, _callee11, this);
+              }, _callee21, this);
             }));
           }
         }, {
           key: "boost",
           value: function boost(pkh) {
             var metadata = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee12() {
-              var _this18 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee22() {
+              var _this24 = this;
 
               var counter;
-              return regeneratorRuntime.wrap(function _callee12$(_context12) {
+              return regeneratorRuntime.wrap(function _callee22$(_context22) {
                 while (1) {
-                  switch (_context12.prev = _context12.next) {
+                  switch (_context22.prev = _context22.next) {
                     case 0:
                       // Expect action
                       console.log('boost ' + pkh);
 
                       if (!this.walletService.addressExists(pkh)) {
-                        _context12.next = 7;
+                        _context22.next = 7;
                         break;
                       }
 
@@ -4767,11 +5507,11 @@
                       }
 
                       if (this.scheduler.get(pkh)) {
-                        _context12.next = 6;
+                        _context22.next = 6;
                         break;
                       }
 
-                      _context12.next = 6;
+                      _context22.next = 6;
                       return this.start(pkh);
 
                     case 6:
@@ -4783,39 +5523,39 @@
                           var _a; // Failsafe
 
 
-                          if (((_a = _this18.scheduler) === null || _a === void 0 ? void 0 : _a.size) && _this18.scheduler.get(pkh).stateCounter === counter) {
+                          if (((_a = _this24.scheduler) === null || _a === void 0 ? void 0 : _a.size) && _this24.scheduler.get(pkh).stateCounter === counter) {
                             console.log('Timeout from wait state');
 
-                            _this18.changeState(pkh, State.UpToDate);
+                            _this24.changeState(pkh, State.UpToDate);
                           }
                         }, 150000);
                       }
 
                     case 7:
                     case "end":
-                      return _context12.stop();
+                      return _context22.stop();
                   }
                 }
-              }, _callee12, this);
+              }, _callee22, this);
             }));
           }
         }, {
           key: "update",
           value: function update(pkh) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee13() {
-              var _this19 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee23() {
+              var _this25 = this;
 
-              return regeneratorRuntime.wrap(function _callee13$(_context13) {
+              return regeneratorRuntime.wrap(function _callee23$(_context23) {
                 while (1) {
-                  switch (_context13.prev = _context13.next) {
+                  switch (_context23.prev = _context23.next) {
                     case 0:
                       this.setDelay(pkh, this.defaultDelayActivity);
                       this.activityService.updateTransactions(pkh).subscribe(function (ans) {
-                        switch (_this19.scheduler.get(pkh) ? _this19.scheduler.get(pkh).state : -1) {
+                        switch (_this25.scheduler.get(pkh) ? _this25.scheduler.get(pkh).state : -1) {
                           case State.UpToDate:
                             {
                               if (!ans.upToDate) {
-                                _this19.changeState(pkh, State.Updating);
+                                _this25.changeState(pkh, State.Updating);
                               }
 
                               break;
@@ -4824,9 +5564,9 @@
                           case State.Wait:
                             {
                               if (!ans.upToDate) {
-                                _this19.changeState(pkh, State.Updating);
+                                _this25.changeState(pkh, State.Updating);
                               } else {
-                                _this19.setDelay(pkh, _this19.shortDelayActivity);
+                                _this25.setDelay(pkh, _this25.shortDelayActivity);
                               }
 
                               break;
@@ -4835,9 +5575,9 @@
                           case State.Updating:
                             {
                               if (ans.upToDate) {
-                                _this19.changeState(pkh, State.UpToDate);
+                                _this25.changeState(pkh, State.UpToDate);
                               } else {
-                                _this19.setDelay(pkh, _this19.shortDelayActivity);
+                                _this25.setDelay(pkh, _this25.shortDelayActivity);
                               }
 
                               break;
@@ -4850,7 +5590,7 @@
                             }
                         }
 
-                        var acc = _this19.walletService.wallet.getAccount(pkh);
+                        var acc = _this25.walletService.wallet.getAccount(pkh);
 
                         if (acc && acc.activities.length) {
                           var latestActivity = acc.activities[0];
@@ -4862,7 +5602,7 @@
                               // 50m
                               acc.activities.shift();
 
-                              _this19.walletService.storeWallet();
+                              _this25.walletService.storeWallet();
                             }
                           }
                         }
@@ -4871,23 +5611,23 @@
                       }, function () {
                         var _a;
 
-                        console.log("account[".concat(_this19.accounts.findIndex(function (a) {
+                        console.log("account[".concat(_this25.accounts.findIndex(function (a) {
                           return a.address === pkh;
-                        }), "][").concat(typeof ((_a = _this19.scheduler.get(pkh)) === null || _a === void 0 ? void 0 : _a.state) !== 'undefined' ? _this19.scheduler.get(pkh).state : '*', "]: <<"));
+                        }), "][").concat(typeof ((_a = _this25.scheduler.get(pkh)) === null || _a === void 0 ? void 0 : _a.state) !== 'undefined' ? _this25.scheduler.get(pkh).state : '*', "]: <<"));
                       });
 
                     case 2:
                     case "end":
-                      return _context13.stop();
+                      return _context23.stop();
                   }
                 }
-              }, _callee13, this);
+              }, _callee23, this);
             }));
           }
         }, {
           key: "changeState",
           value: function changeState(pkh, newState) {
-            var _this20 = this;
+            var _this26 = this;
 
             var scheduleData = this.scheduler.get(pkh);
             scheduleData.state = newState;
@@ -4899,7 +5639,7 @@
             if (newState === State.Wait || newState === State.Updating) {
               clearInterval(scheduleData.interval);
               scheduleData.interval = setInterval(function () {
-                return _this20.update(pkh);
+                return _this26.update(pkh);
               }, this.shortDelayActivity);
             }
 
@@ -4909,7 +5649,7 @@
         }, {
           key: "setDelay",
           value: function setDelay(pkh, time) {
-            var _this21 = this;
+            var _this27 = this;
 
             var scheduleData = this.scheduler.get(pkh);
 
@@ -4918,7 +5658,7 @@
             }
 
             scheduleData.interval = setInterval(function () {
-              return _this21.update(pkh);
+              return _this27.update(pkh);
             }, time);
             this.scheduler.set(pkh, scheduleData);
           }
@@ -4939,10 +5679,10 @@
         }, {
           key: "stop",
           value: function stop(pkh) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee14() {
-              return regeneratorRuntime.wrap(function _callee14$(_context14) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee24() {
+              return regeneratorRuntime.wrap(function _callee24$(_context24) {
                 while (1) {
-                  switch (_context14.prev = _context14.next) {
+                  switch (_context24.prev = _context24.next) {
                     case 0:
                       console.log('Stop scheduler ' + this.accounts.findIndex(function (a) {
                         return a.address === pkh;
@@ -4953,26 +5693,26 @@
 
                     case 4:
                     case "end":
-                      return _context14.stop();
+                      return _context24.stop();
                   }
                 }
-              }, _callee14, this);
+              }, _callee24, this);
             }));
           }
         }, {
           key: "updateAccountData",
           value: function updateAccountData(pkh) {
-            var _this22 = this;
+            var _this28 = this;
 
             // Maybe also check for originations to account?
             console.log('update account data for ' + pkh);
             this.operationService.getAccount(pkh).subscribe(function (ans) {
               if (ans.success) {
-                _this22.balanceService.updateAccountBalance(_this22.walletService.wallet.getAccount(pkh), Number(ans.payload.balance));
+                _this28.balanceService.updateAccountBalance(_this28.walletService.wallet.getAccount(pkh), Number(ans.payload.balance));
 
-                var acc = _this22.walletService.wallet.getAccount(pkh);
+                var acc = _this28.walletService.wallet.getAccount(pkh);
 
-                _this22.delegateService.handleDelegateResponse(acc, ans.payload.delegate);
+                _this28.delegateService.handleDelegateResponse(acc, ans.payload.delegate);
               } else {
                 console.log('updateAccountData -> getAccount failed ', ans.payload.msg);
               }
@@ -5338,74 +6078,74 @@
         _createClass(IndexerService, [{
           key: "getContractAddresses",
           value: function getContractAddresses(address) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee15() {
-              return regeneratorRuntime.wrap(function _callee15$(_context15) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee25() {
+              return regeneratorRuntime.wrap(function _callee25$(_context25) {
                 while (1) {
-                  switch (_context15.prev = _context15.next) {
+                  switch (_context25.prev = _context25.next) {
                     case 0:
-                      return _context15.abrupt("return", this.tzktService.getContractAddresses(address));
+                      return _context25.abrupt("return", this.tzktService.getContractAddresses(address));
 
                     case 1:
                     case "end":
-                      return _context15.stop();
+                      return _context25.stop();
                   }
                 }
-              }, _callee15, this);
+              }, _callee25, this);
             }));
           }
         }, {
           key: "accountInfo",
           value: function accountInfo(address) {
             var knownTokenIds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee16() {
-              return regeneratorRuntime.wrap(function _callee16$(_context16) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee26() {
+              return regeneratorRuntime.wrap(function _callee26$(_context26) {
                 while (1) {
-                  switch (_context16.prev = _context16.next) {
+                  switch (_context26.prev = _context26.next) {
                     case 0:
-                      return _context16.abrupt("return", this.tzktService.accountInfo(address, knownTokenIds));
+                      return _context26.abrupt("return", this.tzktService.accountInfo(address, knownTokenIds));
 
                     case 1:
                     case "end":
-                      return _context16.stop();
+                      return _context26.stop();
                   }
                 }
-              }, _callee16, this);
+              }, _callee26, this);
             }));
           }
         }, {
           key: "getOperations",
           value: function getOperations(address, knownTokenIds, wallet) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee17() {
-              return regeneratorRuntime.wrap(function _callee17$(_context17) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee27() {
+              return regeneratorRuntime.wrap(function _callee27$(_context27) {
                 while (1) {
-                  switch (_context17.prev = _context17.next) {
+                  switch (_context27.prev = _context27.next) {
                     case 0:
-                      return _context17.abrupt("return", this.tzktService.getOperations(address, knownTokenIds, wallet));
+                      return _context27.abrupt("return", this.tzktService.getOperations(address, knownTokenIds, wallet));
 
                     case 1:
                     case "end":
-                      return _context17.stop();
+                      return _context27.stop();
                   }
                 }
-              }, _callee17, this);
+              }, _callee27, this);
             }));
           }
         }, {
           key: "getTokenMetadata",
           value: function getTokenMetadata(contractAddress, id) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
-              return regeneratorRuntime.wrap(function _callee18$(_context18) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee28() {
+              return regeneratorRuntime.wrap(function _callee28$(_context28) {
                 while (1) {
-                  switch (_context18.prev = _context18.next) {
+                  switch (_context28.prev = _context28.next) {
                     case 0:
-                      return _context18.abrupt("return", this.tzktService.getTokenMetadata(contractAddress, id));
+                      return _context28.abrupt("return", this.tzktService.getTokenMetadata(contractAddress, id));
 
                     case 1:
                     case "end":
-                      return _context18.stop();
+                      return _context28.stop();
                   }
                 }
-              }, _callee18, this);
+              }, _callee28, this);
             }));
           }
         }]);
@@ -5467,6 +6207,68 @@
       /* (ignored) */
 
       /***/
+    },
+
+    /***/
+    "874q":
+    /*!*******************************!*\
+      !*** ../icabod/dist/types.js ***!
+      \*******************************/
+
+    /*! no static exports found */
+
+    /***/
+    function q(module, exports, __webpack_require__) {
+      "use strict";
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+      var Networks;
+
+      (function (Networks) {
+        Networks["mainnet"] = "mainnet";
+        Networks["delphinet"] = "delphinet";
+        Networks["edonet"] = "edonet";
+        Networks["dev"] = "dev";
+      })(Networks = exports.Networks || (exports.Networks = {}));
+
+      var TypeOfLogin;
+
+      (function (TypeOfLogin) {
+        TypeOfLogin["Google"] = "google";
+        TypeOfLogin["Reddit"] = "reddit";
+        TypeOfLogin["Twitter"] = "twitter";
+      })(TypeOfLogin = exports.TypeOfLogin || (exports.TypeOfLogin = {}));
+
+      var RequestTypes;
+
+      (function (RequestTypes) {
+        RequestTypes["loginRequest"] = "login_request";
+        RequestTypes["operationRequest"] = "operation_request";
+        RequestTypes["trackRequest"] = "track_request";
+        RequestTypes["logoutRequest"] = "logout_request";
+        RequestTypes["signRequest"] = "sign_request";
+        RequestTypes["authRequest"] = "authentication_request";
+        RequestTypes["cardRequest"] = "card_request";
+        RequestTypes["dismissRequest"] = "dismiss_request";
+      })(RequestTypes = exports.RequestTypes || (exports.RequestTypes = {}));
+
+      var ResponseTypes;
+
+      (function (ResponseTypes) {
+        ResponseTypes["initComplete"] = "init_complete";
+        ResponseTypes["loginResponse"] = "login_response";
+        ResponseTypes["operationResponse"] = "operation_response";
+        ResponseTypes["trackResponse"] = "track_response";
+        ResponseTypes["logoutResponse"] = "logout_response";
+        ResponseTypes["signResponse"] = "sign_response";
+        ResponseTypes["authResponse"] = "authentication_response";
+        ResponseTypes["cardResponse"] = "card_response";
+        ResponseTypes["dismissResponse"] = "dismiss_response";
+      })(ResponseTypes = exports.ResponseTypes || (exports.ResponseTypes = {}));
+      /***/
+
     },
 
     /***/
@@ -6248,29 +7050,29 @@
         }, {
           key: "estimateFees",
           value: function estimateFees() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee19() {
-              var _this23 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee29() {
+              var _this29 = this;
 
               var callback;
-              return regeneratorRuntime.wrap(function _callee19$(_context19) {
+              return regeneratorRuntime.wrap(function _callee29$(_context29) {
                 while (1) {
-                  switch (_context19.prev = _context19.next) {
+                  switch (_context29.prev = _context29.next) {
                     case 0:
                       callback = function callback(res) {
                         if (res) {
                           if (res.error) {
-                            _this23.simError = res.error;
-                            _this23.formInvalid = _this23.simError;
+                            _this29.simError = res.error;
+                            _this29.formInvalid = _this29.simError;
                           } else {
-                            _this23.defaultTransactionParams = res;
+                            _this29.defaultTransactionParams = res;
                           }
                         }
 
-                        _this23.simSemaphore--;
+                        _this29.simSemaphore--;
                       };
 
                       this.simSemaphore++;
-                      _context19.next = 4;
+                      _context29.next = 4;
                       return this.estimateService.preLoadData(this.activeAccount.pkh, this.activeAccount.pk);
 
                     case 4:
@@ -6278,10 +7080,10 @@
 
                     case 5:
                     case "end":
-                      return _context19.stop();
+                      return _context29.stop();
                   }
                 }
-              }, _callee19, this);
+              }, _callee29, this);
             }));
           }
         }, {
@@ -6367,35 +7169,35 @@
         }, {
           key: "inject",
           value: function inject() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee20() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee30() {
               var valid, pwd, keys;
-              return regeneratorRuntime.wrap(function _callee20$(_context20) {
+              return regeneratorRuntime.wrap(function _callee30$(_context30) {
                 while (1) {
-                  switch (_context20.prev = _context20.next) {
+                  switch (_context30.prev = _context30.next) {
                     case 0:
                       this.formInvalid = this.simError;
                       valid = this.validateOrigination();
 
                       if (!valid) {
-                        _context20.next = 16;
+                        _context30.next = 16;
                         break;
                       }
 
                       pwd = this.password;
                       this.password = '';
                       this.messageService.startSpinner('Signing operation...');
-                      _context20.prev = 6;
-                      _context20.next = 9;
+                      _context30.prev = 6;
+                      _context30.next = 9;
                       return this.walletService.getKeys(pwd, this.activeAccount.pkh);
 
                     case 9:
-                      keys = _context20.sent;
-                      _context20.next = 15;
+                      keys = _context30.sent;
+                      _context30.next = 15;
                       break;
 
                     case 12:
-                      _context20.prev = 12;
-                      _context20.t0 = _context20["catch"](6);
+                      _context30.prev = 12;
+                      _context30.t0 = _context30["catch"](6);
                       this.messageService.stopSpinner();
 
                     case 15:
@@ -6421,10 +7223,10 @@
 
                     case 16:
                     case "end":
-                      return _context20.stop();
+                      return _context30.stop();
                   }
                 }
-              }, _callee20, this, [[6, 12]]);
+              }, _callee30, this, [[6, 12]]);
             }));
           }
         }, {
@@ -6450,25 +7252,25 @@
         }, {
           key: "ledgerSign",
           value: function ledgerSign() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee21() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee31() {
               var valid, keys;
-              return regeneratorRuntime.wrap(function _callee21$(_context21) {
+              return regeneratorRuntime.wrap(function _callee31$(_context31) {
                 while (1) {
-                  switch (_context21.prev = _context21.next) {
+                  switch (_context31.prev = _context31.next) {
                     case 0:
                       this.formInvalid = this.simError;
                       valid = this.validateOrigination();
 
                       if (!valid) {
-                        _context21.next = 7;
+                        _context31.next = 7;
                         break;
                       }
 
-                      _context21.next = 5;
+                      _context31.next = 5;
                       return this.walletService.getKeys('');
 
                     case 5:
-                      keys = _context21.sent;
+                      keys = _context31.sent;
 
                       if (keys) {
                         this.sendOrigination(keys);
@@ -6476,29 +7278,29 @@
 
                     case 7:
                     case "end":
-                      return _context21.stop();
+                      return _context31.stop();
                   }
                 }
-              }, _callee21, this);
+              }, _callee31, this);
             }));
           }
         }, {
           key: "sendOrigination",
           value: function sendOrigination(keys) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee23() {
-              var _this24 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee33() {
+              var _this30 = this;
 
-              return regeneratorRuntime.wrap(function _callee23$(_context23) {
+              return regeneratorRuntime.wrap(function _callee33$(_context33) {
                 while (1) {
-                  switch (_context23.prev = _context23.next) {
+                  switch (_context33.prev = _context33.next) {
                     case 0:
                       //this.fee = '';
                       this.operationService.originate(this.getOrigination(), this.getTotalFee(), keys).subscribe(function (ans) {
-                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this24, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee22() {
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this30, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee32() {
                           var metadata;
-                          return regeneratorRuntime.wrap(function _callee22$(_context22) {
+                          return regeneratorRuntime.wrap(function _callee32$(_context32) {
                             while (1) {
-                              switch (_context22.prev = _context22.next) {
+                              switch (_context32.prev = _context32.next) {
                                 case 0:
                                   this.sendResponse = ans;
 
@@ -6527,51 +7329,51 @@
 
                                 case 2:
                                 case "end":
-                                  return _context22.stop();
+                                  return _context32.stop();
                               }
                             }
-                          }, _callee22, this);
+                          }, _callee32, this);
                         }));
                       }, function (err) {
                         console.log('Error Message ', JSON.stringify(err));
-                        _this24.ledgerError = 'Failed to create operation';
+                        _this30.ledgerError = 'Failed to create operation';
                       });
 
                     case 1:
                     case "end":
-                      return _context23.stop();
+                      return _context33.stop();
                   }
                 }
-              }, _callee23, this);
+              }, _callee33, this);
             }));
           }
         }, {
           key: "requestLedgerSignature",
           value: function requestLedgerSignature() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee24() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee34() {
               var op, signature, signedOp;
-              return regeneratorRuntime.wrap(function _callee24$(_context24) {
+              return regeneratorRuntime.wrap(function _callee34$(_context34) {
                 while (1) {
-                  switch (_context24.prev = _context24.next) {
+                  switch (_context34.prev = _context34.next) {
                     case 0:
                       if (!(this.walletService.wallet instanceof _services_wallet_wallet__WEBPACK_IMPORTED_MODULE_7__["LedgerWallet"])) {
-                        _context24.next = 11;
+                        _context34.next = 11;
                         break;
                       }
 
                       op = this.sendResponse.payload.unsignedOperation;
                       this.messageService.startSpinner('Waiting for Ledger signature');
-                      _context24.prev = 3;
-                      _context24.next = 6;
+                      _context34.prev = 3;
+                      _context34.next = 6;
                       return this.ledgerService.signOperation('03' + op, this.walletService.wallet.implicitAccounts[0].derivationPath);
 
                     case 6:
-                      signature = _context24.sent;
+                      signature = _context34.sent;
 
                     case 7:
-                      _context24.prev = 7;
+                      _context34.prev = 7;
                       this.messageService.stopSpinner();
-                      return _context24.finish(7);
+                      return _context34.finish(7);
 
                     case 10:
                       if (signature) {
@@ -6584,57 +7386,57 @@
 
                     case 11:
                     case "end":
-                      return _context24.stop();
+                      return _context34.stop();
                   }
                 }
-              }, _callee24, this, [[3,, 7, 10]]);
+              }, _callee34, this, [[3,, 7, 10]]);
             }));
           }
         }, {
           key: "broadCastLedgerTransaction",
           value: function broadCastLedgerTransaction() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee25() {
-              var _this25 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee35() {
+              var _this31 = this;
 
-              return regeneratorRuntime.wrap(function _callee25$(_context25) {
+              return regeneratorRuntime.wrap(function _callee35$(_context35) {
                 while (1) {
-                  switch (_context25.prev = _context25.next) {
+                  switch (_context35.prev = _context35.next) {
                     case 0:
                       this.messageService.startSpinner('Broadcasting operation');
                       this.operationService.broadcast(this.sendResponse.payload.signedOperation).subscribe(function (ans) {
-                        _this25.sendResponse = ans;
+                        _this31.sendResponse = ans;
 
-                        if (ans.success && _this25.activeAccount.address) {
+                        if (ans.success && _this31.activeAccount.address) {
                           var metadata = {
                             kt1: ans.payload.newPkh,
                             opHash: ans.payload.opHash,
-                            origination: _this25.operationRequest.operationDetails[0]
+                            origination: _this31.operationRequest.operationDetails[0]
                           };
 
-                          _this25.coordinatorService.boost(_this25.activeAccount.address, metadata);
+                          _this31.coordinatorService.boost(_this31.activeAccount.address, metadata);
                         } else {
-                          _this25.messageService.addError(_this25.sendResponse.payload.msg, 0);
+                          _this31.messageService.addError(_this31.sendResponse.payload.msg, 0);
 
-                          _this25.operationResponse.emit('broadcast_error');
+                          _this31.operationResponse.emit('broadcast_error');
                         }
 
-                        _this25.closeModal();
+                        _this31.closeModal();
 
                         console.log('ans: ' + JSON.stringify(ans));
                       }, function (error) {
-                        _this25.messageService.stopSpinner();
+                        _this31.messageService.stopSpinner();
 
-                        _this25.messageService.addError(error, 0);
+                        _this31.messageService.addError(error, 0);
 
-                        _this25.operationResponse.emit('broadcast_error');
+                        _this31.operationResponse.emit('broadcast_error');
                       });
 
                     case 2:
                     case "end":
-                      return _context25.stop();
+                      return _context35.stop();
                   }
                 }
-              }, _callee25, this);
+              }, _callee35, this);
             }));
           }
         }, {
@@ -7988,53 +8790,53 @@
         }, {
           key: "torusLogin",
           value: function torusLogin(verifier) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee27() {
-              var _this26 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee37() {
+              var _this32 = this;
 
               var _yield$this$torusServ, keyPair, userInfo;
 
-              return regeneratorRuntime.wrap(function _callee27$(_context27) {
+              return regeneratorRuntime.wrap(function _callee37$(_context37) {
                 while (1) {
-                  switch (_context27.prev = _context27.next) {
+                  switch (_context37.prev = _context37.next) {
                     case 0:
-                      _context27.next = 2;
+                      _context37.next = 2;
                       return this.messageService.startSpinner('Loading wallet...');
 
                     case 2:
-                      _context27.next = 4;
+                      _context37.next = 4;
                       return this.torusService.loginTorus(verifier)["catch"](function (e) {
-                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this26, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee26() {
-                          return regeneratorRuntime.wrap(function _callee26$(_context26) {
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this32, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee36() {
+                          return regeneratorRuntime.wrap(function _callee36$(_context36) {
                             while (1) {
-                              switch (_context26.prev = _context26.next) {
+                              switch (_context36.prev = _context36.next) {
                                 case 0:
-                                  _context26.next = 2;
+                                  _context36.next = 2;
                                   return this.messageService.stopSpinner();
 
                                 case 2:
-                                  return _context26.abrupt("return", _context26.sent);
+                                  return _context36.abrupt("return", _context36.sent);
 
                                 case 3:
                                 case "end":
-                                  return _context26.stop();
+                                  return _context36.stop();
                               }
                             }
-                          }, _callee26, this);
+                          }, _callee36, this);
                         }));
                       });
 
                     case 4:
-                      _yield$this$torusServ = _context27.sent;
+                      _yield$this$torusServ = _context37.sent;
                       keyPair = _yield$this$torusServ.keyPair;
                       userInfo = _yield$this$torusServ.userInfo;
                       console.log('login done');
 
                       if (!keyPair) {
-                        _context27.next = 13;
+                        _context37.next = 13;
                         break;
                       }
 
-                      _context27.next = 11;
+                      _context37.next = 11;
                       return this.importService.importWalletFromPk(keyPair.pk, '', {
                         verifier: userInfo.typeOfLogin,
                         id: userInfo.verifierId,
@@ -8043,36 +8845,36 @@
                         if (success) {
                           console.log('success');
 
-                          if (_this26.walletService.wallet.implicitAccounts.length === 1 && _this26.walletService.wallet.implicitAccounts[0].originatedAccounts.length === 0) {
+                          if (_this32.walletService.wallet.implicitAccounts.length === 1 && _this32.walletService.wallet.implicitAccounts[0].originatedAccounts.length === 0) {
                             console.log('single address');
 
-                            _this26.router.navigate(["/account/".concat(_this26.walletService.wallet.implicitAccounts[0].address)]);
+                            _this32.router.navigate(["/account/".concat(_this32.walletService.wallet.implicitAccounts[0].address)]);
                           } else {
-                            _this26.router.navigate(['/accounts']);
+                            _this32.router.navigate(['/accounts']);
                           }
 
-                          _this26.messageService.stopSpinner();
+                          _this32.messageService.stopSpinner();
                         } else {
-                          _this26.messageService.addError('Torus import failed');
+                          _this32.messageService.addError('Torus import failed');
 
-                          _this26.messageService.stopSpinner();
+                          _this32.messageService.stopSpinner();
                         }
                       });
 
                     case 11:
-                      _context27.next = 15;
+                      _context37.next = 15;
                       break;
 
                     case 13:
-                      _context27.next = 15;
+                      _context37.next = 15;
                       return this.messageService.stopSpinner();
 
                     case 15:
                     case "end":
-                      return _context27.stop();
+                      return _context37.stop();
                   }
                 }
-              }, _callee27, this);
+              }, _callee37, this);
             }));
           }
         }, {
@@ -8356,48 +9158,48 @@
         }, {
           key: "getPk",
           value: function getPk() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee28() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee38() {
               var path, pk;
-              return regeneratorRuntime.wrap(function _callee28$(_context28) {
+              return regeneratorRuntime.wrap(function _callee38$(_context38) {
                 while (1) {
-                  switch (_context28.prev = _context28.next) {
+                  switch (_context38.prev = _context38.next) {
                     case 0:
                       path = this.path.replace(this.defaultText, this.defaultPath);
 
                       if (!this.inputValidationService.derivationPath(path)) {
-                        _context28.next = 22;
+                        _context38.next = 22;
                         break;
                       }
 
                       this.pendingLedgerConfirmation = true;
-                      _context28.prev = 3;
+                      _context38.prev = 3;
                       this.messageService.startSpinner('Waiting for Ledger confirmation...');
-                      _context28.next = 7;
+                      _context38.next = 7;
                       return this.ledgerService.getPublicAddress(path);
 
                     case 7:
-                      pk = _context28.sent;
+                      pk = _context38.sent;
                       console.log('getPK => ' + pk);
-                      _context28.next = 11;
+                      _context38.next = 11;
                       return this.importFromPk(pk, path);
 
                     case 11:
-                      _context28.next = 16;
+                      _context38.next = 16;
                       break;
 
                     case 13:
-                      _context28.prev = 13;
-                      _context28.t0 = _context28["catch"](3);
-                      throw _context28.t0;
+                      _context38.prev = 13;
+                      _context38.t0 = _context38["catch"](3);
+                      throw _context38.t0;
 
                     case 16:
-                      _context28.prev = 16;
+                      _context38.prev = 16;
                       this.pendingLedgerConfirmation = false;
                       this.messageService.stopSpinner();
-                      return _context28.finish(16);
+                      return _context38.finish(16);
 
                     case 20:
-                      _context28.next = 23;
+                      _context38.next = 23;
                       break;
 
                     case 22:
@@ -8405,31 +9207,31 @@
 
                     case 23:
                     case "end":
-                      return _context28.stop();
+                      return _context38.stop();
                   }
                 }
-              }, _callee28, this, [[3, 13, 16, 20]]);
+              }, _callee38, this, [[3, 13, 16, 20]]);
             }));
           }
         }, {
           key: "importFromPk",
           value: function importFromPk(pk, path) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee29() {
-              return regeneratorRuntime.wrap(function _callee29$(_context29) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee39() {
+              return regeneratorRuntime.wrap(function _callee39$(_context39) {
                 while (1) {
-                  switch (_context29.prev = _context29.next) {
+                  switch (_context39.prev = _context39.next) {
                     case 0:
                       if (!_tezos_core_tools_crypto_utils__WEBPACK_IMPORTED_MODULE_8__["utils"].validPublicKey(pk)) {
-                        _context29.next = 10;
+                        _context39.next = 10;
                         break;
                       }
 
-                      _context29.next = 3;
+                      _context39.next = 3;
                       return this.importService.importWalletFromPk(pk, path);
 
                     case 3:
-                      if (!_context29.sent) {
-                        _context29.next = 7;
+                      if (!_context39.sent) {
+                        _context39.next = 7;
                         break;
                       }
 
@@ -8439,14 +9241,14 @@
                         this.router.navigate(['/accounts']);
                       }
 
-                      _context29.next = 8;
+                      _context39.next = 8;
                       break;
 
                     case 7:
                       this.messageService.addError('Failed to import Ledger wallet');
 
                     case 8:
-                      _context29.next = 11;
+                      _context39.next = 11;
                       break;
 
                     case 10:
@@ -8454,10 +9256,10 @@
 
                     case 11:
                     case "end":
-                      return _context29.stop();
+                      return _context39.stop();
                   }
                 }
-              }, _callee29, this);
+              }, _callee39, this);
             }));
           }
         }, {
@@ -8815,6 +9617,67 @@
     },
 
     /***/
+    "D5E+":
+    /*!******************************!*\
+      !*** ../icabod/dist/util.js ***!
+      \******************************/
+
+    /*! no static exports found */
+
+    /***/
+    function D5E(module, exports, __webpack_require__) {
+      "use strict";
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+
+      var types_1 = __webpack_require__(
+      /*! ./types */
+      "874q");
+
+      exports.defer = function () {
+        // dummy value for typescript
+        var deferred = {
+          resolve: function resolve(res) {},
+          reject: function reject(err) {}
+        }; // get promise and extract resolve/reject into d
+
+        var promise = new Promise(function (resolve, reject) {
+          deferred = {
+            resolve: resolve,
+            reject: reject
+          };
+        });
+        return {
+          deferred: deferred,
+          promise: promise
+        };
+      };
+
+      exports.networkToSrc = function (network) {
+        switch (network) {
+          case types_1.Networks.mainnet:
+            return 'https://wallet.kukai.app';
+
+          case types_1.Networks.delphinet:
+            return 'https://testnet.kukai.app';
+
+          case types_1.Networks.edonet:
+            return 'https://edonet.kukai.app';
+
+          case types_1.Networks.dev:
+            return 'https://ichabod-dev.kukai.app';
+
+          default:
+            return network;
+        }
+      };
+      /***/
+
+    },
+
+    /***/
     "DlHu":
     /*!*************************************************!*\
       !*** ./src/app/services/token/token.service.ts ***!
@@ -8983,25 +9846,25 @@
         }, {
           key: "searchMetadata",
           value: function searchMetadata(contractAddress, id) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee30() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee40() {
               var tokenId, metadata, contract, defaultImg, displayUrl, thumbnailUrl, token;
-              return regeneratorRuntime.wrap(function _callee30$(_context30) {
+              return regeneratorRuntime.wrap(function _callee40$(_context40) {
                 while (1) {
-                  switch (_context30.prev = _context30.next) {
+                  switch (_context40.prev = _context40.next) {
                     case 0:
                       tokenId = "".concat(contractAddress, ":").concat(id);
 
                       if (!this.explore(tokenId)) {
-                        _context30.next = 7;
+                        _context40.next = 7;
                         break;
                       }
 
                       console.log("Searching for tokenId: ".concat(tokenId));
-                      _context30.next = 5;
+                      _context40.next = 5;
                       return this.indexerService.getTokenMetadata(contractAddress, id);
 
                     case 5:
-                      metadata = _context30.sent;
+                      metadata = _context40.sent;
 
                       if (metadata && (metadata.name || metadata.symbol) && !isNaN(metadata.decimals) && metadata.decimals >= 0) {
                         contract = {
@@ -9039,10 +9902,10 @@
 
                     case 7:
                     case "end":
-                      return _context30.stop();
+                      return _context40.stop();
                   }
                 }
-              }, _callee30, this);
+              }, _callee40, this);
             }));
           }
         }, {
@@ -9351,56 +10214,56 @@
         _createClass(TorusService, [{
           key: "initTorus",
           value: function initTorus() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee31() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee41() {
               var torusdirectsdk;
-              return regeneratorRuntime.wrap(function _callee31$(_context31) {
+              return regeneratorRuntime.wrap(function _callee41$(_context41) {
                 while (1) {
-                  switch (_context31.prev = _context31.next) {
+                  switch (_context41.prev = _context41.next) {
                     case 0:
                       if (this.torus) {
-                        _context31.next = 11;
+                        _context41.next = 11;
                         break;
                       }
 
-                      _context31.prev = 1;
+                      _context41.prev = 1;
                       torusdirectsdk = new _toruslabs_torus_direct_web_sdk__WEBPACK_IMPORTED_MODULE_2___default.a({
                         baseUrl: "".concat(location.origin, "/serviceworker"),
                         enableLogging: !(this.proxy.network === 'mainnet'),
                         proxyContractAddress: this.proxy.address,
                         network: this.proxy.network === 'mainnet' ? this.proxy.network : 'testnet'
                       });
-                      _context31.next = 5;
+                      _context41.next = 5;
                       return torusdirectsdk.init({
                         skipSw: false
                       });
 
                     case 5:
                       this.torus = torusdirectsdk;
-                      _context31.next = 11;
+                      _context41.next = 11;
                       break;
 
                     case 8:
-                      _context31.prev = 8;
-                      _context31.t0 = _context31["catch"](1);
-                      console.error(_context31.t0, 'oninit caught');
+                      _context41.prev = 8;
+                      _context41.t0 = _context41["catch"](1);
+                      console.error(_context41.t0, 'oninit caught');
 
                     case 11:
                     case "end":
-                      return _context31.stop();
+                      return _context41.stop();
                   }
                 }
-              }, _callee31, this, [[1, 8]]);
+              }, _callee41, this, [[1, 8]]);
             }));
           }
         }, {
           key: "lookupPkh",
           value: function lookupPkh(selectedVerifier, verifierId) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee32() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee42() {
               var fetchNodeDetails, torus, verifier, _yield$fetchNodeDetai, torusNodeEndpoints, torusNodePub, torusIndexes, sanitizedVerifierId, twitterId, username, _yield$this$twitterLo, id, pk, pkh;
 
-              return regeneratorRuntime.wrap(function _callee32$(_context32) {
+              return regeneratorRuntime.wrap(function _callee42$(_context42) {
                 while (1) {
-                  switch (_context32.prev = _context32.next) {
+                  switch (_context42.prev = _context42.next) {
                     case 0:
                       fetchNodeDetails = new _toruslabs_fetch_node_details__WEBPACK_IMPORTED_MODULE_3___default.a({
                         network: this.proxy.network,
@@ -9410,15 +10273,15 @@
                       verifier = this.verifierMap[selectedVerifier].verifier;
 
                       if (this.nodeDetails) {
-                        _context32.next = 11;
+                        _context42.next = 11;
                         break;
                       }
 
-                      _context32.next = 6;
+                      _context42.next = 6;
                       return fetchNodeDetails.getNodeDetails();
 
                     case 6:
-                      _yield$fetchNodeDetai = _context32.sent;
+                      _yield$fetchNodeDetai = _context42.sent;
                       torusNodeEndpoints = _yield$fetchNodeDetai.torusNodeEndpoints;
                       torusNodePub = _yield$fetchNodeDetai.torusNodePub;
                       torusIndexes = _yield$fetchNodeDetai.torusIndexes;
@@ -9437,67 +10300,67 @@
                       twitterId = '';
 
                       if (!(selectedVerifier === 'twitter')) {
-                        _context32.next = 26;
+                        _context42.next = 26;
                         break;
                       }
 
                       username = sanitizedVerifierId.replace('@', '');
-                      _context32.next = 18;
+                      _context42.next = 18;
                       return this.twitterLookup(username);
 
                     case 18:
-                      _yield$this$twitterLo = _context32.sent;
+                      _yield$this$twitterLo = _context42.sent;
                       id = _yield$this$twitterLo.id;
 
                       if (!this.inputValidationService.twitterId(id)) {
-                        _context32.next = 25;
+                        _context42.next = 25;
                         break;
                       }
 
                       sanitizedVerifierId = "twitter|".concat(id);
                       twitterId = id;
-                      _context32.next = 26;
+                      _context42.next = 26;
                       break;
 
                     case 25:
                       throw new Error('Twitter handle not found');
 
                     case 26:
-                      _context32.next = 28;
+                      _context42.next = 28;
                       return torus.getPublicAddress(this.nodeDetails.torusNodeEndpoints, this.nodeDetails.torusNodePub, {
                         verifier: verifier,
                         verifierId: sanitizedVerifierId
                       }, true);
 
                     case 28:
-                      pk = _context32.sent;
+                      pk = _context42.sent;
                       pkh = this.operationService.spPointsToPkh(pk.X, pk.Y);
-                      return _context32.abrupt("return", {
+                      return _context42.abrupt("return", {
                         pkh: pkh,
                         twitterId: twitterId
                       });
 
                     case 31:
                     case "end":
-                      return _context32.stop();
+                      return _context42.stop();
                   }
                 }
-              }, _callee32, this);
+              }, _callee42, this);
             }));
           }
         }, {
           key: "twitterLookup",
           value: function twitterLookup(username, id) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee33() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee43() {
               var req;
-              return regeneratorRuntime.wrap(function _callee33$(_context33) {
+              return regeneratorRuntime.wrap(function _callee43$(_context43) {
                 while (1) {
-                  switch (_context33.prev = _context33.next) {
+                  switch (_context43.prev = _context43.next) {
                     case 0:
                       req = {};
 
                       if (!(id && username || !id && !username)) {
-                        _context33.next = 6;
+                        _context43.next = 6;
                         break;
                       }
 
@@ -9519,7 +10382,7 @@
                       }
 
                     case 7:
-                      _context33.next = 9;
+                      _context43.next = 9;
                       return fetch("https://api.tezos.help/twitter-lookup/", {
                         method: 'POST',
                         headers: {
@@ -9532,28 +10395,28 @@
                       });
 
                     case 9:
-                      return _context33.abrupt("return", _context33.sent);
+                      return _context43.abrupt("return", _context43.sent);
 
                     case 10:
                     case "end":
-                      return _context33.stop();
+                      return _context43.stop();
                   }
                 }
-              }, _callee33);
+              }, _callee43);
             }));
           }
         }, {
           key: "loginTorus",
           value: function loginTorus(selectedVerifier) {
             var verifierId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee34() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee44() {
               var jwtParams, _this$verifierMap$sel, typeOfLogin, clientId, verifier, loginDetails, keyPair;
 
-              return regeneratorRuntime.wrap(function _callee34$(_context34) {
+              return regeneratorRuntime.wrap(function _callee44$(_context44) {
                 while (1) {
-                  switch (_context34.prev = _context34.next) {
+                  switch (_context44.prev = _context44.next) {
                     case 0:
-                      _context34.prev = 0;
+                      _context44.prev = 0;
                       jwtParams = this._loginToConnectionMap()[selectedVerifier] || {};
 
                       if (verifierId && selectedVerifier === GOOGLE) {
@@ -9562,7 +10425,7 @@
                       }
 
                       _this$verifierMap$sel = this.verifierMap[selectedVerifier], typeOfLogin = _this$verifierMap$sel.typeOfLogin, clientId = _this$verifierMap$sel.clientId, verifier = _this$verifierMap$sel.verifier;
-                      _context34.next = 6;
+                      _context44.next = 6;
                       return this.torus.triggerLogin({
                         verifier: verifier,
                         typeOfLogin: typeOfLogin,
@@ -9571,55 +10434,55 @@
                       });
 
                     case 6:
-                      loginDetails = _context34.sent;
+                      loginDetails = _context44.sent;
                       keyPair = this.operationService.spPrivKeyToKeyPair(loginDetails.privateKey);
                       console.log('DirectAuth KeyPair', keyPair);
-                      return _context34.abrupt("return", {
+                      return _context44.abrupt("return", {
                         keyPair: keyPair,
                         userInfo: loginDetails.userInfo
                       });
 
                     case 12:
-                      _context34.prev = 12;
-                      _context34.t0 = _context34["catch"](0);
-                      console.error(_context34.t0, 'login caught');
-                      return _context34.abrupt("return", {
+                      _context44.prev = 12;
+                      _context44.t0 = _context44["catch"](0);
+                      console.error(_context44.t0, 'login caught');
+                      return _context44.abrupt("return", {
                         keyPair: null,
                         userInfo: null
                       });
 
                     case 16:
                     case "end":
-                      return _context34.stop();
+                      return _context44.stop();
                   }
                 }
-              }, _callee34, this, [[0, 12]]);
+              }, _callee44, this, [[0, 12]]);
             }));
           }
         }, {
           key: "getTorusKeyPair",
           value: function getTorusKeyPair(selectedVerifier, verifierId) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee35() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee45() {
               var _yield$this$loginToru, keyPair;
 
-              return regeneratorRuntime.wrap(function _callee35$(_context35) {
+              return regeneratorRuntime.wrap(function _callee45$(_context45) {
                 while (1) {
-                  switch (_context35.prev = _context35.next) {
+                  switch (_context45.prev = _context45.next) {
                     case 0:
-                      _context35.next = 2;
+                      _context45.next = 2;
                       return this.loginTorus(selectedVerifier, verifierId);
 
                     case 2:
-                      _yield$this$loginToru = _context35.sent;
+                      _yield$this$loginToru = _context45.sent;
                       keyPair = _yield$this$loginToru.keyPair;
-                      return _context35.abrupt("return", keyPair);
+                      return _context45.abrupt("return", keyPair);
 
                     case 5:
                     case "end":
-                      return _context35.stop();
+                      return _context45.stop();
                   }
                 }
-              }, _callee35, this);
+              }, _callee45, this);
             }));
           }
         }]);
@@ -9705,45 +10568,95 @@
       /*! @angular/common */
       "ofXK");
 
-      function SigninComponent_div_4_ng_container_1_Template(rf, ctx) {
+      function SigninComponent_div_8_ng_container_1_div_1_Template(rf, ctx) {
         if (rf & 1) {
-          var _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+          var _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 10);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "div", 7);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function SigninComponent_div_8_ng_container_1_div_1_Template_div_click_0_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r7);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function SigninComponent_div_4_ng_container_1_Template_div_click_1_listener() {
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r4);
+            var key_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
 
-            var key_r2 = ctx.$implicit;
+            var ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
 
-            var ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
-
-            return ctx_r3.login(key_r2);
+            return ctx_r5.login(key_r2);
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](2, "img", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](1, "img", 11);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
         }
 
         if (rf & 2) {
-          var key_r2 = ctx.$implicit;
+          var key_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "../../../../assets/img/torus-login/", key_r2, "-color.svg", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
         }
       }
 
-      function SigninComponent_div_4_Template(rf, ctx) {
+      function SigninComponent_div_8_ng_container_1_div_2_Template(rf, ctx) {
         if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 5);
+          var _r11 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, SigninComponent_div_4_ng_container_1_Template, 3, 1, "ng-container", 6);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 10);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function SigninComponent_div_8_ng_container_1_div_2_Template_div_click_0_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r11);
+
+            var key_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
+
+            var ctx_r9 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+
+            return ctx_r9.login(key_r2);
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](1, "img", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var key_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpropertyInterpolate1"]("src", "../../../../assets/img/torus-login/", key_r2, "-wide.svg", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeUrl"]);
+        }
+      }
+
+      function SigninComponent_div_8_ng_container_1_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, SigninComponent_div_8_ng_container_1_div_1_Template, 2, 1, "div", 9);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](2, SigninComponent_div_8_ng_container_1_div_2_Template, 2, 1, "div", 9);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", !ctx_r1.loginConfig.buttonsVertically);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", ctx_r1.loginConfig.buttonsVertically);
+        }
+      }
+
+      function SigninComponent_div_8_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 7);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, SigninComponent_div_8_ng_container_1_Template, 3, 2, "ng-container", 8);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
         }
@@ -9751,9 +10664,11 @@
         if (rf & 2) {
           var ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
 
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("vertically", ctx_r0.loginConfig.buttonsVertically)("horizontally", !ctx_r0.loginConfig.buttonsVertically);
+
           _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngForOf", ctx_r0.torusService.verifierMapKeys);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngForOf", ctx_r0.loginOptions);
         }
       }
 
@@ -9764,31 +10679,48 @@
           this.messageService = messageService;
           this.torusService = torusService;
           this.loginResponse = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+          this.loginOptions = [];
         }
 
         _createClass(SigninComponent, [{
-          key: "onClick",
-          value: function onClick(ev) {
-            var _a;
-
-            if (((_a = ev === null || ev === void 0 ? void 0 : ev.target) === null || _a === void 0 ? void 0 : _a.localName) === 'app-signin') {
-              this.abort();
-            }
-          }
-        }, {
           key: "ngOnInit",
           value: function ngOnInit() {}
         }, {
           key: "ngOnChanges",
           value: function ngOnChanges(changes) {
-            var _this27 = this;
+            var _this33 = this;
 
-            var _a;
+            var _a, _b, _c;
 
             if (((_a = changes === null || changes === void 0 ? void 0 : changes.dismiss) === null || _a === void 0 ? void 0 : _a.currentValue) === true) {
               this.messageService.stopSpinner().then(function () {
-                return _this27.loginResponse.emit('dismiss');
+                return _this33.loginResponse.emit('dismiss');
               });
+            }
+
+            if ((_b = changes === null || changes === void 0 ? void 0 : changes.loginConfig) === null || _b === void 0 ? void 0 : _b.currentValue) {
+              if (((_c = this.loginConfig.loginOptions) === null || _c === void 0 ? void 0 : _c.length) > 0) {
+                this.loginOptions = [];
+
+                var _iterator6 = _createForOfIteratorHelper(this.loginConfig.loginOptions),
+                    _step6;
+
+                try {
+                  for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+                    var loginOption = _step6.value;
+
+                    if (this.torusService.verifierMapKeys.includes(loginOption)) {
+                      this.loginOptions.push(loginOption);
+                    }
+                  }
+                } catch (err) {
+                  _iterator6.e(err);
+                } finally {
+                  _iterator6.f();
+                }
+              } else {
+                this.loginOptions = this.torusService.verifierMapKeys;
+              }
             }
           }
         }, {
@@ -9799,56 +10731,56 @@
         }, {
           key: "login",
           value: function login(typeOfLogin) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee36() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee46() {
               var loginData;
-              return regeneratorRuntime.wrap(function _callee36$(_context36) {
+              return regeneratorRuntime.wrap(function _callee46$(_context46) {
                 while (1) {
-                  switch (_context36.prev = _context36.next) {
+                  switch (_context46.prev = _context46.next) {
                     case 0:
-                      _context36.prev = 0;
+                      _context46.prev = 0;
                       this.messageService.startSpinner('Loading wallet...'); //const loginData = await this.mockLogin(); // Mock locally
 
-                      _context36.next = 4;
+                      _context46.next = 4;
                       return this.torusService.loginTorus(typeOfLogin);
 
                     case 4:
-                      loginData = _context36.sent;
+                      loginData = _context46.sent;
 
                       if (!(this.dismiss === null)) {
-                        _context36.next = 8;
+                        _context46.next = 8;
                         break;
                       }
 
-                      _context36.next = 8;
+                      _context46.next = 8;
                       return this.messageService.stopSpinner();
 
                     case 8:
                       this.loginResponse.emit(loginData);
-                      _context36.next = 15;
+                      _context46.next = 15;
                       break;
 
                     case 11:
-                      _context36.prev = 11;
-                      _context36.t0 = _context36["catch"](0);
-                      _context36.next = 15;
+                      _context46.prev = 11;
+                      _context46.t0 = _context46["catch"](0);
+                      _context46.next = 15;
                       return this.messageService.stopSpinner();
 
                     case 15:
                     case "end":
-                      return _context36.stop();
+                      return _context46.stop();
                   }
                 }
-              }, _callee36, this, [[0, 11]]);
+              }, _callee46, this, [[0, 11]]);
             }));
           }
         }, {
           key: "mockLogin",
           value: function mockLogin() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee37() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee47() {
               var keyPair, userInfo;
-              return regeneratorRuntime.wrap(function _callee37$(_context37) {
+              return regeneratorRuntime.wrap(function _callee47$(_context47) {
                 while (1) {
-                  switch (_context37.prev = _context37.next) {
+                  switch (_context47.prev = _context47.next) {
                     case 0:
                       keyPair = {
                         sk: 'spsk1VfCfhixtzGvUSKDre6jwyGbXFm6aoeLGnxeVLCouueZmkgtJF',
@@ -9860,7 +10792,7 @@
                         verifierId: 'mock.user@gmail.com',
                         name: 'Mock User'
                       };
-                      return _context37.abrupt("return", new Promise(function (resolve) {
+                      return _context47.abrupt("return", new Promise(function (resolve) {
                         setTimeout(function () {
                           resolve({
                             keyPair: keyPair,
@@ -9871,10 +10803,10 @@
 
                     case 3:
                     case "end":
-                      return _context37.stop();
+                      return _context47.stop();
                   }
                 }
-              }, _callee37);
+              }, _callee47);
             }));
           }
         }]);
@@ -9889,48 +10821,58 @@
       SigninComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
         type: SigninComponent,
         selectors: [["app-signin"]],
-        hostBindings: function SigninComponent_HostBindings(rf, ctx) {
-          if (rf & 1) {
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function SigninComponent_click_HostBindingHandler($event) {
-              return ctx.onClick($event);
-            });
-          }
-        },
         inputs: {
-          dismiss: "dismiss"
+          dismiss: "dismiss",
+          loginConfig: "loginConfig"
         },
         outputs: {
           loginResponse: "loginResponse"
         },
         features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]],
-        decls: 9,
+        decls: 13,
         vars: 1,
-        consts: [[1, "direct-auth-login"], [1, "body"], ["class", "login-options", 4, "ngIf"], [1, "footer"], ["src", "../../../../assets/img/kukai-logo-black.svg", 1, "logo"], [1, "login-options"], [4, "ngFor", "ngForOf"], [1, "login-option", 3, "click"], ["width", "24", 3, "src"]],
+        consts: [[1, "direct-auth-login"], [1, "body"], [1, "header"], ["src", "../../../assets/img/x.svg", 1, "abort", 3, "click"], ["class", "login-options", 3, "vertically", "horizontally", 4, "ngIf"], [1, "footer"], ["src", "../../../../assets/img/kukai-logo-black.svg", 1, "logo"], [1, "login-options"], [4, "ngFor", "ngForOf"], ["class", "login-option", 3, "click", 4, "ngIf"], [1, "login-option", 3, "click"], ["width", "24", 3, "src"], [3, "src"]],
         template: function SigninComponent_Template(rf, ctx) {
           if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "div", 1);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "H2");
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "div", 2);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](3, "Please log in with one of the following providers:");
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](3, "img", 3);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](4, SigninComponent_div_4_Template, 2, 1, "div", 2);
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](5, "div", 3);
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](6, "span");
-
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](7, "Powered by");
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function SigninComponent_Template_img_click_3_listener() {
+              return ctx.abort();
+            });
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](8, "img", 4);
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](4, "H2");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](5, "Sign in with one of the");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](6, "BR");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](7, "following providers:");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](8, SigninComponent_div_8_Template, 2, 5, "div", 4);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](9, "div", 5);
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](10, "span");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](11, "Powered by");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](12, "img", 6);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
 
@@ -9938,13 +10880,13 @@
           }
 
           if (rf & 2) {
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](4);
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](8);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", ctx.torusService && ctx.torusService.verifierMapKeys);
           }
         },
         directives: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgForOf"]],
-        styles: ["@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tDMPKzSQ.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tMMPKzSQ.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tCMPI.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLucXtAKPY.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLufntAKPY.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLucHtA.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTucXtAKPY.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTufntAKPY.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTucHtA.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJbecmNE.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJnecmNE.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJfecg.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n[_nghost-%COMP%] {\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background-color: black;\n  background: rgba(0, 0, 0, 0.6);\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%] {\n  width: 21.875rem;\n  background: #f3f3f3;\n  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.24), 0px 4px 12px rgba(0, 0, 0, 0.24), 0px 32px 48px rgba(0, 0, 0, 0.36);\n  border-radius: 0.625rem;\n}\r\n[_nghost-%COMP%]    > div.direct-auth-login[_ngcontent-%COMP%]   H2[_ngcontent-%COMP%], [_nghost-%COMP%]    > div.direct-auth-login[_ngcontent-%COMP%]   span[_ngcontent-%COMP%] {\n  font-family: \"Poppins\" !important;\n  font-style: normal !important;\n  font-weight: 300 !important;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.header[_ngcontent-%COMP%] {\n  height: 4.375rem;\n  background: white;\n  border-top-left-radius: 0.625rem;\n  border-top-right-radius: 0.625rem;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.header[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  height: 3.125rem;\n  width: 3.125rem;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]   H2[_ngcontent-%COMP%] {\n  margin: 0.5rem 2rem;\n  font-size: 1.25rem;\n  line-height: 1.875rem;\n  text-align: center;\n  vertical-align: top;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-options[_ngcontent-%COMP%] {\n  margin: 1rem 0;\n  display: flex;\n  justify-content: space-evenly;\n  align-items: center;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background: white;\n  border-radius: 0.625rem;\n  width: 90px;\n  height: 60px;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%]:hover {\n  cursor: pointer;\n  background: #eaebf9;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%]    > img[_ngcontent-%COMP%] {\n  width: 2.5rem;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.footer[_ngcontent-%COMP%] {\n  margin: 0.5rem 0;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.footer[_ngcontent-%COMP%]    > span[_ngcontent-%COMP%] {\n  font-size: 0.625rem;\n  line-height: 0.9375rem;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.footer[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  width: 2.5rem;\n  margin-left: 0.25rem;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2Fzc2V0cy9mb250cy9Qb3BwaW5zL3N0eWxlc2hlZXQuY3NzIiwiLi5cXC4uXFwuLlxcLi5cXC4uXFxzaWduaW4uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHNHQUFzRztFQUN0RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsc0dBQXNHO0VBQ3RHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixtR0FBbUc7RUFDbkcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG1HQUFtRztFQUNuRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsbUdBQW1HO0VBQ25HLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnR0FBZ0c7RUFDaEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG1HQUFtRztFQUNuRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsbUdBQW1HO0VBQ25HLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnR0FBZ0c7RUFDaEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLGdHQUFnRztFQUNoRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsZ0dBQWdHO0VBQ2hHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQiw4RkFBOEY7RUFDOUYseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FDcGVBO0VBQ0UsWUFBQTtFQUNBLGFBQUE7RUFDQSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtFQUNBLHVCQUFBO0VBQ0EsOEJBQUE7QUFDRjtBQUNBO0VBQ0UsZ0JBQUE7RUFDQSxtQkFBQTtFQUNBLGdIQUFBO0VBRUEsdUJBQUE7QUFDRjtBQUNBOztFQUVFLGlDQUFBO0VBQ0EsNkJBQUE7RUFDQSwyQkFBQTtBQUVGO0FBQUE7RUFDRSxnQkFBQTtFQUNBLGlCQUFBO0VBQ0EsZ0NBQUE7RUFDQSxpQ0FBQTtFQUNBLGFBQUE7RUFDQSx1QkFBQTtFQUNBLG1CQUFBO0FBR0Y7QUFEQTtFQUNFLGdCQUFBO0VBQ0EsZUFBQTtBQUlGO0FBRkE7RUFDRSxtQkFBQTtFQUNBLGtCQUFBO0VBQ0EscUJBQUE7RUFDQSxrQkFBQTtFQUNBLG1CQUFBO0FBS0Y7QUFIQTtFQUNFLGNBQUE7RUFDQSxhQUFBO0VBQ0EsNkJBQUE7RUFDQSxtQkFBQTtBQU1GO0FBSkE7RUFDRSxhQUFBO0VBQ0EsdUJBQUE7RUFDQSxtQkFBQTtFQUNBLGlCQUFBO0VBQ0EsdUJBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtBQU9GO0FBTEE7RUFDRSxlQUFBO0VBQ0EsbUJBQUE7QUFRRjtBQU5BO0VBQ0UsYUFBQTtBQVNGO0FBUEE7RUFDRSxnQkFBQTtFQUNBLGFBQUE7RUFDQSx1QkFBQTtFQUNBLG1CQUFBO0FBVUY7QUFSQTtFQUNFLG1CQUFBO0VBQ0Esc0JBQUE7QUFXRjtBQVRBO0VBQ0UsYUFBQTtFQUNBLG9CQUFBO0FBWUYiLCJmaWxlIjoic2lnbmluLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQXlwOGt2OEpIZ0ZWckpKTG1FMHRETVBLelNRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDEwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUF5cDhrdjhKSGdGVnJKSkxtRTB0TU1QS3pTUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDEwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUF5cDhrdjhKSGdGVnJKSkxtRTB0Q01QSS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG12MXBWRnRlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAyMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXYxcFZHZGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG12MXBWRjllTy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG0yMWxWRnRlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTIxbFZHZGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG0yMWxWRjllTy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNDAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpR3lwOGt2OEpIZ0ZWckpKTHVjWHRBS1BZLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUd5cDhrdjhKSGdGVnJKSkx1Zm50QUtQWS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUd5cDhrdjhKSGdGVnJKSkx1Y0h0QS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG1nMWhWRnRlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbWcxaFZHZGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG1nMWhWRjllTy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG1yMTlWRnRlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXIxOVZHZGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG1yMTlWRjllTy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG15MTVWRnRlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA3MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXkxNVZHZGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG15MTVWRjllTy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogODAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG0xMTFWRnRlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA4MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTExMVZHZGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogODAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG0xMTFWRjllTy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogOTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG04MXhWRnRlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA5MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTgxeFZHZGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogOTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG04MXhWRjllTy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpR3lwOGt2OEpIZ0ZWckxQVHVjWHRBS1BZLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDEwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUd5cDhrdjhKSGdGVnJMUFR1Zm50QUtQWS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDEwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUd5cDhrdjhKSGdGVnJMUFR1Y0h0QS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxGal9aMTFsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAyMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEZqX1oxSmxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxGal9aMXhsRlEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRHo4WjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxEejhaMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRHo4WjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlFeXA4a3Y4SkhnRlZySkpiZWNtTkUud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNDAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRXlwOGt2OEpIZ0ZWckpKbmVjbU5FLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNDAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRXlwOGt2OEpIZ0ZWckpKZmVjZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxHVDlaMTFsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEdUOVoxSmxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxHVDlaMXhsRlEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRWo2WjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxFajZaMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRWo2WjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA3MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEN6N1oxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMQ3o3WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA3MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEN6N1oxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogODAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxERDRaMTFsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA4MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTERENFoxSmxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogODAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxERDRaMXhsRlEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMQlQ1WjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogOTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxCVDVaMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMQlQ1WjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufSIsIkBpbXBvcnQgJy4uLy4uLy4uLy4uL2Fzc2V0cy9mb250cy9Qb3BwaW5zL3N0eWxlc2hlZXQuY3NzJztcclxuOmhvc3Qge1xyXG4gIHdpZHRoOiAxMDB2dztcclxuICBoZWlnaHQ6IDEwMHZoO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMCwgMCwgMCk7XHJcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjYpO1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiB7XHJcbiAgd2lkdGg6IDIxLjg3NXJlbTtcclxuICBiYWNrZ3JvdW5kOiAjZjNmM2YzO1xyXG4gIGJveC1zaGFkb3c6IDBweCAwcHggMnB4IHJnYmEoMCwgMCwgMCwgMC4yNCksIDBweCA0cHggMTJweCByZ2JhKDAsIDAsIDAsIDAuMjQpLFxyXG4gICAgMHB4IDMycHggNDhweCByZ2JhKDAsIDAsIDAsIDAuMzYpO1xyXG4gIGJvcmRlci1yYWRpdXM6IDAuNjI1cmVtO1xyXG59XHJcbjpob3N0ID4gZGl2LmRpcmVjdC1hdXRoLWxvZ2luIEgyLFxyXG46aG9zdCA+IGRpdi5kaXJlY3QtYXV0aC1sb2dpbiBzcGFuIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnICFpbXBvcnRhbnQ7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsICFpbXBvcnRhbnQ7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMCAhaW1wb3J0YW50O1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5oZWFkZXIge1xyXG4gIGhlaWdodDogNC4zNzVyZW07XHJcbiAgYmFja2dyb3VuZDogd2hpdGU7XHJcbiAgYm9yZGVyLXRvcC1sZWZ0LXJhZGl1czogMC42MjVyZW07XHJcbiAgYm9yZGVyLXRvcC1yaWdodC1yYWRpdXM6IDAuNjI1cmVtO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufVxyXG5kaXYuZGlyZWN0LWF1dGgtbG9naW4gPiBkaXYuaGVhZGVyIGltZyB7XHJcbiAgaGVpZ2h0OiAzLjEyNXJlbTtcclxuICB3aWR0aDogMy4xMjVyZW07XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luIEgyIHtcclxuICBtYXJnaW46IDAuNXJlbSAycmVtO1xyXG4gIGZvbnQtc2l6ZTogMS4yNXJlbTtcclxuICBsaW5lLWhlaWdodDogMS44NzVyZW07XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIHZlcnRpY2FsLWFsaWduOiB0b3A7XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmJvZHkgZGl2LmxvZ2luLW9wdGlvbnMge1xyXG4gIG1hcmdpbjogMXJlbSAwO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1ldmVubHk7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufVxyXG5kaXYuZGlyZWN0LWF1dGgtbG9naW4gPiBkaXYuYm9keSBkaXYubG9naW4tb3B0aW9uIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgYmFja2dyb3VuZDogd2hpdGU7XHJcbiAgYm9yZGVyLXJhZGl1czogMC42MjVyZW07XHJcbiAgd2lkdGg6IDkwcHg7XHJcbiAgaGVpZ2h0OiA2MHB4XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmJvZHkgZGl2LmxvZ2luLW9wdGlvbjpob3ZlciB7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG4gIGJhY2tncm91bmQ6ICNlYWViZjk7XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmJvZHkgZGl2LmxvZ2luLW9wdGlvbiA+IGltZyB7XHJcbiAgd2lkdGg6IDIuNXJlbTtcclxufVxyXG5kaXYuZGlyZWN0LWF1dGgtbG9naW4gPiBkaXYuZm9vdGVyIHtcclxuICBtYXJnaW46IDAuNXJlbSAwO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufVxyXG5kaXYuZGlyZWN0LWF1dGgtbG9naW4gPiBkaXYuZm9vdGVyID4gc3BhbiB7XHJcbiAgZm9udC1zaXplOiAwLjYyNXJlbTtcclxuICBsaW5lLWhlaWdodDogMC45Mzc1cmVtO1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5mb290ZXIgaW1nIHtcclxuICB3aWR0aDogMi41cmVtO1xyXG4gIG1hcmdpbi1sZWZ0OiAwLjI1cmVtO1xyXG59Il19 */"]
+        styles: ["@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tDMPKzSQ.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tMMPKzSQ.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tCMPI.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLucXtAKPY.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLufntAKPY.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLucHtA.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTucXtAKPY.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTufntAKPY.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTucHtA.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJbecmNE.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJnecmNE.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJfecg.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n@font-face {\r\n  font-family: 'Gotham';\r\n  src: url('GothamMedium.ttf') format(\"truetype\");\r\n}\r\n[_nghost-%COMP%] {\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background-color: black;\n  background: rgba(0, 0, 0, 0.6);\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%] {\n  margin: 0 0.25rem;\n  width: 21.875rem;\n  background: #f3f3f3;\n  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.24), 0px 4px 12px rgba(0, 0, 0, 0.24), 0px 32px 48px rgba(0, 0, 0, 0.36);\n  border-radius: 0.625rem;\n}\r\n[_nghost-%COMP%]   div.header[_ngcontent-%COMP%] {\n  height: 2rem;\n  padding: 0.5rem 1rem 0;\n  display: flex;\n  flex-direction: row-reverse;\n}\r\n[_nghost-%COMP%]    > div.direct-auth-login[_ngcontent-%COMP%]   H2[_ngcontent-%COMP%], [_nghost-%COMP%]    > div.direct-auth-login[_ngcontent-%COMP%]   span[_ngcontent-%COMP%] {\n  font-family: \"Gotham\" !important;\n  font-style: normal !important;\n  font-weight: 500 !important;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.header[_ngcontent-%COMP%] {\n  height: 4.375rem;\n  background: white;\n  border-top-left-radius: 0.625rem;\n  border-top-right-radius: 0.625rem;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.header[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  height: 3.125rem;\n  width: 3.125rem;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]   H2[_ngcontent-%COMP%] {\n  margin: 0rem 0 0.5rem;\n  font-size: 1rem;\n  line-height: 1.3125rem;\n  text-align: center;\n  vertical-align: top;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-options.vertically[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-options.vertically[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%] {\n  margin: 0.5rem 0;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-options.horizontally[_ngcontent-%COMP%] {\n  margin: 1rem 0;\n  display: flex;\n  justify-content: space-evenly;\n  align-items: center;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-options.horizontally[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background: white;\n  border-radius: 0.625rem;\n  width: 90px;\n  height: 60px;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-options.horizontally[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%]:hover {\n  background: #eaebf9;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-options.horizontally[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%]    > img[_ngcontent-%COMP%] {\n  width: 2.5rem;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.body[_ngcontent-%COMP%]   div.login-options[_ngcontent-%COMP%]   div.login-option[_ngcontent-%COMP%]:hover, div.direct-auth-login[_ngcontent-%COMP%]   img.abort[_ngcontent-%COMP%]:hover {\n  cursor: pointer;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.footer[_ngcontent-%COMP%] {\n  margin: 2.5rem 0 0.5rem;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  opacity: 0.5;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.footer[_ngcontent-%COMP%]    > span[_ngcontent-%COMP%] {\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 600;\n}\r\ndiv.direct-auth-login[_ngcontent-%COMP%]    > div.footer[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  height: 0.75rem;\n  margin: 0 0 0.1875rem 0.375rem;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2Fzc2V0cy9mb250cy9Qb3BwaW5zL3N0eWxlc2hlZXQuY3NzIiwiLi4vLi4vLi4vLi4vYXNzZXRzL2ZvbnRzL0dvdGhhbS9zdHlsZXNoZWV0LmNzcyIsIi4uXFwuLlxcLi5cXC4uXFwuLlxcc2lnbmluLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixzR0FBc0c7RUFDdEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHNHQUFzRztFQUN0RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsbUdBQW1HO0VBQ25HLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixtR0FBbUc7RUFDbkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG1HQUFtRztFQUNuRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsZ0dBQWdHO0VBQ2hHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixtR0FBbUc7RUFDbkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG1HQUFtRztFQUNuRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsZ0dBQWdHO0VBQ2hHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnR0FBZ0c7RUFDaEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLGdHQUFnRztFQUNoRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsOEZBQThGO0VBQzlGLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQ3JlQTtFQUNFLHFCQUFxQjtFQUNyQiwrQ0FBaUQ7QUFDbkQ7QUNEQTtFQUNFLFlBQUE7RUFDQSxhQUFBO0VBQ0EsYUFBQTtFQUNBLG1CQUFBO0VBQ0EsdUJBQUE7RUFDQSx1QkFBQTtFQUNBLDhCQUFBO0FBQ0Y7QUFDQTtFQUNFLGlCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxtQkFBQTtFQUNBLGdIQUFBO0VBRUEsdUJBQUE7QUFDRjtBQUNBO0VBQ0UsWUFBQTtFQUNBLHNCQUFBO0VBQ0EsYUFBQTtFQUNBLDJCQUFBO0FBRUY7QUFBQTs7RUFFRSxnQ0FBQTtFQUNBLDZCQUFBO0VBQ0EsMkJBQUE7QUFHRjtBQURBO0VBQ0UsZ0JBQUE7RUFDQSxpQkFBQTtFQUNBLGdDQUFBO0VBQ0EsaUNBQUE7RUFDQSxhQUFBO0VBQ0EsdUJBQUE7RUFDQSxtQkFBQTtBQUlGO0FBRkE7RUFDRSxnQkFBQTtFQUNBLGVBQUE7QUFLRjtBQUhBO0VBQ0UscUJBQUE7RUFDQSxlQUFBO0VBQ0Esc0JBQUE7RUFDQSxrQkFBQTtFQUNBLG1CQUFBO0FBTUY7QUFIQTtFQUNFLGFBQUE7RUFDQSxzQkFBQTtFQUNBLG1CQUFBO0FBTUY7QUFKQTtFQUNFLGdCQUFBO0FBT0Y7QUFIQTtFQUNFLGNBQUE7RUFDQSxhQUFBO0VBQ0EsNkJBQUE7RUFDQSxtQkFBQTtBQU1GO0FBSkE7RUFDRSxhQUFBO0VBQ0EsdUJBQUE7RUFDQSxtQkFBQTtFQUNBLGlCQUFBO0VBQ0EsdUJBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtBQU9GO0FBTEE7RUFDRSxtQkFBQTtBQVFGO0FBTkE7RUFDRSxhQUFBO0FBU0Y7QUFOQTs7RUFFRSxlQUFBO0FBU0Y7QUFOQTtFQUNFLHVCQUFBO0VBQ0EsYUFBQTtFQUNBLHVCQUFBO0VBQ0EsbUJBQUE7RUFDQSxZQUFBO0FBU0Y7QUFQQTtFQUNFLGtCQUFBO0VBQ0EsaUJBQUE7RUFDQSxnQkFBQTtBQVVGO0FBUkE7RUFDRSxlQUFBO0VBQ0EsOEJBQUE7QUFXRiIsImZpbGUiOiJzaWduaW4uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlBeXA4a3Y4SkhnRlZySkpMbUUwdERNUEt6U1Eud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQXlwOGt2OEpIZ0ZWckpKTG1FMHRNTVBLelNRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQXlwOGt2OEpIZ0ZWckpKTG1FMHRDTVBJLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAyMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXYxcFZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtdjFwVkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAyMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXYxcFZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTIxbFZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMjFsVkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTIxbFZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZySkpMdWNYdEFLUFkud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNDAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpR3lwOGt2OEpIZ0ZWckpKTHVmbnRBS1BZLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNDAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpR3lwOGt2OEpIZ0ZWckpKTHVjSHRBLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbWcxaFZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtZzFoVkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbWcxaFZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXIxOVZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtcjE5VkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXIxOVZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA3MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXkxNVZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxteTE1VkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA3MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXkxNVZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA4MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTExMVZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMTExVkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA4MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTExMVZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA5MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTgxeFZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtODF4VkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA5MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTgxeFZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZyTFBUdWNYdEFLUFkud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpR3lwOGt2OEpIZ0ZWckxQVHVmbnRBS1BZLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpR3lwOGt2OEpIZ0ZWckxQVHVjSHRBLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAyMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEZqX1oxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRmpfWjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAyMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEZqX1oxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxEejhaMTFsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTER6OFoxSmxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxEejhaMXhsRlEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUV5cDhrdjhKSGdGVnJKSmJlY21ORS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlFeXA4a3Y4SkhnRlZySkpuZWNtTkUud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlFeXA4a3Y4SkhnRlZySkpmZWNnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEdUOVoxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMR1Q5WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEdUOVoxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxFajZaMTFsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEVqNloxSmxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxFajZaMXhsRlEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMQ3o3WjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxDejdaMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMQ3o3WjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA4MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTERENFoxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMREQ0WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA4MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTERENFoxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogOTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxCVDVaMTFsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA5MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEJUNVoxSmxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogOTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxCVDVaMXhsRlEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59IiwiQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdHb3RoYW0nO1xyXG4gIHNyYzogdXJsKFwiLi9Hb3RoYW1NZWRpdW0udHRmXCIpIGZvcm1hdChcInRydWV0eXBlXCIpO1xyXG59IiwiQGltcG9ydCAnLi4vLi4vLi4vLi4vYXNzZXRzL2ZvbnRzL1BvcHBpbnMvc3R5bGVzaGVldC5jc3MnO1xyXG5AaW1wb3J0ICcuLi8uLi8uLi8uLi9hc3NldHMvZm9udHMvR290aGFtL3N0eWxlc2hlZXQuY3NzJztcclxuOmhvc3Qge1xyXG4gIHdpZHRoOiAxMDB2dztcclxuICBoZWlnaHQ6IDEwMHZoO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMCwgMCwgMCk7XHJcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjYpO1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiB7XHJcbiAgbWFyZ2luOiAwIDAuMjVyZW07XHJcbiAgd2lkdGg6IDIxLjg3NXJlbTtcclxuICBiYWNrZ3JvdW5kOiAjZjNmM2YzO1xyXG4gIGJveC1zaGFkb3c6IDBweCAwcHggMnB4IHJnYmEoMCwgMCwgMCwgMC4yNCksIDBweCA0cHggMTJweCByZ2JhKDAsIDAsIDAsIDAuMjQpLFxyXG4gICAgMHB4IDMycHggNDhweCByZ2JhKDAsIDAsIDAsIDAuMzYpO1xyXG4gIGJvcmRlci1yYWRpdXM6IDAuNjI1cmVtO1xyXG59XHJcbjpob3N0IGRpdi5oZWFkZXIge1xyXG4gIGhlaWdodDogMnJlbTtcclxuICBwYWRkaW5nOiAwLjVyZW0gMXJlbSAwO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IHJvdy1yZXZlcnNlO1xyXG59XHJcbjpob3N0ID4gZGl2LmRpcmVjdC1hdXRoLWxvZ2luIEgyLFxyXG46aG9zdCA+IGRpdi5kaXJlY3QtYXV0aC1sb2dpbiBzcGFuIHtcclxuICBmb250LWZhbWlseTogJ0dvdGhhbScgIWltcG9ydGFudDtcclxuICBmb250LXN0eWxlOiBub3JtYWwgIWltcG9ydGFudDtcclxuICBmb250LXdlaWdodDogNTAwICFpbXBvcnRhbnQ7XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmhlYWRlciB7XHJcbiAgaGVpZ2h0OiA0LjM3NXJlbTtcclxuICBiYWNrZ3JvdW5kOiB3aGl0ZTtcclxuICBib3JkZXItdG9wLWxlZnQtcmFkaXVzOiAwLjYyNXJlbTtcclxuICBib3JkZXItdG9wLXJpZ2h0LXJhZGl1czogMC42MjVyZW07XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5oZWFkZXIgaW1nIHtcclxuICBoZWlnaHQ6IDMuMTI1cmVtO1xyXG4gIHdpZHRoOiAzLjEyNXJlbTtcclxufVxyXG5kaXYuZGlyZWN0LWF1dGgtbG9naW4gSDIge1xyXG4gIG1hcmdpbjogMHJlbSAwIDAuNXJlbTtcclxuICBmb250LXNpemU6IDFyZW07XHJcbiAgbGluZS1oZWlnaHQ6IDEuMzEyNXJlbTtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgdmVydGljYWwtYWxpZ246IHRvcDtcclxufVxyXG4vLyBob3Jpem9udGFsIGxvZ2luIGJ1dHRvbnNcclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmJvZHkgZGl2LmxvZ2luLW9wdGlvbnMudmVydGljYWxseSB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmJvZHkgZGl2LmxvZ2luLW9wdGlvbnMudmVydGljYWxseSBkaXYubG9naW4tb3B0aW9uIHtcclxuICBtYXJnaW46IDAuNXJlbSAwO1xyXG59XHJcblxyXG4vLyBWZXJ0aWNhbCBsb2dpbiBidXR0b25zXHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5ib2R5IGRpdi5sb2dpbi1vcHRpb25zLmhvcml6b250YWxseSB7XHJcbiAgbWFyZ2luOiAxcmVtIDA7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWV2ZW5seTtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5ib2R5IGRpdi5sb2dpbi1vcHRpb25zLmhvcml6b250YWxseSBkaXYubG9naW4tb3B0aW9uIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgYmFja2dyb3VuZDogd2hpdGU7XHJcbiAgYm9yZGVyLXJhZGl1czogMC42MjVyZW07XHJcbiAgd2lkdGg6IDkwcHg7XHJcbiAgaGVpZ2h0OiA2MHB4XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmJvZHkgZGl2LmxvZ2luLW9wdGlvbnMuaG9yaXpvbnRhbGx5IGRpdi5sb2dpbi1vcHRpb246aG92ZXIge1xyXG4gIGJhY2tncm91bmQ6ICNlYWViZjk7XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmJvZHkgZGl2LmxvZ2luLW9wdGlvbnMuaG9yaXpvbnRhbGx5IGRpdi5sb2dpbi1vcHRpb24gPiBpbWcge1xyXG4gIHdpZHRoOiAyLjVyZW07XHJcbn1cclxuLy8gYm90aFxyXG5kaXYuZGlyZWN0LWF1dGgtbG9naW4gPiBkaXYuYm9keSBkaXYubG9naW4tb3B0aW9ucyBkaXYubG9naW4tb3B0aW9uOmhvdmVyLFxyXG5kaXYuZGlyZWN0LWF1dGgtbG9naW4gaW1nLmFib3J0OmhvdmVyIHtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbn1cclxuXHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5mb290ZXIge1xyXG4gIG1hcmdpbjogMi41cmVtIDAgMC41cmVtO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBvcGFjaXR5OiAwLjU7XHJcbn1cclxuZGl2LmRpcmVjdC1hdXRoLWxvZ2luID4gZGl2LmZvb3RlciA+IHNwYW4ge1xyXG4gIGZvbnQtc2l6ZTogMC43NXJlbTtcclxuICBsaW5lLWhlaWdodDogMXJlbTtcclxuICBmb250LXdlaWdodDogNjAwO1xyXG59XHJcbmRpdi5kaXJlY3QtYXV0aC1sb2dpbiA+IGRpdi5mb290ZXIgaW1nIHtcclxuICBoZWlnaHQ6IDAuNzVyZW07XHJcbiAgbWFyZ2luOiAwIDAgMC4xODc1cmVtIDAuMzc1cmVtO1xyXG59Il19 */"]
       });
 
       (function () {
@@ -9965,17 +10907,241 @@
           dismiss: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
           }],
+          loginConfig: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+          }],
           loginResponse: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"]
-          }],
-          onClick: [{
-            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"],
-            args: ['click', ['$event']]
           }]
         });
       })();
       /***/
 
+    },
+
+    /***/
+    "I9fP":
+    /*!********************************!*\
+      !*** ../icabod/dist/iframe.js ***!
+      \********************************/
+
+    /*! no static exports found */
+
+    /***/
+    function I9fP(module, exports, __webpack_require__) {
+      "use strict";
+
+      var __classPrivateFieldSet = this && this.__classPrivateFieldSet || function (receiver, privateMap, value) {
+        if (!privateMap.has(receiver)) {
+          throw new TypeError("attempted to set private field on non-instance");
+        }
+
+        privateMap.set(receiver, value);
+        return value;
+      };
+
+      var __classPrivateFieldGet = this && this.__classPrivateFieldGet || function (receiver, privateMap) {
+        if (!privateMap.has(receiver)) {
+          throw new TypeError("attempted to get private field on non-instance");
+        }
+
+        return privateMap.get(receiver);
+      };
+
+      var _iframeSrc, _getIframe;
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+
+      var util_1 = __webpack_require__(
+      /*! ./util */
+      "D5E+");
+
+      var iframeId = 'kukai-iframe';
+
+      var IFrameKukai = /*#__PURE__*/function () {
+        function IFrameKukai(src) {
+          _classCallCheck(this, IFrameKukai);
+
+          _iframeSrc.set(this, void 0);
+
+          _getIframe.set(this, function () {
+            return document.getElementById(iframeId);
+          });
+
+          __classPrivateFieldSet(this, _iframeSrc, src);
+        }
+
+        _createClass(IFrameKukai, [{
+          key: "show",
+          value: function show() {
+            var f = __classPrivateFieldGet(this, _getIframe).call(this);
+
+            if (f) {
+              // f.hidden = true
+              f.style.display = 'block';
+            }
+          }
+        }, {
+          key: "hide",
+          value: function hide() {
+            var f = __classPrivateFieldGet(this, _getIframe).call(this);
+
+            if (f) {
+              // f.hidden = true
+              f.style.display = 'none';
+            }
+          }
+        }, {
+          key: "isHidden",
+          value: function isHidden() {
+            var f = __classPrivateFieldGet(this, _getIframe).call(this);
+
+            return (f === null || f === void 0 ? void 0 : f.style.display) === 'none';
+          }
+        }, {
+          key: "toCard",
+          value: function toCard() {
+            var f = __classPrivateFieldGet(this, _getIframe).call(this);
+
+            if (f) {
+              f.style.position = 'fixed';
+              f.style.top = '';
+              f.style.bottom = '70px';
+              f.style.left = '70px';
+              f.style.borderRadius = '10px';
+              f.style.border = '0';
+              f.style.width = '400px';
+              f.style.height = '200px';
+            }
+          }
+        }, {
+          key: "isCard",
+          value: function isCard() {
+            var f = __classPrivateFieldGet(this, _getIframe).call(this);
+
+            return (f === null || f === void 0 ? void 0 : f.style.borderRadius) === '10px';
+          }
+        }, {
+          key: "toFullScreen",
+          value: function toFullScreen() {
+            var f = __classPrivateFieldGet(this, _getIframe).call(this);
+
+            if (f) {
+              f.style.position = 'fixed';
+              f.style.top = '0';
+              f.style.left = '0';
+              f.style.borderRadius = '0px';
+              f.style.border = '0';
+              f.style.width = '100%';
+              f.style.height = '100%';
+            }
+          }
+        }, {
+          key: "init",
+          value: function () {
+            var _init3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee48(instanceId) {
+              var _this34 = this;
+
+              var iframe, params, _util_1$defer, promise, deferred;
+
+              return regeneratorRuntime.wrap(function _callee48$(_context48) {
+                while (1) {
+                  switch (_context48.prev = _context48.next) {
+                    case 0:
+                      if (__classPrivateFieldGet(this, _getIframe).call(this)) {
+                        _context48.next = 26;
+                        break;
+                      }
+
+                      iframe = document.createElement('iframe');
+                      params = instanceId ? "?instanceId=".concat(instanceId) : '';
+                      iframe.src = __classPrivateFieldGet(this, _iframeSrc) + "/embedded" + params;
+                      iframe.id = iframeId;
+                      iframe.style.zIndex = '99999';
+                      iframe.style.display = 'none'; // sandbox attributes
+                      // TODO jsDOM does not impl iFrame sandbox attrs, so these must be commented out when running tests
+                      // scripts must be allowed to run or Kukai will not run
+
+                      iframe.sandbox.add("allow-scripts"); // same origin must be allowed or message events will be blocked by CORS and storage will not work
+
+                      iframe.sandbox.add('allow-same-origin'); // popups allowed to make oauth work
+
+                      iframe.sandbox.add('allow-popups'); // forms allowed to make oauth work
+
+                      iframe.sandbox.add('allow-forms');
+                      _util_1$defer = util_1.defer(), promise = _util_1$defer.promise, deferred = _util_1$defer.deferred;
+                      _context48.prev = 12;
+                      iframe.addEventListener('load', function () {
+                        return deferred.resolve();
+                      });
+                      document.body.appendChild(iframe);
+                      _context48.next = 17;
+                      return promise.then(function () {
+                        return _this34.toFullScreen();
+                      });
+
+                    case 17:
+                      return _context48.abrupt("return", _context48.sent);
+
+                    case 20:
+                      _context48.prev = 20;
+                      _context48.t0 = _context48["catch"](12);
+                      deferred.reject(_context48.t0);
+                      throw _context48.t0;
+
+                    case 24:
+                      _context48.next = 27;
+                      break;
+
+                    case 26:
+                      throw new Error("Kukai-Embed Already Present");
+
+                    case 27:
+                    case "end":
+                      return _context48.stop();
+                  }
+                }
+              }, _callee48, this, [[12, 20]]);
+            }));
+
+            function init(_x8) {
+              return _init3.apply(this, arguments);
+            }
+
+            return init;
+          }()
+        }, {
+          key: "deinit",
+          value: function deinit() {
+            var f = __classPrivateFieldGet(this, _getIframe).call(this);
+
+            if (f) {
+              document.body.removeChild(f);
+            }
+          }
+        }, {
+          key: "request",
+          value: function request(message) {
+            var _a, _b;
+
+            (_b = (_a = __classPrivateFieldGet(this, _getIframe).call(this)) === null || _a === void 0 ? void 0 : _a.contentWindow) === null || _b === void 0 ? void 0 : _b.postMessage(JSON.stringify(message), // TODO this may cause issues if a careless user overrides src as an empty string
+            __classPrivateFieldGet(this, _iframeSrc) ? __classPrivateFieldGet(this, _iframeSrc) : "*");
+          }
+        }, {
+          key: "isInit",
+          get: function get() {
+            return !!__classPrivateFieldGet(this, _getIframe).call(this);
+          }
+        }]);
+
+        return IFrameKukai;
+      }();
+
+      exports.IFrameKukai = IFrameKukai;
+      _iframeSrc = new WeakMap(), _getIframe = new WeakMap();
+      /***/
     },
 
     /***/
@@ -10057,14 +11223,14 @@
           value: function authenticate(authReq, origin) {
             var _a;
 
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee38() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee49() {
               var keys, authMessage, signature;
-              return regeneratorRuntime.wrap(function _callee38$(_context38) {
+              return regeneratorRuntime.wrap(function _callee49$(_context49) {
                 while (1) {
-                  switch (_context38.prev = _context38.next) {
+                  switch (_context49.prev = _context49.next) {
                     case 0:
                       if (origin) {
-                        _context38.next = 4;
+                        _context49.next = 4;
                         break;
                       }
 
@@ -10072,7 +11238,7 @@
 
                     case 4:
                       if (authReq === null || authReq === void 0 ? void 0 : authReq.id) {
-                        _context38.next = 8;
+                        _context49.next = 8;
                         break;
                       }
 
@@ -10080,7 +11246,7 @@
 
                     case 8:
                       if (authReq.nonce) {
-                        _context38.next = 12;
+                        _context49.next = 12;
                         break;
                       }
 
@@ -10088,33 +11254,33 @@
 
                     case 12:
                       if (!(!((_a = this.walletService) === null || _a === void 0 ? void 0 : _a.wallet) || !this.walletService.isEmbeddedTorusWallet())) {
-                        _context38.next = 14;
+                        _context49.next = 14;
                         break;
                       }
 
                       throw new Error('NO_WALLET_FOUND');
 
                     case 14:
-                      _context38.next = 16;
+                      _context49.next = 16;
                       return this.walletService.getKeys('', this.walletService.wallet.implicitAccounts[0].pkh)["catch"](function (e) {
                         throw new Error('NO_KEYS_FOUND');
                       });
 
                     case 16:
-                      keys = _context38.sent;
+                      keys = _context49.sent;
                       authMessage = this.createAuthMessage(authReq.id, authReq.nonce, origin, keys.pk, keys.pkh);
                       signature = this.signMessage(authMessage, keys.sk);
-                      return _context38.abrupt("return", {
+                      return _context49.abrupt("return", {
                         message: authMessage,
                         signature: signature
                       });
 
                     case 20:
                     case "end":
-                      return _context38.stop();
+                      return _context49.stop();
                   }
                 }
-              }, _callee38, this);
+              }, _callee49, this);
             }));
           }
         }, {
@@ -10313,13 +11479,13 @@
         _createClass(FooterComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this28 = this;
+            var _this35 = this;
 
             this.path = this.location.path();
             this.setFooter();
             this.router.events.subscribe(function (event) {
               if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
-                _this28.setFooter();
+                _this35.setFooter();
               }
             });
           }
@@ -10592,11 +11758,11 @@
         }, {
           key: "checkOpReq",
           value: function checkOpReq(opReq) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee39() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee50() {
               var txs, tokenTransferObj, asset;
-              return regeneratorRuntime.wrap(function _callee39$(_context39) {
+              return regeneratorRuntime.wrap(function _callee50$(_context50) {
                 while (1) {
-                  switch (_context39.prev = _context39.next) {
+                  switch (_context50.prev = _context50.next) {
                     case 0:
                       if (opReq.operationDetails) {
                         opReq = opReq.operationDetails;
@@ -10638,10 +11804,10 @@
 
                     case 2:
                     case "end":
-                      return _context39.stop();
+                      return _context50.stop();
                   }
                 }
-              }, _callee39, this);
+              }, _callee50, this);
             }));
           }
         }, {
@@ -10660,12 +11826,12 @@
         }, {
           key: "validParameters",
           value: function validParameters(txs) {
-            var _iterator6 = _createForOfIteratorHelper(txs),
-                _step6;
+            var _iterator7 = _createForOfIteratorHelper(txs),
+                _step7;
 
             try {
-              for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
-                var tx = _step6.value;
+              for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+                var tx = _step7.value;
 
                 if (tx.parameters) {
                   try {
@@ -10681,9 +11847,9 @@
                 }
               }
             } catch (err) {
-              _iterator6.e(err);
+              _iterator7.e(err);
             } finally {
-              _iterator6.f();
+              _iterator7.f();
             }
 
             return true;
@@ -10691,29 +11857,41 @@
         }, {
           key: "simulateRequest",
           value: function simulateRequest(txs, tokenTransfer) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee40() {
-              var _this29 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee51() {
+              var _this36 = this;
 
               var callback;
-              return regeneratorRuntime.wrap(function _callee40$(_context40) {
+              return regeneratorRuntime.wrap(function _callee51$(_context51) {
                 while (1) {
-                  switch (_context40.prev = _context40.next) {
+                  switch (_context51.prev = _context51.next) {
                     case 0:
-                      _context40.next = 2;
+                      if (!this.template) {
+                        _context51.next = 4;
+                        break;
+                      }
+
+                      this.templateRequest = {
+                        template: this.template
+                      };
+                      _context51.next = 6;
+                      break;
+
+                    case 4:
+                      _context51.next = 6;
                       return this.messageService.startSpinner('Preparing transaction...');
 
-                    case 2:
-                      _context40.prev = 2;
-                      _context40.next = 5;
+                    case 6:
+                      _context51.prev = 6;
+                      _context51.next = 9;
                       return this.estimateService.preLoadData(this.activeAccount.pkh, this.activeAccount.pk);
 
-                    case 5:
+                    case 9:
                       callback = function callback(res) {
                         if (res) {
                           if (res.error) {
-                            _this29.messageService.addError("Simulation error: ".concat(res.error.message), 0);
+                            _this36.messageService.addError("Simulation error: ".concat(res.error.message), 0);
 
-                            _this29.operationResponse.emit('invalid_parameters');
+                            _this36.operationResponse.emit('invalid_parameters');
                           } else {
                             var fullyPrepared = txs.map(function (tx, i) {
                               return Object.assign(Object.assign({}, tx), {
@@ -10723,17 +11901,17 @@
                               });
                             });
 
-                            if (_this29.template) {
-                              var fee = _this29.getTemplateFee(fullyPrepared);
+                            if (_this36.template) {
+                              var fee = _this36.getTemplateFee(fullyPrepared);
 
-                              console.log('Use template', _this29.template);
-                              _this29.templateRequest = {
-                                template: _this29.template,
+                              console.log('Use template', _this36.template);
+                              _this36.templateRequest = {
+                                template: _this36.template,
                                 ops: fullyPrepared,
                                 fee: fee
                               };
                             } else {
-                              _this29.confirmTransactions(fullyPrepared);
+                              _this36.confirmTransactions(fullyPrepared);
                             }
                           }
                         } else {
@@ -10741,24 +11919,23 @@
                         }
                       };
 
-                      console.log('sim1');
-                      _context40.next = 9;
+                      _context51.next = 12;
                       return this.estimateService.estimateTransactions(JSON.parse(JSON.stringify(txs)), this.activeAccount.pkh, tokenTransfer, callback);
 
-                    case 9:
-                      _context40.prev = 9;
-                      _context40.next = 12;
+                    case 12:
+                      _context51.prev = 12;
+                      _context51.next = 15;
                       return this.messageService.stopSpinner();
 
-                    case 12:
-                      return _context40.finish(9);
+                    case 15:
+                      return _context51.finish(12);
 
-                    case 13:
+                    case 16:
                     case "end":
-                      return _context40.stop();
+                      return _context51.stop();
                   }
                 }
-              }, _callee40, this, [[2,, 9, 13]]);
+              }, _callee51, this, [[6,, 12, 16]]);
             }));
           }
         }, {
@@ -10812,19 +11989,19 @@
             var network = new big_js__WEBPACK_IMPORTED_MODULE_8___default.a(0);
             var storageLimit = new big_js__WEBPACK_IMPORTED_MODULE_8___default.a(0);
 
-            var _iterator7 = _createForOfIteratorHelper(ops),
-                _step7;
+            var _iterator8 = _createForOfIteratorHelper(ops),
+                _step8;
 
             try {
-              for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
-                var op = _step7.value;
+              for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+                var op = _step8.value;
                 network = network.plus(op.fee);
                 storageLimit = storageLimit.plus(op.storageLimit);
               }
             } catch (err) {
-              _iterator7.e(err);
+              _iterator8.e(err);
             } finally {
-              _iterator7.f();
+              _iterator8.f();
             }
 
             var storage = storageLimit.times(this.estimateService.costPerByte);
@@ -10840,107 +12017,107 @@
         }, {
           key: "silentInject",
           value: function silentInject(ops) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee42() {
-              var _this30 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee53() {
+              var _this37 = this;
 
-              var _iterator8, _step8, op, keys;
+              var _iterator9, _step9, op, keys;
 
-              return regeneratorRuntime.wrap(function _callee42$(_context42) {
+              return regeneratorRuntime.wrap(function _callee53$(_context53) {
                 while (1) {
-                  switch (_context42.prev = _context42.next) {
+                  switch (_context53.prev = _context53.next) {
                     case 0:
                       if (this.walletService.isEmbeddedTorusWallet()) {
-                        _context42.next = 3;
+                        _context53.next = 3;
                         break;
                       }
 
                       this.operationResponse.emit('UNSUPPORTED_WALLET_TYPE');
-                      return _context42.abrupt("return");
+                      return _context53.abrupt("return");
 
                     case 3:
-                      _iterator8 = _createForOfIteratorHelper(ops);
-                      _context42.prev = 4;
+                      _iterator9 = _createForOfIteratorHelper(ops);
+                      _context53.prev = 4;
 
-                      _iterator8.s();
+                      _iterator9.s();
 
                     case 6:
-                      if ((_step8 = _iterator8.n()).done) {
-                        _context42.next = 13;
+                      if ((_step9 = _iterator9.n()).done) {
+                        _context53.next = 13;
                         break;
                       }
 
-                      op = _step8.value;
+                      op = _step9.value;
 
                       if (!(op.kind !== 'transaction')) {
-                        _context42.next = 11;
+                        _context53.next = 11;
                         break;
                       }
 
                       this.operationResponse.emit('UNSUPPORTED_KIND');
-                      return _context42.abrupt("break", 13);
+                      return _context53.abrupt("break", 13);
 
                     case 11:
-                      _context42.next = 6;
+                      _context53.next = 6;
                       break;
 
                     case 13:
-                      _context42.next = 18;
+                      _context53.next = 18;
                       break;
 
                     case 15:
-                      _context42.prev = 15;
-                      _context42.t0 = _context42["catch"](4);
+                      _context53.prev = 15;
+                      _context53.t0 = _context53["catch"](4);
 
-                      _iterator8.e(_context42.t0);
+                      _iterator9.e(_context53.t0);
 
                     case 18:
-                      _context42.prev = 18;
+                      _context53.prev = 18;
 
-                      _iterator8.f();
+                      _iterator9.f();
 
-                      return _context42.finish(18);
+                      return _context53.finish(18);
 
                     case 21:
                       this.messageService.startSpinner('Sending transaction...');
-                      _context42.prev = 22;
-                      _context42.next = 25;
+                      _context53.prev = 22;
+                      _context53.next = 25;
                       return this.walletService.getKeys('', this.activeAccount.pkh);
 
                     case 25:
-                      keys = _context42.sent;
-                      _context42.next = 31;
+                      keys = _context53.sent;
+                      _context53.next = 31;
                       break;
 
                     case 28:
-                      _context42.prev = 28;
-                      _context42.t1 = _context42["catch"](22);
+                      _context53.prev = 28;
+                      _context53.t1 = _context53["catch"](22);
                       this.messageService.stopSpinner();
 
                     case 31:
                       if (keys) {
-                        _context42.next = 34;
+                        _context53.next = 34;
                         break;
                       }
 
                       this.operationResponse.emit('FAILED_TO_SIGN');
-                      return _context42.abrupt("return");
+                      return _context53.abrupt("return");
 
                     case 34:
                       this.operationService.transfer(this.activeAccount.address, ops, Number(ops[ops.length - 1].fee), keys, '').subscribe(function (ans) {
-                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this30, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee41() {
-                          var metadata, _iterator9, _step9, transaction;
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this37, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee52() {
+                          var metadata, _iterator10, _step10, transaction;
 
-                          return regeneratorRuntime.wrap(function _callee41$(_context41) {
+                          return regeneratorRuntime.wrap(function _callee52$(_context52) {
                             while (1) {
-                              switch (_context41.prev = _context41.next) {
+                              switch (_context52.prev = _context52.next) {
                                 case 0:
                                   if (!(ans.success === true)) {
-                                    _context41.next = 28;
+                                    _context52.next = 28;
                                     break;
                                   }
 
                                   console.log('Transaction successful ', ans);
-                                  _context41.next = 4;
+                                  _context52.next = 4;
                                   return this.messageService.stopSpinner();
 
                                 case 4:
@@ -10949,58 +12126,58 @@
                                     transactions: ops,
                                     opHash: ans.payload.opHash
                                   };
-                                  _context41.next = 8;
+                                  _context52.next = 8;
                                   return this.coordinatorService.boost(this.activeAccount.address, metadata);
 
                                 case 8:
-                                  _iterator9 = _createForOfIteratorHelper(ops);
-                                  _context41.prev = 9;
+                                  _iterator10 = _createForOfIteratorHelper(ops);
+                                  _context52.prev = 9;
 
-                                  _iterator9.s();
+                                  _iterator10.s();
 
                                 case 11:
-                                  if ((_step9 = _iterator9.n()).done) {
-                                    _context41.next = 18;
+                                  if ((_step10 = _iterator10.n()).done) {
+                                    _context52.next = 18;
                                     break;
                                   }
 
-                                  transaction = _step9.value;
+                                  transaction = _step10.value;
 
                                   if (!this.walletService.addressExists(transaction.destination)) {
-                                    _context41.next = 16;
+                                    _context52.next = 16;
                                     break;
                                   }
 
-                                  _context41.next = 16;
+                                  _context52.next = 16;
                                   return this.coordinatorService.boost(transaction.destination);
 
                                 case 16:
-                                  _context41.next = 11;
+                                  _context52.next = 11;
                                   break;
 
                                 case 18:
-                                  _context41.next = 23;
+                                  _context52.next = 23;
                                   break;
 
                                 case 20:
-                                  _context41.prev = 20;
-                                  _context41.t0 = _context41["catch"](9);
+                                  _context52.prev = 20;
+                                  _context52.t0 = _context52["catch"](9);
 
-                                  _iterator9.e(_context41.t0);
+                                  _iterator10.e(_context52.t0);
 
                                 case 23:
-                                  _context41.prev = 23;
+                                  _context52.prev = 23;
 
-                                  _iterator9.f();
+                                  _iterator10.f();
 
-                                  return _context41.finish(23);
+                                  return _context52.finish(23);
 
                                 case 26:
-                                  _context41.next = 33;
+                                  _context52.next = 33;
                                   break;
 
                                 case 28:
-                                  _context41.next = 30;
+                                  _context52.next = 30;
                                   return this.messageService.stopSpinner();
 
                                 case 30:
@@ -11010,25 +12187,25 @@
 
                                 case 33:
                                 case "end":
-                                  return _context41.stop();
+                                  return _context52.stop();
                               }
                             }
-                          }, _callee41, this, [[9, 20, 23, 26]]);
+                          }, _callee52, this, [[9, 20, 23, 26]]);
                         }));
                       }, function (err) {
-                        _this30.messageService.stopSpinner();
+                        _this37.messageService.stopSpinner();
 
                         console.log(err);
 
-                        _this30.operationResponse.emit('UNKNOWN_ERROR');
+                        _this37.operationResponse.emit('UNKNOWN_ERROR');
                       });
 
                     case 35:
                     case "end":
-                      return _context42.stop();
+                      return _context53.stop();
                   }
                 }
-              }, _callee42, this, [[4, 15, 18, 21], [22, 28]]);
+              }, _callee53, this, [[4, 15, 18, 21], [22, 28]]);
             }));
           }
         }]);
@@ -11151,6 +12328,145 @@
       })();
       /***/
 
+    },
+
+    /***/
+    "PYrL":
+    /*!******************************!*\
+      !*** ../icabod/dist/icon.js ***!
+      \******************************/
+
+    /*! no static exports found */
+
+    /***/
+    function PYrL(module, exports, __webpack_require__) {
+      "use strict";
+
+      var __classPrivateFieldGet = this && this.__classPrivateFieldGet || function (receiver, privateMap) {
+        if (!privateMap.has(receiver)) {
+          throw new TypeError("attempted to get private field on non-instance");
+        }
+
+        return privateMap.get(receiver);
+      };
+
+      var _getIcon;
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+      var iconId = 'kukai-icon';
+
+      var IconUI = /*#__PURE__*/function () {
+        function IconUI() {
+          _classCallCheck(this, IconUI);
+
+          _getIcon.set(this, function () {
+            return document.getElementById(iconId);
+          });
+        }
+
+        _createClass(IconUI, [{
+          key: "init",
+          value: function () {
+            var _init4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee54(cb, styleClass) {
+              var _a, icon, k;
+
+              return regeneratorRuntime.wrap(function _callee54$(_context54) {
+                while (1) {
+                  switch (_context54.prev = _context54.next) {
+                    case 0:
+                      if (this.isInit) {
+                        _context54.next = 15;
+                        break;
+                      }
+
+                      icon = document.createElement('button');
+                      icon.id = iconId;
+                      k = document.createElement('img');
+                      k.style.width = '60px';
+                      k.style.height = '60px';
+                      k.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEhQTFRF0dH/amn+urn/o6L+8/P/U1L+9PP/Xl3+mJf+3dz/gYD+3Nz/xcX/jIz+jIv+o6P/dXT+urr/xsX/6Oj/r67/////R0b+////pIBhiAAAABh0Uk5T//////////////////////////////8AzRMu6gAAAaZJREFUeNqsl9uSgyAMhgNyUNS2eyB9/zddXHW1QAKW/ccrhm8MSUgCPAkpkN2vJChqD2RBOVs8yc5SVcLgMCMHFbC0SMjKAgwCGQlgYNVjQb2i4FFgUWLMw5PGCukpB0uslEzhavZE7/CEFzS9wqO+AuvxDCuBlyTUCe7xovoDBrws+IMTox/Rin3EPhE7HEdJD94P59037/0tE68Fju9RH/b6/pX1Jr5jK5ycGJbN8Mp6nzl1+BwPu5VNfuEWWCELC/PLmjQTVIAlC9NscBk8Zw5mWJwDbBl4CRrFBn+DQhpm2XBoABousAggafiDZ1FCR8Irm+TloY6GN9YPb8CH7i2wF2/B5pM1nIWN0F+c4R0ZqjVGjjNckkmyxZczHMj03HLDGtpwxV+MvSZlDbelKxk0UIbPxWIQyjCVKrJchhC/CcNVRQFEbbIV0FWV3j3Yj1zpTfwdw1vg77min7gs7hgofLxytJu40WmIehXeTLwi6BYrYtfquG/C/zT3trGiaaBpG6Xahri28bFtcG0bmduG9bZnQuMDpfFp1Pgoq38O/ggwACoyIQpeKqtUAAAAAElFTkSuQmCC';
+                      icon.innerHTML = k.outerHTML;
+
+                      if (styleClass) {
+                        icon.className = styleClass;
+                      } else {
+                        icon.style.width = '60px';
+                        icon.style.height = '60px';
+                        icon.style.bottom = '40px';
+                        icon.style.left = '40px';
+                        icon.style.position = 'fixed';
+                        icon.style.borderRadius = '50px';
+                        icon.style.boxShadow = '2px 2px 3px #999';
+                        icon.style.padding = '0';
+                        icon.style.border = '0';
+                      }
+
+                      icon.style.zIndex = '99998';
+                      icon.style.display = 'none';
+                      document.body.appendChild(icon);
+                      (_a = __classPrivateFieldGet(this, _getIcon).call(this)) === null || _a === void 0 ? void 0 : _a.addEventListener('click', cb);
+                      _context54.next = 16;
+                      break;
+
+                    case 15:
+                      throw new Error("Kukai-Embed Already Present");
+
+                    case 16:
+                    case "end":
+                      return _context54.stop();
+                  }
+                }
+              }, _callee54, this);
+            }));
+
+            function init(_x9, _x10) {
+              return _init4.apply(this, arguments);
+            }
+
+            return init;
+          }()
+        }, {
+          key: "deinit",
+          value: function deinit() {
+            var i = __classPrivateFieldGet(this, _getIcon).call(this);
+
+            if (i) {
+              document.body.removeChild(i);
+            }
+          }
+        }, {
+          key: "show",
+          value: function show() {
+            var i = __classPrivateFieldGet(this, _getIcon).call(this);
+
+            if (i) {
+              i.style.display = 'block';
+            }
+          }
+        }, {
+          key: "hide",
+          value: function hide() {
+            var i = __classPrivateFieldGet(this, _getIcon).call(this);
+
+            if (i) {
+              i.style.display = 'none';
+            }
+          }
+        }, {
+          key: "isInit",
+          get: function get() {
+            return !!__classPrivateFieldGet(this, _getIcon).call(this);
+          }
+        }]);
+
+        return IconUI;
+      }();
+
+      exports.IconUI = IconUI;
+      _getIcon = new WeakMap();
+      /***/
     },
 
     /***/
@@ -11295,14 +12611,14 @@
         }, {
           key: "check",
           value: function check(address) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee44() {
-              var _this31 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee56() {
+              var _this38 = this;
 
               var _this$index2, x;
 
-              return regeneratorRuntime.wrap(function _callee44$(_context44) {
+              return regeneratorRuntime.wrap(function _callee56$(_context56) {
                 while (1) {
-                  switch (_context44.prev = _context44.next) {
+                  switch (_context56.prev = _context56.next) {
                     case 0:
                       this.initCheck();
 
@@ -11312,20 +12628,20 @@
                         if (!this.pendingLookups[address] && x === -1) {
                           this.pendingLookups[address] = true;
                           this.operationService.torusKeyLookup(address).subscribe(function (ans) {
-                            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this31, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee43() {
+                            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this38, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee55() {
                               var keys, verifierMap, _i3, _keys, key, verifierId, verifierArray, twitterId, _yield$this$torusServ2, username;
 
-                              return regeneratorRuntime.wrap(function _callee43$(_context43) {
+                              return regeneratorRuntime.wrap(function _callee55$(_context55) {
                                 while (1) {
-                                  switch (_context43.prev = _context43.next) {
+                                  switch (_context55.prev = _context55.next) {
                                     case 0:
                                       if (!ans) {
-                                        _context43.next = 35;
+                                        _context55.next = 35;
                                         break;
                                       }
 
                                       if (!(ans.result && ans.result.Verifiers)) {
-                                        _context43.next = 34;
+                                        _context55.next = 34;
                                         break;
                                       }
 
@@ -11335,34 +12651,34 @@
 
                                     case 5:
                                       if (!(_i3 < _keys.length)) {
-                                        _context43.next = 31;
+                                        _context55.next = 31;
                                         break;
                                       }
 
                                       key = _keys[_i3];
 
                                       if (!(key === verifierMap['google'].verifier)) {
-                                        _context43.next = 11;
+                                        _context55.next = 11;
                                         break;
                                       }
 
                                       this.add(address, ans.result.Verifiers[verifierMap['google'].verifier][0], LookupType.Google);
-                                      _context43.next = 28;
+                                      _context55.next = 28;
                                       break;
 
                                     case 11:
                                       if (!(key === verifierMap['reddit'].verifier)) {
-                                        _context43.next = 15;
+                                        _context55.next = 15;
                                         break;
                                       }
 
                                       this.add(address, ans.result.Verifiers[verifierMap['reddit'].verifier][0], LookupType.Reddit);
-                                      _context43.next = 28;
+                                      _context55.next = 28;
                                       break;
 
                                     case 15:
                                       if (!(key === verifierMap['twitter'].verifier)) {
-                                        _context43.next = 27;
+                                        _context55.next = 27;
                                         break;
                                       }
 
@@ -11370,16 +12686,16 @@
                                       verifierArray = verifierId.split('|');
 
                                       if (!(verifierArray[0] === 'twitter' && this.inputValidationService.twitterId(verifierArray[1]))) {
-                                        _context43.next = 25;
+                                        _context55.next = 25;
                                         break;
                                       }
 
                                       twitterId = verifierArray[1];
-                                      _context43.next = 22;
+                                      _context55.next = 22;
                                       return this.torusService.twitterLookup(undefined, twitterId);
 
                                     case 22:
-                                      _yield$this$torusServ2 = _context43.sent;
+                                      _yield$this$torusServ2 = _context55.sent;
                                       username = _yield$this$torusServ2.username;
 
                                       if (username) {
@@ -11387,7 +12703,7 @@
                                       }
 
                                     case 25:
-                                      _context43.next = 28;
+                                      _context55.next = 28;
                                       break;
 
                                     case 27:
@@ -11395,12 +12711,12 @@
 
                                     case 28:
                                       _i3++;
-                                      _context43.next = 5;
+                                      _context55.next = 5;
                                       break;
 
                                     case 31:
                                       this.pendingLookups[address] = false;
-                                      _context43.next = 35;
+                                      _context55.next = 35;
                                       break;
 
                                     case 34:
@@ -11410,10 +12726,10 @@
 
                                     case 35:
                                     case "end":
-                                      return _context43.stop();
+                                      return _context55.stop();
                                   }
                                 }
-                              }, _callee43, this);
+                              }, _callee55, this);
                             }));
                           });
                         }
@@ -11421,10 +12737,10 @@
 
                     case 2:
                     case "end":
-                      return _context44.stop();
+                      return _context56.stop();
                   }
                 }
-              }, _callee44, this);
+              }, _callee56, this);
             }));
           }
         }, {
@@ -11433,21 +12749,21 @@
             var record = this.records[address];
 
             if (record) {
-              var _iterator10 = _createForOfIteratorHelper(record),
-                  _step10;
+              var _iterator11 = _createForOfIteratorHelper(record),
+                  _step11;
 
               try {
-                for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
-                  var entry = _step10.value;
+                for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+                  var entry = _step11.value;
 
                   if (entry.lookupType > 1) {
                     return true;
                   }
                 }
               } catch (err) {
-                _iterator10.e(err);
+                _iterator11.e(err);
               } finally {
-                _iterator10.f();
+                _iterator11.f();
               }
             }
 
@@ -11595,17 +12911,11 @@
       /* harmony import */
 
 
-      var _services_estimate_estimate_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-      /*! ../../../services/estimate/estimate.service */
-      "ds67");
-      /* harmony import */
-
-
-      var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
       /*! @angular/common */
       "ofXK");
 
-      function ConfirmSendTemplateComponent_div_0_div_1_b_3_Template(rf, ctx) {
+      function ConfirmSendTemplateComponent_div_0_div_1_b_4_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "b");
 
@@ -11619,35 +12929,23 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", ctx_r2.templateRequest.template.action, ":");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r2.templateRequest.template.action);
         }
       }
 
-      function ConfirmSendTemplateComponent_div_0_div_1_ng_template_4_Template(rf, ctx) {
+      function ConfirmSendTemplateComponent_div_0_div_1_ng_template_5_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "b");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "send:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "send");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         }
       }
 
-      function ConfirmSendTemplateComponent_div_0_div_1_img_6_Template(rf, ctx) {
+      function ConfirmSendTemplateComponent_div_0_div_1_ng_container_7_ng_container_1_p_1_Template(rf, ctx) {
         if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "img", 14);
-        }
-
-        if (rf & 2) {
-          var ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("src", ctx_r5.templateRequest.template.description[0].imgUrl, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
-        }
-      }
-
-      function ConfirmSendTemplateComponent_div_0_div_1_p_7_Template(rf, ctx) {
-        if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p", 15);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p", 17);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -11655,17 +12953,47 @@
         }
 
         if (rf & 2) {
-          var ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+          var description_r11 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2).$implicit;
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r6.templateRequest.template.description[0].text);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](description_r11.text);
         }
       }
 
-      function ConfirmSendTemplateComponent_div_0_div_1_p_8_Template(rf, ctx) {
+      function ConfirmSendTemplateComponent_div_0_div_1_ng_container_7_ng_container_1_Template(rf, ctx) {
         if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](0);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, ConfirmSendTemplateComponent_div_0_div_1_ng_container_7_ng_container_1_p_1_Template, 2, 1, "p", 16);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
+        }
+
+        if (rf & 2) {
+          var description_r11 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", description_r11.text);
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_div_1_ng_container_7_ng_container_2_img_1_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "img", 20);
+        }
+
+        if (rf & 2) {
+          var description_r11 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2).$implicit;
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("src", description_r11.imgUrl, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_div_1_ng_container_7_ng_container_2_p_2_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p", 21);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -11673,71 +13001,63 @@
         }
 
         if (rf & 2) {
-          var ctx_r7 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+          var description_r11 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2).$implicit;
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r7.templateRequest.template.description[1]);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](description_r11.text);
         }
       }
 
-      function ConfirmSendTemplateComponent_div_0_div_1_p_9_Template(rf, ctx) {
+      function ConfirmSendTemplateComponent_div_0_div_1_ng_container_7_ng_container_2_Template(rf, ctx) {
         if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p", 15);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](0);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, ConfirmSendTemplateComponent_div_0_div_1_ng_container_7_ng_container_2_img_1_Template, 1, 1, "img", 18);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, ConfirmSendTemplateComponent_div_0_div_1_ng_container_7_ng_container_2_p_2_Template, 2, 1, "p", 19);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
         }
 
         if (rf & 2) {
-          var ctx_r8 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+          var description_r11 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r8.templateRequest.template.description[2].text);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", description_r11.imgUrl);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", description_r11.text);
         }
       }
 
-      function ConfirmSendTemplateComponent_div_0_div_1_img_10_Template(rf, ctx) {
+      function ConfirmSendTemplateComponent_div_0_div_1_ng_container_7_Template(rf, ctx) {
         if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "img", 14);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](0);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, ConfirmSendTemplateComponent_div_0_div_1_ng_container_7_ng_container_1_Template, 2, 1, "ng-container", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, ConfirmSendTemplateComponent_div_0_div_1_ng_container_7_ng_container_2_Template, 3, 2, "ng-container", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
         }
 
         if (rf & 2) {
-          var ctx_r9 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+          var description_r11 = ctx.$implicit;
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("src", ctx_r9.templateRequest.template.description[2].imgUrl, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !description_r11.imgUrl);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", description_r11.imgUrl);
         }
       }
 
-      function ConfirmSendTemplateComponent_div_0_div_1_p_11_Template(rf, ctx) {
-        if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p", 16);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "Estimated Fee: ");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "b");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](4, "img", 17);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        }
-
-        if (rf & 2) {
-          var ctx_r10 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", ctx_r10.templateRequest.fee.total, " tez");
-        }
-      }
-
-      function ConfirmSendTemplateComponent_div_0_div_1_ng_container_16_Template(rf, ctx) {
+      function ConfirmSendTemplateComponent_div_0_div_1_ng_container_12_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](0);
 
@@ -11747,79 +13067,117 @@
         }
 
         if (rf & 2) {
-          var ctx_r11 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+          var ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r11.templateRequest.template.button);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r6.templateRequest.template.button);
         }
       }
 
-      function ConfirmSendTemplateComponent_div_0_div_1_ng_template_17_Template(rf, ctx) {
+      function ConfirmSendTemplateComponent_div_0_div_1_ng_template_13_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](0, "Send");
         }
       }
 
+      function ConfirmSendTemplateComponent_div_0_div_1_b_17_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "b");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var ctx_r9 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", ctx_r9.templateRequest.fee.total, " tez");
+        }
+      }
+
+      function ConfirmSendTemplateComponent_div_0_div_1_img_18_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "img", 22);
+        }
+      }
+
       function ConfirmSendTemplateComponent_div_0_div_1_Template(rf, ctx) {
         if (rf & 1) {
-          var _r15 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+          var _r23 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 3);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "H1");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "You are about to ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "You are about to");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](3, ConfirmSendTemplateComponent_div_0_div_1_b_3_Template, 2, 1, "b", 4);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](3, "BR");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](4, ConfirmSendTemplateComponent_div_0_div_1_ng_template_4_Template, 2, 0, "ng-template", null, 5, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](4, ConfirmSendTemplateComponent_div_0_div_1_b_4_Template, 2, 1, "b", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](5, ConfirmSendTemplateComponent_div_0_div_1_ng_template_5_Template, 2, 0, "ng-template", null, 5, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](6, ConfirmSendTemplateComponent_div_0_div_1_img_6_Template, 1, 1, "img", 6);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](7, ConfirmSendTemplateComponent_div_0_div_1_ng_container_7_Template, 3, 2, "ng-container", 6);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](7, ConfirmSendTemplateComponent_div_0_div_1_p_7_Template, 2, 1, "p", 7);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "div", 7);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](8, ConfirmSendTemplateComponent_div_0_div_1_p_8_Template, 2, 1, "p", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "button", 8);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](9, ConfirmSendTemplateComponent_div_0_div_1_p_9_Template, 2, 1, "p", 7);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ConfirmSendTemplateComponent_div_0_div_1_Template_button_click_9_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r23);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](10, ConfirmSendTemplateComponent_div_0_div_1_img_10_Template, 1, 1, "img", 6);
+            var ctx_r22 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, ConfirmSendTemplateComponent_div_0_div_1_p_11_Template, 5, 1, "p", 9);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "div", 10);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "button", 11);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ConfirmSendTemplateComponent_div_0_div_1_Template_button_click_13_listener() {
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r15);
-
-            var ctx_r14 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
-
-            return ctx_r14.cancel();
+            return ctx_r22.cancel();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](14, "Cancel");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](10, "Cancel");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "button", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "button", 9);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ConfirmSendTemplateComponent_div_0_div_1_Template_button_click_15_listener() {
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r15);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ConfirmSendTemplateComponent_div_0_div_1_Template_button_click_11_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r23);
 
-            var ctx_r16 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+            var ctx_r24 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-            return ctx_r16.approve();
+            return ctx_r24.approve();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](16, ConfirmSendTemplateComponent_div_0_div_1_ng_container_16_Template, 2, 1, "ng-container", 4);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](12, ConfirmSendTemplateComponent_div_0_div_1_ng_container_12_Template, 2, 1, "ng-container", 4);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](17, ConfirmSendTemplateComponent_div_0_div_1_ng_template_17_Template, 1, 0, "ng-template", null, 13, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](13, ConfirmSendTemplateComponent_div_0_div_1_ng_template_13_Template, 1, 0, "ng-template", null, 10, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "p", 11);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](16, "Estimated fee ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](17, ConfirmSendTemplateComponent_div_0_div_1_b_17_Template, 2, 1, "b", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](18, ConfirmSendTemplateComponent_div_0_div_1_img_18_Template, 1, 0, "img", 13);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "div", 14);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](20, "span");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](21, "Powered by");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](22, "img", 15);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -11827,43 +13185,35 @@
         }
 
         if (rf & 2) {
-          var _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](5);
+          var _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](6);
 
-          var _r12 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](18);
+          var _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](14);
 
           var ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.action)("ngIfElse", _r3);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.description[0] && ctx_r1.templateRequest.template.description[0].imgUrl);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r1.templateRequest.template.descriptions);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.description[0]);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵclassProp"]("horizontally", !ctx_r1.templateRequest.template.buttonsVertically)("vertically", ctx_r1.templateRequest.template.buttonsVertically);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.description[1]);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.description[2]);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.description[2] && ctx_r1.templateRequest.template.description[2].imgUrl);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.fee);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.button)("ngIfElse", _r7);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.template.button)("ngIfElse", _r12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r1.templateRequest.fee);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !ctx_r1.templateRequest.fee);
         }
       }
 
@@ -11871,7 +13221,7 @@
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, ConfirmSendTemplateComponent_div_0_div_1_Template, 19, 10, "div", 2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, ConfirmSendTemplateComponent_div_0_div_1_Template, 23, 11, "div", 2);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         }
@@ -11886,10 +13236,9 @@
       }
 
       var ConfirmSendTemplateComponent = /*#__PURE__*/function () {
-        function ConfirmSendTemplateComponent(estimateService) {
+        function ConfirmSendTemplateComponent() {
           _classCallCheck(this, ConfirmSendTemplateComponent);
 
-          this.estimateService = estimateService;
           this.templateRequest = null;
           this.isApproved = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
           this.active = false;
@@ -11901,26 +13250,16 @@
         }, {
           key: "ngOnChanges",
           value: function ngOnChanges(changes) {
-            var _a;
+            var _a, _b, _c;
 
-            if (((_a = changes === null || changes === void 0 ? void 0 : changes.templateRequest) === null || _a === void 0 ? void 0 : _a.currentValue) && !changes.templateRequest.previousValue) {
-              if (this.templateRequest.template.description) {
+            if ((_a = changes === null || changes === void 0 ? void 0 : changes.templateRequest) === null || _a === void 0 ? void 0 : _a.currentValue) {
+              console.log(this.templateRequest);
+
+              if ((_c = (_b = this.templateRequest.template) === null || _b === void 0 ? void 0 : _b.descriptions) === null || _c === void 0 ? void 0 : _c.length) {
                 this.hideScrollbar();
-
-                if (this.templateRequest.template.description[0] && typeof this.templateRequest.template.description[0] === 'string') {
-                  this.templateRequest.template.description[0] = {
-                    text: this.templateRequest.template.description[0]
-                  };
-                }
-
-                if (this.templateRequest.template.description[2] && typeof this.templateRequest.template.description[2] === 'string') {
-                  this.templateRequest.template.description[2] = {
-                    text: this.templateRequest.template.description[2]
-                  };
-                }
-
                 this.active = true;
               } else {
+                console.log('No template descriptions');
                 this.isApproved.emit(null);
               }
             }
@@ -11934,8 +13273,10 @@
         }, {
           key: "approve",
           value: function approve() {
-            this.isApproved.emit(this.templateRequest.ops);
-            this.reset();
+            if (this.templateRequest.ops && this.templateRequest.fee) {
+              this.isApproved.emit(this.templateRequest.ops);
+              this.reset();
+            }
           }
         }, {
           key: "reset",
@@ -11962,7 +13303,7 @@
       }();
 
       ConfirmSendTemplateComponent.ɵfac = function ConfirmSendTemplateComponent_Factory(t) {
-        return new (t || ConfirmSendTemplateComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_estimate_estimate_service__WEBPACK_IMPORTED_MODULE_1__["EstimateService"]));
+        return new (t || ConfirmSendTemplateComponent)();
       };
 
       ConfirmSendTemplateComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -11977,7 +13318,7 @@
         features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵNgOnChangesFeature"]],
         decls: 1,
         vars: 1,
-        consts: [["class", "kukai-template", 4, "ngIf"], [1, "kukai-template"], ["class", "card", 4, "ngIf"], [1, "card"], [4, "ngIf", "ngIfElse"], ["defaultAction", ""], ["height", "150", 3, "src", 4, "ngIf"], ["class", "blue", 4, "ngIf"], [4, "ngIf"], ["class", "fee", 4, "ngIf"], [1, "buttons"], [1, "secondary", 3, "click"], [3, "click"], ["defaultButtonText", ""], ["height", "150", 3, "src"], [1, "blue"], [1, "fee"], ["src", "../../../../assets/img/coolicon.svg"]],
+        consts: [["class", "kukai-template", 4, "ngIf"], [1, "kukai-template"], ["class", "card", 4, "ngIf"], [1, "card"], [4, "ngIf", "ngIfElse"], ["defaultAction", ""], [4, "ngFor", "ngForOf"], [1, "buttons"], [1, "secondary", 3, "click"], [3, "click"], ["defaultButtonText", ""], [1, "fee"], [4, "ngIf"], ["src", "../../../../assets/img/feeLoader.gif", 4, "ngIf"], [1, "footer"], ["src", "../../../../assets/img/kukai-logo-black.svg", 1, "logo"], ["class", "single", 4, "ngIf"], [1, "single"], ["height", "150", 3, "src", 4, "ngIf"], ["class", "img-text", 4, "ngIf"], ["height", "150", 3, "src"], [1, "img-text"], ["src", "../../../../assets/img/feeLoader.gif"]],
         template: function ConfirmSendTemplateComponent_Template(rf, ctx) {
           if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, ConfirmSendTemplateComponent_div_0_Template, 2, 1, "div", 0);
@@ -11987,8 +13328,8 @@
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.active);
           }
         },
-        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"]],
-        styles: ["@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tDMPKzSQ.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tMMPKzSQ.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tCMPI.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLucXtAKPY.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLufntAKPY.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLucHtA.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTucXtAKPY.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTufntAKPY.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTucHtA.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJbecmNE.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJnecmNE.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJfecg.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\ndiv.kukai-template[_ngcontent-%COMP%] {\n  position: fixed;\n  z-index: 100;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  padding: 0 0.525rem;\n  background-color: black;\n  background-color: rgba(0, 0, 0, 0.6);\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]    > div.card[_ngcontent-%COMP%] {\n  position: relative;\n  background-color: #f3f3f3;\n  margin: 5rem auto 2rem;\n  padding: 0.75rem 1.25rem;\n  border-radius: 0.625rem;\n  max-width: 25rem;\n  min-height: 6rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   p[_ngcontent-%COMP%], div.kukai-template[_ngcontent-%COMP%]   H1[_ngcontent-%COMP%] {\n  font-family: \"Poppins\";\n  font-weight: 500;\n  font-style: normal;\n  font-size: 1rem;\n  line-height: 1.25rem;\n  margin: 0.375rem 0;\n  text-align: center;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   H1[_ngcontent-%COMP%], div.kukai-template[_ngcontent-%COMP%]   H1[_ngcontent-%COMP%]    > b[_ngcontent-%COMP%] {\n  font-weight: 300;\n  font-size: 20px;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   H1[_ngcontent-%COMP%]    > b[_ngcontent-%COMP%] {\n  font-weight: bold;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   p.fee[_ngcontent-%COMP%] {\n  margin-bottom: 0.75rem;\n  font-weight: 300;\n  font-size: 0.75rem;\n  line-height: 1rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   p.fee[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  position: relative;\n  top: -0.0625rem;\n  left: 0.125rem;\n  width: 0.75rem;\n  height: 0.75rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   .blue[_ngcontent-%COMP%] {\n  color: #5B63F7;\n  font-style: medium;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   div.buttons[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-between;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  all: unset;\n  cursor: pointer;\n  \n  font-weight: 500;\n  font-style: normal;\n  font-size: 1rem;\n  color: #f3f3f3;\n  -webkit-text-fill-color: #f3f3f3;\n  background: #5B63F7;\n  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);\n  border-radius: 1.25rem;\n  border: 1px solid #5B63F7;\n  height: 2rem;\n  width: 100%;\n  text-align: center;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   button.secondary[_ngcontent-%COMP%] {\n  color: #5B63F7;\n  -webkit-text-fill-color: #5B63F7;\n  background: #f3f3f3;\n  border-color: #5B63F7;\n  margin-right: 1.25rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]    > div.card[_ngcontent-%COMP%]    > img[_ngcontent-%COMP%] {\n  margin: 1rem 0;\n  max-height: 150px;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2Fzc2V0cy9mb250cy9Qb3BwaW5zL3N0eWxlc2hlZXQuY3NzIiwiLi5cXC4uXFwuLlxcLi5cXC4uXFxjb25maXJtLXNlbmQtdGVtcGxhdGUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHNHQUFzRztFQUN0RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsc0dBQXNHO0VBQ3RHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixtR0FBbUc7RUFDbkcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG1HQUFtRztFQUNuRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsbUdBQW1HO0VBQ25HLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnR0FBZ0c7RUFDaEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsdUdBQXVHO0VBQ3ZHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG1HQUFtRztFQUNuRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsbUdBQW1HO0VBQ25HLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnR0FBZ0c7RUFDaEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLGdHQUFnRztFQUNoRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsZ0dBQWdHO0VBQ2hHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQiw4RkFBOEY7RUFDOUYseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FBQ0EsZUFBZTtBQUNmO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxjQUFjO0FBQ2Q7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLG1IQUFtSDtBQUNySDtBQUNBLFVBQVU7QUFDVjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixrR0FBa0c7RUFDbEcseUtBQXlLO0FBQzNLO0FDcGVBO0VBQ0UsZUFBQTtFQUNBLFlBQUE7RUFDQSxPQUFBO0VBQ0EsTUFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0VBQ0EsY0FBQTtFQUNBLG1CQUFBO0VBQ0EsdUJBQUE7RUFDQSxvQ0FBQTtBQUNGO0FBQ0E7RUFDRSxrQkFBQTtFQUNBLHlCQUFBO0VBQ0Esc0JBQUE7RUFDQSx3QkFBQTtFQUNBLHVCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxnQkFBQTtBQUVGO0FBRUE7O0VBRUUsc0JBQUE7RUFDQSxnQkFBQTtFQUNBLGtCQUFBO0VBQ0EsZUFBQTtFQUNBLG9CQUFBO0VBQ0Esa0JBQUE7RUFDQSxrQkFBQTtBQUNGO0FBQ0E7O0VBRUUsZ0JBQUE7RUFDQSxlQUFBO0FBRUY7QUFBQTtFQUNFLGlCQUFBO0FBR0Y7QUFEQTtFQUNFLHNCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxrQkFBQTtFQUNBLGlCQUFBO0FBSUY7QUFGQTtFQUNFLGtCQUFBO0VBQ0EsZUFBQTtFQUNBLGNBQUE7RUFDQSxjQUFBO0VBQ0EsZUFBQTtBQUtGO0FBSEE7RUFDRSxjQUFBO0VBQ0Esa0JBQUE7QUFNRjtBQUpBO0VBQ0UsYUFBQTtFQUNBLDhCQUFBO0FBT0Y7QUFMQTtFQUNFLFVBQUE7RUFDQSxlQUFBO0VBRUMsMEJBQUE7RUFDQSxnQkFBQTtFQUNBLGtCQUFBO0VBQ0EsZUFBQTtFQUVELGNBQUE7RUFDQSxnQ0FBQTtFQUNBLG1CQUFBO0VBRUEsMkNBQUE7RUFDQSxzQkFBQTtFQUNBLHlCQUFBO0VBQ0EsWUFBQTtFQUNBLFdBQUE7RUFDQSxrQkFBQTtBQUtGO0FBSEE7RUFDRSxjQUFBO0VBQ0EsZ0NBQUE7RUFDQSxtQkFBQTtFQUNBLHFCQUFBO0VBQ0EscUJBQUE7QUFNRjtBQUpBO0VBQ0UsY0FBQTtFQUNBLGlCQUFBO0VBQ0Esc0JBQUE7S0FBQSxtQkFBQTtBQU9GIiwiZmlsZSI6ImNvbmZpcm0tc2VuZC10ZW1wbGF0ZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDEwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUF5cDhrdjhKSGdGVnJKSkxtRTB0RE1QS3pTUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlBeXA4a3Y4SkhnRlZySkpMbUUwdE1NUEt6U1Eud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlBeXA4a3Y4SkhnRlZySkpMbUUwdENNUEkud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtdjFwVkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG12MXBWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtdjFwVkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMjFsVkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG0yMWxWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMjFsVkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUd5cDhrdjhKSGdGVnJKSkx1Y1h0QUtQWS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZySkpMdWZudEFLUFkud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZySkpMdWNIdEEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtZzFoVkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG1nMWhWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtZzFoVkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtcjE5VkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG1yMTlWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtcjE5VkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxteTE1VkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG15MTVWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxteTE1VkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMTExVkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogODAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG0xMTFWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMTExVkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtODF4VkZ0ZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogOTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRHlwOGt2OEpIZ0ZWckpKTG04MXhWR2RlT2NFZy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtODF4VkY5ZU8ud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDEwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUd5cDhrdjhKSGdGVnJMUFR1Y1h0QUtQWS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZyTFBUdWZudEFLUFkud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZyTFBUdWNIdEEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRmpfWjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxGal9aMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRmpfWjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTER6OFoxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRHo4WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTER6OFoxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNDAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpRXlwOGt2OEpIZ0ZWckpKYmVjbU5FLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUV5cDhrdjhKSGdGVnJKSm5lY21ORS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUV5cDhrdjhKSGdGVnJKSmZlY2cud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMR1Q5WjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxHVDlaMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMR1Q5WjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEVqNloxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRWo2WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEVqNloxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxDejdaMTFsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA3MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEN6N1oxSmxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxDejdaMXhsRlEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMREQ0WjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogODAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxERDRaMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMREQ0WjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA5MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEJUNVoxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMQlQ1WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA5MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEJUNVoxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn0iLCJAaW1wb3J0ICcuLi8uLi8uLi8uLi9hc3NldHMvZm9udHMvUG9wcGlucy9zdHlsZXNoZWV0LmNzcyc7XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSB7XHJcbiAgcG9zaXRpb246IGZpeGVkO1xyXG4gIHotaW5kZXg6IDEwMDtcclxuICBsZWZ0OiAwO1xyXG4gIHRvcDogMDtcclxuICB3aWR0aDogMTAwJTtcclxuICBoZWlnaHQ6IDEwMCU7XHJcbiAgb3ZlcmZsb3c6IGF1dG87XHJcbiAgcGFkZGluZzogMCAwLjUyNXJlbTtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMCwgMCwgMCk7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgwLCAwLCAwLCAwLjYpO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSA+IGRpdi5jYXJkIHtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2YzZjNmMztcclxuICBtYXJnaW46IDVyZW0gYXV0byAycmVtO1xyXG4gIHBhZGRpbmc6IDAuNzVyZW0gMS4yNXJlbTtcclxuICBib3JkZXItcmFkaXVzOiAwLjYyNXJlbTtcclxuICBtYXgtd2lkdGg6IDI1cmVtO1xyXG4gIG1pbi1oZWlnaHQ6IDZyZW07XHJcbn1cclxuXHJcblxyXG5kaXYua3VrYWktdGVtcGxhdGUgcCxcclxuZGl2Lmt1a2FpLXRlbXBsYXRlIEgxIHtcclxuICBmb250LWZhbWlseTogXCJQb3BwaW5zXCI7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LXN0eWxlOiBub3JtYWw7IFxyXG4gIGZvbnQtc2l6ZTogMXJlbTtcclxuICBsaW5lLWhlaWdodDogMS4yNXJlbTtcclxuICBtYXJnaW46IDAuMzc1cmVtIDA7XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBIMSxcclxuZGl2Lmt1a2FpLXRlbXBsYXRlIEgxID4gYiB7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LXNpemU6IDIwcHg7XHJcbn1cclxuZGl2Lmt1a2FpLXRlbXBsYXRlIEgxID4gYiB7XHJcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbn1cclxuZGl2Lmt1a2FpLXRlbXBsYXRlIHAuZmVlIHtcclxuICBtYXJnaW4tYm90dG9tOiAwLjc1cmVtO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1zaXplOiAwLjc1cmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBwLmZlZSBpbWcge1xyXG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICB0b3A6IC0wLjA2MjVyZW07XHJcbiAgbGVmdDogMC4xMjVyZW07XHJcbiAgd2lkdGg6IDAuNzVyZW07XHJcbiAgaGVpZ2h0OiAwLjc1cmVtO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSAuYmx1ZSB7XHJcbiAgY29sb3I6ICM1QjYzRjc7XHJcbiAgZm9udC1zdHlsZTogbWVkaXVtO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBkaXYuYnV0dG9ucyB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6ICBzcGFjZS1iZXR3ZWVuO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBidXR0b24ge1xyXG4gIGFsbDogdW5zZXQ7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG5cclxuICAgLypmb250LWZhbWlseTogXCJQb3BwaW5zXCI7Ki9cclxuICAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICAgZm9udC1zdHlsZTogbm9ybWFsOyBcclxuICAgZm9udC1zaXplOiAxcmVtO1xyXG5cclxuICBjb2xvcjogI2YzZjNmMztcclxuICAtd2Via2l0LXRleHQtZmlsbC1jb2xvcjogI2YzZjNmMztcclxuICBiYWNrZ3JvdW5kOiAjNUI2M0Y3O1xyXG5cclxuICBib3gtc2hhZG93OiAwcHggNHB4IDRweCByZ2JhKDAsIDAsIDAsIDAuMjUpO1xyXG4gIGJvcmRlci1yYWRpdXM6IDEuMjVyZW07XHJcbiAgYm9yZGVyOiAxcHggc29saWQgIzVCNjNGNztcclxuICBoZWlnaHQ6IDJyZW07XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBidXR0b24uc2Vjb25kYXJ5IHtcclxuICBjb2xvcjogIzVCNjNGNztcclxuICAtd2Via2l0LXRleHQtZmlsbC1jb2xvcjogIzVCNjNGNztcclxuICBiYWNrZ3JvdW5kOiAjZjNmM2YzO1xyXG4gIGJvcmRlci1jb2xvcjogIzVCNjNGNztcclxuICBtYXJnaW4tcmlnaHQ6IDEuMjVyZW07XHJcbn1cclxuZGl2Lmt1a2FpLXRlbXBsYXRlID4gZGl2LmNhcmQgPiBpbWcge1xyXG4gIG1hcmdpbjogMXJlbSAwO1xyXG4gIG1heC1oZWlnaHQ6IDE1MHB4O1xyXG4gIG9iamVjdC1maXQ6IGNvbnRhaW47XHJcbn0iXX0= */"]
+        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_1__["NgForOf"]],
+        styles: ["@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tDMPKzSQ.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tMMPKzSQ.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiAyp8kv8JHgFVrJJLmE0tCMPI.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmv1pVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm21lVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLucXtAKPY.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLufntAKPY.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrJJLucHtA.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmg1hVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmr19VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLmy15VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm111VF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVFteOcEg.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVGdeOcEg.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: italic;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiDyp8kv8JHgFVrJJLm81xVF9eO.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTucXtAKPY.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTufntAKPY.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 100;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiGyp8kv8JHgFVrLPTucHtA.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 200;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLFj_Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 300;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJbecmNE.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJnecmNE.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJfecg.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 500;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 600;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 700;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 800;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDD4Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z11lFc-K.woff2) format('woff2');\r\n  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z1JlFc-K.woff2) format('woff2');\r\n  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;\r\n}\r\n\r\n@font-face {\r\n  font-family: 'Poppins';\r\n  font-style: normal;\r\n  font-weight: 900;\r\n  font-display: swap;\r\n  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLBT5Z1xlFQ.woff2) format('woff2');\r\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\r\n}\r\n@font-face {\r\n  font-family: 'Gotham';\r\n  src: url('GothamMedium.ttf') format(\"truetype\");\r\n}\r\ndiv.kukai-template[_ngcontent-%COMP%] {\n  position: fixed;\n  z-index: 100;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background-color: black;\n  background-color: rgba(0, 0, 0, 0.6);\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]    > div.card[_ngcontent-%COMP%] {\n  width: 21.875rem;\n  position: relative;\n  background-color: #f3f3f3;\n  margin: 1rem auto;\n  padding: 0.75rem 1.25rem;\n  border-radius: 0.625rem;\n  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.24), 0px 4px 12px rgba(0, 0, 0, 0.24), 0px 32px 48px rgba(0, 0, 0, 0.36);\n  max-width: 25rem;\n  min-height: 6rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   p[_ngcontent-%COMP%], div.kukai-template[_ngcontent-%COMP%]   H1[_ngcontent-%COMP%] {\n  font-family: \"Gotham\";\n  font-weight: 500;\n  font-style: normal;\n  font-size: 1rem;\n  line-height: 1.25rem;\n  margin: 0.5rem 0;\n  text-align: center;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   H1[_ngcontent-%COMP%] {\n  margin: 0.375rem 0 0.5rem;\n  font-size: 0.875rem;\n  line-height: 1.125rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   H1[_ngcontent-%COMP%]    > b[_ngcontent-%COMP%] {\n  font-weight: 700;\n  font-size: 1rem;\n  line-height: 1.25rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   p.img-text[_ngcontent-%COMP%] {\n  font-weight: 400;\n  font-size: 0.75rem;\n  line-height: 1rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   p.fee[_ngcontent-%COMP%] {\n  margin-bottom: 0.5rem;\n  font-weight: 300;\n  font-size: 0.75rem;\n  line-height: 1rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   p.fee[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  position: relative;\n  top: -0.0625rem;\n  left: 0.125rem;\n  width: 0.75rem;\n  height: 0.75rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   div.buttons[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-between;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   div.buttons.horizontally[_ngcontent-%COMP%] {\n  margin: 1rem 0 0.5rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   div.buttons.vertically[_ngcontent-%COMP%] {\n  margin-top: 0.5rem;\n  align-items: center;\n  justify-content: center;\n  flex-direction: column-reverse;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   div.buttons.vertically[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  width: 15.25rem;\n  margin: 0.5rem 0;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  all: unset;\n  cursor: pointer;\n  \n  font-weight: 500;\n  font-style: normal;\n  font-size: 1rem;\n  color: #f3f3f3;\n  -webkit-text-fill-color: #f3f3f3;\n  background: #5B63F7;\n  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);\n  border-radius: 1.25rem;\n  border: 1px solid #5B63F7;\n  height: 2rem;\n  width: 100%;\n  text-align: center;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   button.secondary[_ngcontent-%COMP%] {\n  color: #5B63F7;\n  -webkit-text-fill-color: #5B63F7;\n  background: #f3f3f3;\n  border-color: #5B63F7;\n  margin-right: 1.25rem;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]    > div.card[_ngcontent-%COMP%]    > img[_ngcontent-%COMP%] {\n  margin: 0.5rem 0 0;\n  max-height: 150px;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   div.footer[_ngcontent-%COMP%] {\n  margin: 1rem 0 0;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  opacity: 0.5;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   div.footer[_ngcontent-%COMP%]    > span[_ngcontent-%COMP%] {\n  font-size: 0.75rem;\n  line-height: 1rem;\n  font-weight: 600;\n}\r\ndiv.kukai-template[_ngcontent-%COMP%]   div.footer[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  height: 0.75rem;\n  margin: 0 0 0.1875rem 0.375rem;\n}\r\n@media screen and (max-width: 23.5rem) {\n  div.kukai-template[_ngcontent-%COMP%]    > div.card[_ngcontent-%COMP%] {\n    width: 18rem;\n  }\n\n  div.kukai-template[_ngcontent-%COMP%]   div.buttons.vertically[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n    width: 90%;\n  }\n}\r\n@media screen and (max-width: 19.5rem) {\n  div.kukai-template[_ngcontent-%COMP%]    > div.card[_ngcontent-%COMP%] {\n    width: 15rem;\n  }\n\n  div.kukai-template[_ngcontent-%COMP%]   div.buttons.vertically[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n    width: 100%;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2Fzc2V0cy9mb250cy9Qb3BwaW5zL3N0eWxlc2hlZXQuY3NzIiwiLi4vLi4vLi4vLi4vYXNzZXRzL2ZvbnRzL0dvdGhhbS9zdHlsZXNoZWV0LmNzcyIsIi4uXFwuLlxcLi5cXC4uXFwuLlxcY29uZmlybS1zZW5kLXRlbXBsYXRlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixzR0FBc0c7RUFDdEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHNHQUFzRztFQUN0RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsbUdBQW1HO0VBQ25HLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixtR0FBbUc7RUFDbkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG1HQUFtRztFQUNuRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsZ0dBQWdHO0VBQ2hHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQix1R0FBdUc7RUFDdkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLHVHQUF1RztFQUN2RyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsb0dBQW9HO0VBQ3BHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixtR0FBbUc7RUFDbkcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG1HQUFtRztFQUNuRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsZ0dBQWdHO0VBQ2hHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnR0FBZ0c7RUFDaEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLGdHQUFnRztFQUNoRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsOEZBQThGO0VBQzlGLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQUNBLGVBQWU7QUFDZjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixvR0FBb0c7RUFDcEcsbUhBQW1IO0FBQ3JIO0FBQ0EsY0FBYztBQUNkO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLG9HQUFvRztFQUNwRyxtSEFBbUg7QUFDckg7QUFDQSxVQUFVO0FBQ1Y7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsa0dBQWtHO0VBQ2xHLHlLQUF5SztBQUMzSztBQ3JlQTtFQUNFLHFCQUFxQjtFQUNyQiwrQ0FBaUQ7QUFDbkQ7QUNBQTtFQUNFLGVBQUE7RUFDQSxZQUFBO0VBQ0EsT0FBQTtFQUNBLE1BQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLGFBQUE7RUFDQSxtQkFBQTtFQUNBLHVCQUFBO0VBQ0EsdUJBQUE7RUFDQSxvQ0FBQTtBQUFGO0FBRUE7RUFDRSxnQkFBQTtFQUNBLGtCQUFBO0VBQ0EseUJBQUE7RUFDQSxpQkFBQTtFQUNBLHdCQUFBO0VBQ0EsdUJBQUE7RUFDQSxnSEFBQTtFQUVBLGdCQUFBO0VBQ0EsZ0JBQUE7QUFBRjtBQUdBOztFQUVFLHFCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxrQkFBQTtFQUNBLGVBQUE7RUFDQSxvQkFBQTtFQUNBLGdCQUFBO0VBQ0Esa0JBQUE7QUFBRjtBQUVBO0VBQ0UseUJBQUE7RUFDQSxtQkFBQTtFQUNBLHFCQUFBO0FBQ0Y7QUFDQTtFQUNFLGdCQUFBO0VBQ0EsZUFBQTtFQUNBLG9CQUFBO0FBRUY7QUFBQTtFQUNFLGdCQUFBO0VBQ0Esa0JBQUE7RUFDQSxpQkFBQTtBQUdGO0FBREE7RUFDRSxxQkFBQTtFQUNBLGdCQUFBO0VBQ0Esa0JBQUE7RUFDQSxpQkFBQTtBQUlGO0FBRkE7RUFDRSxrQkFBQTtFQUNBLGVBQUE7RUFDQSxjQUFBO0VBQ0EsY0FBQTtFQUNBLGVBQUE7QUFLRjtBQUhBO0VBQ0UsYUFBQTtFQUNBLDhCQUFBO0FBTUY7QUFKQTtFQUNFLHFCQUFBO0FBT0Y7QUFMQTtFQUNFLGtCQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtFQUNBLDhCQUFBO0FBUUY7QUFOQTtFQUNFLGVBQUE7RUFDQSxnQkFBQTtBQVNGO0FBUEE7RUFDRSxVQUFBO0VBQ0EsZUFBQTtFQUVDLDBCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxrQkFBQTtFQUNBLGVBQUE7RUFFRCxjQUFBO0VBQ0EsZ0NBQUE7RUFDQSxtQkFBQTtFQUVBLDJDQUFBO0VBQ0Esc0JBQUE7RUFDQSx5QkFBQTtFQUNBLFlBQUE7RUFDQSxXQUFBO0VBQ0Esa0JBQUE7QUFPRjtBQUxBO0VBQ0UsY0FBQTtFQUNBLGdDQUFBO0VBQ0EsbUJBQUE7RUFDQSxxQkFBQTtFQUNBLHFCQUFBO0FBUUY7QUFOQTtFQUNFLGtCQUFBO0VBQ0EsaUJBQUE7RUFDQSxzQkFBQTtLQUFBLG1CQUFBO0FBU0Y7QUFQQTtFQUNFLGdCQUFBO0VBQ0EsYUFBQTtFQUNBLHVCQUFBO0VBQ0EsbUJBQUE7RUFDQSxZQUFBO0FBVUY7QUFSQTtFQUNFLGtCQUFBO0VBQ0EsaUJBQUE7RUFDQSxnQkFBQTtBQVdGO0FBVEE7RUFDRSxlQUFBO0VBQ0EsOEJBQUE7QUFZRjtBQVZBO0VBQ0U7SUFDRSxZQUFBO0VBYUY7O0VBWEE7SUFDRSxVQUFBO0VBY0Y7QUFDRjtBQVpBO0VBQ0U7SUFDRSxZQUFBO0VBY0Y7O0VBWkE7SUFDRSxXQUFBO0VBZUY7QUFDRiIsImZpbGUiOiJjb25maXJtLXNlbmQtdGVtcGxhdGUuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlBeXA4a3Y4SkhnRlZySkpMbUUwdERNUEt6U1Eud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQXlwOGt2OEpIZ0ZWckpKTG1FMHRNTVBLelNRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogMTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQXlwOGt2OEpIZ0ZWckpKTG1FMHRDTVBJLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAyMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXYxcFZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtdjFwVkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAyMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXYxcFZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTIxbFZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMjFsVkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTIxbFZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZySkpMdWNYdEFLUFkud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNDAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpR3lwOGt2OEpIZ0ZWckpKTHVmbnRBS1BZLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICBmb250LXdlaWdodDogNDAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpR3lwOGt2OEpIZ0ZWckpKTHVjSHRBLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbWcxaFZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtZzFoVkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbWcxaFZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXIxOVZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtcjE5VkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXIxOVZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA3MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXkxNVZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxteTE1VkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA3MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbXkxNVZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA4MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTExMVZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtMTExVkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA4MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTExMVZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA5MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTgxeFZGdGVPY0VnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgZm9udC13ZWlnaHQ6IDkwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUR5cDhrdjhKSGdGVnJKSkxtODF4VkdkZU9jRWcud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gIGZvbnQtd2VpZ2h0OiA5MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlEeXA4a3Y4SkhnRlZySkpMbTgxeFZGOWVPLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAxMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlHeXA4a3Y4SkhnRlZyTFBUdWNYdEFLUFkud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpR3lwOGt2OEpIZ0ZWckxQVHVmbnRBS1BZLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpR3lwOGt2OEpIZ0ZWckxQVHVjSHRBLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAyMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEZqX1oxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDIwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMRmpfWjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAyMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEZqX1oxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxEejhaMTFsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTER6OFoxSmxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogMzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxEejhaMXhsRlEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUV5cDhrdjhKSGdGVnJKSmJlY21ORS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlFeXA4a3Y4SkhnRlZySkpuZWNtTkUud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlFeXA4a3Y4SkhnRlZySkpmZWNnLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEdUOVoxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMR1Q5WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEdUOVoxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxFajZaMTFsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEVqNloxSmxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxFajZaMXhsRlEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59XHJcbi8qIGRldmFuYWdhcmkgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMQ3o3WjExbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzA5MDAtMDk3RiwgVSsxQ0QwLTFDRjYsIFUrMUNGOC0xQ0Y5LCBVKzIwMEMtMjAwRCwgVSsyMEE4LCBVKzIwQjksIFUrMjVDQywgVStBODMwLUE4MzksIFUrQThFMC1BOEZCO1xyXG59XHJcbi8qIGxhdGluLWV4dCAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxDejdaMUpsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDEwMC0wMjRGLCBVKzAyNTksIFUrMUUwMC0xRUZGLCBVKzIwMjAsIFUrMjBBMC0yMEFCLCBVKzIwQUQtMjBDRiwgVSsyMTEzLCBVKzJDNjAtMkM3RiwgVStBNzIwLUE3RkY7XHJcbn1cclxuLyogbGF0aW4gKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMQ3o3WjF4bEZRLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcclxufVxyXG4vKiBkZXZhbmFnYXJpICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA4MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTERENFoxMWxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswOTAwLTA5N0YsIFUrMUNEMC0xQ0Y2LCBVKzFDRjgtMUNGOSwgVSsyMDBDLTIwMEQsIFUrMjBBOCwgVSsyMEI5LCBVKzI1Q0MsIFUrQTgzMC1BODM5LCBVK0E4RTAtQThGQjtcclxufVxyXG4vKiBsYXRpbi1leHQgKi9cclxuQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdQb3BwaW5zJztcclxuICBmb250LXN0eWxlOiBub3JtYWw7XHJcbiAgZm9udC13ZWlnaHQ6IDgwMDtcclxuICBmb250LWRpc3BsYXk6IHN3YXA7XHJcbiAgc3JjOiB1cmwoaHR0cHM6Ly9mb250cy5nc3RhdGljLmNvbS9zL3BvcHBpbnMvdjE1L3B4aUJ5cDhrdjhKSGdGVnJMREQ0WjFKbEZjLUsud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAxMDAtMDI0RiwgVSswMjU5LCBVKzFFMDAtMUVGRiwgVSsyMDIwLCBVKzIwQTAtMjBBQiwgVSsyMEFELTIwQ0YsIFUrMjExMywgVSsyQzYwLTJDN0YsIFUrQTcyMC1BN0ZGO1xyXG59XHJcbi8qIGxhdGluICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA4MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTERENFoxeGxGUS53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDAwMC0wMEZGLCBVKzAxMzEsIFUrMDE1Mi0wMTUzLCBVKzAyQkItMDJCQywgVSswMkM2LCBVKzAyREEsIFUrMDJEQywgVSsyMDAwLTIwNkYsIFUrMjA3NCwgVSsyMEFDLCBVKzIxMjIsIFUrMjE5MSwgVSsyMTkzLCBVKzIyMTIsIFUrMjIxNSwgVStGRUZGLCBVK0ZGRkQ7XHJcbn1cclxuLyogZGV2YW5hZ2FyaSAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogOTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxCVDVaMTFsRmMtSy53b2ZmMikgZm9ybWF0KCd3b2ZmMicpO1xyXG4gIHVuaWNvZGUtcmFuZ2U6IFUrMDkwMC0wOTdGLCBVKzFDRDAtMUNGNiwgVSsxQ0Y4LTFDRjksIFUrMjAwQy0yMDBELCBVKzIwQTgsIFUrMjBCOSwgVSsyNUNDLCBVK0E4MzAtQTgzOSwgVStBOEUwLUE4RkI7XHJcbn1cclxuLyogbGF0aW4tZXh0ICovXHJcbkBmb250LWZhY2Uge1xyXG4gIGZvbnQtZmFtaWx5OiAnUG9wcGlucyc7XHJcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xyXG4gIGZvbnQtd2VpZ2h0OiA5MDA7XHJcbiAgZm9udC1kaXNwbGF5OiBzd2FwO1xyXG4gIHNyYzogdXJsKGh0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20vcy9wb3BwaW5zL3YxNS9weGlCeXA4a3Y4SkhnRlZyTEJUNVoxSmxGYy1LLndvZmYyKSBmb3JtYXQoJ3dvZmYyJyk7XHJcbiAgdW5pY29kZS1yYW5nZTogVSswMTAwLTAyNEYsIFUrMDI1OSwgVSsxRTAwLTFFRkYsIFUrMjAyMCwgVSsyMEEwLTIwQUIsIFUrMjBBRC0yMENGLCBVKzIxMTMsIFUrMkM2MC0yQzdGLCBVK0E3MjAtQTdGRjtcclxufVxyXG4vKiBsYXRpbiAqL1xyXG5AZm9udC1mYWNlIHtcclxuICBmb250LWZhbWlseTogJ1BvcHBpbnMnO1xyXG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcclxuICBmb250LXdlaWdodDogOTAwO1xyXG4gIGZvbnQtZGlzcGxheTogc3dhcDtcclxuICBzcmM6IHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcG9wcGlucy92MTUvcHhpQnlwOGt2OEpIZ0ZWckxCVDVaMXhsRlEud29mZjIpIGZvcm1hdCgnd29mZjInKTtcclxuICB1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xyXG59IiwiQGZvbnQtZmFjZSB7XHJcbiAgZm9udC1mYW1pbHk6ICdHb3RoYW0nO1xyXG4gIHNyYzogdXJsKFwiLi9Hb3RoYW1NZWRpdW0udHRmXCIpIGZvcm1hdChcInRydWV0eXBlXCIpO1xyXG59IiwiQGltcG9ydCAnLi4vLi4vLi4vLi4vYXNzZXRzL2ZvbnRzL1BvcHBpbnMvc3R5bGVzaGVldC5jc3MnO1xyXG5AaW1wb3J0ICcuLi8uLi8uLi8uLi9hc3NldHMvZm9udHMvR290aGFtL3N0eWxlc2hlZXQuY3NzJztcclxuXHJcbmRpdi5rdWthaS10ZW1wbGF0ZSB7XHJcbiAgcG9zaXRpb246IGZpeGVkO1xyXG4gIHotaW5kZXg6IDEwMDtcclxuICBsZWZ0OiAwO1xyXG4gIHRvcDogMDtcclxuICB3aWR0aDogMTAwJTtcclxuICBoZWlnaHQ6IDEwMCU7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIGJhY2tncm91bmQtY29sb3I6IHJnYigwLCAwLCAwKTtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDAsIDAsIDAsIDAuNik7XHJcbn1cclxuZGl2Lmt1a2FpLXRlbXBsYXRlID4gZGl2LmNhcmQge1xyXG4gIHdpZHRoOiAyMS44NzVyZW07XHJcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNmM2YzZjM7XHJcbiAgbWFyZ2luOiAxcmVtIGF1dG87XHJcbiAgcGFkZGluZzogMC43NXJlbSAxLjI1cmVtO1xyXG4gIGJvcmRlci1yYWRpdXM6IDAuNjI1cmVtO1xyXG4gIGJveC1zaGFkb3c6IDBweCAwcHggMnB4IHJnYmEoMCwgMCwgMCwgMC4yNCksIDBweCA0cHggMTJweCByZ2JhKDAsIDAsIDAsIDAuMjQpLFxyXG4gICAgMHB4IDMycHggNDhweCByZ2JhKDAsIDAsIDAsIDAuMzYpO1xyXG4gIG1heC13aWR0aDogMjVyZW07XHJcbiAgbWluLWhlaWdodDogNnJlbTtcclxufVxyXG5cclxuZGl2Lmt1a2FpLXRlbXBsYXRlIHAsXHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBIMSB7XHJcbiAgZm9udC1mYW1pbHk6IFwiR290aGFtXCI7XHJcbiAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICBmb250LXN0eWxlOiBub3JtYWw7IFxyXG4gIGZvbnQtc2l6ZTogMXJlbTtcclxuICBsaW5lLWhlaWdodDogMS4yNXJlbTtcclxuICBtYXJnaW46IDAuNXJlbSAwO1xyXG4gIHRleHQtYWxpZ246IGNlbnRlcjtcclxufVxyXG5kaXYua3VrYWktdGVtcGxhdGUgSDEge1xyXG4gIG1hcmdpbjogMC4zNzVyZW0gMCAwLjVyZW07XHJcbiAgZm9udC1zaXplOiAwLjg3NXJlbTtcclxuICBsaW5lLWhlaWdodDogMS4xMjVyZW07XHJcbn1cclxuZGl2Lmt1a2FpLXRlbXBsYXRlIEgxID4gYiB7XHJcbiAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICBmb250LXNpemU6IDFyZW07XHJcbiAgbGluZS1oZWlnaHQ6IDEuMjVyZW07XHJcbn1cclxuZGl2Lmt1a2FpLXRlbXBsYXRlIHAuaW1nLXRleHQge1xyXG4gIGZvbnQtd2VpZ2h0OiA0MDA7XHJcbiAgZm9udC1zaXplOiAwLjc1cmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBwLmZlZSB7XHJcbiAgbWFyZ2luLWJvdHRvbTogMC41cmVtO1xyXG4gIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgZm9udC1zaXplOiAwLjc1cmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAxcmVtO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBwLmZlZSBpbWcge1xyXG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICB0b3A6IC0wLjA2MjVyZW07XHJcbiAgbGVmdDogMC4xMjVyZW07XHJcbiAgd2lkdGg6IDAuNzVyZW07XHJcbiAgaGVpZ2h0OiAwLjc1cmVtO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBkaXYuYnV0dG9ucyB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6ICBzcGFjZS1iZXR3ZWVuO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBkaXYuYnV0dG9ucy5ob3Jpem9udGFsbHkge1xyXG4gIG1hcmdpbjogMXJlbSAwIDAuNXJlbTtcclxufVxyXG5kaXYua3VrYWktdGVtcGxhdGUgZGl2LmJ1dHRvbnMudmVydGljYWxseSB7XHJcbiAgbWFyZ2luLXRvcDogMC41cmVtO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbi1yZXZlcnNlO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBkaXYuYnV0dG9ucy52ZXJ0aWNhbGx5IGJ1dHRvbiB7XHJcbiAgd2lkdGg6IDE1LjI1cmVtO1xyXG4gIG1hcmdpbjogMC41cmVtIDA7XHJcbn1cclxuZGl2Lmt1a2FpLXRlbXBsYXRlIGJ1dHRvbiB7XHJcbiAgYWxsOiB1bnNldDtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcblxyXG4gICAvKmZvbnQtZmFtaWx5OiBcIlBvcHBpbnNcIjsqL1xyXG4gICBmb250LXdlaWdodDogNTAwO1xyXG4gICBmb250LXN0eWxlOiBub3JtYWw7IFxyXG4gICBmb250LXNpemU6IDFyZW07XHJcblxyXG4gIGNvbG9yOiAjZjNmM2YzO1xyXG4gIC13ZWJraXQtdGV4dC1maWxsLWNvbG9yOiAjZjNmM2YzO1xyXG4gIGJhY2tncm91bmQ6ICM1QjYzRjc7XHJcblxyXG4gIGJveC1zaGFkb3c6IDBweCA0cHggNHB4IHJnYmEoMCwgMCwgMCwgMC4yNSk7XHJcbiAgYm9yZGVyLXJhZGl1czogMS4yNXJlbTtcclxuICBib3JkZXI6IDFweCBzb2xpZCAjNUI2M0Y3O1xyXG4gIGhlaWdodDogMnJlbTtcclxuICB3aWR0aDogMTAwJTtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxuZGl2Lmt1a2FpLXRlbXBsYXRlIGJ1dHRvbi5zZWNvbmRhcnkge1xyXG4gIGNvbG9yOiAjNUI2M0Y3O1xyXG4gIC13ZWJraXQtdGV4dC1maWxsLWNvbG9yOiAjNUI2M0Y3O1xyXG4gIGJhY2tncm91bmQ6ICNmM2YzZjM7XHJcbiAgYm9yZGVyLWNvbG9yOiAjNUI2M0Y3O1xyXG4gIG1hcmdpbi1yaWdodDogMS4yNXJlbTtcclxufVxyXG5kaXYua3VrYWktdGVtcGxhdGUgPiBkaXYuY2FyZCA+IGltZyB7XHJcbiAgbWFyZ2luOiAwLjVyZW0gMCAwO1xyXG4gIG1heC1oZWlnaHQ6IDE1MHB4O1xyXG4gIG9iamVjdC1maXQ6IGNvbnRhaW47XHJcbn1cclxuZGl2Lmt1a2FpLXRlbXBsYXRlIGRpdi5mb290ZXIge1xyXG4gIG1hcmdpbjogMXJlbSAwIDA7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIG9wYWNpdHk6IDAuNTtcclxufVxyXG5kaXYua3VrYWktdGVtcGxhdGUgZGl2LmZvb3RlciA+IHNwYW4ge1xyXG4gIGZvbnQtc2l6ZTogMC43NXJlbTtcclxuICBsaW5lLWhlaWdodDogMXJlbTtcclxuICBmb250LXdlaWdodDogNjAwO1xyXG59XHJcbmRpdi5rdWthaS10ZW1wbGF0ZSBkaXYuZm9vdGVyIGltZyB7XHJcbiAgaGVpZ2h0OiAwLjc1cmVtO1xyXG4gIG1hcmdpbjogMCAwIDAuMTg3NXJlbSAwLjM3NXJlbTtcclxufVxyXG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiAyMy41cmVtKSB7XHJcbiAgZGl2Lmt1a2FpLXRlbXBsYXRlID4gZGl2LmNhcmQge1xyXG4gICAgd2lkdGg6IDE4cmVtO1xyXG4gIH1cclxuICBkaXYua3VrYWktdGVtcGxhdGUgZGl2LmJ1dHRvbnMudmVydGljYWxseSBidXR0b24ge1xyXG4gICAgd2lkdGg6IDkwJTtcclxuICB9XHJcbn1cclxuQG1lZGlhIHNjcmVlbiBhbmQgKG1heC13aWR0aDogMTkuNXJlbSkge1xyXG4gIGRpdi5rdWthaS10ZW1wbGF0ZSA+IGRpdi5jYXJkIHtcclxuICAgIHdpZHRoOiAxNXJlbTtcclxuICB9XHJcbiAgZGl2Lmt1a2FpLXRlbXBsYXRlIGRpdi5idXR0b25zLnZlcnRpY2FsbHkgYnV0dG9uIHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gIH1cclxufSJdfQ== */"]
       });
 
       (function () {
@@ -12000,9 +13341,7 @@
             styleUrls: ['./confirm-send-template.component.scss']
           }]
         }], function () {
-          return [{
-            type: _services_estimate_estimate_service__WEBPACK_IMPORTED_MODULE_1__["EstimateService"]
-          }];
+          return [];
         }, {
           templateRequest: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
@@ -13436,7 +14775,7 @@
         _createClass(AppComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this32 = this;
+            var _this39 = this;
 
             this.checkEmbedded();
 
@@ -13450,31 +14789,31 @@
 
             this.router.events.subscribe(function (event) {
               if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
-                _this32.checkEmbedded();
+                _this39.checkEmbedded();
 
                 window.scrollTo(0, 0);
               }
             });
             window.addEventListener('storage', function (e) {
-              _this32.handleStorageEvent(e);
+              _this39.handleStorageEvent(e);
             });
           }
         }, {
           key: "handleStorageEvent",
           value: function handleStorageEvent(e) {
-            var _this33 = this;
+            var _this40 = this;
 
             if (e.key === 'kukai-wallet') {
               if (e.oldValue && !e.newValue) {
                 window.location.reload();
               } else if (!e.oldValue && e.newValue) {
                 setTimeout(function () {
-                  return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this33, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee45() {
-                    return regeneratorRuntime.wrap(function _callee45$(_context45) {
+                  return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this40, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee57() {
+                    return regeneratorRuntime.wrap(function _callee57$(_context57) {
                       while (1) {
-                        switch (_context45.prev = _context45.next) {
+                        switch (_context57.prev = _context57.next) {
                           case 0:
-                            _context45.next = 2;
+                            _context57.next = 2;
                             return this.router.navigate(['']);
 
                           case 2:
@@ -13482,10 +14821,10 @@
 
                           case 3:
                           case "end":
-                            return _context45.stop();
+                            return _context57.stop();
                         }
                       }
-                    }, _callee45, this);
+                    }, _callee57, this);
                   }));
                 }, 10000);
               }
@@ -13677,13 +15016,13 @@
             key: "encrypt",
             value: function encrypt(plaintext, password, version) {
               var salt = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee46() {
-                return regeneratorRuntime.wrap(function _callee46$(_context46) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee58() {
+                return regeneratorRuntime.wrap(function _callee58$(_context58) {
                   while (1) {
-                    switch (_context46.prev = _context46.next) {
+                    switch (_context58.prev = _context58.next) {
                       case 0:
                         if (!(version === 1)) {
-                          _context46.next = 4;
+                          _context58.next = 4;
                           break;
                         }
 
@@ -13691,75 +15030,75 @@
 
                       case 4:
                         if (!(version === 2)) {
-                          _context46.next = 8;
+                          _context58.next = 8;
                           break;
                         }
 
-                        return _context46.abrupt("return", this.encrypt_v2(plaintext, password));
+                        return _context58.abrupt("return", this.encrypt_v2(plaintext, password));
 
                       case 8:
                         if (!(version === 3)) {
-                          _context46.next = 12;
+                          _context58.next = 12;
                           break;
                         }
 
-                        return _context46.abrupt("return", this.encrypt_v2(plaintext, password, salt));
+                        return _context58.abrupt("return", this.encrypt_v2(plaintext, password, salt));
 
                       case 12:
                         throw new Error('Unrecognized encryption format');
 
                       case 13:
                       case "end":
-                        return _context46.stop();
+                        return _context58.stop();
                     }
                   }
-                }, _callee46, this);
+                }, _callee58, this);
               }));
             }
           }, {
             key: "decrypt",
             value: function decrypt(chiphertext, password, salt, version) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee47() {
-                return regeneratorRuntime.wrap(function _callee47$(_context47) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee59() {
+                return regeneratorRuntime.wrap(function _callee59$(_context59) {
                   while (1) {
-                    switch (_context47.prev = _context47.next) {
+                    switch (_context59.prev = _context59.next) {
                       case 0:
                         if (!(version === 1)) {
-                          _context47.next = 4;
+                          _context59.next = 4;
                           break;
                         }
 
-                        return _context47.abrupt("return", this.decrypt_v1(chiphertext, password, salt));
+                        return _context59.abrupt("return", this.decrypt_v1(chiphertext, password, salt));
 
                       case 4:
                         if (!(version === 2 || version === 3)) {
-                          _context47.next = 8;
+                          _context59.next = 8;
                           break;
                         }
 
-                        return _context47.abrupt("return", this.decrypt_v2(chiphertext, password, salt));
+                        return _context59.abrupt("return", this.decrypt_v2(chiphertext, password, salt));
 
                       case 8:
                         throw new Error('Unrecognized encryption format');
 
                       case 9:
                       case "end":
-                        return _context47.stop();
+                        return _context59.stop();
                     }
                   }
-                }, _callee47, this);
+                }, _callee59, this);
               }));
             } // Version 1
 
           }, {
             key: "encrypt_v1",
             value: function encrypt_v1(plaintext, password, salt) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee48() {
-                return regeneratorRuntime.wrap(function _callee48$(_context48) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee60() {
+                return regeneratorRuntime.wrap(function _callee60$(_context60) {
                   while (1) {
-                    switch (_context48.prev = _context48.next) {
+                    switch (_context60.prev = _context60.next) {
                       case 0:
-                        return _context48.abrupt("return", new Promise(function (resolve) {
+                        return _context60.abrupt("return", new Promise(function (resolve) {
                           try {
                             if (!password || !salt) {
                               throw new Error('Missing password or salt');
@@ -13783,21 +15122,21 @@
 
                       case 1:
                       case "end":
-                        return _context48.stop();
+                        return _context60.stop();
                     }
                   }
-                }, _callee48);
+                }, _callee60);
               }));
             }
           }, {
             key: "decrypt_v1",
             value: function decrypt_v1(chiphertext, password, salt) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee49() {
-                return regeneratorRuntime.wrap(function _callee49$(_context49) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee61() {
+                return regeneratorRuntime.wrap(function _callee61$(_context61) {
                   while (1) {
-                    switch (_context49.prev = _context49.next) {
+                    switch (_context61.prev = _context61.next) {
                       case 0:
-                        return _context49.abrupt("return", new Promise(function (resolve) {
+                        return _context61.abrupt("return", new Promise(function (resolve) {
                           try {
                             if (!password || !salt) {
                               throw new Error('Missing password or salt');
@@ -13820,24 +15159,24 @@
 
                       case 1:
                       case "end":
-                        return _context49.stop();
+                        return _context61.stop();
                     }
                   }
-                }, _callee49);
+                }, _callee61);
               }));
             } // Version 2
 
           }, {
             key: "encrypt_v2",
             value: function encrypt_v2(plaintext, password, salt) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee50() {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee62() {
                 var salty, key, cipher, byteStringBuffer, chiphertext;
-                return regeneratorRuntime.wrap(function _callee50$(_context50) {
+                return regeneratorRuntime.wrap(function _callee62$(_context62) {
                   while (1) {
-                    switch (_context50.prev = _context50.next) {
+                    switch (_context62.prev = _context62.next) {
                       case 0:
                         if (password) {
-                          _context50.next = 2;
+                          _context62.next = 2;
                           break;
                         }
 
@@ -13850,11 +15189,11 @@
                           salty = crypto_browserify__WEBPACK_IMPORTED_MODULE_5__["randomBytes"](16);
                         }
 
-                        _context50.next = 5;
+                        _context62.next = 5;
                         return scryptsy__WEBPACK_IMPORTED_MODULE_4__["async"](password, salty, 65536, 8, 1, 32);
 
                       case 5:
-                        key = _context50.sent;
+                        key = _context62.sent;
                         cipher = node_forge__WEBPACK_IMPORTED_MODULE_6__["cipher"].createCipher('AES-GCM', key.toString('binary'));
                         cipher.start({
                           iv: salty
@@ -13863,32 +15202,32 @@
                         cipher.update(byteStringBuffer);
                         cipher.finish();
                         chiphertext = cipher.output.toHex() + '==' + cipher.mode.tag.toHex();
-                        return _context50.abrupt("return", {
+                        return _context62.abrupt("return", {
                           chiphertext: chiphertext,
                           iv: salty.toString('hex')
                         });
 
                       case 13:
                       case "end":
-                        return _context50.stop();
+                        return _context62.stop();
                     }
                   }
-                }, _callee50);
+                }, _callee62);
               }));
             }
           }, {
             key: "decrypt_v2",
             value: function decrypt_v2(chipher, password, salt) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee51() {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee63() {
                 var parts, chiphertext, tag, key, decipher, pass;
-                return regeneratorRuntime.wrap(function _callee51$(_context51) {
+                return regeneratorRuntime.wrap(function _callee63$(_context63) {
                   while (1) {
-                    switch (_context51.prev = _context51.next) {
+                    switch (_context63.prev = _context63.next) {
                       case 0:
-                        _context51.prev = 0;
+                        _context63.prev = 0;
 
                         if (!(!password || !salt)) {
-                          _context51.next = 3;
+                          _context63.next = 3;
                           break;
                         }
 
@@ -13898,11 +15237,11 @@
                         parts = chipher.split('==');
                         chiphertext = parts[0];
                         tag = parts[1];
-                        _context51.next = 8;
+                        _context63.next = 8;
                         return scryptsy__WEBPACK_IMPORTED_MODULE_4__["async"](password, new Buffer(salt, 'hex'), 65536, 8, 1, 32);
 
                       case 8:
-                        key = _context51.sent;
+                        key = _context63.sent;
                         decipher = node_forge__WEBPACK_IMPORTED_MODULE_6__["cipher"].createDecipher('AES-GCM', key.toString('binary'));
                         decipher.start({
                           iv: new Buffer(salt, 'hex'),
@@ -13912,30 +15251,30 @@
                         pass = decipher.finish();
 
                         if (!pass) {
-                          _context51.next = 17;
+                          _context63.next = 17;
                           break;
                         }
 
-                        return _context51.abrupt("return", new Buffer(decipher.output.toHex(), 'hex'));
+                        return _context63.abrupt("return", new Buffer(decipher.output.toHex(), 'hex'));
 
                       case 17:
-                        return _context51.abrupt("return", null);
+                        return _context63.abrupt("return", null);
 
                       case 18:
-                        _context51.next = 23;
+                        _context63.next = 23;
                         break;
 
                       case 20:
-                        _context51.prev = 20;
-                        _context51.t0 = _context51["catch"](0);
-                        return _context51.abrupt("return", null);
+                        _context63.prev = 20;
+                        _context63.t0 = _context63["catch"](0);
+                        return _context63.abrupt("return", null);
 
                       case 23:
                       case "end":
-                        return _context51.stop();
+                        return _context63.stop();
                     }
                   }
-                }, _callee51, null, [[0, 20]]);
+                }, _callee63, null, [[0, 20]]);
               }));
             }
           }, {
@@ -14977,29 +16316,29 @@
           key: "getDelegates",
           value: function getDelegates() {
             if (this.walletService.wallet && this.walletService.wallet.implicitAccounts) {
-              var _iterator11 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
-                  _step11;
+              var _iterator12 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
+                  _step12;
 
               try {
-                for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
-                  var account = _step11.value;
+                for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
+                  var account = _step12.value;
                   this.getDelegate(account);
                 }
               } catch (err) {
-                _iterator11.e(err);
+                _iterator12.e(err);
               } finally {
-                _iterator11.f();
+                _iterator12.f();
               }
             }
           }
         }, {
           key: "getDelegate",
           value: function getDelegate(account) {
-            var _this34 = this;
+            var _this41 = this;
 
             this.operationService.getDelegate(account.address).subscribe(function (data) {
               if (data.success) {
-                _this34.handleDelegateResponse(account, data.payload.delegate);
+                _this41.handleDelegateResponse(account, data.payload.delegate);
               }
             }, function (err) {
               return console.log(JSON.stringify(err));
@@ -16575,12 +17914,12 @@
           _createClass(TzktService, [{
             key: "getContractAddresses",
             value: function getContractAddresses(pkh) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee52() {
-                return regeneratorRuntime.wrap(function _callee52$(_context52) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee64() {
+                return regeneratorRuntime.wrap(function _callee64$(_context64) {
                   while (1) {
-                    switch (_context52.prev = _context52.next) {
+                    switch (_context64.prev = _context64.next) {
                       case 0:
-                        return _context52.abrupt("return", fetch("https://api.".concat(this.network, ".tzkt.io/v1/operations/originations?contractManager=").concat(pkh)).then(function (response) {
+                        return _context64.abrupt("return", fetch("https://api.".concat(this.network, ".tzkt.io/v1/operations/originations?contractManager=").concat(pkh)).then(function (response) {
                           return response.json();
                         }).then(function (data) {
                           return data.map(function (op) {
@@ -16594,30 +17933,30 @@
 
                       case 1:
                       case "end":
-                        return _context52.stop();
+                        return _context64.stop();
                     }
                   }
-                }, _callee52, this);
+                }, _callee64, this);
               }));
             }
           }, {
             key: "accountInfo",
             value: function accountInfo(address) {
               var knownTokenIds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee53() {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee65() {
                 var tokens, unknownTokenIds, aryTokens;
-                return regeneratorRuntime.wrap(function _callee53$(_context53) {
+                return regeneratorRuntime.wrap(function _callee65$(_context65) {
                   while (1) {
-                    switch (_context53.prev = _context53.next) {
+                    switch (_context65.prev = _context65.next) {
                       case 0:
                         tokens = [];
                         unknownTokenIds = [];
-                        _context53.next = 4;
+                        _context65.next = 4;
                         return this.getTokenBalancesUsingPromiseAll(address);
 
                       case 4:
-                        aryTokens = _context53.sent;
-                        return _context53.abrupt("return", fetch("".concat(this.bcd, "/account/").concat(this.network, "/").concat(address)).then(function (response) {
+                        aryTokens = _context65.sent;
+                        return _context65.abrupt("return", fetch("".concat(this.bcd, "/account/").concat(this.network, "/").concat(address)).then(function (response) {
                           return response.json();
                         }).then(function (data) {
                           var _a;
@@ -16627,12 +17966,12 @@
                             data.tokens = aryTokens;
 
                             if ((_a = data === null || data === void 0 ? void 0 : data.tokens) === null || _a === void 0 ? void 0 : _a.length) {
-                              var _iterator12 = _createForOfIteratorHelper(data.tokens),
-                                  _step12;
+                              var _iterator13 = _createForOfIteratorHelper(data.tokens),
+                                  _step13;
 
                               try {
-                                for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
-                                  var token = _step12.value;
+                                for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
+                                  var token = _step13.value;
                                   tokens.push(token);
 
                                   if (!knownTokenIds.includes("".concat(token.contract, ":").concat(token.token_id))) {
@@ -16640,9 +17979,9 @@
                                   }
                                 }
                               } catch (err) {
-                                _iterator12.e(err);
+                                _iterator13.e(err);
                               } finally {
-                                _iterator12.f();
+                                _iterator13.f();
                               }
                             }
 
@@ -16675,10 +18014,10 @@
 
                       case 6:
                       case "end":
-                        return _context53.stop();
+                        return _context65.stop();
                     }
                   }
-                }, _callee53, this);
+                }, _callee65, this);
               }));
             }
           }, {
@@ -16686,15 +18025,15 @@
             value: function getOperations(address) {
               var knownTokenIds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
               var wallet = arguments.length > 2 ? arguments[2] : undefined;
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee54() {
-                var _this35 = this;
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee66() {
+                var _this42 = this;
 
                 var ops, unknownTokenIds, tokenTxs, operations;
-                return regeneratorRuntime.wrap(function _callee54$(_context54) {
+                return regeneratorRuntime.wrap(function _callee66$(_context66) {
                   while (1) {
-                    switch (_context54.prev = _context54.next) {
+                    switch (_context66.prev = _context66.next) {
                       case 0:
-                        _context54.next = 2;
+                        _context66.next = 2;
                         return fetch("https://api.".concat(this.network, ".tzkt.io/v1/accounts/").concat(address, "/operations?limit=20&type=delegation,origination,transaction")).then(function (response) {
                           return response.json();
                         }).then(function (data) {
@@ -16714,7 +18053,7 @@
 
                                   destination = op.target;
                                   amount = op.amount.toString();
-                                  entrypoint = _this35.extractEntrypoint(op);
+                                  entrypoint = _this42.extractEntrypoint(op);
                                   break;
 
                                 case 'delegation':
@@ -16761,9 +18100,9 @@
                         });
 
                       case 2:
-                        ops = _context54.sent;
+                        ops = _context66.sent;
                         unknownTokenIds = [];
-                        _context54.next = 6;
+                        _context66.next = 6;
                         return fetch("".concat(this.bcd, "/tokens/").concat(this.network, "/transfers/").concat(address, "?max=20&start=0")).then(function (response) {
                           return response.json();
                         }).then(function (data) {
@@ -16818,21 +18157,21 @@
                         });
 
                       case 6:
-                        tokenTxs = _context54.sent;
+                        tokenTxs = _context66.sent;
                         operations = ops.concat(tokenTxs).sort(function (a, b) {
                           return b.timestamp - a.timestamp;
                         });
-                        return _context54.abrupt("return", {
+                        return _context66.abrupt("return", {
                           operations: operations,
                           unknownTokenIds: unknownTokenIds
                         });
 
                       case 9:
                       case "end":
-                        return _context54.stop();
+                        return _context66.stop();
                     }
                   }
-                }, _callee54, this);
+                }, _callee66, this);
               }));
             }
           }, {
@@ -16859,13 +18198,13 @@
           }, {
             key: "getTokenMetadata",
             value: function getTokenMetadata(contractAddress, id) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee56() {
-                var _this36 = this;
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee68() {
+                var _this43 = this;
 
                 var tokenKind, contractMetadata, tokenMetadata, ans;
-                return regeneratorRuntime.wrap(function _callee56$(_context56) {
+                return regeneratorRuntime.wrap(function _callee68$(_context68) {
                   while (1) {
-                    switch (_context56.prev = _context56.next) {
+                    switch (_context68.prev = _context68.next) {
                       case 0:
                         tokenKind = fetch("".concat(this.bcd, "/contract/").concat(this.network, "/").concat(contractAddress)).then(function (response) {
                           return response.json();
@@ -16908,12 +18247,12 @@
                         tokenMetadata = fetch("".concat(this.bcd, "/contract/").concat(this.network, "/").concat(contractAddress, "/tokens?token_id=").concat(id, "&offset=0")).then(function (response) {
                           return response.json();
                         }).then(function (datas) {
-                          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this36, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee55() {
-                            var keys, _iterator13, _step13, data, rawData, metadata, _iterator14, _step14, a;
+                          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this43, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee67() {
+                            var keys, _iterator14, _step14, data, rawData, metadata, _iterator15, _step15, a;
 
-                            return regeneratorRuntime.wrap(function _callee55$(_context55) {
+                            return regeneratorRuntime.wrap(function _callee67$(_context67) {
                               while (1) {
-                                switch (_context55.prev = _context55.next) {
+                                switch (_context67.prev = _context67.next) {
                                   case 0:
                                     keys = [{
                                       key: 'name',
@@ -16948,21 +18287,21 @@
                                     }]; // should always be 1
 
                                     assert__WEBPACK_IMPORTED_MODULE_4___default()(datas.length === 1, "cannot find token_id ".concat(id, " for contract: ").concat(contractAddress));
-                                    _iterator13 = _createForOfIteratorHelper(datas);
-                                    _context55.prev = 3;
+                                    _iterator14 = _createForOfIteratorHelper(datas);
+                                    _context67.prev = 3;
 
-                                    _iterator13.s();
+                                    _iterator14.s();
 
                                   case 5:
-                                    if ((_step13 = _iterator13.n()).done) {
-                                      _context55.next = 36;
+                                    if ((_step14 = _iterator14.n()).done) {
+                                      _context67.next = 36;
                                       break;
                                     }
 
-                                    data = _step13.value;
+                                    data = _step14.value;
 
                                     if (!((data === null || data === void 0 ? void 0 : data.token_id) === Number(id))) {
-                                      _context55.next = 34;
+                                      _context67.next = 34;
                                       break;
                                     }
 
@@ -16971,47 +18310,47 @@
                                     rawData = JSON.parse(JSON.stringify(data));
                                     this.flattern(data);
                                     metadata = {};
-                                    _iterator14 = _createForOfIteratorHelper(keys);
+                                    _iterator15 = _createForOfIteratorHelper(keys);
 
                                     try {
-                                      for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
-                                        a = _step14.value;
+                                      for (_iterator15.s(); !(_step15 = _iterator15.n()).done;) {
+                                        a = _step15.value;
 
                                         if (typeof data[a.key] === a.type) {
                                           metadata[a.key] = data[a.key];
                                         }
                                       }
                                     } catch (err) {
-                                      _iterator14.e(err);
+                                      _iterator15.e(err);
                                     } finally {
-                                      _iterator14.f();
+                                      _iterator15.f();
                                     }
 
                                     if (!metadata.displayUri) {
-                                      _context55.next = 18;
+                                      _context67.next = 18;
                                       break;
                                     }
 
-                                    _context55.next = 17;
+                                    _context67.next = 17;
                                     return this.uriToUrl(metadata.displayUri);
 
                                   case 17:
-                                    metadata.displayUri = _context55.sent;
+                                    metadata.displayUri = _context67.sent;
 
                                   case 18:
                                     if (!metadata.thumbnailUri) {
-                                      _context55.next = 22;
+                                      _context67.next = 22;
                                       break;
                                     }
 
-                                    _context55.next = 21;
+                                    _context67.next = 21;
                                     return this.uriToUrl(metadata.thumbnailUri);
 
                                   case 21:
-                                    metadata.thumbnailUri = _context55.sent;
+                                    metadata.thumbnailUri = _context67.sent;
 
                                   case 22:
-                                    _context55.prev = 22;
+                                    _context67.prev = 22;
 
                                     // Exceptions
                                     if ((metadata === null || metadata === void 0 ? void 0 : metadata.isBooleanAmount) === undefined && typeof (data === null || data === void 0 ? void 0 : data.isBooleanAmount) === 'string' && (data === null || data === void 0 ? void 0 : data.isBooleanAmount) === 'true') {
@@ -17020,68 +18359,68 @@
                                     }
 
                                     if (!(!metadata.displayUri && (data === null || data === void 0 ? void 0 : data.symbol) === 'OBJKT')) {
-                                      _context55.next = 29;
+                                      _context67.next = 29;
                                       break;
                                     }
 
                                     if (!['image/png', 'image/jpg', 'image/jpeg'].includes(rawData.formats[0].mimeType)) {
-                                      _context55.next = 29;
+                                      _context67.next = 29;
                                       break;
                                     }
 
-                                    _context55.next = 28;
+                                    _context67.next = 28;
                                     return this.uriToUrl(rawData.formats[0].uri);
 
                                   case 28:
-                                    metadata.displayUri = _context55.sent;
+                                    metadata.displayUri = _context67.sent;
 
                                   case 29:
-                                    _context55.next = 33;
+                                    _context67.next = 33;
                                     break;
 
                                   case 31:
-                                    _context55.prev = 31;
-                                    _context55.t0 = _context55["catch"](22);
+                                    _context67.prev = 31;
+                                    _context67.t0 = _context67["catch"](22);
 
                                   case 33:
-                                    return _context55.abrupt("return", metadata);
+                                    return _context67.abrupt("return", metadata);
 
                                   case 34:
-                                    _context55.next = 5;
+                                    _context67.next = 5;
                                     break;
 
                                   case 36:
-                                    _context55.next = 41;
+                                    _context67.next = 41;
                                     break;
 
                                   case 38:
-                                    _context55.prev = 38;
-                                    _context55.t1 = _context55["catch"](3);
+                                    _context67.prev = 38;
+                                    _context67.t1 = _context67["catch"](3);
 
-                                    _iterator13.e(_context55.t1);
+                                    _iterator14.e(_context67.t1);
 
                                   case 41:
-                                    _context55.prev = 41;
+                                    _context67.prev = 41;
 
-                                    _iterator13.f();
+                                    _iterator14.f();
 
-                                    return _context55.finish(41);
+                                    return _context67.finish(41);
 
                                   case 44:
                                     console.log("No token metadata found for ".concat(contractAddress, ":").concat(id));
-                                    return _context55.abrupt("return", {});
+                                    return _context67.abrupt("return", {});
 
                                   case 46:
                                   case "end":
-                                    return _context55.stop();
+                                    return _context67.stop();
                                 }
                               }
-                            }, _callee55, this, [[3, 38, 41, 44], [22, 31]]);
+                            }, _callee67, this, [[3, 38, 41, 44], [22, 31]]);
                           }));
                         })["catch"](function (e) {
                           return {};
                         });
-                        _context56.next = 5;
+                        _context68.next = 5;
                         return Promise.all([contractMetadata, tokenMetadata, tokenKind]).then(function (res) {
                           var merged = Object.assign(Object.assign({}, res[0]), res[1]);
 
@@ -17093,15 +18432,15 @@
                         });
 
                       case 5:
-                        ans = _context56.sent;
-                        return _context56.abrupt("return", ans ? ans : null);
+                        ans = _context68.sent;
+                        return _context68.abrupt("return", ans ? ans : null);
 
                       case 7:
                       case "end":
-                        return _context56.stop();
+                        return _context68.stop();
                     }
                   }
-                }, _callee56, this);
+                }, _callee68, this);
               }));
             }
           }, {
@@ -17130,18 +18469,18 @@
           }, {
             key: "uriToUrl",
             value: function uriToUrl(uri) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee57() {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee69() {
                 var url, cacheUrl;
-                return regeneratorRuntime.wrap(function _callee57$(_context57) {
+                return regeneratorRuntime.wrap(function _callee69$(_context69) {
                   while (1) {
-                    switch (_context57.prev = _context57.next) {
+                    switch (_context69.prev = _context69.next) {
                       case 0:
                         if (!(!uri || uri.length < 8)) {
-                          _context57.next = 2;
+                          _context69.next = 2;
                           break;
                         }
 
-                        return _context57.abrupt("return", '');
+                        return _context69.abrupt("return", '');
 
                       case 2:
                         url = '';
@@ -17154,30 +18493,30 @@
                           url = uri;
                         }
 
-                        _context57.next = 6;
+                        _context69.next = 6;
                         return this.fetchApi("https://www.tezos.help/api/img-proxy/?url=".concat(url));
 
                       case 6:
-                        cacheUrl = _context57.sent;
-                        return _context57.abrupt("return", cacheUrl ? cacheUrl : '');
+                        cacheUrl = _context69.sent;
+                        return _context69.abrupt("return", cacheUrl ? cacheUrl : '');
 
                       case 8:
                       case "end":
-                        return _context57.stop();
+                        return _context69.stop();
                     }
                   }
-                }, _callee57, this);
+                }, _callee69, this);
               }));
             }
           }, {
             key: "fetchApi",
             value: function fetchApi(url) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee58() {
-                return regeneratorRuntime.wrap(function _callee58$(_context58) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee70() {
+                return regeneratorRuntime.wrap(function _callee70$(_context70) {
                   while (1) {
-                    switch (_context58.prev = _context58.next) {
+                    switch (_context70.prev = _context70.next) {
                       case 0:
-                        return _context58.abrupt("return", fetch(url).then(function (response) {
+                        return _context70.abrupt("return", fetch(url).then(function (response) {
                           return response.json();
                         }).then(function (data) {
                           return data;
@@ -17185,10 +18524,10 @@
 
                       case 1:
                       case "end":
-                        return _context58.stop();
+                        return _context70.stop();
                     }
                   }
-                }, _callee58);
+                }, _callee70);
               }));
             }
           }, {
@@ -17196,23 +18535,23 @@
             value: function getTokenBalancesUsingPromiseAll(address) {
               var _a;
 
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee59() {
-                var _ref2;
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee71() {
+                var _ref6;
 
                 var tokenCount, tokenTotal, querySizeMax, totalPromises, aryTokenFetchUrl, i, url, aryTokenResults, aryTokenBalances, aryTokens;
-                return regeneratorRuntime.wrap(function _callee59$(_context59) {
+                return regeneratorRuntime.wrap(function _callee71$(_context71) {
                   while (1) {
-                    switch (_context59.prev = _context59.next) {
+                    switch (_context71.prev = _context71.next) {
                       case 0:
-                        _context59.next = 2;
+                        _context71.next = 2;
                         return fetch("".concat(this.bcd, "/account/").concat(this.network, "/").concat(address, "/count"));
 
                       case 2:
-                        _context59.next = 4;
-                        return _context59.sent.json();
+                        _context71.next = 4;
+                        return _context71.sent.json();
 
                       case 4:
-                        tokenCount = _context59.sent;
+                        tokenCount = _context71.sent;
                         tokenTotal = Object.keys(tokenCount).map(function (key) {
                           return tokenCount[key];
                         }).reduce(function (a, b) {
@@ -17229,29 +18568,29 @@
                           aryTokenFetchUrl.push(fetch(url));
                         }
 
-                        _context59.next = 12;
+                        _context71.next = 12;
                         return Promise.all(aryTokenFetchUrl);
 
                       case 12:
-                        aryTokenResults = _context59.sent;
-                        _context59.next = 15;
+                        aryTokenResults = _context71.sent;
+                        _context71.next = 15;
                         return Promise.all(aryTokenResults.map(function (r) {
                           return r.json();
                         }));
 
                       case 15:
-                        aryTokenBalances = _context59.sent;
-                        aryTokens = (_ref2 = []).concat.apply(_ref2, _toConsumableArray(aryTokenBalances.map(function (t) {
+                        aryTokenBalances = _context71.sent;
+                        aryTokens = (_ref6 = []).concat.apply(_ref6, _toConsumableArray(aryTokenBalances.map(function (t) {
                           return t.balances;
                         })));
-                        return _context59.abrupt("return", aryTokens);
+                        return _context71.abrupt("return", aryTokens);
 
                       case 18:
                       case "end":
-                        return _context59.stop();
+                        return _context71.stop();
                     }
                   }
-                }, _callee59, this);
+                }, _callee71, this);
               }));
             }
           }]);
@@ -17775,6 +19114,946 @@
     },
 
     /***/
+    "d9S5":
+    /*!**********************************!*\
+      !*** ../icabod/dist/messages.js ***!
+      \**********************************/
+
+    /*! no static exports found */
+
+    /***/
+    function d9S5(module, exports, __webpack_require__) {
+      "use strict";
+
+      var __classPrivateFieldSet = this && this.__classPrivateFieldSet || function (receiver, privateMap, value) {
+        if (!privateMap.has(receiver)) {
+          throw new TypeError("attempted to set private field on non-instance");
+        }
+
+        privateMap.set(receiver, value);
+        return value;
+      };
+
+      var __classPrivateFieldGet = this && this.__classPrivateFieldGet || function (receiver, privateMap) {
+        if (!privateMap.has(receiver)) {
+          throw new TypeError("attempted to get private field on non-instance");
+        }
+
+        return privateMap.get(receiver);
+      };
+
+      var _eventMap, _map, _queue, _single, _allowedOrigin, _init, _card, _login, _operation, _track, _logout, _sign, _auth, _dismiss, _handle, _listener, _messageTarget, _eventSrc;
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+
+      var types_1 = __webpack_require__(
+      /*! ./types */
+      "874q");
+
+      var util_1 = __webpack_require__(
+      /*! ./util */
+      "D5E+");
+
+      var Concurrent = /*#__PURE__*/function () {
+        function Concurrent(map) {
+          _classCallCheck(this, Concurrent);
+
+          _eventMap.set(this, {});
+
+          _map.set(this, void 0);
+
+          __classPrivateFieldSet(this, _map, map);
+        }
+
+        _createClass(Concurrent, [{
+          key: "listen",
+          value: function () {
+            var _listen = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee72(id) {
+              var _util_1$defer2, promise, deferred;
+
+              return regeneratorRuntime.wrap(function _callee72$(_context72) {
+                while (1) {
+                  switch (_context72.prev = _context72.next) {
+                    case 0:
+                      _util_1$defer2 = util_1.defer(), promise = _util_1$defer2.promise, deferred = _util_1$defer2.deferred;
+                      __classPrivateFieldGet(this, _eventMap)[id] = deferred;
+                      _context72.next = 4;
+                      return promise;
+
+                    case 4:
+                      return _context72.abrupt("return", _context72.sent);
+
+                    case 5:
+                    case "end":
+                      return _context72.stop();
+                  }
+                }
+              }, _callee72, this);
+            }));
+
+            function listen(_x11) {
+              return _listen.apply(this, arguments);
+            }
+
+            return listen;
+          }()
+        }, {
+          key: "handle",
+          value: function handle(evt) {
+            var _a;
+
+            var id = __classPrivateFieldGet(this, _map).call(this, evt);
+
+            (_a = __classPrivateFieldGet(this, _eventMap)[id]) === null || _a === void 0 ? void 0 : _a.resolve(evt);
+            delete __classPrivateFieldGet(this, _eventMap)[id];
+          }
+        }]);
+
+        return Concurrent;
+      }();
+
+      _eventMap = new WeakMap(), _map = new WeakMap();
+
+      var Sequential = /*#__PURE__*/function () {
+        function Sequential() {
+          _classCallCheck(this, Sequential);
+
+          _queue.set(this, []);
+        }
+
+        _createClass(Sequential, [{
+          key: "listen",
+          value: function () {
+            var _listen2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee73() {
+              var _util_1$defer3, promise, deferred;
+
+              return regeneratorRuntime.wrap(function _callee73$(_context73) {
+                while (1) {
+                  switch (_context73.prev = _context73.next) {
+                    case 0:
+                      _util_1$defer3 = util_1.defer(), promise = _util_1$defer3.promise, deferred = _util_1$defer3.deferred;
+
+                      __classPrivateFieldGet(this, _queue).push(deferred);
+
+                      _context73.next = 4;
+                      return promise;
+
+                    case 4:
+                      return _context73.abrupt("return", _context73.sent);
+
+                    case 5:
+                    case "end":
+                      return _context73.stop();
+                  }
+                }
+              }, _callee73, this);
+            }));
+
+            function listen() {
+              return _listen2.apply(this, arguments);
+            }
+
+            return listen;
+          }()
+        }, {
+          key: "handle",
+          value: function handle(evt) {
+            var _a;
+
+            (_a = __classPrivateFieldGet(this, _queue).shift()) === null || _a === void 0 ? void 0 : _a.resolve(evt);
+          }
+        }, {
+          key: "length",
+          get: function get() {
+            return __classPrivateFieldGet(this, _queue).length;
+          }
+        }]);
+
+        return Sequential;
+      }();
+
+      _queue = new WeakMap();
+
+      var Single = /*#__PURE__*/function () {
+        function Single() {
+          _classCallCheck(this, Single);
+
+          _single.set(this, null);
+        }
+
+        _createClass(Single, [{
+          key: "listen",
+          value: function () {
+            var _listen3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee74() {
+              var _util_1$defer4, promise, deferred;
+
+              return regeneratorRuntime.wrap(function _callee74$(_context74) {
+                while (1) {
+                  switch (_context74.prev = _context74.next) {
+                    case 0:
+                      if (!__classPrivateFieldGet(this, _single)) {
+                        _context74.next = 4;
+                        break;
+                      }
+
+                      throw new Error("OCCUPIED");
+
+                    case 4:
+                      _util_1$defer4 = util_1.defer(), promise = _util_1$defer4.promise, deferred = _util_1$defer4.deferred;
+
+                      __classPrivateFieldSet(this, _single, deferred);
+
+                      _context74.next = 8;
+                      return promise;
+
+                    case 8:
+                      return _context74.abrupt("return", _context74.sent);
+
+                    case 9:
+                    case "end":
+                      return _context74.stop();
+                  }
+                }
+              }, _callee74, this);
+            }));
+
+            function listen() {
+              return _listen3.apply(this, arguments);
+            }
+
+            return listen;
+          }()
+        }, {
+          key: "handle",
+          value: function handle(evt) {
+            var _a;
+
+            (_a = __classPrivateFieldGet(this, _single)) === null || _a === void 0 ? void 0 : _a.resolve(evt);
+
+            __classPrivateFieldSet(this, _single, null);
+          }
+        }]);
+
+        return Single;
+      }();
+
+      _single = new WeakMap();
+
+      var MessageListener = /*#__PURE__*/function () {
+        function MessageListener(allowedOrigin) {
+          var _this44 = this;
+
+          _classCallCheck(this, MessageListener);
+
+          _allowedOrigin.set(this, void 0);
+
+          _init.set(this, new Single());
+
+          _card.set(this, new Sequential());
+
+          _login.set(this, new Sequential());
+
+          _operation.set(this, new Single());
+
+          _track.set(this, new Concurrent(function (res) {
+            return res.opHash;
+          }));
+
+          _logout.set(this, new Sequential());
+
+          _sign.set(this, new Sequential());
+
+          _auth.set(this, new Sequential());
+
+          _dismiss.set(this, new Sequential());
+
+          _handle.set(this, function (data) {
+            switch (data.type) {
+              case types_1.ResponseTypes.cardResponse:
+                __classPrivateFieldGet(_this44, _card).handle(data);
+
+                break;
+
+              case types_1.ResponseTypes.loginResponse:
+                __classPrivateFieldGet(_this44, _login).handle(data);
+
+                break;
+
+              case types_1.ResponseTypes.operationResponse:
+                __classPrivateFieldGet(_this44, _operation).handle(data);
+
+                break;
+
+              case types_1.ResponseTypes.trackResponse:
+                __classPrivateFieldGet(_this44, _track).handle(data);
+
+                break;
+
+              case types_1.ResponseTypes.logoutResponse:
+                __classPrivateFieldGet(_this44, _logout).handle(data);
+
+                break;
+
+              case types_1.ResponseTypes.signResponse:
+                __classPrivateFieldGet(_this44, _sign).handle(data);
+
+                break;
+
+              case types_1.ResponseTypes.authResponse:
+                __classPrivateFieldGet(_this44, _auth).handle(data);
+
+                break;
+
+              case types_1.ResponseTypes.initComplete:
+                __classPrivateFieldGet(_this44, _init).handle(data);
+
+                break;
+
+              case types_1.ResponseTypes.dismissResponse:
+                __classPrivateFieldGet(_this44, _dismiss).handle(data);
+
+            }
+          });
+
+          __classPrivateFieldSet(this, _allowedOrigin, allowedOrigin);
+        }
+
+        _createClass(MessageListener, [{
+          key: "init",
+          value: function () {
+            var _init5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee75() {
+              return regeneratorRuntime.wrap(function _callee75$(_context75) {
+                while (1) {
+                  switch (_context75.prev = _context75.next) {
+                    case 0:
+                      _context75.next = 2;
+                      return __classPrivateFieldGet(this, _init).listen();
+
+                    case 2:
+                      return _context75.abrupt("return", _context75.sent);
+
+                    case 3:
+                    case "end":
+                      return _context75.stop();
+                  }
+                }
+              }, _callee75, this);
+            }));
+
+            function init() {
+              return _init5.apply(this, arguments);
+            }
+
+            return init;
+          }()
+        }, {
+          key: "login",
+          value: function () {
+            var _login3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee76() {
+              return regeneratorRuntime.wrap(function _callee76$(_context76) {
+                while (1) {
+                  switch (_context76.prev = _context76.next) {
+                    case 0:
+                      _context76.next = 2;
+                      return __classPrivateFieldGet(this, _login).listen();
+
+                    case 2:
+                      return _context76.abrupt("return", _context76.sent);
+
+                    case 3:
+                    case "end":
+                      return _context76.stop();
+                  }
+                }
+              }, _callee76, this);
+            }));
+
+            function login() {
+              return _login3.apply(this, arguments);
+            }
+
+            return login;
+          }()
+        }, {
+          key: "operation",
+          value: function () {
+            var _operation2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee77() {
+              return regeneratorRuntime.wrap(function _callee77$(_context77) {
+                while (1) {
+                  switch (_context77.prev = _context77.next) {
+                    case 0:
+                      _context77.next = 2;
+                      return __classPrivateFieldGet(this, _operation).listen();
+
+                    case 2:
+                      return _context77.abrupt("return", _context77.sent);
+
+                    case 3:
+                    case "end":
+                      return _context77.stop();
+                  }
+                }
+              }, _callee77, this);
+            }));
+
+            function operation() {
+              return _operation2.apply(this, arguments);
+            }
+
+            return operation;
+          }()
+        }, {
+          key: "track",
+          value: function () {
+            var _track2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee78(id) {
+              return regeneratorRuntime.wrap(function _callee78$(_context78) {
+                while (1) {
+                  switch (_context78.prev = _context78.next) {
+                    case 0:
+                      _context78.next = 2;
+                      return __classPrivateFieldGet(this, _track).listen(id);
+
+                    case 2:
+                      return _context78.abrupt("return", _context78.sent);
+
+                    case 3:
+                    case "end":
+                      return _context78.stop();
+                  }
+                }
+              }, _callee78, this);
+            }));
+
+            function track(_x12) {
+              return _track2.apply(this, arguments);
+            }
+
+            return track;
+          }()
+        }, {
+          key: "logout",
+          value: function () {
+            var _logout3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee79() {
+              return regeneratorRuntime.wrap(function _callee79$(_context79) {
+                while (1) {
+                  switch (_context79.prev = _context79.next) {
+                    case 0:
+                      _context79.next = 2;
+                      return __classPrivateFieldGet(this, _logout).listen();
+
+                    case 2:
+                      return _context79.abrupt("return", _context79.sent);
+
+                    case 3:
+                    case "end":
+                      return _context79.stop();
+                  }
+                }
+              }, _callee79, this);
+            }));
+
+            function logout() {
+              return _logout3.apply(this, arguments);
+            }
+
+            return logout;
+          }()
+        }, {
+          key: "sign",
+          value: function () {
+            var _sign2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee80() {
+              return regeneratorRuntime.wrap(function _callee80$(_context80) {
+                while (1) {
+                  switch (_context80.prev = _context80.next) {
+                    case 0:
+                      _context80.next = 2;
+                      return __classPrivateFieldGet(this, _sign).listen();
+
+                    case 2:
+                      return _context80.abrupt("return", _context80.sent);
+
+                    case 3:
+                    case "end":
+                      return _context80.stop();
+                  }
+                }
+              }, _callee80, this);
+            }));
+
+            function sign() {
+              return _sign2.apply(this, arguments);
+            }
+
+            return sign;
+          }()
+        }, {
+          key: "auth",
+          value: function () {
+            var _auth2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee81() {
+              return regeneratorRuntime.wrap(function _callee81$(_context81) {
+                while (1) {
+                  switch (_context81.prev = _context81.next) {
+                    case 0:
+                      _context81.next = 2;
+                      return __classPrivateFieldGet(this, _auth).listen();
+
+                    case 2:
+                      return _context81.abrupt("return", _context81.sent);
+
+                    case 3:
+                    case "end":
+                      return _context81.stop();
+                  }
+                }
+              }, _callee81, this);
+            }));
+
+            function auth() {
+              return _auth2.apply(this, arguments);
+            }
+
+            return auth;
+          }()
+        }, {
+          key: "card",
+          value: function () {
+            var _card2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee82() {
+              return regeneratorRuntime.wrap(function _callee82$(_context82) {
+                while (1) {
+                  switch (_context82.prev = _context82.next) {
+                    case 0:
+                      _context82.next = 2;
+                      return __classPrivateFieldGet(this, _card).listen();
+
+                    case 2:
+                      return _context82.abrupt("return", _context82.sent);
+
+                    case 3:
+                    case "end":
+                      return _context82.stop();
+                  }
+                }
+              }, _callee82, this);
+            }));
+
+            function card() {
+              return _card2.apply(this, arguments);
+            }
+
+            return card;
+          }()
+        }, {
+          key: "dismiss",
+          value: function () {
+            var _dismiss2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee83() {
+              return regeneratorRuntime.wrap(function _callee83$(_context83) {
+                while (1) {
+                  switch (_context83.prev = _context83.next) {
+                    case 0:
+                      _context83.next = 2;
+                      return __classPrivateFieldGet(this, _dismiss).listen();
+
+                    case 2:
+                      return _context83.abrupt("return", _context83.sent);
+
+                    case 3:
+                    case "end":
+                      return _context83.stop();
+                  }
+                }
+              }, _callee83, this);
+            }));
+
+            function dismiss() {
+              return _dismiss2.apply(this, arguments);
+            }
+
+            return dismiss;
+          }()
+        }, {
+          key: "handleEvent",
+          value: function handleEvent(evt) {
+            if (evt.type === 'message' && evt.origin === __classPrivateFieldGet(this, _allowedOrigin)) {
+              console.log("Received ".concat(evt.data, " from ").concat(evt.origin));
+              var data = JSON.parse(evt.data);
+
+              __classPrivateFieldGet(this, _handle).call(this, data);
+            } else {
+              console.warn(evt.origin);
+            }
+          }
+        }]);
+
+        return MessageListener;
+      }();
+
+      _allowedOrigin = new WeakMap(), _init = new WeakMap(), _card = new WeakMap(), _login = new WeakMap(), _operation = new WeakMap(), _track = new WeakMap(), _logout = new WeakMap(), _sign = new WeakMap(), _auth = new WeakMap(), _dismiss = new WeakMap(), _handle = new WeakMap();
+
+      var KukaiMessaging = /*#__PURE__*/function () {
+        function KukaiMessaging(messageTarget, allowedOrigin) {
+          _classCallCheck(this, KukaiMessaging);
+
+          _listener.set(this, void 0);
+
+          _messageTarget.set(this, void 0);
+
+          _eventSrc.set(this, null);
+
+          __classPrivateFieldSet(this, _messageTarget, messageTarget);
+
+          __classPrivateFieldSet(this, _listener, new MessageListener(allowedOrigin));
+        }
+
+        _createClass(KukaiMessaging, [{
+          key: "init",
+          value: function () {
+            var _init6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee84(eventSrc) {
+              return regeneratorRuntime.wrap(function _callee84$(_context84) {
+                while (1) {
+                  switch (_context84.prev = _context84.next) {
+                    case 0:
+                      if (!__classPrivateFieldGet(this, _eventSrc)) {
+                        _context84.next = 4;
+                        break;
+                      }
+
+                      throw new Error("Already Initialized");
+
+                    case 4:
+                      __classPrivateFieldSet(this, _eventSrc, eventSrc);
+
+                      eventSrc.addEventListener('message', __classPrivateFieldGet(this, _listener));
+                      _context84.next = 8;
+                      return __classPrivateFieldGet(this, _listener).init().then(function (res) {
+                        if (res.failed) throw new Error("Init Failed: " + res.error);
+                      });
+
+                    case 8:
+                      return _context84.abrupt("return", _context84.sent);
+
+                    case 9:
+                    case "end":
+                      return _context84.stop();
+                  }
+                }
+              }, _callee84, this);
+            }));
+
+            function init(_x13) {
+              return _init6.apply(this, arguments);
+            }
+
+            return init;
+          }()
+        }, {
+          key: "deinit",
+          value: function deinit() {
+            if (__classPrivateFieldGet(this, _eventSrc)) {
+              __classPrivateFieldGet(this, _eventSrc).removeEventListener('message', __classPrivateFieldGet(this, _listener));
+
+              __classPrivateFieldSet(this, _eventSrc, null);
+            }
+          }
+        }, {
+          key: "card",
+          value: function () {
+            var _card3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee85(show) {
+              return regeneratorRuntime.wrap(function _callee85$(_context85) {
+                while (1) {
+                  switch (_context85.prev = _context85.next) {
+                    case 0:
+                      __classPrivateFieldGet(this, _messageTarget).request({
+                        type: types_1.RequestTypes.cardRequest,
+                        show: show
+                      });
+
+                      _context85.next = 3;
+                      return __classPrivateFieldGet(this, _listener).card().then(function (res) {
+                        if (res.failed) throw new Error("Card Failed: " + res.error);else return;
+                      });
+
+                    case 3:
+                      return _context85.abrupt("return", _context85.sent);
+
+                    case 4:
+                    case "end":
+                      return _context85.stop();
+                  }
+                }
+              }, _callee85, this);
+            }));
+
+            function card(_x14) {
+              return _card3.apply(this, arguments);
+            }
+
+            return card;
+          }()
+        }, {
+          key: "login",
+          value: function () {
+            var _login4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee86(config) {
+              return regeneratorRuntime.wrap(function _callee86$(_context86) {
+                while (1) {
+                  switch (_context86.prev = _context86.next) {
+                    case 0:
+                      __classPrivateFieldGet(this, _messageTarget).request({
+                        type: types_1.RequestTypes.loginRequest,
+                        config: config
+                      });
+
+                      _context86.next = 3;
+                      return __classPrivateFieldGet(this, _listener).login().then(function (res) {
+                        if (res.failed) throw new Error("Login Failed: " + res.error);else return res;
+                      });
+
+                    case 3:
+                      return _context86.abrupt("return", _context86.sent);
+
+                    case 4:
+                    case "end":
+                      return _context86.stop();
+                  }
+                }
+              }, _callee86, this);
+            }));
+
+            function login(_x15) {
+              return _login4.apply(this, arguments);
+            }
+
+            return login;
+          }()
+        }, {
+          key: "operation",
+          value: function () {
+            var _operation3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee87(operations, ui) {
+              return regeneratorRuntime.wrap(function _callee87$(_context87) {
+                while (1) {
+                  switch (_context87.prev = _context87.next) {
+                    case 0:
+                      __classPrivateFieldGet(this, _messageTarget).request({
+                        type: types_1.RequestTypes.operationRequest,
+                        operations: operations,
+                        ui: ui
+                      });
+
+                      _context87.next = 3;
+                      return __classPrivateFieldGet(this, _listener).operation().then(function (res) {
+                        if (res.failed) throw new Error("Operation Failed: " + res.error);else return res;
+                      })["catch"](function (e) {
+                        if (e.message === 'OCCUPIED') throw new Error('Cannot send: Operation in progress');else throw e;
+                      });
+
+                    case 3:
+                      return _context87.abrupt("return", _context87.sent);
+
+                    case 4:
+                    case "end":
+                      return _context87.stop();
+                  }
+                }
+              }, _callee87, this);
+            }));
+
+            function operation(_x16, _x17) {
+              return _operation3.apply(this, arguments);
+            }
+
+            return operation;
+          }()
+        }, {
+          key: "track",
+          value: function () {
+            var _track3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee88(opHash) {
+              return regeneratorRuntime.wrap(function _callee88$(_context88) {
+                while (1) {
+                  switch (_context88.prev = _context88.next) {
+                    case 0:
+                      __classPrivateFieldGet(this, _messageTarget).request({
+                        type: types_1.RequestTypes.trackRequest,
+                        opHash: opHash
+                      });
+
+                      _context88.next = 3;
+                      return __classPrivateFieldGet(this, _listener).track(opHash).then(function (res) {
+                        if (res.failed) throw new Error("Track Failed: " + res.error);else return res;
+                      });
+
+                    case 3:
+                      return _context88.abrupt("return", _context88.sent);
+
+                    case 4:
+                    case "end":
+                      return _context88.stop();
+                  }
+                }
+              }, _callee88, this);
+            }));
+
+            function track(_x18) {
+              return _track3.apply(this, arguments);
+            }
+
+            return track;
+          }()
+        }, {
+          key: "logout",
+          value: function () {
+            var _logout4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee89() {
+              return regeneratorRuntime.wrap(function _callee89$(_context89) {
+                while (1) {
+                  switch (_context89.prev = _context89.next) {
+                    case 0:
+                      __classPrivateFieldGet(this, _messageTarget).request({
+                        type: types_1.RequestTypes.logoutRequest
+                      });
+
+                      _context89.next = 3;
+                      return __classPrivateFieldGet(this, _listener).logout().then(function (res) {
+                        if (res.failed) throw new Error("Logout Failed: " + res.error);else return res;
+                      });
+
+                    case 3:
+                      return _context89.abrupt("return", _context89.sent);
+
+                    case 4:
+                    case "end":
+                      return _context89.stop();
+                  }
+                }
+              }, _callee89, this);
+            }));
+
+            function logout() {
+              return _logout4.apply(this, arguments);
+            }
+
+            return logout;
+          }()
+        }, {
+          key: "sign",
+          value: function () {
+            var _sign3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee90(message) {
+              return regeneratorRuntime.wrap(function _callee90$(_context90) {
+                while (1) {
+                  switch (_context90.prev = _context90.next) {
+                    case 0:
+                      __classPrivateFieldGet(this, _messageTarget).request({
+                        type: types_1.RequestTypes.signRequest,
+                        message: message
+                      });
+
+                      _context90.next = 3;
+                      return __classPrivateFieldGet(this, _listener).sign().then(function (res) {
+                        if (res.failed) throw new Error("Signing Failed: " + res.error);else return res;
+                      });
+
+                    case 3:
+                      return _context90.abrupt("return", _context90.sent);
+
+                    case 4:
+                    case "end":
+                      return _context90.stop();
+                  }
+                }
+              }, _callee90, this);
+            }));
+
+            function sign(_x19) {
+              return _sign3.apply(this, arguments);
+            }
+
+            return sign;
+          }()
+        }, {
+          key: "authenticate",
+          value: function () {
+            var _authenticate2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee91(id, nonce) {
+              return regeneratorRuntime.wrap(function _callee91$(_context91) {
+                while (1) {
+                  switch (_context91.prev = _context91.next) {
+                    case 0:
+                      __classPrivateFieldGet(this, _messageTarget).request({
+                        type: types_1.RequestTypes.authRequest,
+                        id: id,
+                        nonce: nonce
+                      });
+
+                      _context91.next = 3;
+                      return __classPrivateFieldGet(this, _listener).auth().then(function (res) {
+                        if (res.failed) throw new Error("Auth Failed: " + res.error);else return res;
+                      });
+
+                    case 3:
+                      return _context91.abrupt("return", _context91.sent);
+
+                    case 4:
+                    case "end":
+                      return _context91.stop();
+                  }
+                }
+              }, _callee91, this);
+            }));
+
+            function authenticate(_x20, _x21) {
+              return _authenticate2.apply(this, arguments);
+            }
+
+            return authenticate;
+          }()
+        }, {
+          key: "dismiss",
+          value: function () {
+            var _dismiss3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee92() {
+              return regeneratorRuntime.wrap(function _callee92$(_context92) {
+                while (1) {
+                  switch (_context92.prev = _context92.next) {
+                    case 0:
+                      __classPrivateFieldGet(this, _messageTarget).request({
+                        type: types_1.RequestTypes.dismissRequest
+                      });
+
+                      _context92.next = 3;
+                      return __classPrivateFieldGet(this, _listener).dismiss().then(function (res) {
+                        if (res.failed) throw new Error("Dismiss Failed: " + res.error);else return;
+                      });
+
+                    case 3:
+                      return _context92.abrupt("return", _context92.sent);
+
+                    case 4:
+                    case "end":
+                      return _context92.stop();
+                  }
+                }
+              }, _callee92, this);
+            }));
+
+            function dismiss() {
+              return _dismiss3.apply(this, arguments);
+            }
+
+            return dismiss;
+          }()
+        }, {
+          key: "isInit",
+          get: function get() {
+            return !!__classPrivateFieldGet(this, _eventSrc);
+          }
+        }]);
+
+        return KukaiMessaging;
+      }();
+
+      exports.KukaiMessaging = KukaiMessaging;
+      _listener = new WeakMap(), _messageTarget = new WeakMap(), _eventSrc = new WeakMap();
+      /***/
+    },
+
+    /***/
     "ds67":
     /*!*******************************************************!*\
       !*** ./src/app/services/estimate/estimate.service.ts ***!
@@ -17880,28 +20159,28 @@
         }, {
           key: "preLoadData",
           value: function preLoadData(pkh, pk) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee60() {
-              var _this37 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee93() {
+              var _this45 = this;
 
-              return regeneratorRuntime.wrap(function _callee60$(_context60) {
+              return regeneratorRuntime.wrap(function _callee93$(_context93) {
                 while (1) {
-                  switch (_context60.prev = _context60.next) {
+                  switch (_context93.prev = _context93.next) {
                     case 0:
                       this.pkh = pkh;
                       this.pk = pk;
-                      _context60.next = 4;
+                      _context93.next = 4;
                       return Promise.all([this.operationService.getHeader().toPromise(), this.getCounter(pkh), this.getManager(pkh)]).then(function (req) {
                         if (req[0] && req[1] && req[2] || req[2] === null) {
-                          _this37.init(req[0].hash, req[0].chain_id, req[1], req[2], pk, pkh);
+                          _this45.init(req[0].hash, req[0].chain_id, req[1], req[2], pk, pkh);
                         }
                       });
 
                     case 4:
                     case "end":
-                      return _context60.stop();
+                      return _context93.stop();
                   }
                 }
-              }, _callee60, this);
+              }, _callee93, this);
             }));
           }
         }, {
@@ -17909,37 +20188,37 @@
           value: function estimateTransactions(transactions, from) {
             var tokenTransfer = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
             var callback = arguments.length > 3 ? arguments[3] : undefined;
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee61() {
-              return regeneratorRuntime.wrap(function _callee61$(_context61) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee94() {
+              return regeneratorRuntime.wrap(function _callee94$(_context94) {
                 while (1) {
-                  switch (_context61.prev = _context61.next) {
+                  switch (_context94.prev = _context94.next) {
                     case 0:
                       this.estimate(transactions, from, tokenTransfer, callback, false);
 
                     case 1:
                     case "end":
-                      return _context61.stop();
+                      return _context94.stop();
                   }
                 }
-              }, _callee61, this);
+              }, _callee94, this);
             }));
           }
         }, {
           key: "estimateOrigination",
           value: function estimateOrigination(origination, from, callback) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee62() {
-              return regeneratorRuntime.wrap(function _callee62$(_context62) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee95() {
+              return regeneratorRuntime.wrap(function _callee95$(_context95) {
                 while (1) {
-                  switch (_context62.prev = _context62.next) {
+                  switch (_context95.prev = _context95.next) {
                     case 0:
                       this.estimate([origination], from, '', callback, true);
 
                     case 1:
                     case "end":
-                      return _context62.stop();
+                      return _context95.stop();
                   }
                 }
-              }, _callee62, this);
+              }, _callee95, this);
             }));
           }
         }, {
@@ -17948,14 +20227,14 @@
             var tokenTransfer = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
             var callback = arguments.length > 3 ? arguments[3] : undefined;
             var isOrigination = arguments.length > 4 ? arguments[4] : undefined;
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee64() {
-              var _this38 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee97() {
+              var _this46 = this;
 
               var _loop;
 
-              return regeneratorRuntime.wrap(function _callee64$(_context65) {
+              return regeneratorRuntime.wrap(function _callee97$(_context98) {
                 while (1) {
-                  switch (_context65.prev = _context65.next) {
+                  switch (_context98.prev = _context98.next) {
                     case 0:
                       this.queue.push({
                         transactions: transactions,
@@ -17964,20 +20243,20 @@
                       });
 
                       if (!(this.queue.length === 1)) {
-                        _context65.next = 7;
+                        _context98.next = 7;
                         break;
                       }
 
                       _loop = /*#__PURE__*/regeneratorRuntime.mark(function _loop() {
                         var retry, i;
-                        return regeneratorRuntime.wrap(function _loop$(_context64) {
+                        return regeneratorRuntime.wrap(function _loop$(_context97) {
                           while (1) {
-                            switch (_context64.prev = _context64.next) {
+                            switch (_context97.prev = _context97.next) {
                               case 0:
-                                while (_this38.queue.length > 1) {
-                                  _this38.queue[0].callback(null);
+                                while (_this46.queue.length > 1) {
+                                  _this46.queue[0].callback(null);
 
-                                  _this38.queue.shift();
+                                  _this46.queue.shift();
                                 }
 
                                 retry = false;
@@ -17985,31 +20264,31 @@
 
                               case 3:
                                 if (!(i < 1 || retry && i < 2)) {
-                                  _context64.next = 9;
+                                  _context97.next = 9;
                                   break;
                                 }
 
-                                _context64.next = 6;
-                                return _this38._estimate(_this38.queue[0].transactions, _this38.queue[0].from, tokenTransfer, isOrigination).then(function (res) {
-                                  _this38.queue[0].callback(res);
+                                _context97.next = 6;
+                                return _this46._estimate(_this46.queue[0].transactions, _this46.queue[0].from, tokenTransfer, isOrigination).then(function (res) {
+                                  _this46.queue[0].callback(res);
                                 })["catch"](function (error) {
-                                  return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this38, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee63() {
-                                    return regeneratorRuntime.wrap(function _callee63$(_context63) {
+                                  return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this46, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee96() {
+                                    return regeneratorRuntime.wrap(function _callee96$(_context96) {
                                       while (1) {
-                                        switch (_context63.prev = _context63.next) {
+                                        switch (_context96.prev = _context96.next) {
                                           case 0:
                                             if (!(error.message && error.message === 'An operation assumed a contract counter in the past' && !retry)) {
-                                              _context63.next = 7;
+                                              _context96.next = 7;
                                               break;
                                             }
 
                                             console.log('Update counter');
-                                            _context63.next = 4;
+                                            _context96.next = 4;
                                             return this.preLoadData(this.pkh, this.pk);
 
                                           case 4:
                                             retry = true;
-                                            _context63.next = 8;
+                                            _context96.next = 8;
                                             break;
 
                                           case 7:
@@ -18019,24 +20298,24 @@
 
                                           case 8:
                                           case "end":
-                                            return _context63.stop();
+                                            return _context96.stop();
                                         }
                                       }
-                                    }, _callee63, this);
+                                    }, _callee96, this);
                                   }));
                                 });
 
                               case 6:
                                 i++;
-                                _context64.next = 3;
+                                _context97.next = 3;
                                 break;
 
                               case 9:
-                                _this38.queue.shift();
+                                _this46.queue.shift();
 
                               case 10:
                               case "end":
-                                return _context64.stop();
+                                return _context97.stop();
                             }
                           }
                         }, _loop);
@@ -18044,45 +20323,45 @@
 
                     case 3:
                       if (!(this.queue.length > 0)) {
-                        _context65.next = 7;
+                        _context98.next = 7;
                         break;
                       }
 
-                      return _context65.delegateYield(_loop(), "t0", 5);
+                      return _context98.delegateYield(_loop(), "t0", 5);
 
                     case 5:
-                      _context65.next = 3;
+                      _context98.next = 3;
                       break;
 
                     case 7:
                     case "end":
-                      return _context65.stop();
+                      return _context98.stop();
                   }
                 }
-              }, _callee64, this);
+              }, _callee97, this);
             }));
           }
         }, {
           key: "_estimate",
           value: function _estimate(operations, from, tokenTransfer) {
             var isOrigination = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee65() {
-              var _this39 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee98() {
+              var _this47 = this;
 
-              var extraGas, simulation, _iterator15, _step15, tx, op, result, reveal, limits, _iterator16, _step16, content, _this$getOpUsage, gasUsage, storageUsage;
+              var extraGas, simulation, _iterator16, _step16, tx, op, result, reveal, limits, _iterator17, _step17, content, _this$getOpUsage, gasUsage, storageUsage;
 
-              return regeneratorRuntime.wrap(function _callee65$(_context66) {
+              return regeneratorRuntime.wrap(function _callee98$(_context99) {
                 while (1) {
-                  switch (_context66.prev = _context66.next) {
+                  switch (_context99.prev = _context99.next) {
                     case 0:
                       extraGas = 80;
 
                       if (this.hash) {
-                        _context66.next = 3;
+                        _context99.next = 3;
                         break;
                       }
 
-                      return _context66.abrupt("return", null);
+                      return _context99.abrupt("return", null);
 
                     case 3:
                       simulation = {
@@ -18090,11 +20369,11 @@
                         gasLimit: hardGasLimit,
                         storageLimit: hardStorageLimit
                       };
-                      _iterator15 = _createForOfIteratorHelper(operations);
+                      _iterator16 = _createForOfIteratorHelper(operations);
 
                       try {
-                        for (_iterator15.s(); !(_step15 = _iterator15.n()).done;) {
-                          tx = _step15.value;
+                        for (_iterator16.s(); !(_step16 = _iterator16.n()).done;) {
+                          tx = _step16.value;
                           console.log(tx);
 
                           if (!isOrigination) {
@@ -18111,58 +20390,58 @@
                           tx.storageLimit = simulation.storageLimit;
                         }
                       } catch (err) {
-                        _iterator15.e(err);
+                        _iterator16.e(err);
                       } finally {
-                        _iterator15.f();
+                        _iterator16.f();
                       }
 
                       if (!(this.hash && this.counter && (this.manager || this.manager === null))) {
-                        _context66.next = 47;
+                        _context99.next = 47;
                         break;
                       }
 
                       op = isOrigination ? this.operationService.createOriginationObject(this.hash, this.counter, this.manager, operations[0], simulation.fee, this.pk, this.pkh) : this.operationService.createTransactionObject(this.hash, this.counter, this.manager, operations, this.pkh, this.pk, from, simulation.fee, tokenTransfer);
-                      _context66.next = 10;
+                      _context99.next = 10;
                       return this.simulate(op).toPromise()["catch"](function (e) {
                         console.warn(e);
                         return null;
                       });
 
                     case 10:
-                      result = _context66.sent;
+                      result = _context99.sent;
 
                       if (!(result && result.contents)) {
-                        _context66.next = 44;
+                        _context99.next = 44;
                         break;
                       }
 
                       reveal = false;
                       limits = [];
-                      _iterator16 = _createForOfIteratorHelper(result.contents);
-                      _context66.prev = 15;
+                      _iterator17 = _createForOfIteratorHelper(result.contents);
+                      _context99.prev = 15;
 
-                      _iterator16.s();
+                      _iterator17.s();
 
                     case 17:
-                      if ((_step16 = _iterator16.n()).done) {
-                        _context66.next = 31;
+                      if ((_step17 = _iterator17.n()).done) {
+                        _context99.next = 31;
                         break;
                       }
 
-                      content = _step16.value;
+                      content = _step17.value;
 
                       if (!(content.kind === 'reveal')) {
-                        _context66.next = 23;
+                        _context99.next = 23;
                         break;
                       }
 
                       reveal = true;
-                      _context66.next = 29;
+                      _context99.next = 29;
                       break;
 
                     case 23:
                       if (!(['transaction', 'origination'].includes(content.kind) && content.metadata.operation_result.status === 'applied')) {
-                        _context66.next = 28;
+                        _context99.next = 28;
                         break;
                       }
 
@@ -18171,46 +20450,46 @@
                         gasLimit: gasUsage + extraGas,
                         storageLimit: storageUsage
                       });
-                      _context66.next = 29;
+                      _context99.next = 29;
                       break;
 
                     case 28:
-                      return _context66.abrupt("return", null);
+                      return _context99.abrupt("return", null);
 
                     case 29:
-                      _context66.next = 17;
+                      _context99.next = 17;
                       break;
 
                     case 31:
-                      _context66.next = 36;
+                      _context99.next = 36;
                       break;
 
                     case 33:
-                      _context66.prev = 33;
-                      _context66.t0 = _context66["catch"](15);
+                      _context99.prev = 33;
+                      _context99.t0 = _context99["catch"](15);
 
-                      _iterator16.e(_context66.t0);
+                      _iterator17.e(_context99.t0);
 
                     case 36:
-                      _context66.prev = 36;
+                      _context99.prev = 36;
 
-                      _iterator16.f();
+                      _iterator17.f();
 
-                      return _context66.finish(36);
+                      return _context99.finish(36);
 
                     case 39:
-                      _context66.next = 41;
+                      _context99.next = 41;
                       return this.operationService.localForge(op).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (fop) {
                         var bytes = fop.length / 2 + 64;
 
-                        var gas = _this39.averageGasLimit(limits);
+                        var gas = _this47.averageGasLimit(limits);
 
-                        var storage = _this39.averageStorageLimit(limits);
+                        var storage = _this47.averageStorageLimit(limits);
 
                         var dtp = {
                           customLimits: limits,
-                          fee: _this39.recommendFee(limits, reveal, bytes),
-                          burn: _this39.burnFee(limits),
+                          fee: _this47.recommendFee(limits, reveal, bytes),
+                          burn: _this47.burnFee(limits),
                           gas: gas,
                           storage: storage,
                           reveal: reveal
@@ -18220,11 +20499,11 @@
                       })).toPromise();
 
                     case 41:
-                      return _context66.abrupt("return", _context66.sent);
+                      return _context99.abrupt("return", _context99.sent);
 
                     case 44:
                       if (!(typeof result.success === 'boolean' && result.success === false)) {
-                        _context66.next = 47;
+                        _context99.next = 47;
                         break;
                       }
 
@@ -18232,14 +20511,14 @@
                       throw new Error(result.payload.msg);
 
                     case 47:
-                      return _context66.abrupt("return", null);
+                      return _context99.abrupt("return", null);
 
                     case 48:
                     case "end":
-                      return _context66.stop();
+                      return _context99.stop();
                   }
                 }
-              }, _callee65, this, [[15, 33, 36, 39]]);
+              }, _callee98, this, [[15, 33, 36, 39]]);
             }));
           }
         }, {
@@ -18259,34 +20538,15 @@
             }
 
             if (content.metadata.operation_result.balance_updates) {
-              var _iterator17 = _createForOfIteratorHelper(content.metadata.operation_result.balance_updates),
-                  _step17;
-
-              try {
-                for (_iterator17.s(); !(_step17 = _iterator17.n()).done;) {
-                  var balanceUpdate = _step17.value;
-
-                  if (balanceUpdate.contract === this.pkh) {
-                    burn = burn.minus(balanceUpdate.change);
-                  }
-                }
-              } catch (err) {
-                _iterator17.e(err);
-              } finally {
-                _iterator17.f();
-              }
-            }
-
-            if (content.metadata.balance_updates) {
-              var _iterator18 = _createForOfIteratorHelper(content.metadata.balance_updates),
+              var _iterator18 = _createForOfIteratorHelper(content.metadata.operation_result.balance_updates),
                   _step18;
 
               try {
                 for (_iterator18.s(); !(_step18 = _iterator18.n()).done;) {
-                  var _balanceUpdate = _step18.value;
+                  var balanceUpdate = _step18.value;
 
-                  if (_balanceUpdate.contract === this.pkh) {
-                    burn = burn.minus(_balanceUpdate.change);
+                  if (balanceUpdate.contract === this.pkh) {
+                    burn = burn.minus(balanceUpdate.change);
                   }
                 }
               } catch (err) {
@@ -18296,15 +20556,34 @@
               }
             }
 
-            gasUsage += content.metadata.operation_result.consumed_gas ? Number(content.metadata.operation_result.consumed_gas) : 0;
-
-            if (content.metadata.internal_operation_results) {
-              var _iterator19 = _createForOfIteratorHelper(content.metadata.internal_operation_results),
+            if (content.metadata.balance_updates) {
+              var _iterator19 = _createForOfIteratorHelper(content.metadata.balance_updates),
                   _step19;
 
               try {
                 for (_iterator19.s(); !(_step19 = _iterator19.n()).done;) {
-                  var internalResult = _step19.value;
+                  var _balanceUpdate = _step19.value;
+
+                  if (_balanceUpdate.contract === this.pkh) {
+                    burn = burn.minus(_balanceUpdate.change);
+                  }
+                }
+              } catch (err) {
+                _iterator19.e(err);
+              } finally {
+                _iterator19.f();
+              }
+            }
+
+            gasUsage += content.metadata.operation_result.consumed_gas ? Number(content.metadata.operation_result.consumed_gas) : 0;
+
+            if (content.metadata.internal_operation_results) {
+              var _iterator20 = _createForOfIteratorHelper(content.metadata.internal_operation_results),
+                  _step20;
+
+              try {
+                for (_iterator20.s(); !(_step20 = _iterator20.n()).done;) {
+                  var internalResult = _step20.value;
 
                   if (internalResult.result) {
                     if (internalResult.result.consumed_gas) {
@@ -18312,29 +20591,29 @@
                     }
 
                     if (internalResult.result.balance_updates) {
-                      var _iterator20 = _createForOfIteratorHelper(internalResult.result.balance_updates),
-                          _step20;
+                      var _iterator21 = _createForOfIteratorHelper(internalResult.result.balance_updates),
+                          _step21;
 
                       try {
-                        for (_iterator20.s(); !(_step20 = _iterator20.n()).done;) {
-                          var _balanceUpdate2 = _step20.value;
+                        for (_iterator21.s(); !(_step21 = _iterator21.n()).done;) {
+                          var _balanceUpdate2 = _step21.value;
 
                           if (_balanceUpdate2.contract === this.pkh && _balanceUpdate2.change.slice(0, 1) === '-') {
                             burn = burn.minus(_balanceUpdate2.change);
                           }
                         }
                       } catch (err) {
-                        _iterator20.e(err);
+                        _iterator21.e(err);
                       } finally {
-                        _iterator20.f();
+                        _iterator21.f();
                       }
                     }
                   }
                 }
               } catch (err) {
-                _iterator19.e(err);
+                _iterator20.e(err);
               } finally {
-                _iterator19.f();
+                _iterator20.f();
               }
             }
 
@@ -18377,19 +20656,19 @@
               numberOfOperations++;
             }
 
-            var _iterator21 = _createForOfIteratorHelper(limits),
-                _step21;
+            var _iterator22 = _createForOfIteratorHelper(limits),
+                _step22;
 
             try {
-              for (_iterator21.s(); !(_step21 = _iterator21.n()).done;) {
-                var data = _step21.value;
+              for (_iterator22.s(); !(_step22 = _iterator22.n()).done;) {
+                var data = _step22.value;
                 gasUnits += data.gasLimit;
                 numberOfOperations++;
               }
             } catch (err) {
-              _iterator21.e(err);
+              _iterator22.e(err);
             } finally {
-              _iterator21.f();
+              _iterator22.f();
             }
 
             bytes += 10 * numberOfOperations; // add 10 extra bytes for variation in amount & fee
@@ -18401,18 +20680,18 @@
           value: function averageGasLimit(limits) {
             var totalGasLimit = 0;
 
-            var _iterator22 = _createForOfIteratorHelper(limits),
-                _step22;
+            var _iterator23 = _createForOfIteratorHelper(limits),
+                _step23;
 
             try {
-              for (_iterator22.s(); !(_step22 = _iterator22.n()).done;) {
-                var data = _step22.value;
+              for (_iterator23.s(); !(_step23 = _iterator23.n()).done;) {
+                var data = _step23.value;
                 totalGasLimit += data.gasLimit;
               }
             } catch (err) {
-              _iterator22.e(err);
+              _iterator23.e(err);
             } finally {
-              _iterator22.f();
+              _iterator23.f();
             }
 
             return Math.ceil(totalGasLimit / limits.length);
@@ -18422,18 +20701,18 @@
           value: function averageStorageLimit(limits) {
             var totalStorageLimit = 0;
 
-            var _iterator23 = _createForOfIteratorHelper(limits),
-                _step23;
+            var _iterator24 = _createForOfIteratorHelper(limits),
+                _step24;
 
             try {
-              for (_iterator23.s(); !(_step23 = _iterator23.n()).done;) {
-                var data = _step23.value;
+              for (_iterator24.s(); !(_step24 = _iterator24.n()).done;) {
+                var data = _step24.value;
                 totalStorageLimit += data.storageLimit;
               }
             } catch (err) {
-              _iterator23.e(err);
+              _iterator24.e(err);
             } finally {
-              _iterator23.f();
+              _iterator24.f();
             }
 
             return Math.ceil(totalStorageLimit / limits.length);
@@ -18443,18 +20722,18 @@
           value: function burnFee(limits) {
             var totalStorageLimit = big_js__WEBPACK_IMPORTED_MODULE_6___default()(0);
 
-            var _iterator24 = _createForOfIteratorHelper(limits),
-                _step24;
+            var _iterator25 = _createForOfIteratorHelper(limits),
+                _step25;
 
             try {
-              for (_iterator24.s(); !(_step24 = _iterator24.n()).done;) {
-                var data = _step24.value;
+              for (_iterator25.s(); !(_step25 = _iterator25.n()).done;) {
+                var data = _step25.value;
                 totalStorageLimit = totalStorageLimit.plus(data.storageLimit);
               }
             } catch (err) {
-              _iterator24.e(err);
+              _iterator25.e(err);
             } finally {
-              _iterator24.f();
+              _iterator25.f();
             }
 
             return Number(big_js__WEBPACK_IMPORTED_MODULE_6___default()(totalStorageLimit).times(this.costPerByte).div('1000000').toString());
@@ -18462,18 +20741,18 @@
         }, {
           key: "simulate",
           value: function simulate(op) {
-            var _this40 = this;
+            var _this48 = this;
 
             op.signature = 'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q';
             return this.http.post(this.nodeURL + '/chains/main/blocks/head/helpers/scripts/run_operation', {
               operation: op,
               chain_id: this.chainId
             }, httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (res) {
-              _this40.operationService.checkApplied([res]);
+              _this48.operationService.checkApplied([res]);
 
               return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(res);
             })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (err) {
-              return _this40.operationService.errHandler(err);
+              return _this48.operationService.errHandler(err);
             }));
           }
         }, {
@@ -18497,41 +20776,41 @@
         }, {
           key: "getCounter",
           value: function getCounter(pkh) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee66() {
-              return regeneratorRuntime.wrap(function _callee66$(_context67) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee99() {
+              return regeneratorRuntime.wrap(function _callee99$(_context100) {
                 while (1) {
-                  switch (_context67.prev = _context67.next) {
+                  switch (_context100.prev = _context100.next) {
                     case 0:
-                      return _context67.abrupt("return", fetch(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/counter', {}).then(function (response) {
+                      return _context100.abrupt("return", fetch(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/counter', {}).then(function (response) {
                         return response.json();
                       }));
 
                     case 1:
                     case "end":
-                      return _context67.stop();
+                      return _context100.stop();
                   }
                 }
-              }, _callee66, this);
+              }, _callee99, this);
             }));
           }
         }, {
           key: "getManager",
           value: function getManager(pkh) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee67() {
-              return regeneratorRuntime.wrap(function _callee67$(_context68) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee100() {
+              return regeneratorRuntime.wrap(function _callee100$(_context101) {
                 while (1) {
-                  switch (_context68.prev = _context68.next) {
+                  switch (_context101.prev = _context101.next) {
                     case 0:
-                      return _context68.abrupt("return", fetch(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/manager_key', {}).then(function (response) {
+                      return _context101.abrupt("return", fetch(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/manager_key', {}).then(function (response) {
                         return response.json();
                       }));
 
                     case 1:
                     case "end":
-                      return _context68.stop();
+                      return _context101.stop();
                   }
                 }
-              }, _callee67, this);
+              }, _callee100, this);
             }));
           }
         }]);
@@ -18929,7 +21208,7 @@
 
       var kukai_embed__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
       /*! kukai-embed */
-      "ztwt");
+      "/qKp");
       /* harmony import */
 
 
@@ -18979,7 +21258,7 @@
         if (rf & 2) {
           var ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("dismiss", ctx_r0.dismiss);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("dismiss", ctx_r0.dismiss)("loginConfig", ctx_r0.loginConfig);
         }
       }
 
@@ -19021,7 +21300,7 @@
 
       var EmbeddedComponent = /*#__PURE__*/function () {
         function EmbeddedComponent(torusService, importService, walletService, coordinatorService, route, lookupService, activityService, embeddedAuthService) {
-          var _this41 = this;
+          var _this49 = this;
 
           _classCallCheck(this, EmbeddedComponent);
 
@@ -19042,52 +21321,53 @@
           this.activeAccount = null;
           this.template = null;
           this.operationRequests = null;
+          this.loginConfig = null;
 
           this.handleRequest = function (evt) {
             try {
               var data = JSON.parse(evt.data);
 
-              if (!_environments_environment__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].MAINNET || _this41.allowedOrigins.includes(evt.origin)) {
+              if (!_environments_environment__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].MAINNET || _this49.allowedOrigins.includes(evt.origin)) {
                 console.log("Received ".concat(evt.data, " from ").concat(evt.origin));
 
                 if (data && data.type &&
                 /* restricted to dev enviroment for now */
                 !_environments_environment__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].MAINNET) {
-                  _this41.origin = evt.origin;
+                  _this49.origin = evt.origin;
 
                   switch (data.type) {
                     case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].loginRequest:
-                      _this41.handleLoginRequest(data);
+                      _this49.handleLoginRequest(data);
 
                       break;
 
                     case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].operationRequest:
-                      _this41.handleOperationRequest(data);
+                      _this49.handleOperationRequest(data);
 
                       break;
 
                     case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].trackRequest:
-                      _this41.handleTrackRequest(data);
+                      _this49.handleTrackRequest(data);
 
                       break;
 
                     case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].logoutRequest:
-                      _this41.handleLogoutRequest(data);
+                      _this49.handleLogoutRequest(data);
 
                       break;
 
                     case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].authRequest:
-                      _this41.handleAuthRequest(data);
+                      _this49.handleAuthRequest(data);
 
                       break;
 
                     case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].cardRequest:
-                      _this41.handleCardRequest(data);
+                      _this49.handleCardRequest(data);
 
                       break;
 
                     case kukai_embed__WEBPACK_IMPORTED_MODULE_13__["RequestTypes"].dismissRequest:
-                      _this41.dismiss = true;
+                      _this49.dismiss = true;
                       break;
 
                     default:
@@ -19104,7 +21384,7 @@
         _createClass(EmbeddedComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this42 = this;
+            var _this50 = this;
 
             document.body.style.background = 'none';
             this.torusService.initTorus();
@@ -19119,15 +21399,15 @@
             this.route.queryParams.filter(function (params) {
               return params.instanceId;
             }).subscribe(function (params) {
-              _this42.walletService.loadStoredWallet(params.instanceId);
+              _this50.walletService.loadStoredWallet(params.instanceId);
 
-              if (_this42.walletService.wallet instanceof _services_wallet_wallet__WEBPACK_IMPORTED_MODULE_6__["EmbeddedTorusWallet"]) {
-                _this42.origin = _this42.walletService.wallet.origin;
-                _this42.activeAccount = _this42.walletService.wallet.implicitAccounts[0];
+              if (_this50.walletService.wallet instanceof _services_wallet_wallet__WEBPACK_IMPORTED_MODULE_6__["EmbeddedTorusWallet"]) {
+                _this50.origin = _this50.walletService.wallet.origin;
+                _this50.activeAccount = _this50.walletService.wallet.implicitAccounts[0];
 
-                _this42.coordinatorService.startAll();
+                _this50.coordinatorService.startAll();
 
-                _this42.subscribeToConfirmedOps();
+                _this50.subscribeToConfirmedOps();
               }
             });
             window.parent.window.postMessage(JSON.stringify({
@@ -19150,6 +21430,10 @@
             } else {
               if ((_a = req === null || req === void 0 ? void 0 : req.config) === null || _a === void 0 ? void 0 : _a.customSpinnerDismissal) {
                 this.dismiss = false;
+              }
+
+              if (req === null || req === void 0 ? void 0 : req.config) {
+                this.loginConfig = req.config;
               }
 
               this.login = true;
@@ -19181,19 +21465,19 @@
         }, {
           key: "handleTrackRequest",
           value: function handleTrackRequest(req) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee68() {
-              return regeneratorRuntime.wrap(function _callee68$(_context69) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee101() {
+              return regeneratorRuntime.wrap(function _callee101$(_context102) {
                 while (1) {
-                  switch (_context69.prev = _context69.next) {
+                  switch (_context102.prev = _context102.next) {
                     case 0:
                       this.pendingOps.push(req.opHash);
 
                     case 1:
                     case "end":
-                      return _context69.stop();
+                      return _context102.stop();
                   }
                 }
-              }, _callee68, this);
+              }, _callee101, this);
             }));
           }
         }, {
@@ -19214,7 +21498,7 @@
         }, {
           key: "loginResponse",
           value: function loginResponse(loginData) {
-            var _this43 = this;
+            var _this51 = this;
 
             var response;
             var toImport;
@@ -19262,35 +21546,36 @@
 
             if (this.dismiss === null) {
               this.login = false;
+              this.loginConfig = null;
             }
 
             setTimeout(function () {
-              _this43.sendResponse(response);
+              _this51.sendResponse(response);
 
               if (toImport) {
-                _this43.importAccount(toImport.keyPair, toImport.userInfo, toImport.instanceId);
+                _this51.importAccount(toImport.keyPair, toImport.userInfo, toImport.instanceId);
               }
             }, 10);
           }
         }, {
           key: "handleAuthRequest",
           value: function handleAuthRequest(authReq) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee69() {
-              var _this44 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee102() {
+              var _this52 = this;
 
-              return regeneratorRuntime.wrap(function _callee69$(_context70) {
+              return regeneratorRuntime.wrap(function _callee102$(_context103) {
                 while (1) {
-                  switch (_context70.prev = _context70.next) {
+                  switch (_context103.prev = _context103.next) {
                     case 0:
                       this.embeddedAuthService.authenticate(authReq, this.origin).then(function (authResponse) {
-                        _this44.sendResponse({
+                        _this52.sendResponse({
                           type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].authResponse,
                           failed: false,
                           message: authResponse.message,
                           signature: authResponse.signature
                         });
                       })["catch"](function (e) {
-                        _this44.sendResponse({
+                        _this52.sendResponse({
                           type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].authResponse,
                           failed: true,
                           error: e.message ? e.message : 'UNKNOWN_ERROR'
@@ -19299,10 +21584,10 @@
 
                     case 1:
                     case "end":
-                      return _context70.stop();
+                      return _context103.stop();
                   }
                 }
-              }, _callee69, this);
+              }, _callee102, this);
             }));
           }
         }, {
@@ -19327,7 +21612,7 @@
         }, {
           key: "operationResponse",
           value: function operationResponse(opHash) {
-            var _this45 = this;
+            var _this53 = this;
 
             var response;
 
@@ -19367,7 +21652,7 @@
             this.template = null;
             this.operationRequests = null;
             setTimeout(function () {
-              _this45.sendResponse(response);
+              _this53.sendResponse(response);
             }, 0);
           }
         }, {
@@ -19378,19 +21663,19 @@
         }, {
           key: "importAccount",
           value: function importAccount(keyPair, userInfo, instanceId) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee70() {
-              var _this46 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee103() {
+              var _this54 = this;
 
-              return regeneratorRuntime.wrap(function _callee70$(_context71) {
+              return regeneratorRuntime.wrap(function _callee103$(_context104) {
                 while (1) {
-                  switch (_context71.prev = _context71.next) {
+                  switch (_context104.prev = _context104.next) {
                     case 0:
                       if (!keyPair) {
-                        _context71.next = 3;
+                        _context104.next = 3;
                         break;
                       }
 
-                      _context71.next = 3;
+                      _context104.next = 3;
                       return this.importService.importWalletFromPk(keyPair.pk, '', {
                         verifier: userInfo.typeOfLogin,
                         id: userInfo.verifierId,
@@ -19399,20 +21684,20 @@
                         origin: this.origin
                       }, keyPair.sk, instanceId).then(function (success) {
                         if (success) {
-                          _this46.activeAccount = _this46.walletService.wallet.implicitAccounts[0];
+                          _this54.activeAccount = _this54.walletService.wallet.implicitAccounts[0];
 
-                          _this46.coordinatorService.startAll();
+                          _this54.coordinatorService.startAll();
 
-                          _this46.subscribeToConfirmedOps();
+                          _this54.subscribeToConfirmedOps();
                         }
                       });
 
                     case 3:
                     case "end":
-                      return _context71.stop();
+                      return _context104.stop();
                   }
                 }
-              }, _callee70, this);
+              }, _callee103, this);
             }));
           }
         }, {
@@ -19448,19 +21733,19 @@
         }, {
           key: "subscribeToConfirmedOps",
           value: function subscribeToConfirmedOps() {
-            var _this47 = this;
+            var _this55 = this;
 
             this.ophashSubscription = this.activityService.confirmedOp.subscribe(function (opHash) {
-              if (_this47.pendingOps.includes(opHash)) {
-                _this47.sendResponse({
+              if (_this55.pendingOps.includes(opHash)) {
+                _this55.sendResponse({
                   type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].trackResponse,
                   opHash: opHash,
                   failed: false
                 });
 
-                for (var i = 0; i < _this47.pendingOps.length; i++) {
-                  if (_this47.pendingOps[i] === opHash) {
-                    _this47.pendingOps.splice(i, 1);
+                for (var i = 0; i < _this55.pendingOps.length; i++) {
+                  if (_this55.pendingOps[i] === opHash) {
+                    _this55.pendingOps.splice(i, 1);
                   }
                 }
               }
@@ -19480,10 +21765,10 @@
         selectors: [["app-embedded"]],
         decls: 3,
         vars: 3,
-        consts: [[3, "dismiss", "loginResponse", 4, "ngIf"], [3, "headless", "operationRequest", "template", "activeAccount", "operationResponse", 4, "ngIf"], [3, "activeAccount", 4, "ngIf"], [3, "dismiss", "loginResponse"], [3, "headless", "operationRequest", "template", "activeAccount", "operationResponse"], [3, "activeAccount"]],
+        consts: [[3, "dismiss", "loginConfig", "loginResponse", 4, "ngIf"], [3, "headless", "operationRequest", "template", "activeAccount", "operationResponse", 4, "ngIf"], [3, "activeAccount", 4, "ngIf"], [3, "dismiss", "loginConfig", "loginResponse"], [3, "headless", "operationRequest", "template", "activeAccount", "operationResponse"], [3, "activeAccount"]],
         template: function EmbeddedComponent_Template(rf, ctx) {
           if (rf & 1) {
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, EmbeddedComponent_app_signin_0_Template, 1, 1, "app-signin", 0);
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, EmbeddedComponent_app_signin_0_Template, 1, 2, "app-signin", 0);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, EmbeddedComponent_app_send_1_Template, 1, 4, "app-send", 1);
 
@@ -20194,7 +22479,7 @@
         }, {
           key: "openModal",
           value: function openModal() {
-            var _this48 = this;
+            var _this56 = this;
 
             if (this.walletService.wallet) {
               // hide body scrollbar
@@ -20207,7 +22492,7 @@
 
               if (window.innerWidth > 1300) {
                 setTimeout(function () {
-                  var inputElem = _this48.toPkhView.nativeElement;
+                  var inputElem = _this56.toPkhView.nativeElement;
                   inputElem.focus();
                 }, 100);
               }
@@ -20234,10 +22519,10 @@
         }, {
           key: "openModal2",
           value: function openModal2() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee71() {
-              return regeneratorRuntime.wrap(function _callee71$(_context72) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee104() {
+              return regeneratorRuntime.wrap(function _callee104$(_context105) {
                 while (1) {
-                  switch (_context72.prev = _context72.next) {
+                  switch (_context105.prev = _context105.next) {
                     case 0:
                       this.formInvalid = this.invalidInput();
 
@@ -20257,36 +22542,36 @@
 
                     case 2:
                     case "end":
-                      return _context72.stop();
+                      return _context105.stop();
                   }
                 }
-              }, _callee71, this);
+              }, _callee104, this);
             }));
           }
         }, {
           key: "inject",
           value: function inject() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee72() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee105() {
               var pwd, keys;
-              return regeneratorRuntime.wrap(function _callee72$(_context73) {
+              return regeneratorRuntime.wrap(function _callee105$(_context106) {
                 while (1) {
-                  switch (_context73.prev = _context73.next) {
+                  switch (_context106.prev = _context106.next) {
                     case 0:
                       pwd = this.password;
                       this.password = '';
                       this.messageService.startSpinner('Signing operation...');
-                      _context73.prev = 3;
-                      _context73.next = 6;
+                      _context106.prev = 3;
+                      _context106.next = 6;
                       return this.walletService.getKeys(pwd, this.activeAccount.pkh);
 
                     case 6:
-                      keys = _context73.sent;
-                      _context73.next = 12;
+                      keys = _context106.sent;
+                      _context106.next = 12;
                       break;
 
                     case 9:
-                      _context73.prev = 9;
-                      _context73.t0 = _context73["catch"](3);
+                      _context106.prev = 9;
+                      _context106.t0 = _context106["catch"](3);
                       this.messageService.stopSpinner();
 
                     case 12:
@@ -20312,26 +22597,26 @@
 
                     case 13:
                     case "end":
-                      return _context73.stop();
+                      return _context106.stop();
                   }
                 }
-              }, _callee72, this, [[3, 9]]);
+              }, _callee105, this, [[3, 9]]);
             }));
           }
         }, {
           key: "ledgerSign",
           value: function ledgerSign() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee73() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee106() {
               var keys;
-              return regeneratorRuntime.wrap(function _callee73$(_context74) {
+              return regeneratorRuntime.wrap(function _callee106$(_context107) {
                 while (1) {
-                  switch (_context74.prev = _context74.next) {
+                  switch (_context107.prev = _context107.next) {
                     case 0:
-                      _context74.next = 2;
+                      _context107.next = 2;
                       return this.walletService.getKeys('');
 
                     case 2:
-                      keys = _context74.sent;
+                      keys = _context107.sent;
 
                       if (keys) {
                         this.sendDelegation(keys);
@@ -20339,10 +22624,10 @@
 
                     case 4:
                     case "end":
-                      return _context74.stop();
+                      return _context107.stop();
                   }
                 }
-              }, _callee73, this);
+              }, _callee106, this);
             }));
           }
         }, {
@@ -20366,13 +22651,13 @@
         }, {
           key: "sendDelegation",
           value: function sendDelegation(keys) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee75() {
-              var _this49 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee108() {
+              var _this57 = this;
 
               var fee;
-              return regeneratorRuntime.wrap(function _callee75$(_context76) {
+              return regeneratorRuntime.wrap(function _callee108$(_context109) {
                 while (1) {
-                  switch (_context76.prev = _context76.next) {
+                  switch (_context109.prev = _context109.next) {
                     case 0:
                       fee = this.storedFee;
                       this.fee = '';
@@ -20382,11 +22667,11 @@
                       }
 
                       this.operationService.delegate(this.activeAccount.address, this.getDelegate(), Number(fee), keys).subscribe(function (ans) {
-                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this49, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee74() {
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this57, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee107() {
                           var metadata;
-                          return regeneratorRuntime.wrap(function _callee74$(_context75) {
+                          return regeneratorRuntime.wrap(function _callee107$(_context108) {
                             while (1) {
-                              switch (_context75.prev = _context75.next) {
+                              switch (_context108.prev = _context108.next) {
                                 case 0:
                                   this.sendResponse = ans;
                                   console.log(JSON.stringify(ans));
@@ -20415,51 +22700,51 @@
 
                                 case 3:
                                 case "end":
-                                  return _context75.stop();
+                                  return _context108.stop();
                               }
                             }
-                          }, _callee74, this);
+                          }, _callee107, this);
                         }));
                       }, function (err) {
                         console.log('Error Message ', JSON.stringify(err));
-                        _this49.ledgerError = 'Failed to create operation';
+                        _this57.ledgerError = 'Failed to create operation';
                       });
 
                     case 4:
                     case "end":
-                      return _context76.stop();
+                      return _context109.stop();
                   }
                 }
-              }, _callee75, this);
+              }, _callee108, this);
             }));
           }
         }, {
           key: "requestLedgerSignature",
           value: function requestLedgerSignature() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee76() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee109() {
               var op, signature, signedOp;
-              return regeneratorRuntime.wrap(function _callee76$(_context77) {
+              return regeneratorRuntime.wrap(function _callee109$(_context110) {
                 while (1) {
-                  switch (_context77.prev = _context77.next) {
+                  switch (_context110.prev = _context110.next) {
                     case 0:
                       if (!(this.walletService.wallet instanceof _services_wallet_wallet__WEBPACK_IMPORTED_MODULE_9__["LedgerWallet"])) {
-                        _context77.next = 11;
+                        _context110.next = 11;
                         break;
                       }
 
                       op = this.sendResponse.payload.unsignedOperation;
                       this.messageService.startSpinner('Waiting for Ledger signature');
-                      _context77.prev = 3;
-                      _context77.next = 6;
+                      _context110.prev = 3;
+                      _context110.next = 6;
                       return this.ledgerService.signOperation('03' + op, this.walletService.wallet.implicitAccounts[0].derivationPath);
 
                     case 6:
-                      signature = _context77.sent;
+                      signature = _context110.sent;
 
                     case 7:
-                      _context77.prev = 7;
+                      _context110.prev = 7;
                       this.messageService.stopSpinner();
-                      return _context77.finish(7);
+                      return _context110.finish(7);
 
                     case 10:
                       if (signature) {
@@ -20473,72 +22758,72 @@
 
                     case 11:
                     case "end":
-                      return _context77.stop();
+                      return _context110.stop();
                   }
                 }
-              }, _callee76, this, [[3,, 7, 10]]);
+              }, _callee109, this, [[3,, 7, 10]]);
             }));
           }
         }, {
           key: "broadCastLedgerTransaction",
           value: function broadCastLedgerTransaction() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee77() {
-              var _this50 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee110() {
+              var _this58 = this;
 
-              return regeneratorRuntime.wrap(function _callee77$(_context78) {
+              return regeneratorRuntime.wrap(function _callee110$(_context111) {
                 while (1) {
-                  switch (_context78.prev = _context78.next) {
+                  switch (_context111.prev = _context111.next) {
                     case 0:
                       this.messageService.startSpinner('Broadcasting operation');
                       this.operationService.broadcast(this.sendResponse.payload.signedOperation).subscribe(function (ans) {
-                        _this50.sendResponse = ans;
+                        _this58.sendResponse = ans;
 
-                        if (ans.success && _this50.activeAccount.address) {
+                        if (ans.success && _this58.activeAccount.address) {
                           var metadata = {
-                            delegate: _this50.getDelegate(),
+                            delegate: _this58.getDelegate(),
                             opHash: ans.payload.opHash
                           };
 
-                          _this50.coordinatorService.boost(_this50.activeAccount.address, metadata);
+                          _this58.coordinatorService.boost(_this58.activeAccount.address, metadata);
                         } else {
-                          _this50.messageService.addError(_this50.sendResponse.payload.msg, 0);
+                          _this58.messageService.addError(_this58.sendResponse.payload.msg, 0);
 
-                          _this50.operationResponse.emit('broadcast_error');
+                          _this58.operationResponse.emit('broadcast_error');
                         }
 
-                        _this50.closeModal();
+                        _this58.closeModal();
 
                         console.log('ans: ' + JSON.stringify(ans));
                       }, function (error) {
-                        _this50.messageService.stopSpinner();
+                        _this58.messageService.stopSpinner();
 
-                        _this50.messageService.addError(error, 0);
+                        _this58.messageService.addError(error, 0);
 
-                        _this50.operationResponse.emit('broadcast_error');
+                        _this58.operationResponse.emit('broadcast_error');
                       });
 
                     case 2:
                     case "end":
-                      return _context78.stop();
+                      return _context111.stop();
                   }
                 }
-              }, _callee77, this);
+              }, _callee110, this);
             }));
           }
         }, {
           key: "checkReveal",
           value: function checkReveal() {
-            var _this51 = this;
+            var _this59 = this;
 
             console.log('check reveal ' + this.activeAccount.pkh);
             this.operationService.isRevealed(this.activeAccount.pkh).subscribe(function (revealed) {
               if (!revealed) {
-                _this51.revealFee = 0.0002;
+                _this59.revealFee = 0.0002;
               } else {
-                _this51.revealFee = 0;
+                _this59.revealFee = 0;
               }
 
-              _this51.checkSource();
+              _this59.checkSource();
             });
           }
         }, {
@@ -21112,54 +23397,54 @@
         _createClass(LedgerService, [{
           key: "setTransport",
           value: function setTransport() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee78() {
-              return regeneratorRuntime.wrap(function _callee78$(_context79) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee111() {
+              return regeneratorRuntime.wrap(function _callee111$(_context112) {
                 while (1) {
-                  switch (_context79.prev = _context79.next) {
+                  switch (_context112.prev = _context112.next) {
                     case 0:
                       if (this.transport) {
-                        _context79.next = 12;
+                        _context112.next = 12;
                         break;
                       }
 
                       console.log('Trying to use U2F for transport...');
-                      _context79.prev = 2;
-                      _context79.next = 5;
+                      _context112.prev = 2;
+                      _context112.next = 5;
                       return _ledgerhq_hw_transport_u2f__WEBPACK_IMPORTED_MODULE_3__["default"].create();
 
                     case 5:
-                      this.transport = _context79.sent;
+                      this.transport = _context112.sent;
                       console.log('Transport is now set to use U2F!');
-                      _context79.next = 12;
+                      _context112.next = 12;
                       break;
 
                     case 9:
-                      _context79.prev = 9;
-                      _context79.t0 = _context79["catch"](2);
+                      _context112.prev = 9;
+                      _context112.t0 = _context112["catch"](2);
                       console.log('Couldn\'t use U2F for transport!');
 
                     case 12:
                     case "end":
-                      return _context79.stop();
+                      return _context112.stop();
                   }
                 }
-              }, _callee78, this, [[2, 9]]);
+              }, _callee111, this, [[2, 9]]);
             }));
           }
         }, {
           key: "transportCheck",
           value: function transportCheck() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee79() {
-              return regeneratorRuntime.wrap(function _callee79$(_context80) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee112() {
+              return regeneratorRuntime.wrap(function _callee112$(_context113) {
                 while (1) {
-                  switch (_context80.prev = _context80.next) {
+                  switch (_context113.prev = _context113.next) {
                     case 0:
                       if (this.transport) {
-                        _context80.next = 3;
+                        _context113.next = 3;
                         break;
                       }
 
-                      _context80.next = 3;
+                      _context113.next = 3;
                       return this.setTransport();
 
                     case 3:
@@ -21169,155 +23454,155 @@
 
                     case 4:
                     case "end":
-                      return _context80.stop();
+                      return _context113.stop();
                   }
                 }
-              }, _callee79, this);
+              }, _callee112, this);
             }));
           }
         }, {
           key: "getPublicAddress",
           value: function getPublicAddress(path) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee80() {
-              var _this52 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee113() {
+              var _this60 = this;
 
               var xtz, result, pk;
-              return regeneratorRuntime.wrap(function _callee80$(_context81) {
+              return regeneratorRuntime.wrap(function _callee113$(_context114) {
                 while (1) {
-                  switch (_context81.prev = _context81.next) {
+                  switch (_context114.prev = _context114.next) {
                     case 0:
-                      _context81.next = 2;
+                      _context114.next = 2;
                       return this.transportCheck();
 
                     case 2:
                       xtz = new _obsidiansystems_hw_app_xtz__WEBPACK_IMPORTED_MODULE_4___default.a(this.transport);
-                      _context81.next = 5;
+                      _context114.next = 5;
                       return xtz.getAddress(path, true)["catch"](function (e) {
                         if (e.message) {
-                          _this52.messageService.addError(e.message);
+                          _this60.messageService.addError(e.message);
                         } else {
-                          _this52.messageService.addError(e);
+                          _this60.messageService.addError(e);
                         }
 
                         throw e;
                       });
 
                     case 5:
-                      result = _context81.sent;
+                      result = _context114.sent;
                       pk = this.operationService.hex2pk(result.publicKey);
-                      return _context81.abrupt("return", pk);
+                      return _context114.abrupt("return", pk);
 
                     case 8:
                     case "end":
-                      return _context81.stop();
+                      return _context114.stop();
                   }
                 }
-              }, _callee80, this);
+              }, _callee113, this);
             }));
           }
         }, {
           key: "signOperation",
           value: function signOperation(op, path) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee81() {
-              var _this53 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee114() {
+              var _this61 = this;
 
               var xtz, result;
-              return regeneratorRuntime.wrap(function _callee81$(_context82) {
+              return regeneratorRuntime.wrap(function _callee114$(_context115) {
                 while (1) {
-                  switch (_context82.prev = _context82.next) {
+                  switch (_context115.prev = _context115.next) {
                     case 0:
                       if (['03', '05'].includes(op.slice(0, 2))) {
-                        _context82.next = 2;
+                        _context115.next = 2;
                         break;
                       }
 
                       throw new Error('Invalid prefix');
 
                     case 2:
-                      _context82.next = 4;
+                      _context115.next = 4;
                       return this.transportCheck();
 
                     case 4:
                       xtz = new _obsidiansystems_hw_app_xtz__WEBPACK_IMPORTED_MODULE_4___default.a(this.transport);
                       console.log('op', op);
-                      _context82.next = 8;
+                      _context115.next = 8;
                       return xtz.signOperation(path, op)["catch"](function (e) {
                         console.warn(e);
 
-                        _this53.messageService.addError(e, 0);
+                        _this61.messageService.addError(e, 0);
                       });
 
                     case 8:
-                      result = _context82.sent;
+                      result = _context115.sent;
                       console.log(JSON.stringify(result));
 
                       if (!(result && result.signature)) {
-                        _context82.next = 12;
+                        _context115.next = 12;
                         break;
                       }
 
-                      return _context82.abrupt("return", result.signature);
+                      return _context115.abrupt("return", result.signature);
 
                     case 12:
-                      return _context82.abrupt("return", null);
+                      return _context115.abrupt("return", null);
 
                     case 13:
                     case "end":
-                      return _context82.stop();
+                      return _context115.stop();
                   }
                 }
-              }, _callee81, this);
+              }, _callee114, this);
             }));
           }
         }, {
           key: "signHash",
           value: function signHash(hash, path) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee82() {
-              var _this54 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee115() {
+              var _this62 = this;
 
               var xtz, result;
-              return regeneratorRuntime.wrap(function _callee82$(_context83) {
+              return regeneratorRuntime.wrap(function _callee115$(_context116) {
                 while (1) {
-                  switch (_context83.prev = _context83.next) {
+                  switch (_context116.prev = _context116.next) {
                     case 0:
                       if (!(hash.length !== 64)) {
-                        _context83.next = 2;
+                        _context116.next = 2;
                         break;
                       }
 
                       throw new Error('Invalid hash!');
 
                     case 2:
-                      _context83.next = 4;
+                      _context116.next = 4;
                       return this.transportCheck();
 
                     case 4:
                       xtz = new _obsidiansystems_hw_app_xtz__WEBPACK_IMPORTED_MODULE_4___default.a(this.transport);
-                      _context83.next = 7;
+                      _context116.next = 7;
                       return xtz.signHash(path, hash)["catch"](function (e) {
-                        _this54.messageService.addError(e, 0);
+                        _this62.messageService.addError(e, 0);
                       });
 
                     case 7:
-                      result = _context83.sent;
+                      result = _context116.sent;
                       console.log(JSON.stringify(result));
 
                       if (!(result && result.signature)) {
-                        _context83.next = 11;
+                        _context116.next = 11;
                         break;
                       }
 
-                      return _context83.abrupt("return", result.signature);
+                      return _context116.abrupt("return", result.signature);
 
                     case 11:
-                      return _context83.abrupt("return", null);
+                      return _context116.abrupt("return", null);
 
                     case 12:
                     case "end":
-                      return _context83.stop();
+                      return _context116.stop();
                   }
                 }
-              }, _callee82, this);
+              }, _callee115, this);
             }));
           }
         }]);
@@ -22367,11 +24652,11 @@
         }, {
           key: "openModal",
           value: function openModal() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee83() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee116() {
               var scrollBarWidth;
-              return regeneratorRuntime.wrap(function _callee83$(_context84) {
+              return regeneratorRuntime.wrap(function _callee116$(_context117) {
                 while (1) {
-                  switch (_context84.prev = _context84.next) {
+                  switch (_context117.prev = _context117.next) {
                     case 0:
                       scrollBarWidth = window.innerWidth - document.body.offsetWidth;
                       document.body.style.marginRight = scrollBarWidth.toString();
@@ -22381,10 +24666,10 @@
 
                     case 5:
                     case "end":
-                      return _context84.stop();
+                      return _context117.stop();
                   }
                 }
-              }, _callee83, this);
+              }, _callee116, this);
             }));
           }
         }, {
@@ -22447,18 +24732,18 @@
           value: function getTotalAmount() {
             var totalSent = big_js__WEBPACK_IMPORTED_MODULE_6___default()(0);
 
-            var _iterator25 = _createForOfIteratorHelper(this.transactions),
-                _step25;
+            var _iterator26 = _createForOfIteratorHelper(this.transactions),
+                _step26;
 
             try {
-              for (_iterator25.s(); !(_step25 = _iterator25.n()).done;) {
-                var tx = _step25.value;
+              for (_iterator26.s(); !(_step26 = _iterator26.n()).done;) {
+                var tx = _step26.value;
                 totalSent = totalSent.add(tx.amount);
               }
             } catch (err) {
-              _iterator25.e(err);
+              _iterator26.e(err);
             } finally {
-              _iterator25.f();
+              _iterator26.f();
             }
 
             return totalSent.toFixed();
@@ -22512,13 +24797,13 @@
         }, {
           key: "estimateFees",
           value: function estimateFees() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee84() {
-              var _this55 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee117() {
+              var _this63 = this;
 
               var prevSimError, txs, equiClass, callback;
-              return regeneratorRuntime.wrap(function _callee84$(_context85) {
+              return regeneratorRuntime.wrap(function _callee117$(_context118) {
                 while (1) {
-                  switch (_context85.prev = _context85.next) {
+                  switch (_context118.prev = _context118.next) {
                     case 0:
                       console.log('estimate..');
                       prevSimError = this.latestSimError;
@@ -22543,20 +24828,20 @@
                           callback = function callback(res) {
                             if (res) {
                               if (res.error) {
-                                _this55.formInvalid = res.error;
-                                _this55.latestSimError = res.error;
+                                _this63.formInvalid = res.error;
+                                _this63.latestSimError = res.error;
                               } else {
-                                _this55.defaultTransactionParams = res;
-                                _this55.formInvalid = '';
-                                _this55.latestSimError = '';
+                                _this63.defaultTransactionParams = res;
+                                _this63.formInvalid = '';
+                                _this63.latestSimError = '';
 
-                                _this55.updateMaxAmount();
+                                _this63.updateMaxAmount();
                               }
                             } else {
                               console.log('no res');
                             }
 
-                            _this55.simSemaphore--;
+                            _this63.simSemaphore--;
                           };
 
                           this.estimateService.estimateTransactions(JSON.parse(JSON.stringify(txs)), this.activeAccount.address, this.tokenTransfer, callback);
@@ -22576,10 +24861,10 @@
 
                     case 6:
                     case "end":
-                      return _context85.stop();
+                      return _context118.stop();
                   }
                 }
-              }, _callee84, this);
+              }, _callee117, this);
             }));
           }
         }, {
@@ -22590,18 +24875,18 @@
             if (this.tokenTransfer) {
               data += transactions[0].to + transactions[0].amount.toString();
             } else {
-              var _iterator26 = _createForOfIteratorHelper(transactions),
-                  _step26;
+              var _iterator27 = _createForOfIteratorHelper(transactions),
+                  _step27;
 
               try {
-                for (_iterator26.s(); !(_step26 = _iterator26.n()).done;) {
-                  var tx = _step26.value;
+                for (_iterator27.s(); !(_step27 = _iterator27.n()).done;) {
+                  var tx = _step27.value;
                   data += tx.to;
                 }
               } catch (err) {
-                _iterator26.e(err);
+                _iterator27.e(err);
               } finally {
-                _iterator26.f();
+                _iterator27.f();
               }
             }
 
@@ -22680,7 +24965,7 @@
         }, {
           key: "getBatch",
           value: function getBatch() {
-            var _this56 = this;
+            var _this64 = this;
 
             var finalCheck = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
             var txs = this.toMultipleDestinationsString.trim().split(';').map(function (row, i) {
@@ -22691,10 +24976,10 @@
                   return col;
                 });
                 assert__WEBPACK_IMPORTED_MODULE_10___default()((cols === null || cols === void 0 ? void 0 : cols.length) === 2, "Transaction ".concat(i + 1, " has invalid number of arguments. Expected 2, but got ").concat(cols === null || cols === void 0 ? void 0 : cols.length, "."));
-                assert__WEBPACK_IMPORTED_MODULE_10___default()(_this56.inputValidationService.address(cols[0]), "Transaction ".concat(i + 1, " contains an invalid destination."));
-                assert__WEBPACK_IMPORTED_MODULE_10___default()(_this56.inputValidationService.amount(cols[1]), "Transaction ".concat(i + 1, " contains an invalid amount."));
+                assert__WEBPACK_IMPORTED_MODULE_10___default()(_this64.inputValidationService.address(cols[0]), "Transaction ".concat(i + 1, " contains an invalid destination."));
+                assert__WEBPACK_IMPORTED_MODULE_10___default()(_this64.inputValidationService.amount(cols[1]), "Transaction ".concat(i + 1, " contains an invalid amount."));
 
-                _this56.checkTx(cols[0], cols[1], finalCheck);
+                _this64.checkTx(cols[0], cols[1], finalCheck);
 
                 var tx = {
                   kind: 'transaction',
@@ -22803,18 +25088,18 @@
                 var max = big_js__WEBPACK_IMPORTED_MODULE_6___default()(this.maxToSend(this.activeAccount)).plus(this.tokenTransfer ? 0 : 0.000001);
                 var amount = big_js__WEBPACK_IMPORTED_MODULE_6___default()(0);
 
-                var _iterator27 = _createForOfIteratorHelper(this.transactions),
-                    _step27;
+                var _iterator28 = _createForOfIteratorHelper(this.transactions),
+                    _step28;
 
                 try {
-                  for (_iterator27.s(); !(_step27 = _iterator27.n()).done;) {
-                    var tx = _step27.value;
+                  for (_iterator28.s(); !(_step28 = _iterator28.n()).done;) {
+                    var tx = _step28.value;
                     amount = amount.plus(big_js__WEBPACK_IMPORTED_MODULE_6___default()(tx.amount));
                   }
                 } catch (err) {
-                  _iterator27.e(err);
+                  _iterator28.e(err);
                 } finally {
-                  _iterator27.f();
+                  _iterator28.f();
                 }
 
                 if (amount.gt(max)) {
@@ -22826,18 +25111,18 @@
 
                 var _amount2 = big_js__WEBPACK_IMPORTED_MODULE_6___default()(0);
 
-                var _iterator28 = _createForOfIteratorHelper(this.transactions),
-                    _step28;
+                var _iterator29 = _createForOfIteratorHelper(this.transactions),
+                    _step29;
 
                 try {
-                  for (_iterator28.s(); !(_step28 = _iterator28.n()).done;) {
-                    var _tx = _step28.value;
+                  for (_iterator29.s(); !(_step29 = _iterator29.n()).done;) {
+                    var _tx = _step29.value;
                     _amount2 = _amount2.plus(big_js__WEBPACK_IMPORTED_MODULE_6___default()(_tx.amount));
                   }
                 } catch (err) {
-                  _iterator28.e(err);
+                  _iterator29.e(err);
                 } finally {
-                  _iterator28.f();
+                  _iterator29.f();
                 }
 
                 if (_amount2.gt(maxKt)) {
@@ -22895,10 +25180,10 @@
         }, {
           key: "verifierChange",
           value: function verifierChange() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee85() {
-              return regeneratorRuntime.wrap(function _callee85$(_context86) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee118() {
+              return regeneratorRuntime.wrap(function _callee118$(_context119) {
                 while (1) {
-                  switch (_context86.prev = _context86.next) {
+                  switch (_context119.prev = _context119.next) {
                     case 0:
                       this.torusLookupAddress = '';
 
@@ -22912,60 +25197,60 @@
 
                     case 2:
                     case "end":
-                      return _context86.stop();
+                      return _context119.stop();
                   }
                 }
-              }, _callee85, this);
+              }, _callee118, this);
             }));
           }
         }, {
           key: "torusLookup",
           value: function torusLookup() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee86() {
-              var _this57 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee119() {
+              var _this65 = this;
 
               var _yield$this$torusServ3, pkh, twitterId;
 
-              return regeneratorRuntime.wrap(function _callee86$(_context87) {
+              return regeneratorRuntime.wrap(function _callee119$(_context120) {
                 while (1) {
-                  switch (_context87.prev = _context87.next) {
+                  switch (_context120.prev = _context120.next) {
                     case 0:
                       if (this.torusService.verifierMapKeys.includes(this.torusVerifier)) {
-                        _context87.next = 4;
+                        _context120.next = 4;
                         break;
                       }
 
                       this.formInvalid = 'Invalid verifier';
-                      _context87.next = 18;
+                      _context120.next = 18;
                       break;
 
                     case 4:
                       if (!this.invalidTorusAccount()) {
-                        _context87.next = 8;
+                        _context120.next = 8;
                         break;
                       }
 
                       this.formInvalid = this.invalidTorusAccount();
-                      _context87.next = 18;
+                      _context120.next = 18;
                       break;
 
                     case 8:
                       if (!this.toPkh) {
-                        _context87.next = 18;
+                        _context120.next = 18;
                         break;
                       }
 
                       this.torusPendingLookup = true;
                       this.torusLookupId = this.toPkh;
-                      _context87.next = 13;
+                      _context120.next = 13;
                       return this.torusService.lookupPkh(this.torusVerifier, this.toPkh)["catch"](function (e) {
                         console.error(e);
-                        _this57.formInvalid = e;
+                        _this65.formInvalid = e;
                         return '';
                       });
 
                     case 13:
-                      _yield$this$torusServ3 = _context87.sent;
+                      _yield$this$torusServ3 = _context120.sent;
                       pkh = _yield$this$torusServ3.pkh;
                       twitterId = _yield$this$torusServ3.twitterId;
                       this.torusPendingLookup = false;
@@ -22980,10 +25265,10 @@
 
                     case 18:
                     case "end":
-                      return _context87.stop();
+                      return _context120.stop();
                   }
                 }
-              }, _callee86, this);
+              }, _callee119, this);
             }));
           }
         }, {
@@ -23289,7 +25574,7 @@
         }, {
           key: "openModal",
           value: function openModal() {
-            var _this58 = this;
+            var _this66 = this;
 
             // hide body scrollbar
             var scrollBarWidth = window.innerWidth - document.body.offsetWidth;
@@ -23297,7 +25582,7 @@
             document.body.style.overflow = 'hidden';
             this.modalOpen = true;
             setTimeout(function () {
-              _this58.getQR();
+              _this66.getQR();
             }, 100);
           }
         }, {
@@ -23326,7 +25611,7 @@
         }, {
           key: "open1",
           value: function open1(template1) {
-            var _this59 = this;
+            var _this67 = this;
 
             if (this.activeAddress) {
               this.modalRef1 = this.modalService.show(template1, {
@@ -23334,7 +25619,7 @@
               }); // modal-sm / modal-lg
 
               setTimeout(function () {
-                _this59.getQR();
+                _this67.getQR();
               }, 100);
             } else {
               this.messageService.add('Select an address first by clicking on it!');
@@ -23477,13 +25762,13 @@
         _createClass(TzrateService, [{
           key: "getTzrate",
           value: function getTzrate() {
-            var _this60 = this;
+            var _this68 = this;
 
             if (_environments_environment__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].MAINNET) {
               this.http.get(this.apiUrl).subscribe(function (price) {
-                _this60.walletService.wallet.XTZrate = price.tezos.usd;
+                _this68.walletService.wallet.XTZrate = price.tezos.usd;
 
-                _this60.updateFiatBalances();
+                _this68.updateFiatBalances();
               }, function (err) {
                 return console.log('Failed to get xtz price: ' + JSON.stringify(err));
               });
@@ -23499,12 +25784,12 @@
             var tot = 0;
             var change = false;
 
-            var _iterator29 = _createForOfIteratorHelper(accounts),
-                _step29;
+            var _iterator30 = _createForOfIteratorHelper(accounts),
+                _step30;
 
             try {
-              for (_iterator29.s(); !(_step29 = _iterator29.n()).done;) {
-                var account = _step29.value;
+              for (_iterator30.s(); !(_step30 = _iterator30.n()).done;) {
+                var account = _step30.value;
 
                 if (account.balanceXTZ !== null) {
                   account.balanceUSD = Number(account.balanceXTZ / 1000000 * this.walletService.wallet.XTZrate);
@@ -23513,9 +25798,9 @@
                 }
               }
             } catch (err) {
-              _iterator29.e(err);
+              _iterator30.e(err);
             } finally {
-              _iterator29.f();
+              _iterator30.f();
             }
 
             if (change) {
@@ -24816,7 +27101,7 @@
         _createClass(AccountViewComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this61 = this;
+            var _this69 = this;
 
             if (!this.walletService.wallet) {
               this.router.navigate(['']);
@@ -24831,14 +27116,14 @@
               this.router.events.pipe(Object(rxjs_internal_operators_filter__WEBPACK_IMPORTED_MODULE_8__["filter"])(function (evt) {
                 return evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"];
               })).subscribe(function () {
-                address = _this61.route.snapshot.paramMap.get('address');
+                address = _this69.route.snapshot.paramMap.get('address');
 
-                if (_this61.walletService.wallet && _this61.walletService.addressExists(address)) {
-                  _this61.account = _this61.walletService.wallet.getAccount(address);
+                if (_this69.walletService.wallet && _this69.walletService.addressExists(address)) {
+                  _this69.account = _this69.walletService.wallet.getAccount(address);
                 }
               });
               setInterval(function () {
-                return _this61.trigger = !_this61.trigger;
+                return _this69.trigger = !_this69.trigger;
               }, 1000);
             }
           }
@@ -25109,34 +27394,34 @@
             var accounts = [];
 
             if (this.implicitAccounts.length) {
-              var _iterator30 = _createForOfIteratorHelper(this.implicitAccounts),
-                  _step30;
+              var _iterator31 = _createForOfIteratorHelper(this.implicitAccounts),
+                  _step31;
 
               try {
-                for (_iterator30.s(); !(_step30 = _iterator30.n()).done;) {
-                  var implicitAccount = _step30.value;
+                for (_iterator31.s(); !(_step31 = _iterator31.n()).done;) {
+                  var implicitAccount = _step31.value;
                   accounts.push(implicitAccount);
 
                   if (implicitAccount.originatedAccounts.length) {
-                    var _iterator31 = _createForOfIteratorHelper(implicitAccount.originatedAccounts),
-                        _step31;
+                    var _iterator32 = _createForOfIteratorHelper(implicitAccount.originatedAccounts),
+                        _step32;
 
                     try {
-                      for (_iterator31.s(); !(_step31 = _iterator31.n()).done;) {
-                        var originatedAccount = _step31.value;
+                      for (_iterator32.s(); !(_step32 = _iterator32.n()).done;) {
+                        var originatedAccount = _step32.value;
                         accounts.push(originatedAccount);
                       }
                     } catch (err) {
-                      _iterator31.e(err);
+                      _iterator32.e(err);
                     } finally {
-                      _iterator31.f();
+                      _iterator32.f();
                     }
                   }
                 }
               } catch (err) {
-                _iterator30.e(err);
+                _iterator31.e(err);
               } finally {
-                _iterator30.f();
+                _iterator31.f();
               }
             }
 
@@ -25151,40 +27436,40 @@
           key: "getAccount",
           value: function getAccount(address) {
             if (this.implicitAccounts.length) {
-              var _iterator32 = _createForOfIteratorHelper(this.implicitAccounts),
-                  _step32;
+              var _iterator33 = _createForOfIteratorHelper(this.implicitAccounts),
+                  _step33;
 
               try {
-                for (_iterator32.s(); !(_step32 = _iterator32.n()).done;) {
-                  var implicitAccount = _step32.value;
+                for (_iterator33.s(); !(_step33 = _iterator33.n()).done;) {
+                  var implicitAccount = _step33.value;
 
                   if (implicitAccount.address === address) {
                     return implicitAccount;
                   }
 
                   if (implicitAccount.originatedAccounts.length) {
-                    var _iterator33 = _createForOfIteratorHelper(implicitAccount.originatedAccounts),
-                        _step33;
+                    var _iterator34 = _createForOfIteratorHelper(implicitAccount.originatedAccounts),
+                        _step34;
 
                     try {
-                      for (_iterator33.s(); !(_step33 = _iterator33.n()).done;) {
-                        var originatedAccount = _step33.value;
+                      for (_iterator34.s(); !(_step34 = _iterator34.n()).done;) {
+                        var originatedAccount = _step34.value;
 
                         if (originatedAccount.address === address) {
                           return originatedAccount;
                         }
                       }
                     } catch (err) {
-                      _iterator33.e(err);
+                      _iterator34.e(err);
                     } finally {
-                      _iterator33.f();
+                      _iterator34.f();
                     }
                   }
                 }
               } catch (err) {
-                _iterator32.e(err);
+                _iterator33.e(err);
               } finally {
-                _iterator32.f();
+                _iterator33.f();
               }
             }
 
@@ -25194,21 +27479,21 @@
           key: "getImplicitAccount",
           value: function getImplicitAccount(pkh) {
             if (this.implicitAccounts.length) {
-              var _iterator34 = _createForOfIteratorHelper(this.implicitAccounts),
-                  _step34;
+              var _iterator35 = _createForOfIteratorHelper(this.implicitAccounts),
+                  _step35;
 
               try {
-                for (_iterator34.s(); !(_step34 = _iterator34.n()).done;) {
-                  var implicitAccount = _step34.value;
+                for (_iterator35.s(); !(_step35 = _iterator35.n()).done;) {
+                  var implicitAccount = _step35.value;
 
                   if (implicitAccount.pkh === pkh) {
                     return implicitAccount;
                   }
                 }
               } catch (err) {
-                _iterator34.e(err);
+                _iterator35.e(err);
               } finally {
-                _iterator34.f();
+                _iterator35.f();
               }
             }
 
@@ -25225,13 +27510,13 @@
         var _super = _createSuper(FullWallet);
 
         function FullWallet(encryptedSeed) {
-          var _this62;
+          var _this70;
 
           _classCallCheck(this, FullWallet);
 
-          _this62 = _super.call(this);
-          _this62.encryptedSeed = encryptedSeed;
-          return _this62;
+          _this70 = _super.call(this);
+          _this70.encryptedSeed = encryptedSeed;
+          return _this70;
         }
 
         return FullWallet;
@@ -25243,13 +27528,13 @@
         var _super2 = _createSuper(LegacyWalletV1);
 
         function LegacyWalletV1(salt, encrypedSeed) {
-          var _this63;
+          var _this71;
 
           _classCallCheck(this, LegacyWalletV1);
 
-          _this63 = _super2.call(this, encrypedSeed);
-          _this63.salt = salt;
-          return _this63;
+          _this71 = _super2.call(this, encrypedSeed);
+          _this71.salt = salt;
+          return _this71;
         }
 
         return LegacyWalletV1;
@@ -25261,13 +27546,13 @@
         var _super3 = _createSuper(LegacyWalletV2);
 
         function LegacyWalletV2(IV, encryptedSeed) {
-          var _this64;
+          var _this72;
 
           _classCallCheck(this, LegacyWalletV2);
 
-          _this64 = _super3.call(this, encryptedSeed);
-          _this64.IV = IV;
-          return _this64;
+          _this72 = _super3.call(this, encryptedSeed);
+          _this72.IV = IV;
+          return _this72;
         }
 
         return LegacyWalletV2;
@@ -25279,14 +27564,14 @@
         var _super4 = _createSuper(LegacyWalletV3);
 
         function LegacyWalletV3(IV, encryptedSeed, encryptedEntropy) {
-          var _this65;
+          var _this73;
 
           _classCallCheck(this, LegacyWalletV3);
 
-          _this65 = _super4.call(this, encryptedSeed);
-          _this65.IV = IV;
-          _this65.encryptedEntropy = encryptedEntropy;
-          return _this65;
+          _this73 = _super4.call(this, encryptedSeed);
+          _this73.IV = IV;
+          _this73.encryptedEntropy = encryptedEntropy;
+          return _this73;
         }
 
         return LegacyWalletV3;
@@ -25298,15 +27583,15 @@
         var _super5 = _createSuper(HdWallet);
 
         function HdWallet(IV, encryptedSeed, encryptedEntropy) {
-          var _this66;
+          var _this74;
 
           _classCallCheck(this, HdWallet);
 
-          _this66 = _super5.call(this, encryptedSeed);
-          _this66.encryptedEntropy = encryptedEntropy;
-          _this66.IV = IV;
-          _this66.index = 0;
-          return _this66;
+          _this74 = _super5.call(this, encryptedSeed);
+          _this74.encryptedEntropy = encryptedEntropy;
+          _this74.IV = IV;
+          _this74.index = 0;
+          return _this74;
         }
 
         return HdWallet;
@@ -25318,15 +27603,15 @@
         var _super6 = _createSuper(TorusWallet);
 
         function TorusWallet(verifier, id, name) {
-          var _this67;
+          var _this75;
 
           _classCallCheck(this, TorusWallet);
 
-          _this67 = _super6.call(this);
-          _this67.verifier = verifier;
-          _this67.id = id;
-          _this67.name = name;
-          return _this67;
+          _this75 = _super6.call(this);
+          _this75.verifier = verifier;
+          _this75.id = id;
+          _this75.name = name;
+          return _this75;
         }
 
         _createClass(TorusWallet, [{
@@ -25349,15 +27634,15 @@
         var _super7 = _createSuper(EmbeddedTorusWallet);
 
         function EmbeddedTorusWallet(verifier, id, name, origin, sk, instanceId) {
-          var _this68;
+          var _this76;
 
           _classCallCheck(this, EmbeddedTorusWallet);
 
-          _this68 = _super7.call(this, verifier, id, name);
-          _this68.origin = origin;
-          _this68.sk = sk;
-          _this68.instanceId = instanceId;
-          return _this68;
+          _this76 = _super7.call(this, verifier, id, name);
+          _this76.origin = origin;
+          _this76.sk = sk;
+          _this76.instanceId = instanceId;
+          return _this76;
         }
 
         return EmbeddedTorusWallet;
@@ -25402,21 +27687,21 @@
           key: "getTokenBalance",
           value: function getTokenBalance(tokenId) {
             if (this.tokens.length) {
-              var _iterator35 = _createForOfIteratorHelper(this.tokens),
-                  _step35;
+              var _iterator36 = _createForOfIteratorHelper(this.tokens),
+                  _step36;
 
               try {
-                for (_iterator35.s(); !(_step35 = _iterator35.n()).done;) {
-                  var token = _step35.value;
+                for (_iterator36.s(); !(_step36 = _iterator36.n()).done;) {
+                  var token = _step36.value;
 
                   if (tokenId === token.tokenId) {
                     return token.balance;
                   }
                 }
               } catch (err) {
-                _iterator35.e(err);
+                _iterator36.e(err);
               } finally {
-                _iterator35.f();
+                _iterator36.f();
               }
             }
 
@@ -25459,18 +27744,18 @@
         var _super9 = _createSuper(ImplicitAccount);
 
         function ImplicitAccount(pkh, pk, derivationPath) {
-          var _this69;
+          var _this77;
 
           _classCallCheck(this, ImplicitAccount);
 
-          _this69 = _super9.call(this, pkh, pk, pkh);
-          _this69.originatedAccounts = [];
+          _this77 = _super9.call(this, pkh, pk, pkh);
+          _this77.originatedAccounts = [];
 
           if (derivationPath) {
-            _this69.derivationPath = derivationPath;
+            _this77.derivationPath = derivationPath;
           }
 
-          return _this69;
+          return _this77;
         }
 
         _createClass(ImplicitAccount, [{
@@ -25725,34 +28010,34 @@
         }, {
           key: "scan",
           value: function scan() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee87() {
-              var _this70 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee120() {
+              var _this78 = this;
 
               var hasCamera;
-              return regeneratorRuntime.wrap(function _callee87$(_context88) {
+              return regeneratorRuntime.wrap(function _callee120$(_context121) {
                 while (1) {
-                  switch (_context88.prev = _context88.next) {
+                  switch (_context121.prev = _context121.next) {
                     case 0:
-                      _context88.next = 2;
+                      _context121.next = 2;
                       return qr_scanner__WEBPACK_IMPORTED_MODULE_3__["default"].hasCamera();
 
                     case 2:
-                      hasCamera = _context88.sent;
+                      hasCamera = _context121.sent;
 
                       if (!hasCamera) {
-                        _context88.next = 10;
+                        _context121.next = 10;
                         break;
                       }
 
                       qr_scanner__WEBPACK_IMPORTED_MODULE_3__["default"].WORKER_PATH = './assets/js/qr-scanner-worker.min.js';
                       this.qrScanner = new qr_scanner__WEBPACK_IMPORTED_MODULE_3__["default"](this.videoplayer.nativeElement, function (result) {
-                        return _this70.handleQrCode(result);
+                        return _this78.handleQrCode(result);
                       });
-                      _context88.next = 8;
+                      _context121.next = 8;
                       return this.qrScanner.start();
 
                     case 8:
-                      _context88.next = 11;
+                      _context121.next = 11;
                       break;
 
                     case 10:
@@ -25760,10 +28045,10 @@
 
                     case 11:
                     case "end":
-                      return _context88.stop();
+                      return _context121.stop();
                   }
                 }
-              }, _callee87, this);
+              }, _callee120, this);
             }));
           }
         }, {
@@ -26809,7 +29094,7 @@
         }, {
           key: "retrieve",
           value: function retrieve() {
-            var _this71 = this;
+            var _this79 = this;
 
             if (this.mnemonic) {
               this.mnemonic = this.mnemonic.toLowerCase().replace(/(\r\n|\n|\r)/gm, ' ').trim();
@@ -26821,26 +29106,26 @@
 
             if (!this.inputValidationService.mnemonics(this.mnemonic)) {
               this.translate.get('MNEMONICIMPORTCOMPONENT.INVALIDMNEMONIC').subscribe(function (res) {
-                return _this71.messageService.addWarning(res, 10);
+                return _this79.messageService.addWarning(res, 10);
               });
             } else if (this.importOption === 2 && !this.inputValidationService.email(this.email)) {
               this.translate.get('MNEMONICIMPORTCOMPONENT.INVALIDEMAIL').subscribe(function (res) {
-                return _this71.messageService.addWarning(res, 10);
+                return _this79.messageService.addWarning(res, 10);
               } // 'Invalid email!'
               );
             } else if (this.importOption === 2 && !this.password) {
               this.translate.get('MNEMONICIMPORTCOMPONENT.INVALIDPASSWORD').subscribe(function (res) {
-                return _this71.messageService.addWarning(res, 10);
+                return _this79.messageService.addWarning(res, 10);
               } // 'Invalid password!'
               );
             } else if (!this.inputValidationService.passphrase(this.passphrase)) {
               this.translate.get('MNEMONICIMPORTCOMPONENT.INVALIDPASSPHRASE').subscribe(function (res) {
-                return _this71.messageService.addWarning(res, 10);
+                return _this79.messageService.addWarning(res, 10);
               } // 'Invalid passphrase!'
               );
             } else if (this.pkh && !this.inputValidationService.address(this.pkh)) {
               this.translate.get('MNEMONICIMPORTCOMPONENT.INVALIDPKH').subscribe(function (res) {
-                return _this71.messageService.addWarning(res, 10);
+                return _this79.messageService.addWarning(res, 10);
               } // 'Invalid public key hash!'
               );
             } else {
@@ -26857,11 +29142,11 @@
               if (this.pkh && pkh !== this.pkh) {
                 if (this.importOption === 2) {
                   this.translate.get('MNEMONICIMPORTCOMPONENT.INVALIDEMAILPASSWORD').subscribe(function (res) {
-                    return _this71.messageService.addWarning(res, 5);
+                    return _this79.messageService.addWarning(res, 5);
                   });
                 } else {
                   this.translate.get('MNEMONICIMPORTCOMPONENT.INVALIDPASSPHRASE').subscribe(function (res) {
-                    return _this71.messageService.addWarning(res, 5);
+                    return _this79.messageService.addWarning(res, 5);
                   });
                 }
               } else {
@@ -26872,35 +29157,35 @@
         }, {
           key: "setPwd",
           value: function setPwd() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee88() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee121() {
               var password;
-              return regeneratorRuntime.wrap(function _callee88$(_context89) {
+              return regeneratorRuntime.wrap(function _callee121$(_context122) {
                 while (1) {
-                  switch (_context89.prev = _context89.next) {
+                  switch (_context122.prev = _context122.next) {
                     case 0:
                       if (!this.validPwd()) {
-                        _context89.next = 19;
+                        _context122.next = 19;
                         break;
                       }
 
                       password = this.pwd1;
                       this.pwd1 = '';
                       this.pwd2 = '';
-                      _context89.next = 6;
+                      _context122.next = 6;
                       return this.messageService.startSpinner('Encrypting wallet...');
 
                     case 6:
-                      _context89.prev = 6;
-                      _context89.next = 9;
+                      _context122.prev = 6;
+                      _context122.next = 9;
                       return this.walletService.createEncryptedWallet(this.mnemonic, password, this.passphrase, this.importOption === 1 && this.hdImport);
 
                     case 9:
-                      this.wallet = _context89.sent;
+                      this.wallet = _context122.sent;
 
                     case 10:
-                      _context89.prev = 10;
+                      _context122.prev = 10;
                       this.messageService.stopSpinner();
-                      return _context89.finish(10);
+                      return _context122.finish(10);
 
                     case 13:
                       this.mnemonic = '';
@@ -26915,26 +29200,26 @@
 
                     case 19:
                     case "end":
-                      return _context89.stop();
+                      return _context122.stop();
                   }
                 }
-              }, _callee88, this, [[6,, 10, 13]]);
+              }, _callee121, this, [[6,, 10, 13]]);
             }));
           }
         }, {
           key: "validPwd",
           value: function validPwd() {
-            var _this72 = this;
+            var _this80 = this;
 
             if (!this.inputValidationService.password(this.pwd1)) {
               this.translate.get('MNEMONICIMPORTCOMPONENT.PASSWORDWEAK').subscribe(function (res) {
-                return _this72.messageService.addWarning(res, 10);
+                return _this80.messageService.addWarning(res, 10);
               } // 'Password is too weak!'
               );
               return false;
             } else if (this.pwd1 !== this.pwd2) {
               this.translate.get('MNEMONICIMPORTCOMPONENT.NOMATCHPASSWORDS').subscribe(function (res) {
-                return _this72.messageService.addWarning(res, 10);
+                return _this80.messageService.addWarning(res, 10);
               } // Passwords don't match!
               );
               return false;
@@ -26966,25 +29251,25 @@
         }, {
           key: "done",
           value: function done() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee89() {
-              var _this73 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee122() {
+              var _this81 = this;
 
-              return regeneratorRuntime.wrap(function _callee89$(_context90) {
+              return regeneratorRuntime.wrap(function _callee122$(_context123) {
                 while (1) {
-                  switch (_context90.prev = _context90.next) {
+                  switch (_context123.prev = _context123.next) {
                     case 0:
-                      _context90.next = 2;
+                      _context123.next = 2;
                       return this.messageService.startSpinner('Loading wallet...');
 
                     case 2:
-                      _context90.prev = 2;
-                      _context90.next = 5;
+                      _context123.prev = 2;
+                      _context123.next = 5;
                       return this.importService.importWalletFromObject(this.wallet.data, this.wallet.seed);
 
                     case 5:
-                      _context90.prev = 5;
+                      _context123.prev = 5;
                       this.messageService.stopSpinner();
-                      return _context90.finish(5);
+                      return _context123.finish(5);
 
                     case 8:
                       this.wallet = null;
@@ -26996,15 +29281,15 @@
                       }
 
                       this.translate.get('MNEMONICIMPORTCOMPONENT.WALLETREADY').subscribe(function (res) {
-                        return _this73.messageService.addSuccess(res);
+                        return _this81.messageService.addSuccess(res);
                       });
 
                     case 11:
                     case "end":
-                      return _context90.stop();
+                      return _context123.stop();
                   }
                 }
-              }, _callee89, this, [[2,, 5, 8]]);
+              }, _callee122, this, [[2,, 5, 8]]);
             }));
           }
           /* Keystore handling */
@@ -27066,34 +29351,34 @@
         }, {
           key: "checkImportPwd",
           value: function checkImportPwd() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee90() {
-              return regeneratorRuntime.wrap(function _callee90$(_context91) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee123() {
+              return regeneratorRuntime.wrap(function _callee123$(_context124) {
                 while (1) {
-                  switch (_context91.prev = _context91.next) {
+                  switch (_context124.prev = _context124.next) {
                     case 0:
                       if (!this.pwd) {
-                        _context91.next = 12;
+                        _context124.next = 12;
                         break;
                       }
 
-                      _context91.next = 3;
+                      _context124.next = 3;
                       return this.messageService.startSpinner('Importing wallet...');
 
                     case 3:
-                      _context91.prev = 3;
-                      _context91.next = 6;
+                      _context124.prev = 3;
+                      _context124.next = 6;
                       return this["import"](this.walletJson, this.pwd);
 
                     case 6:
                       this.pwd = '';
 
                     case 7:
-                      _context91.prev = 7;
+                      _context124.prev = 7;
                       this.messageService.stopSpinner();
-                      return _context91.finish(7);
+                      return _context124.finish(7);
 
                     case 10:
-                      _context91.next = 13;
+                      _context124.next = 13;
                       break;
 
                     case 12:
@@ -27101,52 +29386,52 @@
 
                     case 13:
                     case "end":
-                      return _context91.stop();
+                      return _context124.stop();
                   }
                 }
-              }, _callee90, this, [[3,, 7, 10]]);
+              }, _callee123, this, [[3,, 7, 10]]);
             }));
           }
         }, {
           key: "import",
           value: function _import(keyFile, pwd) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee91() {
-              var _this74 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee124() {
+              var _this82 = this;
 
-              return regeneratorRuntime.wrap(function _callee91$(_context92) {
+              return regeneratorRuntime.wrap(function _callee124$(_context125) {
                 while (1) {
-                  switch (_context92.prev = _context92.next) {
+                  switch (_context125.prev = _context125.next) {
                     case 0:
                       this.typeCheckFile(keyFile);
-                      _context92.next = 3;
+                      _context125.next = 3;
                       return this.importService.importWalletFromJson(keyFile, pwd).then(function (success) {
                         if (success) {
-                          if (_this74.walletService.wallet.implicitAccounts.length === 1 && _this74.walletService.wallet.implicitAccounts[0].originatedAccounts.length === 0) {
-                            _this74.router.navigate(["/account/".concat(_this74.walletService.wallet.implicitAccounts[0].address)]);
+                          if (_this82.walletService.wallet.implicitAccounts.length === 1 && _this82.walletService.wallet.implicitAccounts[0].originatedAccounts.length === 0) {
+                            _this82.router.navigate(["/account/".concat(_this82.walletService.wallet.implicitAccounts[0].address)]);
                           } else {
-                            _this74.router.navigate(['/accounts']);
+                            _this82.router.navigate(['/accounts']);
                           }
                         } else {
                           console.log(success);
 
-                          _this74.messageService.addError('Something went wrong');
+                          _this82.messageService.addError('Something went wrong');
                         }
                       })["catch"](function (e) {
-                        _this74.messageService.addError(e);
+                        _this82.messageService.addError(e);
                       });
 
                     case 3:
                     case "end":
-                      return _context92.stop();
+                      return _context125.stop();
                   }
                 }
-              }, _callee91, this);
+              }, _callee124, this);
             }));
           }
         }, {
           key: "handleFileInput",
           value: function handleFileInput(files) {
-            var _this75 = this;
+            var _this83 = this;
 
             var fileToUpload = files.item(0);
 
@@ -27169,18 +29454,18 @@
               reader.onload = function () {
                 if (typeof reader.result === 'string') {
                   try {
-                    _this75.importPreCheck(reader.result);
+                    _this83.importPreCheck(reader.result);
                   } catch (e) {
-                    _this75.messageService.addError(e, 5);
+                    _this83.messageService.addError(e, 5);
 
-                    _this75.walletJson = null;
+                    _this83.walletJson = null;
                   }
 
-                  if (_this75.walletJson) {
-                    _this75.fileName = fileToUpload.name;
+                  if (_this83.walletJson) {
+                    _this83.fileName = fileToUpload.name;
                   }
                 } else {
-                  _this75.walletJson = null;
+                  _this83.walletJson = null;
                   throw new Error('Not a string import');
                 }
               };
@@ -27350,12 +29635,12 @@
               var peers = JSON.parse(peersJson);
 
               if (peers && peers.length > 0 && pairInfo.publicKey) {
-                var _iterator36 = _createForOfIteratorHelper(peers),
-                    _step36;
+                var _iterator37 = _createForOfIteratorHelper(peers),
+                    _step37;
 
                 try {
-                  for (_iterator36.s(); !(_step36 = _iterator36.n()).done;) {
-                    var peer = _step36.value;
+                  for (_iterator37.s(); !(_step37 = _iterator37.n()).done;) {
+                    var peer = _step37.value;
 
                     if (peer.publicKey && peer.publicKey === pairInfo.publicKey) {
                       newPublicKey = false;
@@ -27364,9 +29649,9 @@
                     }
                   }
                 } catch (err) {
-                  _iterator36.e(err);
+                  _iterator37.e(err);
                 } finally {
-                  _iterator36.f();
+                  _iterator37.f();
                 }
               }
             }
@@ -27378,15 +29663,15 @@
         }, {
           key: "addPeer",
           value: function addPeer(pairInfoJson) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee92() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee125() {
               var pairInfo;
-              return regeneratorRuntime.wrap(function _callee92$(_context93) {
+              return regeneratorRuntime.wrap(function _callee125$(_context126) {
                 while (1) {
-                  switch (_context93.prev = _context93.next) {
+                  switch (_context126.prev = _context126.next) {
                     case 0:
                       pairInfo = JSON.parse(pairInfoJson);
                       console.log('PairInfo', pairInfo);
-                      _context93.next = 4;
+                      _context126.next = 4;
                       return this.client.addPeer(pairInfo);
 
                     case 4:
@@ -27395,91 +29680,91 @@
 
                     case 6:
                     case "end":
-                      return _context93.stop();
+                      return _context126.stop();
                   }
                 }
-              }, _callee92, this);
+              }, _callee125, this);
             }));
           }
         }, {
           key: "syncBeaconState",
           value: function syncBeaconState() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee93() {
-              return regeneratorRuntime.wrap(function _callee93$(_context94) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee126() {
+              return regeneratorRuntime.wrap(function _callee126$(_context127) {
                 while (1) {
-                  switch (_context94.prev = _context94.next) {
+                  switch (_context127.prev = _context127.next) {
                     case 0:
-                      _context94.next = 2;
+                      _context127.next = 2;
                       return this.getPeers();
 
                     case 2:
-                      this.peers = _context94.sent;
-                      _context94.next = 5;
+                      this.peers = _context127.sent;
+                      _context127.next = 5;
                       return this.getPermissions();
 
                     case 5:
-                      this.permissions = _context94.sent;
+                      this.permissions = _context127.sent;
 
                     case 6:
                     case "end":
-                      return _context94.stop();
+                      return _context127.stop();
                   }
                 }
-              }, _callee93, this);
+              }, _callee126, this);
             }));
           }
         }, {
           key: "removePeers",
           value: function removePeers() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee94() {
-              return regeneratorRuntime.wrap(function _callee94$(_context95) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee127() {
+              return regeneratorRuntime.wrap(function _callee127$(_context128) {
                 while (1) {
-                  switch (_context95.prev = _context95.next) {
+                  switch (_context128.prev = _context128.next) {
                     case 0:
                       if (!(this.peers.length > 0)) {
-                        _context95.next = 5;
+                        _context128.next = 5;
                         break;
                       }
 
-                      _context95.next = 3;
+                      _context128.next = 3;
                       return this.removePeer(0);
 
                     case 3:
-                      _context95.next = 0;
+                      _context128.next = 0;
                       break;
 
                     case 5:
                     case "end":
-                      return _context95.stop();
+                      return _context128.stop();
                   }
                 }
-              }, _callee94, this);
+              }, _callee127, this);
             }));
           }
         }, {
           key: "removePeer",
           value: function removePeer(index) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee95() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee128() {
               var pairInfo, senderId, peerResponse;
-              return regeneratorRuntime.wrap(function _callee95$(_context96) {
+              return regeneratorRuntime.wrap(function _callee128$(_context129) {
                 while (1) {
-                  switch (_context96.prev = _context96.next) {
+                  switch (_context129.prev = _context129.next) {
                     case 0:
                       pairInfo = this.peers[index];
-                      _context96.next = 3;
+                      _context129.next = 3;
                       return Object(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["getSenderId"])(pairInfo.publicKey);
 
                     case 3:
-                      senderId = _context96.sent;
+                      senderId = _context129.sent;
                       peerResponse = Object.assign(Object.assign({}, pairInfo), {
                         type: 'p2p-pairing-response',
                         senderId: senderId
                       });
-                      _context96.next = 7;
+                      _context129.next = 7;
                       return this.client.removePeer(peerResponse);
 
                     case 7:
-                      _context96.next = 9;
+                      _context129.next = 9;
                       return this.client.removeAppMetadata(senderId);
 
                     case 9:
@@ -27487,21 +29772,21 @@
 
                     case 10:
                     case "end":
-                      return _context96.stop();
+                      return _context129.stop();
                   }
                 }
-              }, _callee95, this);
+              }, _callee128, this);
             }));
           }
         }, {
           key: "removePermissions",
           value: function removePermissions() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee96() {
-              return regeneratorRuntime.wrap(function _callee96$(_context97) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee129() {
+              return regeneratorRuntime.wrap(function _callee129$(_context130) {
                 while (1) {
-                  switch (_context97.prev = _context97.next) {
+                  switch (_context130.prev = _context130.next) {
                     case 0:
-                      _context97.next = 2;
+                      _context130.next = 2;
                       return this.client.removeAllPermissions();
 
                     case 2:
@@ -27509,21 +29794,21 @@
 
                     case 3:
                     case "end":
-                      return _context97.stop();
+                      return _context130.stop();
                   }
                 }
-              }, _callee96, this);
+              }, _callee129, this);
             }));
           }
         }, {
           key: "removePermission",
           value: function removePermission(index) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee97() {
-              return regeneratorRuntime.wrap(function _callee97$(_context98) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee130() {
+              return regeneratorRuntime.wrap(function _callee130$(_context131) {
                 while (1) {
-                  switch (_context98.prev = _context98.next) {
+                  switch (_context131.prev = _context131.next) {
                     case 0:
-                      _context98.next = 2;
+                      _context131.next = 2;
                       return this.client.removePermission(this.permissions[index].accountIdentifier);
 
                     case 2:
@@ -27531,257 +29816,257 @@
 
                     case 3:
                     case "end":
-                      return _context98.stop();
+                      return _context131.stop();
                   }
                 }
-              }, _callee97, this);
+              }, _callee130, this);
             }));
           }
         }, {
           key: "getPeers",
           value: function getPeers() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee98() {
-              return regeneratorRuntime.wrap(function _callee98$(_context99) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee131() {
+              return regeneratorRuntime.wrap(function _callee131$(_context132) {
                 while (1) {
-                  switch (_context99.prev = _context99.next) {
+                  switch (_context132.prev = _context132.next) {
                     case 0:
-                      _context99.next = 2;
+                      _context132.next = 2;
                       return this.client.getPeers();
 
                     case 2:
-                      return _context99.abrupt("return", _context99.sent);
+                      return _context132.abrupt("return", _context132.sent);
 
                     case 3:
                     case "end":
-                      return _context99.stop();
+                      return _context132.stop();
                   }
                 }
-              }, _callee98, this);
+              }, _callee131, this);
             }));
           }
         }, {
           key: "getPermissions",
           value: function getPermissions() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee99() {
-              return regeneratorRuntime.wrap(function _callee99$(_context100) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee132() {
+              return regeneratorRuntime.wrap(function _callee132$(_context133) {
                 while (1) {
-                  switch (_context100.prev = _context100.next) {
+                  switch (_context133.prev = _context133.next) {
                     case 0:
-                      _context100.next = 2;
+                      _context133.next = 2;
                       return this.client.getPermissions();
 
                     case 2:
-                      return _context100.abrupt("return", _context100.sent);
+                      return _context133.abrupt("return", _context133.sent);
 
                     case 3:
                     case "end":
-                      return _context100.stop();
+                      return _context133.stop();
                   }
                 }
-              }, _callee99, this);
+              }, _callee132, this);
             }));
           }
         }, {
           key: "rejectOnPermission",
           value: function rejectOnPermission(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee100() {
-              return regeneratorRuntime.wrap(function _callee100$(_context101) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee133() {
+              return regeneratorRuntime.wrap(function _callee133$(_context134) {
                 while (1) {
-                  switch (_context101.prev = _context101.next) {
+                  switch (_context134.prev = _context134.next) {
                     case 0:
-                      _context101.next = 2;
+                      _context134.next = 2;
                       return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].NOT_GRANTED_ERROR, message);
 
                     case 2:
                     case "end":
-                      return _context101.stop();
+                      return _context134.stop();
                   }
                 }
-              }, _callee100, this);
+              }, _callee133, this);
             }));
           }
         }, {
           key: "rejectOnNetwork",
           value: function rejectOnNetwork(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee101() {
-              return regeneratorRuntime.wrap(function _callee101$(_context102) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee134() {
+              return regeneratorRuntime.wrap(function _callee134$(_context135) {
                 while (1) {
-                  switch (_context102.prev = _context102.next) {
+                  switch (_context135.prev = _context135.next) {
                     case 0:
-                      _context102.next = 2;
+                      _context135.next = 2;
                       return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].NETWORK_NOT_SUPPORTED, message);
 
                     case 2:
                     case "end":
-                      return _context102.stop();
+                      return _context135.stop();
                   }
                 }
-              }, _callee101, this);
+              }, _callee134, this);
             }));
           }
         }, {
           key: "rejectOnUserAbort",
           value: function rejectOnUserAbort(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee102() {
-              return regeneratorRuntime.wrap(function _callee102$(_context103) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee135() {
+              return regeneratorRuntime.wrap(function _callee135$(_context136) {
                 while (1) {
-                  switch (_context103.prev = _context103.next) {
+                  switch (_context136.prev = _context136.next) {
                     case 0:
-                      _context103.next = 2;
+                      _context136.next = 2;
                       return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].ABORTED_ERROR, message);
 
                     case 2:
                     case "end":
-                      return _context103.stop();
+                      return _context136.stop();
                   }
                 }
-              }, _callee102, this);
+              }, _callee135, this);
             }));
           }
         }, {
           key: "rejectOnSourceAddress",
           value: function rejectOnSourceAddress(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee103() {
-              return regeneratorRuntime.wrap(function _callee103$(_context104) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee136() {
+              return regeneratorRuntime.wrap(function _callee136$(_context137) {
                 while (1) {
-                  switch (_context104.prev = _context104.next) {
+                  switch (_context137.prev = _context137.next) {
                     case 0:
-                      _context104.next = 2;
+                      _context137.next = 2;
                       return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].NO_PRIVATE_KEY_FOUND_ERROR, message);
 
                     case 2:
                     case "end":
-                      return _context104.stop();
+                      return _context137.stop();
                   }
                 }
-              }, _callee103, this);
+              }, _callee136, this);
             }));
           }
         }, {
           key: "rejectOnTooManyOps",
           value: function rejectOnTooManyOps(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee104() {
-              return regeneratorRuntime.wrap(function _callee104$(_context105) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee137() {
+              return regeneratorRuntime.wrap(function _callee137$(_context138) {
                 while (1) {
-                  switch (_context105.prev = _context105.next) {
+                  switch (_context138.prev = _context138.next) {
                     case 0:
-                      _context105.next = 2;
+                      _context138.next = 2;
                       return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].TOO_MANY_OPERATIONS, message);
 
                     case 2:
                     case "end":
-                      return _context105.stop();
+                      return _context138.stop();
                   }
                 }
-              }, _callee104, this);
+              }, _callee137, this);
             }));
           }
         }, {
           key: "rejectOnUnknown",
           value: function rejectOnUnknown(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee105() {
-              return regeneratorRuntime.wrap(function _callee105$(_context106) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee138() {
+              return regeneratorRuntime.wrap(function _callee138$(_context139) {
                 while (1) {
-                  switch (_context106.prev = _context106.next) {
+                  switch (_context139.prev = _context139.next) {
                     case 0:
-                      _context106.next = 2;
+                      _context139.next = 2;
                       return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].UNKNOWN_ERROR, message);
 
                     case 2:
                     case "end":
-                      return _context106.stop();
+                      return _context139.stop();
                   }
                 }
-              }, _callee105, this);
+              }, _callee138, this);
             }));
           }
         }, {
           key: "rejectOnParameters",
           value: function rejectOnParameters(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee106() {
-              return regeneratorRuntime.wrap(function _callee106$(_context107) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee139() {
+              return regeneratorRuntime.wrap(function _callee139$(_context140) {
                 while (1) {
-                  switch (_context107.prev = _context107.next) {
+                  switch (_context140.prev = _context140.next) {
                     case 0:
-                      _context107.next = 2;
+                      _context140.next = 2;
                       return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].PARAMETERS_INVALID_ERROR, message);
 
                     case 2:
                     case "end":
-                      return _context107.stop();
+                      return _context140.stop();
                   }
                 }
-              }, _callee106, this);
+              }, _callee139, this);
             }));
           }
         }, {
           key: "rejectOnBroadcastError",
           value: function rejectOnBroadcastError(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee107() {
-              return regeneratorRuntime.wrap(function _callee107$(_context108) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee140() {
+              return regeneratorRuntime.wrap(function _callee140$(_context141) {
                 while (1) {
-                  switch (_context108.prev = _context108.next) {
+                  switch (_context141.prev = _context141.next) {
                     case 0:
-                      _context108.next = 2;
+                      _context141.next = 2;
                       return this.respondWithError(_airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconErrorType"].BROADCAST_ERROR, message);
 
                     case 2:
                     case "end":
-                      return _context108.stop();
+                      return _context141.stop();
                   }
                 }
-              }, _callee107, this);
+              }, _callee140, this);
             }));
           }
         }, {
           key: "respondWithError",
           value: function respondWithError(errorType, requestMessage) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee108() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee141() {
               var response;
-              return regeneratorRuntime.wrap(function _callee108$(_context109) {
+              return regeneratorRuntime.wrap(function _callee141$(_context142) {
                 while (1) {
-                  switch (_context109.prev = _context109.next) {
+                  switch (_context142.prev = _context142.next) {
                     case 0:
                       if (!requestMessage) {
-                        _context109.next = 11;
+                        _context142.next = 11;
                         break;
                       }
 
-                      _context109.t0 = _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconMessageType"].Error;
-                      _context109.t1 = errorType;
-                      _context109.t2 = _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BEACON_VERSION"];
-                      _context109.t3 = requestMessage.id;
-                      _context109.next = 7;
+                      _context142.t0 = _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconMessageType"].Error;
+                      _context142.t1 = errorType;
+                      _context142.t2 = _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BEACON_VERSION"];
+                      _context142.t3 = requestMessage.id;
+                      _context142.next = 7;
                       return this.client.beaconId;
 
                     case 7:
-                      _context109.t4 = _context109.sent;
+                      _context142.t4 = _context142.sent;
                       response = {
-                        type: _context109.t0,
-                        errorType: _context109.t1,
-                        version: _context109.t2,
-                        id: _context109.t3,
-                        senderId: _context109.t4
+                        type: _context142.t0,
+                        errorType: _context142.t1,
+                        version: _context142.t2,
+                        id: _context142.t3,
+                        senderId: _context142.t4
                       };
-                      _context109.next = 11;
+                      _context142.next = 11;
                       return this.client.respond(response);
 
                     case 11:
                     case "end":
-                      return _context109.stop();
+                      return _context142.stop();
                   }
                 }
-              }, _callee108, this);
+              }, _callee141, this);
             }));
           }
         }, {
           key: "approvePermissionRequest",
           value: function approvePermissionRequest(message, publicKey) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee109() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee142() {
               var response;
-              return regeneratorRuntime.wrap(function _callee109$(_context110) {
+              return regeneratorRuntime.wrap(function _callee142$(_context143) {
                 while (1) {
-                  switch (_context110.prev = _context110.next) {
+                  switch (_context143.prev = _context143.next) {
                     case 0:
                       response = {
                         type: _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconMessageType"].PermissionResponse,
@@ -27790,25 +30075,25 @@
                         id: message.id,
                         publicKey: publicKey
                       };
-                      _context110.next = 3;
+                      _context143.next = 3;
                       return this.client.respond(response);
 
                     case 3:
                     case "end":
-                      return _context110.stop();
+                      return _context143.stop();
                   }
                 }
-              }, _callee109, this);
+              }, _callee142, this);
             }));
           }
         }, {
           key: "approveSignPayloadRequest",
           value: function approveSignPayloadRequest(message, signature) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee110() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee143() {
               var response;
-              return regeneratorRuntime.wrap(function _callee110$(_context111) {
+              return regeneratorRuntime.wrap(function _callee143$(_context144) {
                 while (1) {
-                  switch (_context111.prev = _context111.next) {
+                  switch (_context144.prev = _context144.next) {
                     case 0:
                       response = {
                         type: _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_3__["BeaconMessageType"].SignPayloadResponse,
@@ -27816,15 +30101,15 @@
                         signingType: message.signingType,
                         signature: signature
                       };
-                      _context111.next = 3;
+                      _context144.next = 3;
                       return this.client.respond(response);
 
                     case 3:
                     case "end":
-                      return _context111.stop();
+                      return _context144.stop();
                   }
                 }
-              }, _callee110, this);
+              }, _callee143, this);
             }));
           }
         }]);
@@ -27961,7 +30246,7 @@
         }, {
           key: "activate",
           value: function activate() {
-            var _this76 = this;
+            var _this84 = this;
 
             this.formInvalid = this.checkInput();
 
@@ -27973,13 +30258,13 @@
               this.operationService.activate(pkh, secret).subscribe(function (ans) {
                 if (ans.success) {
                   if (ans.payload.opHash) {
-                    _this76.translate.get('ACTIVATECOMPONENT.ACTIVATESUCCESS').subscribe(function (res) {
-                      return _this76.messageService.addSuccess(res);
+                    _this84.translate.get('ACTIVATECOMPONENT.ACTIVATESUCCESS').subscribe(function (res) {
+                      return _this84.messageService.addSuccess(res);
                     } // 'Activation successfully broadcasted to the blockchain!'
                     );
                   } else {
-                    _this76.translate.get('ACTIVATECOMPONENT.RETRIEVEFAIL').subscribe(function (res) {
-                      return _this76.messageService.addWarning(res);
+                    _this84.translate.get('ACTIVATECOMPONENT.RETRIEVEFAIL').subscribe(function (res) {
+                      return _this84.messageService.addWarning(res);
                     } // Could not retrieve an operation hash
                     );
                   }
@@ -27992,12 +30277,12 @@
                     errorMessage = 'NodeError ' + JSON.stringify(ans.payload.msg);
                   }
 
-                  _this76.messageService.addError(errorMessage);
+                  _this84.messageService.addError(errorMessage);
 
                   console.log(JSON.stringify(ans.payload.msg));
                 }
               }, function (err) {
-                _this76.translate.get('ACTIVATECOMPONENT.ACTIVATEFAIL').subscribe(function (res) {
+                _this84.translate.get('ACTIVATECOMPONENT.ACTIVATEFAIL').subscribe(function (res) {
                   var errorMessage = '';
                   var activateFailed = res;
 
@@ -28007,7 +30292,7 @@
                     errorMessage = activateFailed;
                   }
 
-                  _this76.messageService.addError(errorMessage);
+                  _this84.messageService.addError(errorMessage);
                 } // 'Failed to activate wallet!'
                 );
 
@@ -29587,16 +31872,16 @@
         }, {
           key: "init",
           value: function init() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee111() {
-              return regeneratorRuntime.wrap(function _callee111$(_context112) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee144() {
+              return regeneratorRuntime.wrap(function _callee144$(_context145) {
                 while (1) {
-                  switch (_context112.prev = _context112.next) {
+                  switch (_context145.prev = _context145.next) {
                     case 0:
-                      _context112.next = 2;
+                      _context145.next = 2;
                       return this.openModal();
 
                     case 2:
-                      _context112.next = 4;
+                      _context145.next = 4;
                       return this.loadParameters();
 
                     case 4:
@@ -29606,28 +31891,28 @@
 
                     case 5:
                     case "end":
-                      return _context112.stop();
+                      return _context145.stop();
                   }
                 }
-              }, _callee111, this);
+              }, _callee144, this);
             }));
           }
         }, {
           key: "loadParameters",
           value: function loadParameters() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee112() {
-              var _iterator37, _step37, _step37$value, i, op;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee145() {
+              var _iterator38, _step38, _step38$value, i, op;
 
-              return regeneratorRuntime.wrap(function _callee112$(_context113) {
+              return regeneratorRuntime.wrap(function _callee145$(_context146) {
                 while (1) {
-                  switch (_context113.prev = _context113.next) {
+                  switch (_context146.prev = _context146.next) {
                     case 0:
                       if (this.transactions.length > 1) {
-                        _iterator37 = _createForOfIteratorHelper(this.transactions.entries());
+                        _iterator38 = _createForOfIteratorHelper(this.transactions.entries());
 
                         try {
-                          for (_iterator37.s(); !(_step37 = _iterator37.n()).done;) {
-                            _step37$value = _slicedToArray(_step37.value, 2), i = _step37$value[0], op = _step37$value[1];
+                          for (_iterator38.s(); !(_step38 = _iterator38.n()).done;) {
+                            _step38$value = _slicedToArray(_step38.value, 2), i = _step38$value[0], op = _step38$value[1];
 
                             if (op.parameters) {
                               this.batchParameters.push({
@@ -29641,9 +31926,9 @@
                             }
                           }
                         } catch (err) {
-                          _iterator37.e(err);
+                          _iterator38.e(err);
                         } finally {
-                          _iterator37.f();
+                          _iterator38.f();
                         }
                       } else if (this.transactions[0].parameters) {
                         this.updateParameters(0, this.transactions[0].parameters);
@@ -29651,10 +31936,10 @@
 
                     case 1:
                     case "end":
-                      return _context113.stop();
+                      return _context146.stop();
                   }
                 }
-              }, _callee112, this);
+              }, _callee145, this);
             }));
           }
         }, {
@@ -29710,11 +31995,11 @@
         }, {
           key: "openModal",
           value: function openModal() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee113() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee146() {
               var scrollBarWidth;
-              return regeneratorRuntime.wrap(function _callee113$(_context114) {
+              return regeneratorRuntime.wrap(function _callee146$(_context147) {
                 while (1) {
-                  switch (_context114.prev = _context114.next) {
+                  switch (_context147.prev = _context147.next) {
                     case 0:
                       scrollBarWidth = window.innerWidth - document.body.offsetWidth;
                       document.body.style.marginRight = scrollBarWidth.toString();
@@ -29723,10 +32008,10 @@
 
                     case 4:
                     case "end":
-                      return _context114.stop();
+                      return _context147.stop();
                   }
                 }
-              }, _callee113, this);
+              }, _callee146, this);
             }));
           }
         }, {
@@ -29734,18 +32019,18 @@
           value: function totalAmount() {
             var totalSent = big_js__WEBPACK_IMPORTED_MODULE_12___default()(0);
 
-            var _iterator38 = _createForOfIteratorHelper(this.transactions),
-                _step38;
+            var _iterator39 = _createForOfIteratorHelper(this.transactions),
+                _step39;
 
             try {
-              for (_iterator38.s(); !(_step38 = _iterator38.n()).done;) {
-                var tx = _step38.value;
+              for (_iterator39.s(); !(_step39 = _iterator39.n()).done;) {
+                var tx = _step39.value;
                 totalSent = totalSent.add(tx.amount);
               }
             } catch (err) {
-              _iterator38.e(err);
+              _iterator39.e(err);
             } finally {
-              _iterator38.f();
+              _iterator39.f();
             }
 
             return totalSent.toFixed();
@@ -29759,18 +32044,18 @@
 
             var totalFee = big_js__WEBPACK_IMPORTED_MODULE_12___default()(0);
 
-            var _iterator39 = _createForOfIteratorHelper(this.transactions),
-                _step39;
+            var _iterator40 = _createForOfIteratorHelper(this.transactions),
+                _step40;
 
             try {
-              for (_iterator39.s(); !(_step39 = _iterator39.n()).done;) {
-                var tx = _step39.value;
+              for (_iterator40.s(); !(_step40 = _iterator40.n()).done;) {
+                var tx = _step40.value;
                 totalFee = totalFee.add(tx.fee ? tx.fee : 0);
               }
             } catch (err) {
-              _iterator39.e(err);
+              _iterator40.e(err);
             } finally {
-              _iterator39.f();
+              _iterator40.f();
             }
 
             return totalFee.toFixed();
@@ -29780,18 +32065,18 @@
           value: function getTotalBurn() {
             var totalBurn = big_js__WEBPACK_IMPORTED_MODULE_12___default()(0);
 
-            var _iterator40 = _createForOfIteratorHelper(this.transactions),
-                _step40;
+            var _iterator41 = _createForOfIteratorHelper(this.transactions),
+                _step41;
 
             try {
-              for (_iterator40.s(); !(_step40 = _iterator40.n()).done;) {
-                var tx = _step40.value;
+              for (_iterator41.s(); !(_step41 = _iterator41.n()).done;) {
+                var tx = _step41.value;
                 totalBurn = totalBurn.add(tx.storageLimit ? tx.storageLimit : 0);
               }
             } catch (err) {
-              _iterator40.e(err);
+              _iterator41.e(err);
             } finally {
-              _iterator40.f();
+              _iterator41.f();
             }
 
             totalBurn = totalBurn.mul(this.transactions.length).times(this.costPerByte).div(1000000).toFixed();
@@ -29800,38 +32085,38 @@
         }, {
           key: "ledgerRetry",
           value: function ledgerRetry() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee114() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee147() {
               var keys;
-              return regeneratorRuntime.wrap(function _callee114$(_context115) {
+              return regeneratorRuntime.wrap(function _callee147$(_context148) {
                 while (1) {
-                  switch (_context115.prev = _context115.next) {
+                  switch (_context148.prev = _context148.next) {
                     case 0:
                       if (this.inputValidationService.fee(this.getTotalFee())) {
-                        _context115.next = 3;
+                        _context148.next = 3;
                         break;
                       }
 
                       this.messageService.addError('Invalid fee');
-                      return _context115.abrupt("return");
+                      return _context148.abrupt("return");
 
                     case 3:
                       this.messageService.startSpinner('Preparing transaction...');
-                      _context115.next = 6;
+                      _context148.next = 6;
                       return this.walletService.getKeys('');
 
                     case 6:
-                      keys = _context115.sent;
+                      keys = _context148.sent;
 
                       if (!keys) {
-                        _context115.next = 12;
+                        _context148.next = 12;
                         break;
                       }
 
-                      _context115.next = 10;
+                      _context148.next = 10;
                       return this.sendTransaction(keys);
 
                     case 10:
-                      _context115.next = 13;
+                      _context148.next = 13;
                       break;
 
                     case 12:
@@ -29839,57 +32124,57 @@
 
                     case 13:
                     case "end":
-                      return _context115.stop();
+                      return _context148.stop();
                   }
                 }
-              }, _callee114, this);
+              }, _callee147, this);
             }));
           }
         }, {
           key: "inject",
           value: function inject() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee115() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee148() {
               var pwd, keys;
-              return regeneratorRuntime.wrap(function _callee115$(_context116) {
+              return regeneratorRuntime.wrap(function _callee148$(_context149) {
                 while (1) {
-                  switch (_context116.prev = _context116.next) {
+                  switch (_context149.prev = _context149.next) {
                     case 0:
                       if (!this.walletService.isLedgerWallet()) {
-                        _context116.next = 6;
+                        _context149.next = 6;
                         break;
                       }
 
                       this.broadCastLedgerTransaction();
                       this.sendResponse = null;
                       this.closeModal();
-                      _context116.next = 22;
+                      _context149.next = 22;
                       break;
 
                     case 6:
                       if (this.inputValidationService.fee(this.getTotalFee())) {
-                        _context116.next = 9;
+                        _context149.next = 9;
                         break;
                       }
 
                       this.messageService.addError('Invalid fee');
-                      return _context116.abrupt("return");
+                      return _context149.abrupt("return");
 
                     case 9:
                       pwd = this.password;
                       this.password = '';
                       this.messageService.startSpinner('Signing transaction...');
-                      _context116.prev = 12;
-                      _context116.next = 15;
+                      _context149.prev = 12;
+                      _context149.next = 15;
                       return this.walletService.getKeys(pwd, this.activeAccount.pkh);
 
                     case 15:
-                      keys = _context116.sent;
-                      _context116.next = 21;
+                      keys = _context149.sent;
+                      _context149.next = 21;
                       break;
 
                     case 18:
-                      _context116.prev = 18;
-                      _context116.t0 = _context116["catch"](12);
+                      _context149.prev = 18;
+                      _context149.t0 = _context149["catch"](12);
                       this.messageService.stopSpinner();
 
                     case 21:
@@ -29910,45 +32195,45 @@
 
                     case 22:
                     case "end":
-                      return _context116.stop();
+                      return _context149.stop();
                   }
                 }
-              }, _callee115, this, [[12, 18]]);
+              }, _callee148, this, [[12, 18]]);
             }));
           }
         }, {
           key: "sendTransaction",
           value: function sendTransaction(keys) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee117() {
-              var _this77 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee150() {
+              var _this85 = this;
 
-              return regeneratorRuntime.wrap(function _callee117$(_context118) {
+              return regeneratorRuntime.wrap(function _callee150$(_context151) {
                 while (1) {
-                  switch (_context118.prev = _context118.next) {
+                  switch (_context151.prev = _context151.next) {
                     case 0:
                       this.operationService.transfer(this.activeAccount.address, this.transactions, Number(this.getTotalFee()), keys, this.tokenTransfer).subscribe(function (ans) {
-                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this77, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee116() {
-                          var metadata, _iterator41, _step41, transaction;
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this85, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee149() {
+                          var metadata, _iterator42, _step42, transaction;
 
-                          return regeneratorRuntime.wrap(function _callee116$(_context117) {
+                          return regeneratorRuntime.wrap(function _callee149$(_context150) {
                             while (1) {
-                              switch (_context117.prev = _context117.next) {
+                              switch (_context150.prev = _context150.next) {
                                 case 0:
                                   this.sendResponse = ans;
 
                                   if (!(ans.success === true)) {
-                                    _context117.next = 37;
+                                    _context150.next = 37;
                                     break;
                                   }
 
                                   console.log('Transaction successful ', ans);
 
                                   if (!ans.payload.opHash) {
-                                    _context117.next = 31;
+                                    _context150.next = 31;
                                     break;
                                   }
 
-                                  _context117.next = 6;
+                                  _context150.next = 6;
                                   return this.messageService.stopSpinner();
 
                                 case 6:
@@ -29958,7 +32243,7 @@
                                     opHash: ans.payload.opHash,
                                     tokenTransfer: this.tokenTransfer
                                   };
-                                  _context117.next = 10;
+                                  _context150.next = 10;
                                   return this.coordinatorService.boost(this.activeAccount.address, metadata);
 
                                 case 10:
@@ -29966,70 +32251,70 @@
                                     this.torusNotification(this.transactions[0]);
                                   }
 
-                                  _iterator41 = _createForOfIteratorHelper(this.transactions);
-                                  _context117.prev = 12;
+                                  _iterator42 = _createForOfIteratorHelper(this.transactions);
+                                  _context150.prev = 12;
 
-                                  _iterator41.s();
+                                  _iterator42.s();
 
                                 case 14:
-                                  if ((_step41 = _iterator41.n()).done) {
-                                    _context117.next = 21;
+                                  if ((_step42 = _iterator42.n()).done) {
+                                    _context150.next = 21;
                                     break;
                                   }
 
-                                  transaction = _step41.value;
+                                  transaction = _step42.value;
 
                                   if (!this.walletService.addressExists(transaction.destination)) {
-                                    _context117.next = 19;
+                                    _context150.next = 19;
                                     break;
                                   }
 
-                                  _context117.next = 19;
+                                  _context150.next = 19;
                                   return this.coordinatorService.boost(transaction.destination);
 
                                 case 19:
-                                  _context117.next = 14;
+                                  _context150.next = 14;
                                   break;
 
                                 case 21:
-                                  _context117.next = 26;
+                                  _context150.next = 26;
                                   break;
 
                                 case 23:
-                                  _context117.prev = 23;
-                                  _context117.t0 = _context117["catch"](12);
+                                  _context150.prev = 23;
+                                  _context150.t0 = _context150["catch"](12);
 
-                                  _iterator41.e(_context117.t0);
+                                  _iterator42.e(_context150.t0);
 
                                 case 26:
-                                  _context117.prev = 26;
+                                  _context150.prev = 26;
 
-                                  _iterator41.f();
+                                  _iterator42.f();
 
-                                  return _context117.finish(26);
+                                  return _context150.finish(26);
 
                                 case 29:
-                                  _context117.next = 35;
+                                  _context150.next = 35;
                                   break;
 
                                 case 31:
                                   if (!(this.walletService.wallet instanceof _services_wallet_wallet__WEBPACK_IMPORTED_MODULE_13__["LedgerWallet"])) {
-                                    _context117.next = 35;
+                                    _context150.next = 35;
                                     break;
                                   }
 
-                                  _context117.next = 34;
+                                  _context150.next = 34;
                                   return this.requestLedgerSignature();
 
                                 case 34:
-                                  return _context117.abrupt("return");
+                                  return _context150.abrupt("return");
 
                                 case 35:
-                                  _context117.next = 42;
+                                  _context150.next = 42;
                                   break;
 
                                 case 37:
-                                  _context117.next = 39;
+                                  _context150.next = 39;
                                   return this.messageService.stopSpinner();
 
                                 case 39:
@@ -30042,74 +32327,74 @@
 
                                 case 43:
                                 case "end":
-                                  return _context117.stop();
+                                  return _context150.stop();
                               }
                             }
-                          }, _callee116, this, [[12, 23, 26, 29]]);
+                          }, _callee149, this, [[12, 23, 26, 29]]);
                         }));
                       }, function (err) {
-                        _this77.messageService.stopSpinner();
+                        _this85.messageService.stopSpinner();
 
                         console.log('Error Message ', JSON.stringify(err));
 
-                        if (_this77.walletService.isLedgerWallet()) {
-                          _this77.messageService.addError('Failed to create transaction', 0);
+                        if (_this85.walletService.isLedgerWallet()) {
+                          _this85.messageService.addError('Failed to create transaction', 0);
 
-                          _this77.operationResponse.emit('broadcast_error');
+                          _this85.operationResponse.emit('broadcast_error');
                         }
 
-                        _this77.reset();
+                        _this85.reset();
                       });
 
                     case 1:
                     case "end":
-                      return _context118.stop();
+                      return _context151.stop();
                   }
                 }
-              }, _callee117, this);
+              }, _callee150, this);
             }));
           }
         }, {
           key: "requestLedgerSignature",
           value: function requestLedgerSignature() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee118() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee151() {
               var op, signature, signedOp;
-              return regeneratorRuntime.wrap(function _callee118$(_context119) {
+              return regeneratorRuntime.wrap(function _callee151$(_context152) {
                 while (1) {
-                  switch (_context119.prev = _context119.next) {
+                  switch (_context152.prev = _context152.next) {
                     case 0:
                       if (!(this.walletService.wallet instanceof _services_wallet_wallet__WEBPACK_IMPORTED_MODULE_13__["LedgerWallet"])) {
-                        _context119.next = 19;
+                        _context152.next = 19;
                         break;
                       }
 
-                      _context119.next = 3;
+                      _context152.next = 3;
                       return this.messageService.startSpinner('Waiting for Ledger signature...');
 
                     case 3:
-                      _context119.prev = 3;
+                      _context152.prev = 3;
                       op = this.sendResponse.payload.unsignedOperation;
                       signature = '';
 
                       if (!(op.length <= 2290)) {
-                        _context119.next = 12;
+                        _context152.next = 12;
                         break;
                       }
 
-                      _context119.next = 9;
+                      _context152.next = 9;
                       return this.ledgerService.signOperation('03' + op, this.walletService.wallet.implicitAccounts[0].derivationPath);
 
                     case 9:
-                      signature = _context119.sent;
-                      _context119.next = 15;
+                      signature = _context152.sent;
+                      _context152.next = 15;
                       break;
 
                     case 12:
-                      _context119.next = 14;
+                      _context152.next = 14;
                       return this.ledgerService.signHash(this.operationService.ledgerPreHash('03' + op), this.walletService.wallet.implicitAccounts[0].derivationPath);
 
                     case 14:
-                      signature = _context119.sent;
+                      signature = _context152.sent;
 
                     case 15:
                       if (signature) {
@@ -30121,39 +32406,39 @@
                       }
 
                     case 16:
-                      _context119.prev = 16;
+                      _context152.prev = 16;
                       this.messageService.stopSpinner();
-                      return _context119.finish(16);
+                      return _context152.finish(16);
 
                     case 19:
                     case "end":
-                      return _context119.stop();
+                      return _context152.stop();
                   }
                 }
-              }, _callee118, this, [[3,, 16, 19]]);
+              }, _callee151, this, [[3,, 16, 19]]);
             }));
           }
         }, {
           key: "broadCastLedgerTransaction",
           value: function broadCastLedgerTransaction() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee120() {
-              var _this78 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee153() {
+              var _this86 = this;
 
-              return regeneratorRuntime.wrap(function _callee120$(_context121) {
+              return regeneratorRuntime.wrap(function _callee153$(_context154) {
                 while (1) {
-                  switch (_context121.prev = _context121.next) {
+                  switch (_context154.prev = _context154.next) {
                     case 0:
                       this.operationService.broadcast(this.sendResponse.payload.signedOperation).subscribe(function (ans) {
-                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this78, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee119() {
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this86, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee152() {
                           var metadata;
-                          return regeneratorRuntime.wrap(function _callee119$(_context120) {
+                          return regeneratorRuntime.wrap(function _callee152$(_context153) {
                             while (1) {
-                              switch (_context120.prev = _context120.next) {
+                              switch (_context153.prev = _context153.next) {
                                 case 0:
                                   this.sendResponse = ans;
 
                                   if (!(ans.success && this.activeAccount)) {
-                                    _context120.next = 12;
+                                    _context153.next = 12;
                                     break;
                                   }
 
@@ -30167,21 +32452,21 @@
                                     this.torusNotification(this.transactions[0]);
                                   }
 
-                                  _context120.next = 6;
+                                  _context153.next = 6;
                                   return this.coordinatorService.boost(this.activeAccount.address, metadata);
 
                                 case 6:
                                   if (!this.walletService.addressExists(this.transactions[0].destination)) {
-                                    _context120.next = 9;
+                                    _context153.next = 9;
                                     break;
                                   }
 
-                                  _context120.next = 9;
+                                  _context153.next = 9;
                                   return this.coordinatorService.boost(this.transactions[0].destination);
 
                                 case 9:
                                   this.operationResponse.emit(ans.payload.opHash);
-                                  _context120.next = 14;
+                                  _context153.next = 14;
                                   break;
 
                                 case 12:
@@ -30194,29 +32479,29 @@
 
                                 case 16:
                                 case "end":
-                                  return _context120.stop();
+                                  return _context153.stop();
                               }
                             }
-                          }, _callee119, this);
+                          }, _callee152, this);
                         }));
                       });
 
                     case 1:
                     case "end":
-                      return _context121.stop();
+                      return _context154.stop();
                   }
                 }
-              }, _callee120, this);
+              }, _callee153, this);
             }));
           }
         }, {
           key: "torusNotification",
           value: function torusNotification(transaction) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee121() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee154() {
               var amount;
-              return regeneratorRuntime.wrap(function _callee121$(_context122) {
+              return regeneratorRuntime.wrap(function _callee154$(_context155) {
                 while (1) {
-                  switch (_context122.prev = _context122.next) {
+                  switch (_context155.prev = _context155.next) {
                     case 0:
                       if (transaction.meta) {
                         amount = this.tokenService.formatAmount(this.tokenTransfer, transaction.amount.toString(), false);
@@ -30235,10 +32520,10 @@
 
                     case 1:
                     case "end":
-                      return _context122.stop();
+                      return _context155.stop();
                   }
                 }
-              }, _callee121, this);
+              }, _callee154, this);
             }));
           }
         }, {
@@ -30720,21 +33005,21 @@
         }, {
           key: "getTransactonsCounter",
           value: function getTransactonsCounter(account) {
-            var _this79 = this;
+            var _this87 = this;
 
             var knownTokenIds = this.tokenService.knownTokenIds();
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["from"])(this.indexerService.accountInfo(account.address, knownTokenIds)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (data) {
               var counter = data.counter;
               var unknownTokenIds = data.unknownTokenIds ? data.unknownTokenIds : [];
 
-              _this79.handleUnknownTokenIds(unknownTokenIds);
+              _this87.handleUnknownTokenIds(unknownTokenIds);
 
               if (account.state !== counter) {
                 if (data.tokens) {
-                  _this79.updateTokenBalances(account, data.tokens);
+                  _this87.updateTokenBalances(account, data.tokens);
                 }
 
-                return _this79.getAllTransactions(account, counter);
+                return _this87.getAllTransactions(account, counter);
               } else {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
                   upToDate: true
@@ -30746,38 +33031,38 @@
           key: "handleUnknownTokenIds",
           value: function handleUnknownTokenIds(unknownTokenIds) {
             if (unknownTokenIds.length) {
-              var _iterator42 = _createForOfIteratorHelper(unknownTokenIds),
-                  _step42;
+              var _iterator43 = _createForOfIteratorHelper(unknownTokenIds),
+                  _step43;
 
               try {
-                for (_iterator42.s(); !(_step42 = _iterator42.n()).done;) {
-                  var tokenId = _step42.value;
+                for (_iterator43.s(); !(_step43 = _iterator43.n()).done;) {
+                  var tokenId = _step43.value;
                   var tok = tokenId.split(':');
                   this.tokenService.searchMetadata(tok[0], tok[1]);
                 }
               } catch (err) {
-                _iterator42.e(err);
+                _iterator43.e(err);
               } finally {
-                _iterator42.f();
+                _iterator43.f();
               }
             }
           }
         }, {
           key: "updateTokenBalances",
           value: function updateTokenBalances(account, tokens) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee122() {
-              var _iterator43, _step43, token, tokenId;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee155() {
+              var _iterator44, _step44, token, tokenId;
 
-              return regeneratorRuntime.wrap(function _callee122$(_context123) {
+              return regeneratorRuntime.wrap(function _callee155$(_context156) {
                 while (1) {
-                  switch (_context123.prev = _context123.next) {
+                  switch (_context156.prev = _context156.next) {
                     case 0:
                       if (tokens && tokens.length) {
-                        _iterator43 = _createForOfIteratorHelper(tokens);
+                        _iterator44 = _createForOfIteratorHelper(tokens);
 
                         try {
-                          for (_iterator43.s(); !(_step43 = _iterator43.n()).done;) {
-                            token = _step43.value;
+                          for (_iterator44.s(); !(_step44 = _iterator44.n()).done;) {
+                            token = _step44.value;
                             tokenId = "".concat(token.contract, ":").concat(token.token_id);
 
                             if (tokenId) {
@@ -30785,9 +33070,9 @@
                             }
                           }
                         } catch (err) {
-                          _iterator43.e(err);
+                          _iterator44.e(err);
                         } finally {
-                          _iterator43.f();
+                          _iterator44.f();
                         }
                       }
 
@@ -30795,22 +33080,22 @@
 
                     case 2:
                     case "end":
-                      return _context123.stop();
+                      return _context156.stop();
                   }
                 }
-              }, _callee122, this);
+              }, _callee155, this);
             }));
           }
         }, {
           key: "getAllTransactions",
           value: function getAllTransactions(account, counter) {
-            var _this80 = this;
+            var _this88 = this;
 
             var knownTokenIds = this.tokenService.knownTokenIds();
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["from"])(this.indexerService.getOperations(account.address, knownTokenIds, this.walletService.wallet)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (resp) {
               var operations = resp.operations;
 
-              _this80.handleUnknownTokenIds(resp.unknownTokenIds);
+              _this88.handleUnknownTokenIds(resp.unknownTokenIds);
 
               if (Array.isArray(operations)) {
                 var oldActivities = account.activities;
@@ -30818,30 +33103,30 @@
                 var oldState = account.state;
                 account.state = counter;
 
-                _this80.walletService.storeWallet();
+                _this88.walletService.storeWallet();
 
                 if (oldState !== '') {
                   // Exclude inital loading
-                  _this80.promptNewActivities(account, oldActivities, operations);
+                  _this88.promptNewActivities(account, oldActivities, operations);
                 } else {
                   console.log('# Excluded ' + counter);
                 }
 
-                var _iterator44 = _createForOfIteratorHelper(operations),
-                    _step44;
+                var _iterator45 = _createForOfIteratorHelper(operations),
+                    _step45;
 
                 try {
-                  for (_iterator44.s(); !(_step44 = _iterator44.n()).done;) {
-                    var activity = _step44.value;
+                  for (_iterator45.s(); !(_step45 = _iterator45.n()).done;) {
+                    var activity = _step45.value;
 
-                    var counterParty = _this80.getCounterparty(activity, account, false);
+                    var counterParty = _this88.getCounterparty(activity, account, false);
 
-                    _this80.lookupService.check(counterParty);
+                    _this88.lookupService.check(counterParty);
                   }
                 } catch (err) {
-                  _iterator44.e(err);
+                  _iterator45.e(err);
                 } finally {
-                  _iterator44.f();
+                  _iterator45.f();
                 }
               } else {
                 console.log(operations);
@@ -30855,14 +33140,14 @@
         }, {
           key: "promptNewActivities",
           value: function promptNewActivities(account, oldActivities, newActivities) {
-            var _this81 = this;
+            var _this89 = this;
 
-            var _iterator45 = _createForOfIteratorHelper(newActivities),
-                _step45;
+            var _iterator46 = _createForOfIteratorHelper(newActivities),
+                _step46;
 
             try {
               var _loop2 = function _loop2() {
-                var activity = _step45.value;
+                var activity = _step46.value;
                 var index = oldActivities.findIndex(function (a) {
                   return a.hash === activity.hash;
                 });
@@ -30874,35 +33159,35 @@
                   if (timeDiff < 3600000) {
                     // 1 hour
                     if (activity.hash) {
-                      _this81.confirmedOp.next(activity.hash);
+                      _this89.confirmedOp.next(activity.hash);
                     }
 
                     if (activity.type === 'transaction') {
                       if (account.address === activity.source.address) {
-                        _this81.messageService.addSuccess(account.shortAddress() + ': Sent ' + _this81.tokenService.formatAmount(activity.tokenId, activity.amount.toString()));
+                        _this89.messageService.addSuccess(account.shortAddress() + ': Sent ' + _this89.tokenService.formatAmount(activity.tokenId, activity.amount.toString()));
                       }
 
                       if (account.address === activity.destination.address) {
-                        _this81.messageService.addSuccess(account.shortAddress() + ': Received ' + _this81.tokenService.formatAmount(activity.tokenId, activity.amount.toString()));
+                        _this89.messageService.addSuccess(account.shortAddress() + ': Received ' + _this89.tokenService.formatAmount(activity.tokenId, activity.amount.toString()));
                       }
                     } else if (activity.type === 'delegation') {
-                      _this81.messageService.addSuccess(account.shortAddress() + ': Delegate updated');
+                      _this89.messageService.addSuccess(account.shortAddress() + ': Delegate updated');
                     } else if (activity.type === 'origination') {
-                      _this81.messageService.addSuccess(account.shortAddress() + ': Contract originated');
+                      _this89.messageService.addSuccess(account.shortAddress() + ': Contract originated');
                     } else if (activity.type === 'activation') {
-                      _this81.messageService.addSuccess(account.shortAddress() + ': Account activated');
+                      _this89.messageService.addSuccess(account.shortAddress() + ': Account activated');
                     }
                   }
                 }
               };
 
-              for (_iterator45.s(); !(_step45 = _iterator45.n()).done;) {
+              for (_iterator46.s(); !(_step46 = _iterator46.n()).done;) {
                 _loop2();
               }
             } catch (err) {
-              _iterator45.e(err);
+              _iterator46.e(err);
             } finally {
-              _iterator45.f();
+              _iterator46.f();
             }
           }
         }, {
@@ -31088,82 +33373,82 @@
         }, {
           key: "importWalletFromJson",
           value: function importWalletFromJson(json, pwd) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee123() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee156() {
               var seed, walletData;
-              return regeneratorRuntime.wrap(function _callee123$(_context124) {
+              return regeneratorRuntime.wrap(function _callee156$(_context157) {
                 while (1) {
-                  switch (_context124.prev = _context124.next) {
+                  switch (_context157.prev = _context157.next) {
                     case 0:
-                      _context124.prev = 0;
+                      _context157.prev = 0;
                       walletData = JSON.parse(json);
 
                       if (!(walletData.walletType === 4 && walletData.version === 3)) {
-                        _context124.next = 8;
+                        _context157.next = 8;
                         break;
                       }
 
-                      _context124.next = 5;
+                      _context157.next = 5;
                       return this.encryptionService.decrypt(walletData.encryptedSeed, pwd, walletData.iv, 3);
 
                     case 5:
-                      seed = _context124.sent;
-                      _context124.next = 21;
+                      seed = _context157.sent;
+                      _context157.next = 21;
                       break;
 
                     case 8:
                       if (!(walletData.walletType === 0)) {
-                        _context124.next = 21;
+                        _context157.next = 21;
                         break;
                       }
 
                       if (!(walletData.version === 1)) {
-                        _context124.next = 17;
+                        _context157.next = 17;
                         break;
                       }
 
                       console.log('v1');
-                      _context124.next = 13;
+                      _context157.next = 13;
                       return this.encryptionService.decrypt(walletData.encryptedSeed, pwd, walletData.pkh.slice(3, 19), 1);
 
                     case 13:
-                      seed = _context124.sent;
+                      seed = _context157.sent;
 
                       if (_tezos_core_tools_crypto_utils__WEBPACK_IMPORTED_MODULE_5__["utils"].seedToKeyPair(seed).pkh !== walletData.pkh) {
                         seed = '';
                       }
 
-                      _context124.next = 21;
+                      _context157.next = 21;
                       break;
 
                     case 17:
                       if (!(walletData.version === 2 || walletData.version === 3)) {
-                        _context124.next = 21;
+                        _context157.next = 21;
                         break;
                       }
 
-                      _context124.next = 20;
+                      _context157.next = 20;
                       return this.encryptionService.decrypt(walletData.encryptedSeed, pwd, walletData.iv, walletData.version);
 
                     case 20:
-                      seed = _context124.sent;
+                      seed = _context157.sent;
 
                     case 21:
-                      _context124.next = 27;
+                      _context157.next = 27;
                       break;
 
                     case 23:
-                      _context124.prev = 23;
-                      _context124.t0 = _context124["catch"](0);
-                      console.error(_context124.t0);
+                      _context157.prev = 23;
+                      _context157.t0 = _context157["catch"](0);
+                      console.error(_context157.t0);
                       throw new Error('Failed to decrypt keystore file');
 
                     case 27:
                       if (!seed) {
-                        _context124.next = 31;
+                        _context157.next = 31;
                         break;
                       }
 
-                      return _context124.abrupt("return", this.importWalletFromObject(walletData, seed).then(function (ans) {
+                      return _context157.abrupt("return", this.importWalletFromObject(walletData, seed).then(function (ans) {
                         return ans;
                       }, function (e) {
                         console.error(e);
@@ -31175,10 +33460,10 @@
 
                     case 32:
                     case "end":
-                      return _context124.stop();
+                      return _context157.stop();
                   }
                 }
-              }, _callee123, this, [[0, 23]]);
+              }, _callee156, this, [[0, 23]]);
             }));
           }
         }, {
@@ -31186,64 +33471,64 @@
           value: function importWalletFromObject(data, seed) {
             var _a;
 
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee124() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee157() {
               var keys, index, state, accountInfo;
-              return regeneratorRuntime.wrap(function _callee124$(_context125) {
+              return regeneratorRuntime.wrap(function _callee157$(_context158) {
                 while (1) {
-                  switch (_context125.prev = _context125.next) {
+                  switch (_context158.prev = _context158.next) {
                     case 0:
                       this.coordinatorService.stopAll();
 
                       if (!(data.walletType === 4 && data.version === 3)) {
-                        _context125.next = 5;
+                        _context158.next = 5;
                         break;
                       }
 
                       // HD
                       this.walletService.wallet = new _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["HdWallet"](data.iv, data.encryptedSeed, data.encryptedEntropy);
-                      _context125.next = 22;
+                      _context158.next = 22;
                       break;
 
                     case 5:
                       if (!(data.walletType === 0)) {
-                        _context125.next = 21;
+                        _context158.next = 21;
                         break;
                       }
 
                       if (!(data.version === 3)) {
-                        _context125.next = 10;
+                        _context158.next = 10;
                         break;
                       }
 
                       this.walletService.wallet = new _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["LegacyWalletV3"](data.iv, data.encryptedSeed, data.encryptedEntropy);
-                      _context125.next = 19;
+                      _context158.next = 19;
                       break;
 
                     case 10:
                       if (!(data.version === 2)) {
-                        _context125.next = 14;
+                        _context158.next = 14;
                         break;
                       }
 
                       this.walletService.wallet = new _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["LegacyWalletV2"](data.iv, data.encryptedSeed);
-                      _context125.next = 19;
+                      _context158.next = 19;
                       break;
 
                     case 14:
                       if (!(data.version === 1)) {
-                        _context125.next = 18;
+                        _context158.next = 18;
                         break;
                       }
 
                       this.walletService.wallet = new _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["LegacyWalletV1"](data.pkh.slice(3, 19), data.encryptedSeed);
-                      _context125.next = 19;
+                      _context158.next = 19;
                       break;
 
                     case 18:
                       throw new Error('Unsupported wallet file');
 
                     case 19:
-                      _context125.next = 22;
+                      _context158.next = 22;
                       break;
 
                     case 21:
@@ -31251,22 +33536,22 @@
 
                     case 22:
                       if (!(seed.length === 32)) {
-                        _context125.next = 26;
+                        _context158.next = 26;
                         break;
                       }
 
                       keys = _tezos_core_tools_crypto_utils__WEBPACK_IMPORTED_MODULE_5__["utils"].seedToKeyPair(seed);
-                      _context125.next = 31;
+                      _context158.next = 31;
                       break;
 
                     case 26:
                       if (!(seed.length === 64)) {
-                        _context125.next = 30;
+                        _context158.next = 30;
                         break;
                       }
 
                       keys = _tezos_core_tools_crypto_utils__WEBPACK_IMPORTED_MODULE_5__["hd"].keyPairFromAccountIndex(seed, 0);
-                      _context125.next = 31;
+                      _context158.next = 31;
                       break;
 
                     case 30:
@@ -31276,7 +33561,7 @@
                       this.walletService.initStorage();
 
                       if (!(this.walletService.wallet instanceof _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["HdWallet"])) {
-                        _context125.next = 52;
+                        _context158.next = 52;
                         break;
                       }
 
@@ -31285,16 +33570,16 @@
 
                     case 35:
                       if (!state) {
-                        _context125.next = 49;
+                        _context158.next = 49;
                         break;
                       }
 
                       keys = _tezos_core_tools_crypto_utils__WEBPACK_IMPORTED_MODULE_5__["hd"].keyPairFromAccountIndex(seed, index);
-                      _context125.next = 39;
+                      _context158.next = 39;
                       return this.indexerService.accountInfo(keys.pkh);
 
                     case 39:
-                      accountInfo = _context125.sent;
+                      accountInfo = _context158.sent;
                       state = accountInfo.counter;
                       console.log(accountInfo);
 
@@ -31303,37 +33588,37 @@
                       }
 
                       if (!(state || index === 0)) {
-                        _context125.next = 47;
+                        _context158.next = 47;
                         break;
                       }
 
                       this.walletService.addImplicitAccount(keys.pk, index++);
-                      _context125.next = 47;
+                      _context158.next = 47;
                       return this.findContracts(keys.pkh);
 
                     case 47:
-                      _context125.next = 35;
+                      _context158.next = 35;
                       break;
 
                     case 49:
                       this.walletService.wallet.index = index;
-                      _context125.next = 55;
+                      _context158.next = 55;
                       break;
 
                     case 52:
                       this.walletService.addImplicitAccount(keys.pk);
-                      _context125.next = 55;
+                      _context158.next = 55;
                       return this.findContracts(keys.pkh);
 
                     case 55:
-                      return _context125.abrupt("return", true);
+                      return _context158.abrupt("return", true);
 
                     case 56:
                     case "end":
-                      return _context125.stop();
+                      return _context158.stop();
                   }
                 }
-              }, _callee124, this);
+              }, _callee157, this);
             }));
           }
         }, {
@@ -31342,67 +33627,67 @@
             var verifierDetails = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
             var sk = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
             var instanceId = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee125() {
-              return regeneratorRuntime.wrap(function _callee125$(_context126) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee158() {
+              return regeneratorRuntime.wrap(function _callee158$(_context159) {
                 while (1) {
-                  switch (_context126.prev = _context126.next) {
+                  switch (_context159.prev = _context159.next) {
                     case 0:
                       this.coordinatorService.stopAll();
 
                       if (!derivationPath) {
-                        _context126.next = 5;
+                        _context159.next = 5;
                         break;
                       }
 
-                      return _context126.abrupt("return", this.ledgerImport(pk, derivationPath));
+                      return _context159.abrupt("return", this.ledgerImport(pk, derivationPath));
 
                     case 5:
                       if (!verifierDetails) {
-                        _context126.next = 7;
+                        _context159.next = 7;
                         break;
                       }
 
-                      return _context126.abrupt("return", this.torusImport(pk, verifierDetails, sk, instanceId));
+                      return _context159.abrupt("return", this.torusImport(pk, verifierDetails, sk, instanceId));
 
                     case 7:
                     case "end":
-                      return _context126.stop();
+                      return _context159.stop();
                   }
                 }
-              }, _callee125, this);
+              }, _callee158, this);
             }));
           }
         }, {
           key: "ledgerImport",
           value: function ledgerImport(pk, derivationPath) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee126() {
-              return regeneratorRuntime.wrap(function _callee126$(_context127) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee159() {
+              return regeneratorRuntime.wrap(function _callee159$(_context160) {
                 while (1) {
-                  switch (_context127.prev = _context127.next) {
+                  switch (_context160.prev = _context160.next) {
                     case 0:
-                      _context127.prev = 0;
+                      _context160.prev = 0;
                       this.walletService.initStorage();
                       this.walletService.wallet = new _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["LedgerWallet"]();
                       this.walletService.addImplicitAccount(pk, derivationPath);
-                      _context127.next = 6;
+                      _context160.next = 6;
                       return this.findContracts(this.walletService.wallet.implicitAccounts[0].pkh);
 
                     case 6:
-                      return _context127.abrupt("return", true);
+                      return _context160.abrupt("return", true);
 
                     case 9:
-                      _context127.prev = 9;
-                      _context127.t0 = _context127["catch"](0);
-                      console.warn(_context127.t0);
+                      _context160.prev = 9;
+                      _context160.t0 = _context160["catch"](0);
+                      console.warn(_context160.t0);
                       this.walletService.clearWallet();
-                      return _context127.abrupt("return", false);
+                      return _context160.abrupt("return", false);
 
                     case 14:
                     case "end":
-                      return _context127.stop();
+                      return _context160.stop();
                   }
                 }
-              }, _callee126, this, [[0, 9]]);
+              }, _callee159, this, [[0, 9]]);
             }));
           }
         }, {
@@ -31410,12 +33695,12 @@
           value: function torusImport(pk, verifierDetails) {
             var sk = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
             var instanceId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee127() {
-              return regeneratorRuntime.wrap(function _callee127$(_context128) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee160() {
+              return regeneratorRuntime.wrap(function _callee160$(_context161) {
                 while (1) {
-                  switch (_context128.prev = _context128.next) {
+                  switch (_context161.prev = _context161.next) {
                     case 0:
-                      _context128.prev = 0;
+                      _context161.prev = 0;
 
                       if (verifierDetails.embedded) {
                         this.walletService.initStorage(instanceId);
@@ -31430,39 +33715,39 @@
                       }
 
                       this.walletService.addImplicitAccount(pk);
-                      return _context128.abrupt("return", true);
+                      return _context161.abrupt("return", true);
 
                     case 7:
-                      _context128.prev = 7;
-                      _context128.t0 = _context128["catch"](0);
-                      console.warn(_context128.t0);
+                      _context161.prev = 7;
+                      _context161.t0 = _context161["catch"](0);
+                      console.warn(_context161.t0);
                       this.walletService.clearWallet(instanceId);
-                      return _context128.abrupt("return", false);
+                      return _context161.abrupt("return", false);
 
                     case 12:
                     case "end":
-                      return _context128.stop();
+                      return _context161.stop();
                   }
                 }
-              }, _callee127, this, [[0, 7]]);
+              }, _callee160, this, [[0, 7]]);
             }));
           }
         }, {
           key: "updateTwitterName",
           value: function updateTwitterName(verifierId) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee128() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee161() {
               var twitterId, _yield$this$torusServ4, username;
 
-              return regeneratorRuntime.wrap(function _callee128$(_context129) {
+              return regeneratorRuntime.wrap(function _callee161$(_context162) {
                 while (1) {
-                  switch (_context129.prev = _context129.next) {
+                  switch (_context162.prev = _context162.next) {
                     case 0:
                       twitterId = verifierId.split('|')[1];
-                      _context129.next = 3;
+                      _context162.next = 3;
                       return this.torusService.twitterLookup(undefined, twitterId);
 
                     case 3:
-                      _yield$this$torusServ4 = _context129.sent;
+                      _yield$this$torusServ4 = _context162.sent;
                       username = _yield$this$torusServ4.username;
 
                       if (username && this.walletService.wallet instanceof _wallet_wallet__WEBPACK_IMPORTED_MODULE_4__["TorusWallet"]) {
@@ -31471,49 +33756,49 @@
 
                     case 6:
                     case "end":
-                      return _context129.stop();
+                      return _context162.stop();
                   }
                 }
-              }, _callee128, this);
+              }, _callee161, this);
             }));
           }
         }, {
           key: "findContracts",
           value: function findContracts(pkh) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee129() {
-              var addresses, _iterator46, _step46, KT;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee162() {
+              var addresses, _iterator47, _step47, KT;
 
-              return regeneratorRuntime.wrap(function _callee129$(_context130) {
+              return regeneratorRuntime.wrap(function _callee162$(_context163) {
                 while (1) {
-                  switch (_context130.prev = _context130.next) {
+                  switch (_context163.prev = _context163.next) {
                     case 0:
-                      _context130.next = 2;
+                      _context163.next = 2;
                       return this.indexerService.getContractAddresses(pkh);
 
                     case 2:
-                      addresses = _context130.sent;
-                      _iterator46 = _createForOfIteratorHelper(addresses);
+                      addresses = _context163.sent;
+                      _iterator47 = _createForOfIteratorHelper(addresses);
 
                       try {
-                        for (_iterator46.s(); !(_step46 = _iterator46.n()).done;) {
-                          KT = _step46.value;
+                        for (_iterator47.s(); !(_step47 = _iterator47.n()).done;) {
+                          KT = _step47.value;
                           console.log('Found KT: ' + KT);
                           this.walletService.addOriginatedAccount(KT, pkh);
                         }
                       } catch (err) {
-                        _iterator46.e(err);
+                        _iterator47.e(err);
                       } finally {
-                        _iterator46.f();
+                        _iterator47.f();
                       }
 
                       this.walletService.storeWallet();
 
                     case 6:
                     case "end":
-                      return _context130.stop();
+                      return _context163.stop();
                   }
                 }
-              }, _callee129, this);
+              }, _callee162, this);
             }));
           }
         }]);
@@ -31695,7 +33980,7 @@
 
       var UriHandlerComponent = /*#__PURE__*/function () {
         function UriHandlerComponent(route, messageService, walletService, location, beaconService, deeplinkService, inputValidationService) {
-          var _this82 = this;
+          var _this90 = this;
 
           _classCallCheck(this, UriHandlerComponent);
 
@@ -31712,12 +33997,12 @@
           /* https://docs.walletbeacon.io/beacon/03.getting-started-wallet.html#setup */
 
           this.connectApp = function () {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this82, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee131() {
-              var _this83 = this;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this90, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee164() {
+              var _this91 = this;
 
-              return regeneratorRuntime.wrap(function _callee131$(_context132) {
+              return regeneratorRuntime.wrap(function _callee164$(_context165) {
                 while (1) {
-                  switch (_context132.prev = _context132.next) {
+                  switch (_context165.prev = _context165.next) {
                     case 0:
                       if (!this.beaconService.client) {
                         this.beaconService.client = new _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["WalletClient"]({
@@ -31725,100 +34010,100 @@
                         });
                       }
 
-                      _context132.next = 3;
+                      _context165.next = 3;
                       return this.beaconService.client.init();
 
                     case 3:
                       // Establish P2P connection
                       this.beaconService.client.connect(function (message) {
-                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this83, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee130() {
-                          return regeneratorRuntime.wrap(function _callee130$(_context131) {
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this91, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee163() {
+                          return regeneratorRuntime.wrap(function _callee163$(_context164) {
                             while (1) {
-                              switch (_context131.prev = _context131.next) {
+                              switch (_context164.prev = _context164.next) {
                                 case 0:
                                   console.log('### beacon message', message);
 
                                   if (!(message.type !== _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].SignPayloadRequest && message.network.type.replace('edo2net', 'edonet') !== _environments_environment__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].NETWORK)) {
-                                    _context131.next = 7;
+                                    _context164.next = 7;
                                     break;
                                   }
 
                                   console.warn("Rejecting Beacon message because of network. Expected ".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].NETWORK, " instead of ").concat(message.network.type));
-                                  _context131.next = 5;
+                                  _context164.next = 5;
                                   return this.beaconService.rejectOnNetwork(message);
 
                                 case 5:
-                                  _context131.next = 38;
+                                  _context164.next = 38;
                                   break;
 
                                 case 7:
                                   if (!(!this.permissionRequest && !this.operationRequest && !this.signRequest)) {
-                                    _context131.next = 37;
+                                    _context164.next = 37;
                                     break;
                                   }
 
-                                  _context131.t0 = message.type;
-                                  _context131.next = _context131.t0 === _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].PermissionRequest ? 11 : _context131.t0 === _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].OperationRequest ? 14 : _context131.t0 === _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].SignPayloadRequest ? 23 : 32;
+                                  _context164.t0 = message.type;
+                                  _context164.next = _context164.t0 === _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].PermissionRequest ? 11 : _context164.t0 === _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].OperationRequest ? 14 : _context164.t0 === _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].SignPayloadRequest ? 23 : 32;
                                   break;
 
                                 case 11:
-                                  _context131.next = 13;
+                                  _context164.next = 13;
                                   return this.handlePermissionRequest(message);
 
                                 case 13:
-                                  return _context131.abrupt("break", 35);
+                                  return _context164.abrupt("break", 35);
 
                                 case 14:
-                                  _context131.next = 16;
+                                  _context164.next = 16;
                                   return this.isSupportedOperationRequest(message);
 
                                 case 16:
-                                  if (!_context131.sent) {
-                                    _context131.next = 20;
+                                  if (!_context164.sent) {
+                                    _context164.next = 20;
                                     break;
                                   }
 
                                   this.operationRequest = message;
-                                  _context131.next = 22;
+                                  _context164.next = 22;
                                   break;
 
                                 case 20:
-                                  _context131.next = 22;
+                                  _context164.next = 22;
                                   return this.beaconService.rejectOnUnknown(message);
 
                                 case 22:
-                                  return _context131.abrupt("break", 35);
+                                  return _context164.abrupt("break", 35);
 
                                 case 23:
-                                  _context131.next = 25;
+                                  _context164.next = 25;
                                   return this.isSupportedSignPayload(message);
 
                                 case 25:
-                                  if (!_context131.sent) {
-                                    _context131.next = 29;
+                                  if (!_context164.sent) {
+                                    _context164.next = 29;
                                     break;
                                   }
 
                                   this.signRequest = message;
-                                  _context131.next = 31;
+                                  _context164.next = 31;
                                   break;
 
                                 case 29:
-                                  _context131.next = 31;
+                                  _context164.next = 31;
                                   return this.beaconService.rejectOnUnknown(message);
 
                                 case 31:
-                                  return _context131.abrupt("break", 35);
+                                  return _context164.abrupt("break", 35);
 
                                 case 32:
-                                  _context131.next = 34;
+                                  _context164.next = 34;
                                   return this.beaconService.rejectOnUnknown(message);
 
                                 case 34:
                                   console.warn('Unknown message type', message);
 
                                 case 35:
-                                  _context131.next = 38;
+                                  _context164.next = 38;
                                   break;
 
                                 case 37:
@@ -31826,10 +34111,10 @@
 
                                 case 38:
                                 case "end":
-                                  return _context131.stop();
+                                  return _context164.stop();
                               }
                             }
-                          }, _callee130, this);
+                          }, _callee163, this);
                         }));
                       })["catch"](function (error) {
                         return console.error('connect error', error);
@@ -31837,10 +34122,10 @@
 
                     case 4:
                     case "end":
-                      return _context132.stop();
+                      return _context165.stop();
                   }
                 }
-              }, _callee131, this);
+              }, _callee164, this);
             }));
           };
         }
@@ -31855,11 +34140,11 @@
         }, {
           key: "init",
           value: function init() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee132() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee165() {
               var pairingString;
-              return regeneratorRuntime.wrap(function _callee132$(_context133) {
+              return regeneratorRuntime.wrap(function _callee165$(_context166) {
                 while (1) {
-                  switch (_context133.prev = _context133.next) {
+                  switch (_context166.prev = _context166.next) {
                     case 0:
                       pairingString = this.deeplinkService.popPairingJson();
 
@@ -31868,18 +34153,18 @@
                         this.beaconService.preNotifyPairing(pairingString);
                       }
 
-                      _context133.next = 4;
+                      _context166.next = 4;
                       return this.connectApp()["catch"](function (error) {
                         return console.error('connect error', error);
                       });
 
                     case 4:
                       if (!pairingString) {
-                        _context133.next = 8;
+                        _context166.next = 8;
                         break;
                       }
 
-                      _context133.next = 7;
+                      _context166.next = 7;
                       return this.beaconService.client.isConnected;
 
                     case 7:
@@ -31887,19 +34172,19 @@
 
                     case 8:
                     case "end":
-                      return _context133.stop();
+                      return _context166.stop();
                   }
                 }
-              }, _callee132, this);
+              }, _callee165, this);
             }));
           }
         }, {
           key: "handlePermissionRequest",
           value: function handlePermissionRequest(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee133() {
-              return regeneratorRuntime.wrap(function _callee133$(_context134) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee166() {
+              return regeneratorRuntime.wrap(function _callee166$(_context167) {
                 while (1) {
-                  switch (_context134.prev = _context134.next) {
+                  switch (_context167.prev = _context167.next) {
                     case 0:
                       console.log('## permission request');
                       message.scopes = message.scopes.filter(function (scope) {
@@ -31907,26 +34192,26 @@
                       });
 
                       if (!message.scopes.length) {
-                        _context134.next = 12;
+                        _context167.next = 12;
                         break;
                       }
 
                       if (!this.walletService.wallet) {
-                        _context134.next = 7;
+                        _context167.next = 7;
                         break;
                       }
 
                       this.permissionRequest = message;
-                      _context134.next = 10;
+                      _context167.next = 10;
                       break;
 
                     case 7:
                       console.warn('No wallet found');
-                      _context134.next = 10;
+                      _context167.next = 10;
                       return this.beaconService.rejectOnSourceAddress(message);
 
                     case 10:
-                      _context134.next = 13;
+                      _context167.next = 13;
                       break;
 
                     case 12:
@@ -31934,98 +34219,98 @@
 
                     case 13:
                     case "end":
-                      return _context134.stop();
+                      return _context167.stop();
                   }
                 }
-              }, _callee133, this);
+              }, _callee166, this);
             }));
           }
         }, {
           key: "isSupportedOperationRequest",
           value: function isSupportedOperationRequest(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee134() {
-              var _iterator47, _step47, op, i;
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee167() {
+              var _iterator48, _step48, op, i;
 
-              return regeneratorRuntime.wrap(function _callee134$(_context135) {
+              return regeneratorRuntime.wrap(function _callee167$(_context168) {
                 while (1) {
-                  switch (_context135.prev = _context135.next) {
+                  switch (_context168.prev = _context168.next) {
                     case 0:
                       if (this.walletService.wallet) {
-                        _context135.next = 5;
+                        _context168.next = 5;
                         break;
                       }
 
                       console.log('No wallet found');
-                      return _context135.abrupt("return", false);
+                      return _context168.abrupt("return", false);
 
                     case 5:
                       if (this.walletService.wallet.getImplicitAccount(message.sourceAddress)) {
-                        _context135.next = 12;
+                        _context168.next = 12;
                         break;
                       }
 
                       console.warn('Source address not recogized');
-                      _context135.next = 9;
+                      _context168.next = 9;
                       return this.beaconService.rejectOnSourceAddress(message);
 
                     case 9:
-                      return _context135.abrupt("return", false);
+                      return _context168.abrupt("return", false);
 
                     case 12:
                       if (!(message.operationDetails.length > 1)) {
-                        _context135.next = 33;
+                        _context168.next = 33;
                         break;
                       }
 
-                      _iterator47 = _createForOfIteratorHelper(message.operationDetails);
-                      _context135.prev = 14;
+                      _iterator48 = _createForOfIteratorHelper(message.operationDetails);
+                      _context168.prev = 14;
 
-                      _iterator47.s();
+                      _iterator48.s();
 
                     case 16:
-                      if ((_step47 = _iterator47.n()).done) {
-                        _context135.next = 25;
+                      if ((_step48 = _iterator48.n()).done) {
+                        _context168.next = 25;
                         break;
                       }
 
-                      op = _step47.value;
+                      op = _step48.value;
 
                       if (!(op.kind !== 'transaction')) {
-                        _context135.next = 23;
+                        _context168.next = 23;
                         break;
                       }
 
                       console.warn('Only transaction batches supported');
-                      _context135.next = 22;
+                      _context168.next = 22;
                       return this.beaconService.rejectOnTooManyOps(message);
 
                     case 22:
-                      return _context135.abrupt("return", false);
+                      return _context168.abrupt("return", false);
 
                     case 23:
-                      _context135.next = 16;
+                      _context168.next = 16;
                       break;
 
                     case 25:
-                      _context135.next = 30;
+                      _context168.next = 30;
                       break;
 
                     case 27:
-                      _context135.prev = 27;
-                      _context135.t0 = _context135["catch"](14);
+                      _context168.prev = 27;
+                      _context168.t0 = _context168["catch"](14);
 
-                      _iterator47.e(_context135.t0);
+                      _iterator48.e(_context168.t0);
 
                     case 30:
-                      _context135.prev = 30;
+                      _context168.prev = 30;
 
-                      _iterator47.f();
+                      _iterator48.f();
 
-                      return _context135.finish(30);
+                      return _context168.finish(30);
 
                     case 33:
                       if (!(message.operationDetails[0].kind === 'transaction')) {
-                        _context135.next = 59;
+                        _context168.next = 59;
                         break;
                       }
 
@@ -32033,143 +34318,143 @@
 
                     case 35:
                       if (!(i < message.operationDetails.length)) {
-                        _context135.next = 57;
+                        _context168.next = 57;
                         break;
                       }
 
                       if (!(message.operationDetails[i].destination && message.operationDetails[i].parameters && this.walletService.wallet.getAccount(message.operationDetails[i].destination))) {
-                        _context135.next = 43;
+                        _context168.next = 43;
                         break;
                       }
 
                       console.warn('Invocation of user controlled contract is disabled');
-                      _context135.next = 40;
+                      _context168.next = 40;
                       return this.beaconService.rejectOnPermission(message);
 
                     case 40:
-                      return _context135.abrupt("return", false);
+                      return _context168.abrupt("return", false);
 
                     case 43:
                       if (!(!message.operationDetails[i].destination || !message.operationDetails[i].amount)) {
-                        _context135.next = 50;
+                        _context168.next = 50;
                         break;
                       }
 
                       console.warn('Missing destination or amount');
-                      _context135.next = 47;
+                      _context168.next = 47;
                       return this.beaconService.rejectOnUnknown(message);
 
                     case 47:
-                      return _context135.abrupt("return", false);
+                      return _context168.abrupt("return", false);
 
                     case 50:
                       if (!this.invalidParameters(message.operationDetails[i].parameters)) {
-                        _context135.next = 54;
+                        _context168.next = 54;
                         break;
                       }
 
-                      _context135.next = 53;
+                      _context168.next = 53;
                       return this.beaconService.rejectOnParameters(message);
 
                     case 53:
-                      return _context135.abrupt("return", false);
+                      return _context168.abrupt("return", false);
 
                     case 54:
                       i++;
-                      _context135.next = 35;
+                      _context168.next = 35;
                       break;
 
                     case 57:
-                      _context135.next = 77;
+                      _context168.next = 77;
                       break;
 
                     case 59:
                       if (!(message.operationDetails[0].kind === 'delegation')) {
-                        _context135.next = 66;
+                        _context168.next = 66;
                         break;
                       }
 
                       if (message.operationDetails[0].delegate) {
-                        _context135.next = 64;
+                        _context168.next = 64;
                         break;
                       }
 
                       console.warn('Invalid delegate');
-                      _context135.next = 64;
+                      _context168.next = 64;
                       return this.beaconService.rejectOnUnknown(message);
 
                     case 64:
-                      _context135.next = 77;
+                      _context168.next = 77;
                       break;
 
                     case 66:
                       if (!(message.operationDetails[0].kind === 'origination')) {
-                        _context135.next = 73;
+                        _context168.next = 73;
                         break;
                       }
 
                       if (message.operationDetails[0].script) {
-                        _context135.next = 71;
+                        _context168.next = 71;
                         break;
                       }
 
                       console.warn('No script found');
-                      _context135.next = 71;
+                      _context168.next = 71;
                       return this.beaconService.rejectOnParameters(message);
 
                     case 71:
-                      _context135.next = 77;
+                      _context168.next = 77;
                       break;
 
                     case 73:
                       console.warn('Unsupported operation kind');
-                      _context135.next = 76;
+                      _context168.next = 76;
                       return this.beaconService.rejectOnUnknown(message);
 
                     case 76:
-                      return _context135.abrupt("return", false);
+                      return _context168.abrupt("return", false);
 
                     case 77:
                       this.activeAccount = this.walletService.wallet.getImplicitAccount(message.sourceAddress);
-                      return _context135.abrupt("return", true);
+                      return _context168.abrupt("return", true);
 
                     case 79:
                     case "end":
-                      return _context135.stop();
+                      return _context168.stop();
                   }
                 }
-              }, _callee134, this, [[14, 27, 30, 33]]);
+              }, _callee167, this, [[14, 27, 30, 33]]);
             }));
           }
         }, {
           key: "isSupportedSignPayload",
           value: function isSupportedSignPayload(message) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee135() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee168() {
               var hexString, parsedPayload;
-              return regeneratorRuntime.wrap(function _callee135$(_context136) {
+              return regeneratorRuntime.wrap(function _callee168$(_context169) {
                 while (1) {
-                  switch (_context136.prev = _context136.next) {
+                  switch (_context169.prev = _context169.next) {
                     case 0:
                       if (this.walletService.wallet) {
-                        _context136.next = 5;
+                        _context169.next = 5;
                         break;
                       }
 
                       console.log('No wallet found');
-                      return _context136.abrupt("return", false);
+                      return _context169.abrupt("return", false);
 
                     case 5:
                       if (this.walletService.wallet.getImplicitAccount(message.sourceAddress)) {
-                        _context136.next = 10;
+                        _context169.next = 10;
                         break;
                       }
 
                       console.warn('Source address not recogized');
-                      _context136.next = 9;
+                      _context169.next = 9;
                       return this.beaconService.rejectOnSourceAddress(message);
 
                     case 9:
-                      return _context136.abrupt("return", false);
+                      return _context169.abrupt("return", false);
 
                     case 10:
                       if (message.payload.slice(0, 2) === '0x') {
@@ -32181,57 +34466,57 @@
                       console.log('hex', hexString);
 
                       if (!(message.signingType !== 'raw' && message.signingType !== 'micheline' || !this.inputValidationService.hexString(hexString))) {
-                        _context136.next = 21;
+                        _context169.next = 21;
                         break;
                       }
 
                       console.warn('Invalid sign payload');
-                      _context136.next = 18;
+                      _context169.next = 18;
                       return this.beaconService.rejectOnUnknown(message);
 
                     case 18:
-                      return _context136.abrupt("return", false);
+                      return _context169.abrupt("return", false);
 
                     case 21:
                       if (!(hexString.slice(0, 2) !== '05')) {
-                        _context136.next = 26;
+                        _context169.next = 26;
                         break;
                       }
 
                       console.warn('Unsupported prefix (expected 05)');
-                      _context136.next = 25;
+                      _context169.next = 25;
                       return this.beaconService.rejectOnUnknown(message);
 
                     case 25:
-                      return _context136.abrupt("return", false);
+                      return _context169.abrupt("return", false);
 
                     case 26:
-                      _context136.prev = 26;
+                      _context169.prev = 26;
                       parsedPayload = Object(_taquito_local_forging_dist_lib_michelson_codec__WEBPACK_IMPORTED_MODULE_11__["valueDecoder"])(_taquito_local_forging_dist_lib_uint8array_consumer__WEBPACK_IMPORTED_MODULE_12__["Uint8ArrayConsumer"].fromHexString(hexString.slice(2)));
                       console.log('Parsed sign payload', parsedPayload);
-                      _context136.next = 37;
+                      _context169.next = 37;
                       break;
 
                     case 31:
-                      _context136.prev = 31;
-                      _context136.t0 = _context136["catch"](26);
-                      console.warn(_context136.t0.message ? 'Decoding: ' + _context136.t0.message : _context136.t0);
-                      _context136.next = 36;
+                      _context169.prev = 31;
+                      _context169.t0 = _context169["catch"](26);
+                      console.warn(_context169.t0.message ? 'Decoding: ' + _context169.t0.message : _context169.t0);
+                      _context169.next = 36;
                       return this.beaconService.rejectOnUnknown(message);
 
                     case 36:
-                      return _context136.abrupt("return", false);
+                      return _context169.abrupt("return", false);
 
                     case 37:
                       this.activeAccount = this.walletService.wallet.getImplicitAccount(message.sourceAddress);
-                      return _context136.abrupt("return", true);
+                      return _context169.abrupt("return", true);
 
                     case 39:
                     case "end":
-                      return _context136.stop();
+                      return _context169.stop();
                   }
                 }
-              }, _callee135, this, [[26, 31]]);
+              }, _callee168, this, [[26, 31]]);
             }));
           }
         }, {
@@ -32256,61 +34541,61 @@
         }, {
           key: "operationResponse",
           value: function operationResponse(opHash) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee136() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee169() {
               var response;
-              return regeneratorRuntime.wrap(function _callee136$(_context137) {
+              return regeneratorRuntime.wrap(function _callee169$(_context170) {
                 while (1) {
-                  switch (_context137.prev = _context137.next) {
+                  switch (_context170.prev = _context170.next) {
                     case 0:
                       if (opHash) {
-                        _context137.next = 5;
+                        _context170.next = 5;
                         break;
                       }
 
-                      _context137.next = 3;
+                      _context170.next = 3;
                       return this.beaconService.rejectOnUserAbort(this.operationRequest);
 
                     case 3:
-                      _context137.next = 23;
+                      _context170.next = 23;
                       break;
 
                     case 5:
                       if (!(opHash === 'broadcast_error')) {
-                        _context137.next = 10;
+                        _context170.next = 10;
                         break;
                       }
 
-                      _context137.next = 8;
+                      _context170.next = 8;
                       return this.beaconService.rejectOnBroadcastError(this.operationRequest);
 
                     case 8:
-                      _context137.next = 23;
+                      _context170.next = 23;
                       break;
 
                     case 10:
                       if (!(opHash === 'invalid_parameters')) {
-                        _context137.next = 15;
+                        _context170.next = 15;
                         break;
                       }
 
-                      _context137.next = 13;
+                      _context170.next = 13;
                       return this.beaconService.rejectOnParameters(this.operationRequest);
 
                     case 13:
-                      _context137.next = 23;
+                      _context170.next = 23;
                       break;
 
                     case 15:
                       if (!(opHash === 'parameters_error')) {
-                        _context137.next = 20;
+                        _context170.next = 20;
                         break;
                       }
 
-                      _context137.next = 18;
+                      _context170.next = 18;
                       return this.beaconService.rejectOnParameters(this.operationRequest);
 
                     case 18:
-                      _context137.next = 23;
+                      _context170.next = 23;
                       break;
 
                     case 20:
@@ -32319,7 +34604,7 @@
                         transactionHash: opHash,
                         id: this.operationRequest.id
                       };
-                      _context137.next = 23;
+                      _context170.next = 23;
                       return this.beaconService.client.respond(response);
 
                     case 23:
@@ -32327,10 +34612,10 @@
 
                     case 24:
                     case "end":
-                      return _context137.stop();
+                      return _context170.stop();
                   }
                 }
-              }, _callee136, this);
+              }, _callee169, this);
             }));
           }
           /* permission handling */
@@ -32338,25 +34623,25 @@
         }, {
           key: "permissionResponse",
           value: function permissionResponse(publicKey) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee137() {
-              return regeneratorRuntime.wrap(function _callee137$(_context138) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee170() {
+              return regeneratorRuntime.wrap(function _callee170$(_context171) {
                 while (1) {
-                  switch (_context138.prev = _context138.next) {
+                  switch (_context171.prev = _context171.next) {
                     case 0:
                       if (publicKey) {
-                        _context138.next = 5;
+                        _context171.next = 5;
                         break;
                       }
 
-                      _context138.next = 3;
+                      _context171.next = 3;
                       return this.beaconService.rejectOnUserAbort(this.permissionRequest);
 
                     case 3:
-                      _context138.next = 8;
+                      _context171.next = 8;
                       break;
 
                     case 5:
-                      _context138.next = 7;
+                      _context171.next = 7;
                       return this.beaconService.approvePermissionRequest(this.permissionRequest, publicKey);
 
                     case 7:
@@ -32367,10 +34652,10 @@
 
                     case 9:
                     case "end":
-                      return _context138.stop();
+                      return _context171.stop();
                   }
                 }
-              }, _callee137, this);
+              }, _callee170, this);
             }));
           }
           /* sign payload handling */
@@ -32378,25 +34663,25 @@
         }, {
           key: "signResponse",
           value: function signResponse(signature) {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee138() {
-              return regeneratorRuntime.wrap(function _callee138$(_context139) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee171() {
+              return regeneratorRuntime.wrap(function _callee171$(_context172) {
                 while (1) {
-                  switch (_context139.prev = _context139.next) {
+                  switch (_context172.prev = _context172.next) {
                     case 0:
                       if (signature) {
-                        _context139.next = 5;
+                        _context172.next = 5;
                         break;
                       }
 
-                      _context139.next = 3;
+                      _context172.next = 3;
                       return this.beaconService.rejectOnUserAbort(this.signRequest);
 
                     case 3:
-                      _context139.next = 7;
+                      _context172.next = 7;
                       break;
 
                     case 5:
-                      _context139.next = 7;
+                      _context172.next = 7;
                       return this.beaconService.approveSignPayloadRequest(this.signRequest, signature);
 
                     case 7:
@@ -32405,10 +34690,10 @@
 
                     case 9:
                     case "end":
-                      return _context139.stop();
+                      return _context172.stop();
                   }
                 }
-              }, _callee138, this);
+              }, _callee171, this);
             }));
           }
         }]);
@@ -32898,41 +35183,41 @@
         }, {
           key: "sign",
           value: function sign() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee139() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee172() {
               var pwd, keys, signature;
-              return regeneratorRuntime.wrap(function _callee139$(_context140) {
+              return regeneratorRuntime.wrap(function _callee172$(_context173) {
                 while (1) {
-                  switch (_context140.prev = _context140.next) {
+                  switch (_context173.prev = _context173.next) {
                     case 0:
                       if (!this.walletService.isLedgerWallet()) {
-                        _context140.next = 4;
+                        _context173.next = 4;
                         break;
                       }
 
                       this.requestLedgerSignature();
-                      _context140.next = 19;
+                      _context173.next = 19;
                       break;
 
                     case 4:
                       pwd = this.password;
                       this.password = '';
-                      _context140.next = 8;
+                      _context173.next = 8;
                       return this.messageService.startSpinner("Signing ".concat(this.isMessage ? 'message' : 'payload', "..."));
 
                     case 8:
-                      _context140.prev = 8;
-                      _context140.next = 11;
+                      _context173.prev = 8;
+                      _context173.next = 11;
                       return this.walletService.getKeys(pwd, this.activeAccount.pkh);
 
                     case 11:
-                      keys = _context140.sent;
-                      _context140.next = 18;
+                      keys = _context173.sent;
+                      _context173.next = 18;
                       break;
 
                     case 14:
-                      _context140.prev = 14;
-                      _context140.t0 = _context140["catch"](8);
-                      console.warn(_context140.t0);
+                      _context173.prev = 14;
+                      _context173.t0 = _context173["catch"](8);
+                      console.warn(_context173.t0);
                       this.messageService.stopSpinner();
 
                     case 18:
@@ -32960,48 +35245,48 @@
 
                     case 19:
                     case "end":
-                      return _context140.stop();
+                      return _context173.stop();
                   }
                 }
-              }, _callee139, this, [[8, 14]]);
+              }, _callee172, this, [[8, 14]]);
             }));
           }
         }, {
           key: "requestLedgerSignature",
           value: function requestLedgerSignature() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee140() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee173() {
               var payload, signature;
-              return regeneratorRuntime.wrap(function _callee140$(_context141) {
+              return regeneratorRuntime.wrap(function _callee173$(_context174) {
                 while (1) {
-                  switch (_context141.prev = _context141.next) {
+                  switch (_context174.prev = _context174.next) {
                     case 0:
-                      _context141.next = 2;
+                      _context174.next = 2;
                       return this.messageService.startSpinner('Waiting for Ledger signature...');
 
                     case 2:
-                      _context141.prev = 2;
+                      _context174.prev = 2;
                       payload = this.signRequest.payload;
                       signature = '';
 
                       if (!(payload.length <= 2290)) {
-                        _context141.next = 11;
+                        _context174.next = 11;
                         break;
                       }
 
-                      _context141.next = 8;
+                      _context174.next = 8;
                       return this.ledgerService.signOperation(payload, this.walletService.wallet.implicitAccounts[0].derivationPath);
 
                     case 8:
-                      signature = _context141.sent;
-                      _context141.next = 14;
+                      signature = _context174.sent;
+                      _context174.next = 14;
                       break;
 
                     case 11:
-                      _context141.next = 13;
+                      _context174.next = 13;
                       return this.ledgerService.signHash(this.operationService.ledgerPreHash(payload), this.walletService.wallet.implicitAccounts[0].derivationPath);
 
                     case 13:
-                      signature = _context141.sent;
+                      signature = _context174.sent;
 
                     case 14:
                       if (signature) {
@@ -33011,16 +35296,16 @@
                       }
 
                     case 15:
-                      _context141.prev = 15;
+                      _context174.prev = 15;
                       this.messageService.stopSpinner();
-                      return _context141.finish(15);
+                      return _context174.finish(15);
 
                     case 18:
                     case "end":
-                      return _context141.stop();
+                      return _context174.stop();
                   }
                 }
-              }, _callee140, this, [[2,, 15, 18]]);
+              }, _callee173, this, [[2,, 15, 18]]);
             }));
           }
         }, {
@@ -34119,14 +36404,14 @@
         }, {
           key: "encryptWallet",
           value: function encryptWallet() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee141() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee174() {
               var pwd, ans;
-              return regeneratorRuntime.wrap(function _callee141$(_context142) {
+              return regeneratorRuntime.wrap(function _callee174$(_context175) {
                 while (1) {
-                  switch (_context142.prev = _context142.next) {
+                  switch (_context175.prev = _context175.next) {
                     case 0:
                       if (!this.validPwd()) {
-                        _context142.next = 18;
+                        _context175.next = 18;
                         break;
                       }
 
@@ -34134,11 +36419,11 @@
                       pwd = this.pwd1;
                       this.pwd1 = '';
                       this.pwd2 = '';
-                      _context142.next = 7;
+                      _context175.next = 7;
                       return this.walletService.createEncryptedWallet(this.MNEMONIC.string, pwd, '', true);
 
                     case 7:
-                      ans = _context142.sent;
+                      ans = _context175.sent;
                       this.seed = ans.seed;
                       this.data = ans.data;
                       this.pkh = ans.pkh;
@@ -34155,10 +36440,10 @@
 
                     case 18:
                     case "end":
-                      return _context142.stop();
+                      return _context175.stop();
                   }
                 }
-              }, _callee141, this);
+              }, _callee174, this);
             }));
           }
         }, {
@@ -34182,15 +36467,15 @@
         }, {
           key: "done",
           value: function done() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee142() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee175() {
               var seed;
-              return regeneratorRuntime.wrap(function _callee142$(_context143) {
+              return regeneratorRuntime.wrap(function _callee175$(_context176) {
                 while (1) {
-                  switch (_context143.prev = _context143.next) {
+                  switch (_context176.prev = _context176.next) {
                     case 0:
                       seed = this.seed;
                       this.seed = null;
-                      _context143.next = 4;
+                      _context176.next = 4;
                       return this.importService.importWalletFromObject(this.data, seed);
 
                     case 4:
@@ -34201,10 +36486,10 @@
 
                     case 8:
                     case "end":
-                      return _context143.stop();
+                      return _context176.stop();
                   }
                 }
-              }, _callee142, this);
+              }, _callee175, this);
             }));
           }
         }, {
@@ -34773,29 +37058,29 @@
         _createClass(BalanceService, [{
           key: "getBalanceAll",
           value: function getBalanceAll() {
-            var _iterator48 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
-                _step48;
+            var _iterator49 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
+                _step49;
 
             try {
-              for (_iterator48.s(); !(_step48 = _iterator48.n()).done;) {
-                var account = _step48.value;
+              for (_iterator49.s(); !(_step49 = _iterator49.n()).done;) {
+                var account = _step49.value;
                 this.getAccountBalance(account);
               }
             } catch (err) {
-              _iterator48.e(err);
+              _iterator49.e(err);
             } finally {
-              _iterator48.f();
+              _iterator49.f();
             }
           }
         }, {
           key: "getAccountBalance",
           value: function getAccountBalance(account) {
-            var _this84 = this;
+            var _this92 = this;
 
             console.log('for ' + account.address);
             this.operationService.getBalance(account.address).subscribe(function (ans) {
               if (ans.success) {
-                _this84.updateAccountBalance(account, Number(ans.payload.balance));
+                _this92.updateAccountBalance(account, Number(ans.payload.balance));
               } else {
                 console.log('Balance Error: ' + JSON.stringify(ans.payload.msg));
               }
@@ -34817,12 +37102,12 @@
             var balance = 0;
             var change = false;
 
-            var _iterator49 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
-                _step49;
+            var _iterator50 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
+                _step50;
 
             try {
-              for (_iterator49.s(); !(_step49 = _iterator49.n()).done;) {
-                var account = _step49.value;
+              for (_iterator50.s(); !(_step50 = _iterator50.n()).done;) {
+                var account = _step50.value;
 
                 if (!(account.balanceXTZ === null || account.balanceXTZ === undefined)) {
                   balance = balance + Number(account.balanceXTZ);
@@ -34830,9 +37115,9 @@
                 }
               }
             } catch (err) {
-              _iterator49.e(err);
+              _iterator50.e(err);
             } finally {
-              _iterator49.f();
+              _iterator50.f();
             }
 
             if (change) {
