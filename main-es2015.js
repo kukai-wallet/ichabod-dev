@@ -4438,7 +4438,7 @@ class ErrorHandlingPipe {
                 id: 'proto.alpha.gas_limit_too_high',
             },
             {
-                msg: 'No manager operations are allowed on an empty accounts. Make sure you have enought balance.',
+                msg: 'No manager operations are allowed on an empty account. Make sure you have enought balance.',
                 id: 'proto.alpha.implicit.empty_implicit_contract',
             },
             {
