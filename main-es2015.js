@@ -5934,6 +5934,21 @@ const CONSTANTS = {
                     shouldPreferSymbol: true
                 }
             }
+        },
+        'KT1DgT2VViqZR5qt9bzXZnmbAsPkdad8fxrc': {
+            kind: 'FA2',
+            category: 'finance',
+            tokens: {
+                '0-30': {
+                    name: 'Eli Forever',
+                    symbol: '',
+                    decimals: 0,
+                    description: 'You can keep my face',
+                    displayUrl: 'https://cloudflare-ipfs.com/ipfs/QmZwSEXcagB1SGtbbncSDxMwAe6haf1xyFKMUwpMwvMAEc',
+                    thumbnailUrl: 'https://cloudflare-ipfs.com/ipfs/QmXJHCoidLgxcf4Sbi3UvasEtFTbzVme6f7ztSQ6tJFXTr',
+                    shouldPreferSymbol: false,
+                }
+            }
         }
     },
     CONTRACT_OVERRIDES: {
@@ -6081,7 +6096,30 @@ class TokenService {
         this.exploredIds = {};
         this.storeKey = 'tokenMetadata';
         this.contracts = _environments_environment__WEBPACK_IMPORTED_MODULE_2__["CONSTANTS"].ASSETS;
+        this.unPack();
         this.loadMetadata();
+    }
+    unPack() {
+        var _a;
+        const contracts = Object.keys(this.contracts);
+        for (const contract of contracts) {
+            if (((_a = this.contracts[contract]) === null || _a === void 0 ? void 0 : _a.kind) === 'FA2') {
+                const ids = Object.keys(this.contracts[contract].tokens);
+                if (ids === null || ids === void 0 ? void 0 : ids.length) {
+                    for (const id of ids) {
+                        if (id.includes('-')) {
+                            const span = id.split('-');
+                            if (span.length === 2 && !isNaN(Number(span[0])) && !isNaN(Number(span[1]))) {
+                                for (let i = Number(span[0]); i <= Number(span[1]); i++) {
+                                    this.contracts[contract].tokens[i] = this.contracts[contract].tokens[id];
+                                }
+                                delete this.contracts[contract].tokens[id];
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     getAsset(tokenId) {
         if (!tokenId || !tokenId.includes(':')) {

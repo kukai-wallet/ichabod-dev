@@ -9552,6 +9552,21 @@
                 shouldPreferSymbol: true
               }
             }
+          },
+          'KT1DgT2VViqZR5qt9bzXZnmbAsPkdad8fxrc': {
+            kind: 'FA2',
+            category: 'finance',
+            tokens: {
+              '0-30': {
+                name: 'Eli Forever',
+                symbol: '',
+                decimals: 0,
+                description: 'You can keep my face',
+                displayUrl: 'https://cloudflare-ipfs.com/ipfs/QmZwSEXcagB1SGtbbncSDxMwAe6haf1xyFKMUwpMwvMAEc',
+                thumbnailUrl: 'https://cloudflare-ipfs.com/ipfs/QmXJHCoidLgxcf4Sbi3UvasEtFTbzVme6f7ztSQ6tJFXTr',
+                shouldPreferSymbol: false
+              }
+            }
           }
         },
         CONTRACT_OVERRIDES: {
@@ -9760,10 +9775,53 @@
           this.exploredIds = {};
           this.storeKey = 'tokenMetadata';
           this.contracts = _environments_environment__WEBPACK_IMPORTED_MODULE_2__["CONSTANTS"].ASSETS;
+          this.unPack();
           this.loadMetadata();
         }
 
         _createClass(TokenService, [{
+          key: "unPack",
+          value: function unPack() {
+            var _a;
+
+            var contracts = Object.keys(this.contracts);
+
+            for (var _i = 0, _contracts = contracts; _i < _contracts.length; _i++) {
+              var contract = _contracts[_i];
+
+              if (((_a = this.contracts[contract]) === null || _a === void 0 ? void 0 : _a.kind) === 'FA2') {
+                var ids = Object.keys(this.contracts[contract].tokens);
+
+                if (ids === null || ids === void 0 ? void 0 : ids.length) {
+                  var _iterator4 = _createForOfIteratorHelper(ids),
+                      _step4;
+
+                  try {
+                    for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+                      var id = _step4.value;
+
+                      if (id.includes('-')) {
+                        var span = id.split('-');
+
+                        if (span.length === 2 && !isNaN(Number(span[0])) && !isNaN(Number(span[1]))) {
+                          for (var i = Number(span[0]); i <= Number(span[1]); i++) {
+                            this.contracts[contract].tokens[i] = this.contracts[contract].tokens[id];
+                          }
+
+                          delete this.contracts[contract].tokens[id];
+                        }
+                      }
+                    }
+                  } catch (err) {
+                    _iterator4.e(err);
+                  } finally {
+                    _iterator4.f();
+                  }
+                }
+              }
+            }
+          }
+        }, {
           key: "getAsset",
           value: function getAsset(tokenId) {
             if (!tokenId || !tokenId.includes(':')) {
@@ -9805,34 +9863,34 @@
             var contractKeys = Object.keys(this.contracts);
 
             if (contractKeys) {
-              var _iterator4 = _createForOfIteratorHelper(contractKeys),
-                  _step4;
+              var _iterator5 = _createForOfIteratorHelper(contractKeys),
+                  _step5;
 
               try {
-                for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-                  var contractKey = _step4.value;
+                for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+                  var contractKey = _step5.value;
                   var tokenKeys = Object.keys(this.contracts[contractKey].tokens);
 
                   if (tokenKeys) {
-                    var _iterator5 = _createForOfIteratorHelper(tokenKeys),
-                        _step5;
+                    var _iterator6 = _createForOfIteratorHelper(tokenKeys),
+                        _step6;
 
                     try {
-                      for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-                        var tokenKey = _step5.value;
+                      for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+                        var tokenKey = _step6.value;
                         tokenIds.push("".concat(contractKey, ":").concat(tokenKey));
                       }
                     } catch (err) {
-                      _iterator5.e(err);
+                      _iterator6.e(err);
                     } finally {
-                      _iterator5.f();
+                      _iterator6.f();
                     }
                   }
                 }
               } catch (err) {
-                _iterator4.e(err);
+                _iterator5.e(err);
               } finally {
-                _iterator4.f();
+                _iterator5.f();
               }
             }
 
@@ -9852,8 +9910,8 @@
               var currentKeys = Object.keys(this.contracts[contractAddress].tokens);
               var newKeys = Object.keys(contract.tokens);
 
-              for (var _i = 0, _newKeys = newKeys; _i < _newKeys.length; _i++) {
-                var key = _newKeys[_i];
+              for (var _i2 = 0, _newKeys = newKeys; _i2 < _newKeys.length; _i2++) {
+                var key = _newKeys[_i2];
 
                 if (!currentKeys.includes(key)) {
                   this.contracts[contractAddress].tokens[key] = contract.tokens[key];
@@ -10002,8 +10060,8 @@
                 if (metadata === null || metadata === void 0 ? void 0 : metadata.contracts) {
                   var contractAddresses = Object.keys(metadata.contracts);
 
-                  for (var _i2 = 0, _contractAddresses = contractAddresses; _i2 < _contractAddresses.length; _i2++) {
-                    var address = _contractAddresses[_i2];
+                  for (var _i3 = 0, _contractAddresses = contractAddresses; _i3 < _contractAddresses.length; _i3++) {
+                    var address = _contractAddresses[_i3];
                     this.addAsset(address, metadata.contracts[address]);
                   }
                 }
@@ -10720,21 +10778,21 @@
               if (((_c = this.loginConfig.loginOptions) === null || _c === void 0 ? void 0 : _c.length) > 0) {
                 this.loginOptions = [];
 
-                var _iterator6 = _createForOfIteratorHelper(this.loginConfig.loginOptions),
-                    _step6;
+                var _iterator7 = _createForOfIteratorHelper(this.loginConfig.loginOptions),
+                    _step7;
 
                 try {
-                  for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
-                    var loginOption = _step6.value;
+                  for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+                    var loginOption = _step7.value;
 
                     if (this.torusService.verifierMapKeys.includes(loginOption)) {
                       this.loginOptions.push(loginOption);
                     }
                   }
                 } catch (err) {
-                  _iterator6.e(err);
+                  _iterator7.e(err);
                 } finally {
-                  _iterator6.f();
+                  _iterator7.f();
                 }
               } else {
                 this.loginOptions = this.torusService.verifierMapKeys;
@@ -11852,12 +11910,12 @@
         }, {
           key: "validParameters",
           value: function validParameters(txs) {
-            var _iterator7 = _createForOfIteratorHelper(txs),
-                _step7;
+            var _iterator8 = _createForOfIteratorHelper(txs),
+                _step8;
 
             try {
-              for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
-                var tx = _step7.value;
+              for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+                var tx = _step8.value;
 
                 if (tx.parameters) {
                   try {
@@ -11873,9 +11931,9 @@
                 }
               }
             } catch (err) {
-              _iterator7.e(err);
+              _iterator8.e(err);
             } finally {
-              _iterator7.f();
+              _iterator8.f();
             }
 
             return true;
@@ -12018,19 +12076,19 @@
             var network = new big_js__WEBPACK_IMPORTED_MODULE_8___default.a(0);
             var storageLimit = new big_js__WEBPACK_IMPORTED_MODULE_8___default.a(0);
 
-            var _iterator8 = _createForOfIteratorHelper(ops),
-                _step8;
+            var _iterator9 = _createForOfIteratorHelper(ops),
+                _step9;
 
             try {
-              for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
-                var op = _step8.value;
+              for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+                var op = _step9.value;
                 network = network.plus(op.fee);
                 storageLimit = storageLimit.plus(op.storageLimit);
               }
             } catch (err) {
-              _iterator8.e(err);
+              _iterator9.e(err);
             } finally {
-              _iterator8.f();
+              _iterator9.f();
             }
 
             var storage = storageLimit.times(this.estimateService.costPerByte);
@@ -12049,7 +12107,7 @@
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee53() {
               var _this37 = this;
 
-              var _iterator9, _step9, op, keys;
+              var _iterator10, _step10, op, keys;
 
               return regeneratorRuntime.wrap(function _callee53$(_context53) {
                 while (1) {
@@ -12064,18 +12122,18 @@
                       return _context53.abrupt("return");
 
                     case 3:
-                      _iterator9 = _createForOfIteratorHelper(ops);
+                      _iterator10 = _createForOfIteratorHelper(ops);
                       _context53.prev = 4;
 
-                      _iterator9.s();
+                      _iterator10.s();
 
                     case 6:
-                      if ((_step9 = _iterator9.n()).done) {
+                      if ((_step10 = _iterator10.n()).done) {
                         _context53.next = 13;
                         break;
                       }
 
-                      op = _step9.value;
+                      op = _step10.value;
 
                       if (!(op.kind !== 'transaction')) {
                         _context53.next = 11;
@@ -12097,12 +12155,12 @@
                       _context53.prev = 15;
                       _context53.t0 = _context53["catch"](4);
 
-                      _iterator9.e(_context53.t0);
+                      _iterator10.e(_context53.t0);
 
                     case 18:
                       _context53.prev = 18;
 
-                      _iterator9.f();
+                      _iterator10.f();
 
                       return _context53.finish(18);
 
@@ -12134,7 +12192,7 @@
                     case 34:
                       this.operationService.transfer(this.activeAccount.address, ops, Number(ops[ops.length - 1].fee), keys, '').subscribe(function (ans) {
                         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this37, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee52() {
-                          var metadata, _iterator10, _step10, transaction;
+                          var metadata, _iterator11, _step11, transaction;
 
                           return regeneratorRuntime.wrap(function _callee52$(_context52) {
                             while (1) {
@@ -12159,18 +12217,18 @@
                                   return this.coordinatorService.boost(this.activeAccount.address, metadata);
 
                                 case 8:
-                                  _iterator10 = _createForOfIteratorHelper(ops);
+                                  _iterator11 = _createForOfIteratorHelper(ops);
                                   _context52.prev = 9;
 
-                                  _iterator10.s();
+                                  _iterator11.s();
 
                                 case 11:
-                                  if ((_step10 = _iterator10.n()).done) {
+                                  if ((_step11 = _iterator11.n()).done) {
                                     _context52.next = 18;
                                     break;
                                   }
 
-                                  transaction = _step10.value;
+                                  transaction = _step11.value;
 
                                   if (!this.walletService.addressExists(transaction.destination)) {
                                     _context52.next = 16;
@@ -12192,12 +12250,12 @@
                                   _context52.prev = 20;
                                   _context52.t0 = _context52["catch"](9);
 
-                                  _iterator10.e(_context52.t0);
+                                  _iterator11.e(_context52.t0);
 
                                 case 23:
                                   _context52.prev = 23;
 
-                                  _iterator10.f();
+                                  _iterator11.f();
 
                                   return _context52.finish(23);
 
@@ -12661,7 +12719,7 @@
                           this.pendingLookups[address] = true;
                           this.operationService.torusKeyLookup(address).subscribe(function (ans) {
                             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this38, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee55() {
-                              var keys, verifierMap, _i3, _keys, key, verifierId, verifierArray, twitterId, _yield$this$torusServ2, username;
+                              var keys, verifierMap, _i4, _keys, key, verifierId, verifierArray, twitterId, _yield$this$torusServ2, username;
 
                               return regeneratorRuntime.wrap(function _callee55$(_context55) {
                                 while (1) {
@@ -12679,15 +12737,15 @@
 
                                       keys = Object.keys(ans.result.Verifiers);
                                       verifierMap = this.torusService.verifierMap;
-                                      _i3 = 0, _keys = keys;
+                                      _i4 = 0, _keys = keys;
 
                                     case 5:
-                                      if (!(_i3 < _keys.length)) {
+                                      if (!(_i4 < _keys.length)) {
                                         _context55.next = 31;
                                         break;
                                       }
 
-                                      key = _keys[_i3];
+                                      key = _keys[_i4];
 
                                       if (!(key === verifierMap['google'].verifier)) {
                                         _context55.next = 11;
@@ -12742,7 +12800,7 @@
                                       console.log('Unhandled verifier result', ans);
 
                                     case 28:
-                                      _i3++;
+                                      _i4++;
                                       _context55.next = 5;
                                       break;
 
@@ -12781,21 +12839,21 @@
             var record = this.records[address];
 
             if (record) {
-              var _iterator11 = _createForOfIteratorHelper(record),
-                  _step11;
+              var _iterator12 = _createForOfIteratorHelper(record),
+                  _step12;
 
               try {
-                for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
-                  var entry = _step11.value;
+                for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
+                  var entry = _step12.value;
 
                   if (entry.lookupType > 1) {
                     return true;
                   }
                 }
               } catch (err) {
-                _iterator11.e(err);
+                _iterator12.e(err);
               } finally {
-                _iterator11.f();
+                _iterator12.f();
               }
             }
 
@@ -13459,8 +13517,8 @@
             var count = 0;
             var output = '';
 
-            for (var _i4 = 0, _keys2 = keys; _i4 < _keys2.length; _i4++) {
-              var key = _keys2[_i4];
+            for (var _i5 = 0, _keys2 = keys; _i5 < _keys2.length; _i5++) {
+              var key = _keys2[_i5];
 
               if (diff[key] || count) {
                 if (count) {
@@ -16348,18 +16406,18 @@
           key: "getDelegates",
           value: function getDelegates() {
             if (this.walletService.wallet && this.walletService.wallet.implicitAccounts) {
-              var _iterator12 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
-                  _step12;
+              var _iterator13 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
+                  _step13;
 
               try {
-                for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
-                  var account = _step12.value;
+                for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
+                  var account = _step13.value;
                   this.getDelegate(account);
                 }
               } catch (err) {
-                _iterator12.e(err);
+                _iterator13.e(err);
               } finally {
-                _iterator12.f();
+                _iterator13.f();
               }
             }
           }
@@ -17998,12 +18056,12 @@
                             data.tokens = aryTokens;
 
                             if ((_a = data === null || data === void 0 ? void 0 : data.tokens) === null || _a === void 0 ? void 0 : _a.length) {
-                              var _iterator13 = _createForOfIteratorHelper(data.tokens),
-                                  _step13;
+                              var _iterator14 = _createForOfIteratorHelper(data.tokens),
+                                  _step14;
 
                               try {
-                                for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
-                                  var token = _step13.value;
+                                for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
+                                  var token = _step14.value;
                                   tokens.push(token);
 
                                   if (!knownTokenIds.includes("".concat(token.contract, ":").concat(token.token_id))) {
@@ -18011,9 +18069,9 @@
                                   }
                                 }
                               } catch (err) {
-                                _iterator13.e(err);
+                                _iterator14.e(err);
                               } finally {
-                                _iterator13.f();
+                                _iterator14.f();
                               }
                             }
 
@@ -18280,7 +18338,7 @@
                           return response.json();
                         }).then(function (datas) {
                           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this43, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee67() {
-                            var keys, _iterator14, _step14, data, rawData, metadata, _iterator15, _step15, a;
+                            var keys, _iterator15, _step15, data, rawData, metadata, _iterator16, _step16, a;
 
                             return regeneratorRuntime.wrap(function _callee67$(_context67) {
                               while (1) {
@@ -18319,18 +18377,18 @@
                                     }]; // should always be 1
 
                                     assert__WEBPACK_IMPORTED_MODULE_4___default()(datas.length === 1, "cannot find token_id ".concat(id, " for contract: ").concat(contractAddress));
-                                    _iterator14 = _createForOfIteratorHelper(datas);
+                                    _iterator15 = _createForOfIteratorHelper(datas);
                                     _context67.prev = 3;
 
-                                    _iterator14.s();
+                                    _iterator15.s();
 
                                   case 5:
-                                    if ((_step14 = _iterator14.n()).done) {
+                                    if ((_step15 = _iterator15.n()).done) {
                                       _context67.next = 36;
                                       break;
                                     }
 
-                                    data = _step14.value;
+                                    data = _step15.value;
 
                                     if (!((data === null || data === void 0 ? void 0 : data.token_id) === Number(id))) {
                                       _context67.next = 34;
@@ -18342,20 +18400,20 @@
                                     rawData = JSON.parse(JSON.stringify(data));
                                     this.flattern(data);
                                     metadata = {};
-                                    _iterator15 = _createForOfIteratorHelper(keys);
+                                    _iterator16 = _createForOfIteratorHelper(keys);
 
                                     try {
-                                      for (_iterator15.s(); !(_step15 = _iterator15.n()).done;) {
-                                        a = _step15.value;
+                                      for (_iterator16.s(); !(_step16 = _iterator16.n()).done;) {
+                                        a = _step16.value;
 
                                         if (typeof data[a.key] === a.type) {
                                           metadata[a.key] = data[a.key];
                                         }
                                       }
                                     } catch (err) {
-                                      _iterator15.e(err);
+                                      _iterator16.e(err);
                                     } finally {
-                                      _iterator15.f();
+                                      _iterator16.f();
                                     }
 
                                     if (!metadata.displayUri) {
@@ -18429,12 +18487,12 @@
                                     _context67.prev = 38;
                                     _context67.t1 = _context67["catch"](3);
 
-                                    _iterator14.e(_context67.t1);
+                                    _iterator15.e(_context67.t1);
 
                                   case 41:
                                     _context67.prev = 41;
 
-                                    _iterator14.f();
+                                    _iterator15.f();
 
                                     return _context67.finish(41);
 
@@ -18480,14 +18538,14 @@
             value: function flattern(obj) {
               var keys = Object.keys(obj);
 
-              for (var _i5 = 0, _keys3 = keys; _i5 < _keys3.length; _i5++) {
-                var key = _keys3[_i5];
+              for (var _i6 = 0, _keys3 = keys; _i6 < _keys3.length; _i6++) {
+                var key = _keys3[_i6];
 
                 if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
                   var childKeys = Object.keys(obj[key]);
 
-                  for (var _i6 = 0, _childKeys = childKeys; _i6 < _childKeys.length; _i6++) {
-                    var childKey = _childKeys[_i6];
+                  for (var _i7 = 0, _childKeys = childKeys; _i7 < _childKeys.length; _i7++) {
+                    var childKey = _childKeys[_i7];
 
                     if (typeof obj[childKey] === 'undefined' && typeof obj[key][childKey] !== 'object') {
                       obj[childKey] = obj[key][childKey];
@@ -20380,7 +20438,7 @@
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee98() {
               var _this47 = this;
 
-              var extraGas, simulation, _iterator16, _step16, tx, op, result, reveal, limits, _iterator17, _step17, content, _this$getOpUsage, gasUsage, storageUsage;
+              var extraGas, simulation, _iterator17, _step17, tx, op, result, reveal, limits, _iterator18, _step18, content, _this$getOpUsage, gasUsage, storageUsage;
 
               return regeneratorRuntime.wrap(function _callee98$(_context99) {
                 while (1) {
@@ -20401,11 +20459,11 @@
                         gasLimit: hardGasLimit,
                         storageLimit: hardStorageLimit
                       };
-                      _iterator16 = _createForOfIteratorHelper(operations);
+                      _iterator17 = _createForOfIteratorHelper(operations);
 
                       try {
-                        for (_iterator16.s(); !(_step16 = _iterator16.n()).done;) {
-                          tx = _step16.value;
+                        for (_iterator17.s(); !(_step17 = _iterator17.n()).done;) {
+                          tx = _step17.value;
                           console.log(tx);
 
                           if (!isOrigination) {
@@ -20422,9 +20480,9 @@
                           tx.storageLimit = simulation.storageLimit;
                         }
                       } catch (err) {
-                        _iterator16.e(err);
+                        _iterator17.e(err);
                       } finally {
-                        _iterator16.f();
+                        _iterator17.f();
                       }
 
                       if (!(this.hash && this.counter && (this.manager || this.manager === null))) {
@@ -20449,18 +20507,18 @@
 
                       reveal = false;
                       limits = [];
-                      _iterator17 = _createForOfIteratorHelper(result.contents);
+                      _iterator18 = _createForOfIteratorHelper(result.contents);
                       _context99.prev = 15;
 
-                      _iterator17.s();
+                      _iterator18.s();
 
                     case 17:
-                      if ((_step17 = _iterator17.n()).done) {
+                      if ((_step18 = _iterator18.n()).done) {
                         _context99.next = 31;
                         break;
                       }
 
-                      content = _step17.value;
+                      content = _step18.value;
 
                       if (!(content.kind === 'reveal')) {
                         _context99.next = 23;
@@ -20500,12 +20558,12 @@
                       _context99.prev = 33;
                       _context99.t0 = _context99["catch"](15);
 
-                      _iterator17.e(_context99.t0);
+                      _iterator18.e(_context99.t0);
 
                     case 36:
                       _context99.prev = 36;
 
-                      _iterator17.f();
+                      _iterator18.f();
 
                       return _context99.finish(36);
 
@@ -20570,34 +20628,15 @@
             }
 
             if (content.metadata.operation_result.balance_updates) {
-              var _iterator18 = _createForOfIteratorHelper(content.metadata.operation_result.balance_updates),
-                  _step18;
-
-              try {
-                for (_iterator18.s(); !(_step18 = _iterator18.n()).done;) {
-                  var balanceUpdate = _step18.value;
-
-                  if (balanceUpdate.contract === this.pkh) {
-                    burn = burn.minus(balanceUpdate.change);
-                  }
-                }
-              } catch (err) {
-                _iterator18.e(err);
-              } finally {
-                _iterator18.f();
-              }
-            }
-
-            if (content.metadata.balance_updates) {
-              var _iterator19 = _createForOfIteratorHelper(content.metadata.balance_updates),
+              var _iterator19 = _createForOfIteratorHelper(content.metadata.operation_result.balance_updates),
                   _step19;
 
               try {
                 for (_iterator19.s(); !(_step19 = _iterator19.n()).done;) {
-                  var _balanceUpdate = _step19.value;
+                  var balanceUpdate = _step19.value;
 
-                  if (_balanceUpdate.contract === this.pkh) {
-                    burn = burn.minus(_balanceUpdate.change);
+                  if (balanceUpdate.contract === this.pkh) {
+                    burn = burn.minus(balanceUpdate.change);
                   }
                 }
               } catch (err) {
@@ -20607,15 +20646,34 @@
               }
             }
 
-            gasUsage += content.metadata.operation_result.consumed_gas ? Number(content.metadata.operation_result.consumed_gas) : 0;
-
-            if (content.metadata.internal_operation_results) {
-              var _iterator20 = _createForOfIteratorHelper(content.metadata.internal_operation_results),
+            if (content.metadata.balance_updates) {
+              var _iterator20 = _createForOfIteratorHelper(content.metadata.balance_updates),
                   _step20;
 
               try {
                 for (_iterator20.s(); !(_step20 = _iterator20.n()).done;) {
-                  var internalResult = _step20.value;
+                  var _balanceUpdate = _step20.value;
+
+                  if (_balanceUpdate.contract === this.pkh) {
+                    burn = burn.minus(_balanceUpdate.change);
+                  }
+                }
+              } catch (err) {
+                _iterator20.e(err);
+              } finally {
+                _iterator20.f();
+              }
+            }
+
+            gasUsage += content.metadata.operation_result.consumed_gas ? Number(content.metadata.operation_result.consumed_gas) : 0;
+
+            if (content.metadata.internal_operation_results) {
+              var _iterator21 = _createForOfIteratorHelper(content.metadata.internal_operation_results),
+                  _step21;
+
+              try {
+                for (_iterator21.s(); !(_step21 = _iterator21.n()).done;) {
+                  var internalResult = _step21.value;
 
                   if (internalResult.result) {
                     if (internalResult.result.consumed_gas) {
@@ -20623,29 +20681,29 @@
                     }
 
                     if (internalResult.result.balance_updates) {
-                      var _iterator21 = _createForOfIteratorHelper(internalResult.result.balance_updates),
-                          _step21;
+                      var _iterator22 = _createForOfIteratorHelper(internalResult.result.balance_updates),
+                          _step22;
 
                       try {
-                        for (_iterator21.s(); !(_step21 = _iterator21.n()).done;) {
-                          var _balanceUpdate2 = _step21.value;
+                        for (_iterator22.s(); !(_step22 = _iterator22.n()).done;) {
+                          var _balanceUpdate2 = _step22.value;
 
                           if (_balanceUpdate2.contract === this.pkh && _balanceUpdate2.change.slice(0, 1) === '-') {
                             burn = burn.minus(_balanceUpdate2.change);
                           }
                         }
                       } catch (err) {
-                        _iterator21.e(err);
+                        _iterator22.e(err);
                       } finally {
-                        _iterator21.f();
+                        _iterator22.f();
                       }
                     }
                   }
                 }
               } catch (err) {
-                _iterator20.e(err);
+                _iterator21.e(err);
               } finally {
-                _iterator20.f();
+                _iterator21.f();
               }
             }
 
@@ -20688,19 +20746,19 @@
               numberOfOperations++;
             }
 
-            var _iterator22 = _createForOfIteratorHelper(limits),
-                _step22;
+            var _iterator23 = _createForOfIteratorHelper(limits),
+                _step23;
 
             try {
-              for (_iterator22.s(); !(_step22 = _iterator22.n()).done;) {
-                var data = _step22.value;
+              for (_iterator23.s(); !(_step23 = _iterator23.n()).done;) {
+                var data = _step23.value;
                 gasUnits += data.gasLimit;
                 numberOfOperations++;
               }
             } catch (err) {
-              _iterator22.e(err);
+              _iterator23.e(err);
             } finally {
-              _iterator22.f();
+              _iterator23.f();
             }
 
             bytes += 10 * numberOfOperations; // add 10 extra bytes for variation in amount & fee
@@ -20712,18 +20770,18 @@
           value: function averageGasLimit(limits) {
             var totalGasLimit = 0;
 
-            var _iterator23 = _createForOfIteratorHelper(limits),
-                _step23;
+            var _iterator24 = _createForOfIteratorHelper(limits),
+                _step24;
 
             try {
-              for (_iterator23.s(); !(_step23 = _iterator23.n()).done;) {
-                var data = _step23.value;
+              for (_iterator24.s(); !(_step24 = _iterator24.n()).done;) {
+                var data = _step24.value;
                 totalGasLimit += data.gasLimit;
               }
             } catch (err) {
-              _iterator23.e(err);
+              _iterator24.e(err);
             } finally {
-              _iterator23.f();
+              _iterator24.f();
             }
 
             return Math.ceil(totalGasLimit / limits.length);
@@ -20733,18 +20791,18 @@
           value: function averageStorageLimit(limits) {
             var totalStorageLimit = 0;
 
-            var _iterator24 = _createForOfIteratorHelper(limits),
-                _step24;
+            var _iterator25 = _createForOfIteratorHelper(limits),
+                _step25;
 
             try {
-              for (_iterator24.s(); !(_step24 = _iterator24.n()).done;) {
-                var data = _step24.value;
+              for (_iterator25.s(); !(_step25 = _iterator25.n()).done;) {
+                var data = _step25.value;
                 totalStorageLimit += data.storageLimit;
               }
             } catch (err) {
-              _iterator24.e(err);
+              _iterator25.e(err);
             } finally {
-              _iterator24.f();
+              _iterator25.f();
             }
 
             return Math.ceil(totalStorageLimit / limits.length);
@@ -20754,18 +20812,18 @@
           value: function burnFee(limits) {
             var totalStorageLimit = big_js__WEBPACK_IMPORTED_MODULE_6___default()(0);
 
-            var _iterator25 = _createForOfIteratorHelper(limits),
-                _step25;
+            var _iterator26 = _createForOfIteratorHelper(limits),
+                _step26;
 
             try {
-              for (_iterator25.s(); !(_step25 = _iterator25.n()).done;) {
-                var data = _step25.value;
+              for (_iterator26.s(); !(_step26 = _iterator26.n()).done;) {
+                var data = _step26.value;
                 totalStorageLimit = totalStorageLimit.plus(data.storageLimit);
               }
             } catch (err) {
-              _iterator25.e(err);
+              _iterator26.e(err);
             } finally {
-              _iterator25.f();
+              _iterator26.f();
             }
 
             return Number(big_js__WEBPACK_IMPORTED_MODULE_6___default()(totalStorageLimit).times(this.costPerByte).div('1000000').toString());
@@ -24772,18 +24830,18 @@
           value: function getTotalAmount() {
             var totalSent = big_js__WEBPACK_IMPORTED_MODULE_6___default()(0);
 
-            var _iterator26 = _createForOfIteratorHelper(this.transactions),
-                _step26;
+            var _iterator27 = _createForOfIteratorHelper(this.transactions),
+                _step27;
 
             try {
-              for (_iterator26.s(); !(_step26 = _iterator26.n()).done;) {
-                var tx = _step26.value;
+              for (_iterator27.s(); !(_step27 = _iterator27.n()).done;) {
+                var tx = _step27.value;
                 totalSent = totalSent.add(tx.amount);
               }
             } catch (err) {
-              _iterator26.e(err);
+              _iterator27.e(err);
             } finally {
-              _iterator26.f();
+              _iterator27.f();
             }
 
             return totalSent.toFixed();
@@ -24915,18 +24973,18 @@
             if (this.tokenTransfer) {
               data += transactions[0].to + transactions[0].amount.toString();
             } else {
-              var _iterator27 = _createForOfIteratorHelper(transactions),
-                  _step27;
+              var _iterator28 = _createForOfIteratorHelper(transactions),
+                  _step28;
 
               try {
-                for (_iterator27.s(); !(_step27 = _iterator27.n()).done;) {
-                  var tx = _step27.value;
+                for (_iterator28.s(); !(_step28 = _iterator28.n()).done;) {
+                  var tx = _step28.value;
                   data += tx.to;
                 }
               } catch (err) {
-                _iterator27.e(err);
+                _iterator28.e(err);
               } finally {
-                _iterator27.f();
+                _iterator28.f();
               }
             }
 
@@ -25128,18 +25186,18 @@
                 var max = big_js__WEBPACK_IMPORTED_MODULE_6___default()(this.maxToSend(this.activeAccount)).plus(this.tokenTransfer ? 0 : 0.000001);
                 var amount = big_js__WEBPACK_IMPORTED_MODULE_6___default()(0);
 
-                var _iterator28 = _createForOfIteratorHelper(this.transactions),
-                    _step28;
+                var _iterator29 = _createForOfIteratorHelper(this.transactions),
+                    _step29;
 
                 try {
-                  for (_iterator28.s(); !(_step28 = _iterator28.n()).done;) {
-                    var tx = _step28.value;
+                  for (_iterator29.s(); !(_step29 = _iterator29.n()).done;) {
+                    var tx = _step29.value;
                     amount = amount.plus(big_js__WEBPACK_IMPORTED_MODULE_6___default()(tx.amount));
                   }
                 } catch (err) {
-                  _iterator28.e(err);
+                  _iterator29.e(err);
                 } finally {
-                  _iterator28.f();
+                  _iterator29.f();
                 }
 
                 if (amount.gt(max)) {
@@ -25151,18 +25209,18 @@
 
                 var _amount2 = big_js__WEBPACK_IMPORTED_MODULE_6___default()(0);
 
-                var _iterator29 = _createForOfIteratorHelper(this.transactions),
-                    _step29;
+                var _iterator30 = _createForOfIteratorHelper(this.transactions),
+                    _step30;
 
                 try {
-                  for (_iterator29.s(); !(_step29 = _iterator29.n()).done;) {
-                    var _tx = _step29.value;
+                  for (_iterator30.s(); !(_step30 = _iterator30.n()).done;) {
+                    var _tx = _step30.value;
                     _amount2 = _amount2.plus(big_js__WEBPACK_IMPORTED_MODULE_6___default()(_tx.amount));
                   }
                 } catch (err) {
-                  _iterator29.e(err);
+                  _iterator30.e(err);
                 } finally {
-                  _iterator29.f();
+                  _iterator30.f();
                 }
 
                 if (_amount2.gt(maxKt)) {
@@ -25824,12 +25882,12 @@
             var tot = 0;
             var change = false;
 
-            var _iterator30 = _createForOfIteratorHelper(accounts),
-                _step30;
+            var _iterator31 = _createForOfIteratorHelper(accounts),
+                _step31;
 
             try {
-              for (_iterator30.s(); !(_step30 = _iterator30.n()).done;) {
-                var account = _step30.value;
+              for (_iterator31.s(); !(_step31 = _iterator31.n()).done;) {
+                var account = _step31.value;
 
                 if (account.balanceXTZ !== null) {
                   account.balanceUSD = Number(account.balanceXTZ / 1000000 * this.walletService.wallet.XTZrate);
@@ -25838,9 +25896,9 @@
                 }
               }
             } catch (err) {
-              _iterator30.e(err);
+              _iterator31.e(err);
             } finally {
-              _iterator30.f();
+              _iterator31.f();
             }
 
             if (change) {
@@ -27434,34 +27492,34 @@
             var accounts = [];
 
             if (this.implicitAccounts.length) {
-              var _iterator31 = _createForOfIteratorHelper(this.implicitAccounts),
-                  _step31;
+              var _iterator32 = _createForOfIteratorHelper(this.implicitAccounts),
+                  _step32;
 
               try {
-                for (_iterator31.s(); !(_step31 = _iterator31.n()).done;) {
-                  var implicitAccount = _step31.value;
+                for (_iterator32.s(); !(_step32 = _iterator32.n()).done;) {
+                  var implicitAccount = _step32.value;
                   accounts.push(implicitAccount);
 
                   if (implicitAccount.originatedAccounts.length) {
-                    var _iterator32 = _createForOfIteratorHelper(implicitAccount.originatedAccounts),
-                        _step32;
+                    var _iterator33 = _createForOfIteratorHelper(implicitAccount.originatedAccounts),
+                        _step33;
 
                     try {
-                      for (_iterator32.s(); !(_step32 = _iterator32.n()).done;) {
-                        var originatedAccount = _step32.value;
+                      for (_iterator33.s(); !(_step33 = _iterator33.n()).done;) {
+                        var originatedAccount = _step33.value;
                         accounts.push(originatedAccount);
                       }
                     } catch (err) {
-                      _iterator32.e(err);
+                      _iterator33.e(err);
                     } finally {
-                      _iterator32.f();
+                      _iterator33.f();
                     }
                   }
                 }
               } catch (err) {
-                _iterator31.e(err);
+                _iterator32.e(err);
               } finally {
-                _iterator31.f();
+                _iterator32.f();
               }
             }
 
@@ -27476,40 +27534,40 @@
           key: "getAccount",
           value: function getAccount(address) {
             if (this.implicitAccounts.length) {
-              var _iterator33 = _createForOfIteratorHelper(this.implicitAccounts),
-                  _step33;
+              var _iterator34 = _createForOfIteratorHelper(this.implicitAccounts),
+                  _step34;
 
               try {
-                for (_iterator33.s(); !(_step33 = _iterator33.n()).done;) {
-                  var implicitAccount = _step33.value;
+                for (_iterator34.s(); !(_step34 = _iterator34.n()).done;) {
+                  var implicitAccount = _step34.value;
 
                   if (implicitAccount.address === address) {
                     return implicitAccount;
                   }
 
                   if (implicitAccount.originatedAccounts.length) {
-                    var _iterator34 = _createForOfIteratorHelper(implicitAccount.originatedAccounts),
-                        _step34;
+                    var _iterator35 = _createForOfIteratorHelper(implicitAccount.originatedAccounts),
+                        _step35;
 
                     try {
-                      for (_iterator34.s(); !(_step34 = _iterator34.n()).done;) {
-                        var originatedAccount = _step34.value;
+                      for (_iterator35.s(); !(_step35 = _iterator35.n()).done;) {
+                        var originatedAccount = _step35.value;
 
                         if (originatedAccount.address === address) {
                           return originatedAccount;
                         }
                       }
                     } catch (err) {
-                      _iterator34.e(err);
+                      _iterator35.e(err);
                     } finally {
-                      _iterator34.f();
+                      _iterator35.f();
                     }
                   }
                 }
               } catch (err) {
-                _iterator33.e(err);
+                _iterator34.e(err);
               } finally {
-                _iterator33.f();
+                _iterator34.f();
               }
             }
 
@@ -27519,21 +27577,21 @@
           key: "getImplicitAccount",
           value: function getImplicitAccount(pkh) {
             if (this.implicitAccounts.length) {
-              var _iterator35 = _createForOfIteratorHelper(this.implicitAccounts),
-                  _step35;
+              var _iterator36 = _createForOfIteratorHelper(this.implicitAccounts),
+                  _step36;
 
               try {
-                for (_iterator35.s(); !(_step35 = _iterator35.n()).done;) {
-                  var implicitAccount = _step35.value;
+                for (_iterator36.s(); !(_step36 = _iterator36.n()).done;) {
+                  var implicitAccount = _step36.value;
 
                   if (implicitAccount.pkh === pkh) {
                     return implicitAccount;
                   }
                 }
               } catch (err) {
-                _iterator35.e(err);
+                _iterator36.e(err);
               } finally {
-                _iterator35.f();
+                _iterator36.f();
               }
             }
 
@@ -27727,21 +27785,21 @@
           key: "getTokenBalance",
           value: function getTokenBalance(tokenId) {
             if (this.tokens.length) {
-              var _iterator36 = _createForOfIteratorHelper(this.tokens),
-                  _step36;
+              var _iterator37 = _createForOfIteratorHelper(this.tokens),
+                  _step37;
 
               try {
-                for (_iterator36.s(); !(_step36 = _iterator36.n()).done;) {
-                  var token = _step36.value;
+                for (_iterator37.s(); !(_step37 = _iterator37.n()).done;) {
+                  var token = _step37.value;
 
                   if (tokenId === token.tokenId) {
                     return token.balance;
                   }
                 }
               } catch (err) {
-                _iterator36.e(err);
+                _iterator37.e(err);
               } finally {
-                _iterator36.f();
+                _iterator37.f();
               }
             }
 
@@ -29675,12 +29733,12 @@
               var peers = JSON.parse(peersJson);
 
               if (peers && peers.length > 0 && pairInfo.publicKey) {
-                var _iterator37 = _createForOfIteratorHelper(peers),
-                    _step37;
+                var _iterator38 = _createForOfIteratorHelper(peers),
+                    _step38;
 
                 try {
-                  for (_iterator37.s(); !(_step37 = _iterator37.n()).done;) {
-                    var peer = _step37.value;
+                  for (_iterator38.s(); !(_step38 = _iterator38.n()).done;) {
+                    var peer = _step38.value;
 
                     if (peer.publicKey && peer.publicKey === pairInfo.publicKey) {
                       newPublicKey = false;
@@ -29689,9 +29747,9 @@
                     }
                   }
                 } catch (err) {
-                  _iterator37.e(err);
+                  _iterator38.e(err);
                 } finally {
-                  _iterator37.f();
+                  _iterator38.f();
                 }
               }
             }
@@ -31941,18 +31999,18 @@
           key: "loadParameters",
           value: function loadParameters() {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee145() {
-              var _iterator38, _step38, _step38$value, i, op;
+              var _iterator39, _step39, _step39$value, i, op;
 
               return regeneratorRuntime.wrap(function _callee145$(_context146) {
                 while (1) {
                   switch (_context146.prev = _context146.next) {
                     case 0:
                       if (this.transactions.length > 1) {
-                        _iterator38 = _createForOfIteratorHelper(this.transactions.entries());
+                        _iterator39 = _createForOfIteratorHelper(this.transactions.entries());
 
                         try {
-                          for (_iterator38.s(); !(_step38 = _iterator38.n()).done;) {
-                            _step38$value = _slicedToArray(_step38.value, 2), i = _step38$value[0], op = _step38$value[1];
+                          for (_iterator39.s(); !(_step39 = _iterator39.n()).done;) {
+                            _step39$value = _slicedToArray(_step39.value, 2), i = _step39$value[0], op = _step39$value[1];
 
                             if (op.parameters) {
                               this.batchParameters.push({
@@ -31966,9 +32024,9 @@
                             }
                           }
                         } catch (err) {
-                          _iterator38.e(err);
+                          _iterator39.e(err);
                         } finally {
-                          _iterator38.f();
+                          _iterator39.f();
                         }
                       } else if (this.transactions[0].parameters) {
                         this.updateParameters(0, this.transactions[0].parameters);
@@ -32059,18 +32117,18 @@
           value: function totalAmount() {
             var totalSent = big_js__WEBPACK_IMPORTED_MODULE_12___default()(0);
 
-            var _iterator39 = _createForOfIteratorHelper(this.transactions),
-                _step39;
+            var _iterator40 = _createForOfIteratorHelper(this.transactions),
+                _step40;
 
             try {
-              for (_iterator39.s(); !(_step39 = _iterator39.n()).done;) {
-                var tx = _step39.value;
+              for (_iterator40.s(); !(_step40 = _iterator40.n()).done;) {
+                var tx = _step40.value;
                 totalSent = totalSent.add(tx.amount);
               }
             } catch (err) {
-              _iterator39.e(err);
+              _iterator40.e(err);
             } finally {
-              _iterator39.f();
+              _iterator40.f();
             }
 
             return totalSent.toFixed();
@@ -32084,18 +32142,18 @@
 
             var totalFee = big_js__WEBPACK_IMPORTED_MODULE_12___default()(0);
 
-            var _iterator40 = _createForOfIteratorHelper(this.transactions),
-                _step40;
+            var _iterator41 = _createForOfIteratorHelper(this.transactions),
+                _step41;
 
             try {
-              for (_iterator40.s(); !(_step40 = _iterator40.n()).done;) {
-                var tx = _step40.value;
+              for (_iterator41.s(); !(_step41 = _iterator41.n()).done;) {
+                var tx = _step41.value;
                 totalFee = totalFee.add(tx.fee ? tx.fee : 0);
               }
             } catch (err) {
-              _iterator40.e(err);
+              _iterator41.e(err);
             } finally {
-              _iterator40.f();
+              _iterator41.f();
             }
 
             return totalFee.toFixed();
@@ -32105,18 +32163,18 @@
           value: function getTotalBurn() {
             var totalBurn = big_js__WEBPACK_IMPORTED_MODULE_12___default()(0);
 
-            var _iterator41 = _createForOfIteratorHelper(this.transactions),
-                _step41;
+            var _iterator42 = _createForOfIteratorHelper(this.transactions),
+                _step42;
 
             try {
-              for (_iterator41.s(); !(_step41 = _iterator41.n()).done;) {
-                var tx = _step41.value;
+              for (_iterator42.s(); !(_step42 = _iterator42.n()).done;) {
+                var tx = _step42.value;
                 totalBurn = totalBurn.add(tx.storageLimit ? tx.storageLimit : 0);
               }
             } catch (err) {
-              _iterator41.e(err);
+              _iterator42.e(err);
             } finally {
-              _iterator41.f();
+              _iterator42.f();
             }
 
             totalBurn = totalBurn.mul(this.transactions.length).times(this.costPerByte).div(1000000).toFixed();
@@ -32253,7 +32311,7 @@
                     case 0:
                       this.operationService.transfer(this.activeAccount.address, this.transactions, Number(this.getTotalFee()), keys, this.tokenTransfer).subscribe(function (ans) {
                         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this85, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee149() {
-                          var metadata, _iterator42, _step42, transaction;
+                          var metadata, _iterator43, _step43, transaction;
 
                           return regeneratorRuntime.wrap(function _callee149$(_context150) {
                             while (1) {
@@ -32291,18 +32349,18 @@
                                     this.torusNotification(this.transactions[0]);
                                   }
 
-                                  _iterator42 = _createForOfIteratorHelper(this.transactions);
+                                  _iterator43 = _createForOfIteratorHelper(this.transactions);
                                   _context150.prev = 12;
 
-                                  _iterator42.s();
+                                  _iterator43.s();
 
                                 case 14:
-                                  if ((_step42 = _iterator42.n()).done) {
+                                  if ((_step43 = _iterator43.n()).done) {
                                     _context150.next = 21;
                                     break;
                                   }
 
-                                  transaction = _step42.value;
+                                  transaction = _step43.value;
 
                                   if (!this.walletService.addressExists(transaction.destination)) {
                                     _context150.next = 19;
@@ -32324,12 +32382,12 @@
                                   _context150.prev = 23;
                                   _context150.t0 = _context150["catch"](12);
 
-                                  _iterator42.e(_context150.t0);
+                                  _iterator43.e(_context150.t0);
 
                                 case 26:
                                   _context150.prev = 26;
 
-                                  _iterator42.f();
+                                  _iterator43.f();
 
                                   return _context150.finish(26);
 
@@ -33071,19 +33129,19 @@
           key: "handleUnknownTokenIds",
           value: function handleUnknownTokenIds(unknownTokenIds) {
             if (unknownTokenIds.length) {
-              var _iterator43 = _createForOfIteratorHelper(unknownTokenIds),
-                  _step43;
+              var _iterator44 = _createForOfIteratorHelper(unknownTokenIds),
+                  _step44;
 
               try {
-                for (_iterator43.s(); !(_step43 = _iterator43.n()).done;) {
-                  var tokenId = _step43.value;
+                for (_iterator44.s(); !(_step44 = _iterator44.n()).done;) {
+                  var tokenId = _step44.value;
                   var tok = tokenId.split(':');
                   this.tokenService.searchMetadata(tok[0], tok[1]);
                 }
               } catch (err) {
-                _iterator43.e(err);
+                _iterator44.e(err);
               } finally {
-                _iterator43.f();
+                _iterator44.f();
               }
             }
           }
@@ -33091,18 +33149,18 @@
           key: "updateTokenBalances",
           value: function updateTokenBalances(account, tokens) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee155() {
-              var _iterator44, _step44, token, tokenId;
+              var _iterator45, _step45, token, tokenId;
 
               return regeneratorRuntime.wrap(function _callee155$(_context156) {
                 while (1) {
                   switch (_context156.prev = _context156.next) {
                     case 0:
                       if (tokens && tokens.length) {
-                        _iterator44 = _createForOfIteratorHelper(tokens);
+                        _iterator45 = _createForOfIteratorHelper(tokens);
 
                         try {
-                          for (_iterator44.s(); !(_step44 = _iterator44.n()).done;) {
-                            token = _step44.value;
+                          for (_iterator45.s(); !(_step45 = _iterator45.n()).done;) {
+                            token = _step45.value;
                             tokenId = "".concat(token.contract, ":").concat(token.token_id);
 
                             if (tokenId) {
@@ -33110,9 +33168,9 @@
                             }
                           }
                         } catch (err) {
-                          _iterator44.e(err);
+                          _iterator45.e(err);
                         } finally {
-                          _iterator44.f();
+                          _iterator45.f();
                         }
                       }
 
@@ -33152,21 +33210,21 @@
                   console.log('# Excluded ' + counter);
                 }
 
-                var _iterator45 = _createForOfIteratorHelper(operations),
-                    _step45;
+                var _iterator46 = _createForOfIteratorHelper(operations),
+                    _step46;
 
                 try {
-                  for (_iterator45.s(); !(_step45 = _iterator45.n()).done;) {
-                    var activity = _step45.value;
+                  for (_iterator46.s(); !(_step46 = _iterator46.n()).done;) {
+                    var activity = _step46.value;
 
                     var counterParty = _this88.getCounterparty(activity, account, false);
 
                     _this88.lookupService.check(counterParty);
                   }
                 } catch (err) {
-                  _iterator45.e(err);
+                  _iterator46.e(err);
                 } finally {
-                  _iterator45.f();
+                  _iterator46.f();
                 }
               } else {
                 console.log(operations);
@@ -33182,12 +33240,12 @@
           value: function promptNewActivities(account, oldActivities, newActivities) {
             var _this89 = this;
 
-            var _iterator46 = _createForOfIteratorHelper(newActivities),
-                _step46;
+            var _iterator47 = _createForOfIteratorHelper(newActivities),
+                _step47;
 
             try {
               var _loop2 = function _loop2() {
-                var activity = _step46.value;
+                var activity = _step47.value;
                 var index = oldActivities.findIndex(function (a) {
                   return a.hash === activity.hash;
                 });
@@ -33221,13 +33279,13 @@
                 }
               };
 
-              for (_iterator46.s(); !(_step46 = _iterator46.n()).done;) {
+              for (_iterator47.s(); !(_step47 = _iterator47.n()).done;) {
                 _loop2();
               }
             } catch (err) {
-              _iterator46.e(err);
+              _iterator47.e(err);
             } finally {
-              _iterator46.f();
+              _iterator47.f();
             }
           }
         }, {
@@ -33806,7 +33864,7 @@
           key: "findContracts",
           value: function findContracts(pkh) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee162() {
-              var addresses, _iterator47, _step47, KT;
+              var addresses, _iterator48, _step48, KT;
 
               return regeneratorRuntime.wrap(function _callee162$(_context163) {
                 while (1) {
@@ -33817,18 +33875,18 @@
 
                     case 2:
                       addresses = _context163.sent;
-                      _iterator47 = _createForOfIteratorHelper(addresses);
+                      _iterator48 = _createForOfIteratorHelper(addresses);
 
                       try {
-                        for (_iterator47.s(); !(_step47 = _iterator47.n()).done;) {
-                          KT = _step47.value;
+                        for (_iterator48.s(); !(_step48 = _iterator48.n()).done;) {
+                          KT = _step48.value;
                           console.log('Found KT: ' + KT);
                           this.walletService.addOriginatedAccount(KT, pkh);
                         }
                       } catch (err) {
-                        _iterator47.e(err);
+                        _iterator48.e(err);
                       } finally {
-                        _iterator47.f();
+                        _iterator48.f();
                       }
 
                       this.walletService.storeWallet();
@@ -34269,7 +34327,7 @@
           key: "isSupportedOperationRequest",
           value: function isSupportedOperationRequest(message) {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee167() {
-              var _iterator48, _step48, op, i;
+              var _iterator49, _step49, op, i;
 
               return regeneratorRuntime.wrap(function _callee167$(_context168) {
                 while (1) {
@@ -34302,18 +34360,18 @@
                         break;
                       }
 
-                      _iterator48 = _createForOfIteratorHelper(message.operationDetails);
+                      _iterator49 = _createForOfIteratorHelper(message.operationDetails);
                       _context168.prev = 14;
 
-                      _iterator48.s();
+                      _iterator49.s();
 
                     case 16:
-                      if ((_step48 = _iterator48.n()).done) {
+                      if ((_step49 = _iterator49.n()).done) {
                         _context168.next = 25;
                         break;
                       }
 
-                      op = _step48.value;
+                      op = _step49.value;
 
                       if (!(op.kind !== 'transaction')) {
                         _context168.next = 23;
@@ -34339,12 +34397,12 @@
                       _context168.prev = 27;
                       _context168.t0 = _context168["catch"](14);
 
-                      _iterator48.e(_context168.t0);
+                      _iterator49.e(_context168.t0);
 
                     case 30:
                       _context168.prev = 30;
 
-                      _iterator48.f();
+                      _iterator49.f();
 
                       return _context168.finish(30);
 
@@ -37102,18 +37160,18 @@
         _createClass(BalanceService, [{
           key: "getBalanceAll",
           value: function getBalanceAll() {
-            var _iterator49 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
-                _step49;
+            var _iterator50 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
+                _step50;
 
             try {
-              for (_iterator49.s(); !(_step49 = _iterator49.n()).done;) {
-                var account = _step49.value;
+              for (_iterator50.s(); !(_step50 = _iterator50.n()).done;) {
+                var account = _step50.value;
                 this.getAccountBalance(account);
               }
             } catch (err) {
-              _iterator49.e(err);
+              _iterator50.e(err);
             } finally {
-              _iterator49.f();
+              _iterator50.f();
             }
           }
         }, {
@@ -37146,12 +37204,12 @@
             var balance = 0;
             var change = false;
 
-            var _iterator50 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
-                _step50;
+            var _iterator51 = _createForOfIteratorHelper(this.walletService.wallet.getAccounts()),
+                _step51;
 
             try {
-              for (_iterator50.s(); !(_step50 = _iterator50.n()).done;) {
-                var account = _step50.value;
+              for (_iterator51.s(); !(_step51 = _iterator51.n()).done;) {
+                var account = _step51.value;
 
                 if (!(account.balanceXTZ === null || account.balanceXTZ === undefined)) {
                   balance = balance + Number(account.balanceXTZ);
@@ -37159,9 +37217,9 @@
                 }
               }
             } catch (err) {
-              _iterator50.e(err);
+              _iterator51.e(err);
             } finally {
-              _iterator50.f();
+              _iterator51.f();
             }
 
             if (change) {
