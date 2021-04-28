@@ -1820,10 +1820,10 @@ class OperationService {
                     throw new Error(`the amount ${transactions[i].amount} is not within ${decimals} decimals`);
                 }
                 if (kind === 'FA1.2') {
-                    invocation = this.getFA12Transaction(pkh, transactions[i].to, txAmount.toFixed(0));
+                    invocation = this.getFA12Transaction(pkh, transactions[i].destination, txAmount.toFixed(0));
                 }
                 else if (kind === 'FA2') {
-                    invocation = this.getFA2Transaction(pkh, transactions[i].to, txAmount.toFixed(0), id);
+                    invocation = this.getFA2Transaction(pkh, transactions[i].destination, txAmount.toFixed(0), id);
                 }
                 else {
                     throw new Error('Unrecognized token kind');
@@ -2095,7 +2095,22 @@ class OperationService {
         }
     }
     errHandler(error) {
-        console.log(JSON.stringify(error));
+        if (error.error && typeof error.error === 'string') { // parsing errors
+            error = error.error;
+            const lines = error.split('\n').map((line) => {
+                return line.trim();
+            });
+            if (lines === null || lines === void 0 ? void 0 : lines.length) {
+                for (const i in lines) {
+                    if (lines[i].startsWith('At /') && !lines[i].startsWith('At /kind')) {
+                        const n = Number(i) + 1;
+                        if (lines[n]) {
+                            error = `${lines[i]} ${lines[n]}`;
+                        }
+                    }
+                }
+            }
+        }
         if (error.error && error.error[0]) {
             error = error.error[0];
         }
@@ -4423,7 +4438,7 @@ class ErrorHandlingPipe {
                 id: 'proto.alpha.gas_limit_too_high',
             },
             {
-                msg: 'No manager operations are allowed on an empty implicit contract.',
+                msg: 'No manager operations are allowed on an empty accounts. Make sure you have enought balance.',
                 id: 'proto.alpha.implicit.empty_implicit_contract',
             },
             {
@@ -7175,7 +7190,7 @@ class SendComponent {
                     if (res) {
                         if (res.error) {
                             this.messageService.addError(`Simulation error: ${res.error.message}`, 0);
-                            this.operationResponse.emit('invalid_parameters');
+                            this.operationResponse.emit({ error: 'invalid_parameters', errorMessage: res.error.message });
                         }
                         else {
                             const fullyPrepared = txs.map((tx, i) => {
@@ -7285,7 +7300,7 @@ class SendComponent {
                     yield this.messageService.stopSpinner();
                     console.log('Transaction error id ', ans.payload.msg);
                     this.messageService.addError(ans.payload.msg, 0);
-                    this.operationResponse.emit('broadcast_error');
+                    this.operationResponse.emit({ error: 'broadcast_error', errorMessage: ans.payload.msg });
                 }
             }), err => {
                 this.messageService.stopSpinner();
@@ -12378,14 +12393,19 @@ class EmbeddedComponent {
     }
     operationResponse(opHash) {
         let response;
+        let errorMessage = '';
+        if ((opHash === null || opHash === void 0 ? void 0 : opHash.error) && opHash.errorMessage) {
+            errorMessage = opHash.errorMessage;
+            opHash = opHash.error;
+        }
         if (!opHash) {
             response = { type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse, failed: true, error: 'ABORTED_BY_USER' };
         }
         else if (opHash === 'broadcast_error') {
-            response = { type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse, failed: true, error: 'BROADCAST_ERROR' };
+            response = { type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse, failed: true, error: 'BROADCAST_ERROR', errorMessage };
         }
         else if (opHash === 'invalid_parameters') {
-            response = { type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse, failed: true, error: 'INVALID_PARAMETERS' };
+            response = { type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse, failed: true, error: 'INVALID_PARAMETERS', errorMessage };
         }
         else if (_tezos_core_tools_crypto_utils__WEBPACK_IMPORTED_MODULE_8__["utils"].validOperationHash(opHash)) {
             response = { type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse, opHash, failed: false };
@@ -18499,6 +18519,9 @@ class UriHandlerComponent {
     /* operation request handling */
     operationResponse(opHash) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (opHash === null || opHash === void 0 ? void 0 : opHash.error) {
+                opHash = opHash.error;
+            }
             if (!opHash) {
                 yield this.beaconService.rejectOnUserAbort(this.operationRequest);
             }

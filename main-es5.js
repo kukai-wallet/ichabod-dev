@@ -3721,9 +3721,9 @@
                 }
 
                 if (kind === 'FA1.2') {
-                  invocation = this.getFA12Transaction(pkh, transactions[i].to, txAmount.toFixed(0));
+                  invocation = this.getFA12Transaction(pkh, transactions[i].destination, txAmount.toFixed(0));
                 } else if (kind === 'FA2') {
-                  invocation = this.getFA2Transaction(pkh, transactions[i].to, txAmount.toFixed(0), id);
+                  invocation = this.getFA2Transaction(pkh, transactions[i].destination, txAmount.toFixed(0), id);
                 } else {
                   throw new Error('Unrecognized token kind');
                 }
@@ -4028,7 +4028,25 @@
         }, {
           key: "errHandler",
           value: function errHandler(error) {
-            console.log(JSON.stringify(error));
+            if (error.error && typeof error.error === 'string') {
+              // parsing errors
+              error = error.error;
+              var lines = error.split('\n').map(function (line) {
+                return line.trim();
+              });
+
+              if (lines === null || lines === void 0 ? void 0 : lines.length) {
+                for (var i in lines) {
+                  if (lines[i].startsWith('At /') && !lines[i].startsWith('At /kind')) {
+                    var n = Number(i) + 1;
+
+                    if (lines[n]) {
+                      error = "".concat(lines[i], " ").concat(lines[n]);
+                    }
+                  }
+                }
+              }
+            }
 
             if (error.error && error.error[0]) {
               error = error.error[0];
@@ -7732,7 +7750,7 @@
             msg: 'A transaction tried to exceed the hard limit on gas',
             id: 'proto.alpha.gas_limit_too_high'
           }, {
-            msg: 'No manager operations are allowed on an empty implicit contract.',
+            msg: 'No manager operations are allowed on an empty accounts. Make sure you have enought balance.',
             id: 'proto.alpha.implicit.empty_implicit_contract'
           }, {
             msg: 'Emptying an implicit delegated account is not allowed.',
@@ -11899,7 +11917,10 @@
                           if (res.error) {
                             _this36.messageService.addError("Simulation error: ".concat(res.error.message), 0);
 
-                            _this36.operationResponse.emit('invalid_parameters');
+                            _this36.operationResponse.emit({
+                              error: 'invalid_parameters',
+                              errorMessage: res.error.message
+                            });
                           } else {
                             var fullyPrepared = txs.map(function (tx, i) {
                               return Object.assign(Object.assign({}, tx), {
@@ -12191,7 +12212,10 @@
                                 case 30:
                                   console.log('Transaction error id ', ans.payload.msg);
                                   this.messageService.addError(ans.payload.msg, 0);
-                                  this.operationResponse.emit('broadcast_error');
+                                  this.operationResponse.emit({
+                                    error: 'broadcast_error',
+                                    errorMessage: ans.payload.msg
+                                  });
 
                                 case 33:
                                 case "end":
@@ -21623,6 +21647,12 @@
             var _this53 = this;
 
             var response;
+            var errorMessage = '';
+
+            if ((opHash === null || opHash === void 0 ? void 0 : opHash.error) && opHash.errorMessage) {
+              errorMessage = opHash.errorMessage;
+              opHash = opHash.error;
+            }
 
             if (!opHash) {
               response = {
@@ -21634,13 +21664,15 @@
               response = {
                 type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
                 failed: true,
-                error: 'BROADCAST_ERROR'
+                error: 'BROADCAST_ERROR',
+                errorMessage: errorMessage
               };
             } else if (opHash === 'invalid_parameters') {
               response = {
                 type: kukai_embed__WEBPACK_IMPORTED_MODULE_13__["ResponseTypes"].operationResponse,
                 failed: true,
-                error: 'INVALID_PARAMETERS'
+                error: 'INVALID_PARAMETERS',
+                errorMessage: errorMessage
               };
             } else if (_tezos_core_tools_crypto_utils__WEBPACK_IMPORTED_MODULE_8__["utils"].validOperationHash(opHash)) {
               response = {
@@ -34555,70 +34587,74 @@
                 while (1) {
                   switch (_context170.prev = _context170.next) {
                     case 0:
+                      if (opHash === null || opHash === void 0 ? void 0 : opHash.error) {
+                        opHash = opHash.error;
+                      }
+
                       if (opHash) {
-                        _context170.next = 5;
+                        _context170.next = 6;
                         break;
                       }
 
-                      _context170.next = 3;
+                      _context170.next = 4;
                       return this.beaconService.rejectOnUserAbort(this.operationRequest);
 
-                    case 3:
-                      _context170.next = 23;
+                    case 4:
+                      _context170.next = 24;
                       break;
 
-                    case 5:
+                    case 6:
                       if (!(opHash === 'broadcast_error')) {
-                        _context170.next = 10;
+                        _context170.next = 11;
                         break;
                       }
 
-                      _context170.next = 8;
+                      _context170.next = 9;
                       return this.beaconService.rejectOnBroadcastError(this.operationRequest);
 
-                    case 8:
-                      _context170.next = 23;
+                    case 9:
+                      _context170.next = 24;
                       break;
 
-                    case 10:
+                    case 11:
                       if (!(opHash === 'invalid_parameters')) {
-                        _context170.next = 15;
+                        _context170.next = 16;
                         break;
                       }
 
-                      _context170.next = 13;
+                      _context170.next = 14;
                       return this.beaconService.rejectOnParameters(this.operationRequest);
 
-                    case 13:
-                      _context170.next = 23;
+                    case 14:
+                      _context170.next = 24;
                       break;
 
-                    case 15:
+                    case 16:
                       if (!(opHash === 'parameters_error')) {
-                        _context170.next = 20;
+                        _context170.next = 21;
                         break;
                       }
 
-                      _context170.next = 18;
+                      _context170.next = 19;
                       return this.beaconService.rejectOnParameters(this.operationRequest);
 
-                    case 18:
-                      _context170.next = 23;
+                    case 19:
+                      _context170.next = 24;
                       break;
 
-                    case 20:
+                    case 21:
                       response = {
                         type: _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].OperationResponse,
                         transactionHash: opHash,
                         id: this.operationRequest.id
                       };
-                      _context170.next = 23;
+                      _context170.next = 24;
                       return this.beaconService.client.respond(response);
 
-                    case 23:
+                    case 24:
                       this.operationRequest = null;
 
-                    case 24:
+                    case 25:
                     case "end":
                       return _context170.stop();
                   }
