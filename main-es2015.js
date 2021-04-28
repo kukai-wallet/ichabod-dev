@@ -11161,7 +11161,6 @@ class TzktService {
             const aryTokenFetchUrl = [];
             for (let i = 0; i < totalPromises; i++) {
                 const url = `${this.bcd}/account/${this.network}/${address}/token_balances?max=${querySizeMax}&offset=${querySizeMax * i}`;
-                console.log('url', url);
                 aryTokenFetchUrl.push(fetch(url));
             }
             const aryTokenResults = yield Promise.all(aryTokenFetchUrl);

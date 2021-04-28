@@ -18659,7 +18659,6 @@
 
                         for (i = 0; i < totalPromises; i++) {
                           url = "".concat(this.bcd, "/account/").concat(this.network, "/").concat(address, "/token_balances?max=").concat(querySizeMax, "&offset=").concat(querySizeMax * i);
-                          console.log('url', url);
                           aryTokenFetchUrl.push(fetch(url));
                         }
 
