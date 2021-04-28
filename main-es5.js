@@ -9557,7 +9557,7 @@
             kind: 'FA2',
             category: 'finance',
             tokens: {
-              '0-30': {
+              '0-29': {
                 name: 'Eli Forever',
                 symbol: '',
                 decimals: 0,
@@ -9809,8 +9809,8 @@
                           var last = Number(span[1]);
 
                           for (var i = first; i <= last; i++) {
-                            this.contracts[contract].tokens[i] = this.contracts[contract].tokens[id];
-                            this.contracts[contract].tokens[i].name = "".concat(this.contracts[contract].tokens[i].name, " #").concat(i - first + 1);
+                            this.contracts[contract].tokens[i] = JSON.parse(JSON.stringify(this.contracts[contract].tokens[id]));
+                            this.contracts[contract].tokens[i].name = "".concat(this.contracts[contract].tokens[id].name, " #").concat(i - first + 1);
                           }
 
                           delete this.contracts[contract].tokens[id];

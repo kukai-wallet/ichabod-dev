@@ -5939,7 +5939,7 @@ const CONSTANTS = {
             kind: 'FA2',
             category: 'finance',
             tokens: {
-                '0-30': {
+                '0-29': {
                     name: 'Eli Forever',
                     symbol: '',
                     decimals: 0,
@@ -6114,8 +6114,8 @@ class TokenService {
                                 const first = Number(span[0]);
                                 const last = Number(span[1]);
                                 for (let i = first; i <= last; i++) {
-                                    this.contracts[contract].tokens[i] = this.contracts[contract].tokens[id];
-                                    this.contracts[contract].tokens[i].name = `${this.contracts[contract].tokens[i].name} #${(i - first + 1)}`;
+                                    this.contracts[contract].tokens[i] = JSON.parse(JSON.stringify(this.contracts[contract].tokens[id]));
+                                    this.contracts[contract].tokens[i].name = `${this.contracts[contract].tokens[id].name} #${(i - first + 1)}`;
                                 }
                                 delete this.contracts[contract].tokens[id];
                             }
