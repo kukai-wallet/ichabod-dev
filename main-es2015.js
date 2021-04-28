@@ -6111,8 +6111,11 @@ class TokenService {
                         if (id.includes('-')) {
                             const span = id.split('-');
                             if (span.length === 2 && !isNaN(Number(span[0])) && !isNaN(Number(span[1]))) {
-                                for (let i = Number(span[0]); i <= Number(span[1]); i++) {
+                                const first = Number(span[0]);
+                                const last = Number(span[1]);
+                                for (let i = first; i <= last; i++) {
                                     this.contracts[contract].tokens[i] = this.contracts[contract].tokens[id];
+                                    this.contracts[contract].tokens[i].name = `${this.contracts[contract].tokens[i].name} #${(i - first + 1)}`;
                                 }
                                 delete this.contracts[contract].tokens[id];
                             }

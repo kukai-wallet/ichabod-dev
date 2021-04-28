@@ -9805,8 +9805,12 @@
                         var span = id.split('-');
 
                         if (span.length === 2 && !isNaN(Number(span[0])) && !isNaN(Number(span[1]))) {
-                          for (var i = Number(span[0]); i <= Number(span[1]); i++) {
+                          var first = Number(span[0]);
+                          var last = Number(span[1]);
+
+                          for (var i = first; i <= last; i++) {
                             this.contracts[contract].tokens[i] = this.contracts[contract].tokens[id];
+                            this.contracts[contract].tokens[i].name = "".concat(this.contracts[contract].tokens[i].name, " #").concat(i - first + 1);
                           }
 
                           delete this.contracts[contract].tokens[id];
