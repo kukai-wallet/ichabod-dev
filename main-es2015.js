@@ -5947,6 +5947,7 @@ const CONSTANTS = {
                     displayUrl: 'https://cloudflare-ipfs.com/ipfs/QmZwSEXcagB1SGtbbncSDxMwAe6haf1xyFKMUwpMwvMAEc',
                     thumbnailUrl: 'https://cloudflare-ipfs.com/ipfs/QmXJHCoidLgxcf4Sbi3UvasEtFTbzVme6f7ztSQ6tJFXTr',
                     shouldPreferSymbol: false,
+                    isBooleanAmount: true
                 }
             }
         }
