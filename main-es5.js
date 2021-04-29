@@ -22563,11 +22563,13 @@
 
             if (this.beaconMode) {
               if (this.operationRequest) {
-                if (((_a = this.operationRequest[0]) === null || _a === void 0 ? void 0 : _a.kind) === 'delegation') {
+                var opReq = this.operationRequest.operationDetails ? this.operationRequest.operationDetails : this.operationRequest;
+
+                if (((_a = opReq[0]) === null || _a === void 0 ? void 0 : _a.kind) === 'delegation') {
                   this.openModal();
 
-                  if (this.operationRequest[0].delegate) {
-                    this.toPkh = this.operationRequest[0].delegate;
+                  if (opReq[0].delegate) {
+                    this.toPkh = opReq[0].delegate;
                   }
                 }
               }
