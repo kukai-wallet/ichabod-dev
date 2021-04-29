@@ -7185,6 +7185,7 @@ class SendComponent {
                         this.simulateRequest(txs, tokenTransferObj === null || tokenTransferObj === void 0 ? void 0 : tokenTransferObj.tokenId);
                     }
                     else {
+                        this.tokenTransfer = '';
                         this.simulateRequest(txs, '');
                     }
                 }
