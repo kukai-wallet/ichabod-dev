@@ -611,278 +611,6 @@ WalletService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInj
 
 /***/ }),
 
-/***/ "/qKp":
-/*!*******************************!*\
-  !*** ../icabod/dist/index.js ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
-};
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
-};
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-var _iframe, _messages, _icon, _user;
-Object.defineProperty(exports, "__esModule", { value: true });
-const types_1 = __webpack_require__(/*! ./types */ "874q");
-exports.Networks = types_1.Networks;
-const util_1 = __webpack_require__(/*! ./util */ "D5E+");
-const iframe_1 = __webpack_require__(/*! ./iframe */ "I9fP");
-const icon_1 = __webpack_require__(/*! ./icon */ "PYrL");
-const messages_1 = __webpack_require__(/*! ./messages */ "d9S5");
-__export(__webpack_require__(/*! ./types */ "874q"));
-const storeKey = 'kukai-embed-instance-id';
-class KukaiEmbed {
-    /**
-     * Constructs a {@link KukaiEmbed} instance, using the given network OR with override src
-     *
-     * @param network - The network which the Kukai instance will use, OR the source of the Kukai instance
-     */
-    constructor(cfg = {}) {
-        _iframe.set(this, void 0);
-        _messages.set(this, void 0);
-        _icon.set(this, null);
-        _user.set(this, null);
-        const fullCfg = {
-            net: types_1.Networks.mainnet,
-            icon: false,
-            ...cfg
-        };
-        const iframeSrc = util_1.networkToSrc(fullCfg.net);
-        const k = new iframe_1.IFrameKukai(iframeSrc);
-        __classPrivateFieldSet(this, _iframe, k);
-        __classPrivateFieldSet(this, _messages, new messages_1.KukaiMessaging(k, iframeSrc));
-        if (fullCfg.icon) {
-            __classPrivateFieldSet(this, _icon, new icon_1.IconUI());
-        }
-    }
-    /**
-     * Initializes the Kukai Embed in the page
-     *
-     * @remarks
-     * This method injects an IFrame into the document body which contains a Kukai instance. The returned
-     * promise resolves when the iframe content has finished loading and a message has been exchanged with
-     * the Kukai instance
-     */
-    async init() {
-        var _a;
-        if (this.initialized) {
-            throw new Error("Kukai-Embed Already Present");
-        }
-        const id = window.sessionStorage.getItem(storeKey);
-        const instanceId = id ? id : undefined;
-        let init = async (id) => {
-            // begin waiting for init message
-            let p = __classPrivateFieldGet(this, _messages).init(window);
-            // add iframe to document body, Kukai embedded component should send an init message once init is complete
-            __classPrivateFieldGet(this, _iframe).init(instanceId);
-            // await the init message
-            return await p;
-        };
-        if (instanceId) {
-            const user = window.sessionStorage.getItem(instanceId);
-            if (user) {
-                await init(instanceId);
-                __classPrivateFieldSet(this, _user, JSON.parse(user));
-                __classPrivateFieldGet(this, _iframe).toCard();
-                __classPrivateFieldGet(this, _iframe).hide();
-                (_a = __classPrivateFieldGet(this, _icon)) === null || _a === void 0 ? void 0 : _a.init(() => this.toggle()).then(() => { var _a; return (_a = __classPrivateFieldGet(this, _icon)) === null || _a === void 0 ? void 0 : _a.show(); });
-            }
-            else {
-                await init();
-            }
-        }
-        else {
-            await init();
-        }
-    }
-    /**
-     * Indicates whether the embed is fully initialized
-     *
-     * @returns the initialization state of the embed
-     */
-    get initialized() {
-        return __classPrivateFieldGet(this, _iframe).isInit && __classPrivateFieldGet(this, _messages).isInit;
-    }
-    deinit() {
-        var _a;
-        __classPrivateFieldGet(this, _messages).deinit();
-        __classPrivateFieldGet(this, _iframe).deinit();
-        (_a = __classPrivateFieldGet(this, _icon)) === null || _a === void 0 ? void 0 : _a.deinit();
-    }
-    get user() {
-        return __classPrivateFieldGet(this, _user);
-    }
-    /**
-     * Initiates the User Login flow for the embed
-     *
-     * @remarks
-     * This will {@link KukaiEmbed.show | show} the embed containing a DirectAuth component
-     *
-     * @returns the Login information for the User
-     */
-    async login(config = {}) {
-        if (!this.initialized) {
-            throw new Error("Cannot login: Embed Uninitialized");
-        }
-        if (this.user !== null) {
-            throw new Error("Already logged in");
-        }
-        __classPrivateFieldGet(this, _iframe).toFullScreen();
-        __classPrivateFieldGet(this, _iframe).show();
-        return await __classPrivateFieldGet(this, _messages).login(config).then(({ pk, pkh, userData, instanceId }) => {
-            var _a;
-            window.sessionStorage.setItem(storeKey, instanceId);
-            window.sessionStorage.setItem(instanceId, JSON.stringify({ pk, pkh, userData }));
-            (_a = __classPrivateFieldGet(this, _icon)) === null || _a === void 0 ? void 0 : _a.init(() => this.toggle()).then(() => { var _a; return (_a = __classPrivateFieldGet(this, _icon)) === null || _a === void 0 ? void 0 : _a.show(); });
-            __classPrivateFieldSet(this, _user, { pk, pkh, userData });
-            const callback = async () => {
-                return await __classPrivateFieldGet(this, _messages).dismiss()
-                    .finally(() => {
-                    __classPrivateFieldGet(this, _iframe).hide();
-                    __classPrivateFieldGet(this, _iframe).toCard();
-                });
-            };
-            return !config.customSpinnerDismissal ? __classPrivateFieldGet(this, _user) : { ...__classPrivateFieldGet(this, _user), dismissCallback: callback };
-        }).catch((e) => {
-            config.customSpinnerDismissal = false;
-            throw e;
-        }).finally(() => {
-            if (!config.customSpinnerDismissal) {
-                __classPrivateFieldGet(this, _iframe).hide();
-                __classPrivateFieldGet(this, _iframe).toCard();
-            }
-        });
-    }
-    /**
-     * Logs out of the embedded Kukai instance
-     *
-     * @returns the Logout result with potential error info
-     */
-    async logout() {
-        if (!this.initialized) {
-            throw new Error("Cannot logout: Embed Uninitialized");
-        }
-        if (__classPrivateFieldGet(this, _iframe).isCard() && !__classPrivateFieldGet(this, _iframe).isHidden())
-            await __classPrivateFieldGet(this, _messages).card(false);
-        return await __classPrivateFieldGet(this, _messages).logout()
-            .then(res => {
-            var _a, _b;
-            window.sessionStorage.removeItem(storeKey);
-            __classPrivateFieldGet(this, _iframe).hide();
-            (_a = __classPrivateFieldGet(this, _icon)) === null || _a === void 0 ? void 0 : _a.hide();
-            (_b = __classPrivateFieldGet(this, _icon)) === null || _b === void 0 ? void 0 : _b.deinit();
-            __classPrivateFieldSet(this, _user, null);
-        })
-            .finally(() => __classPrivateFieldGet(this, _iframe).hide());
-    }
-    /**
-     * Sends a transaction to be signed and broadcast
-     *
-     * @remarks
-     * Only one set of operations can be sent at a time. If send is called while a previous is still pending,
-     * an error will be thrown
-     *
-     * @param operations - A list of Tezos operations to sign and broadcast
-     * @returns the operation hash resulting from broadcasting the operations
-     */
-    async send(operations, ui) {
-        if (!this.initialized) {
-            throw new Error("Cannot send: Embed Uninitialized");
-        }
-        // wait for card to close properly, if open
-        if (__classPrivateFieldGet(this, _iframe).isCard() && !__classPrivateFieldGet(this, _iframe).isHidden())
-            await __classPrivateFieldGet(this, _messages).card(false);
-        __classPrivateFieldGet(this, _iframe).toFullScreen();
-        __classPrivateFieldGet(this, _iframe).show();
-        return await __classPrivateFieldGet(this, _messages).operation(operations, ui)
-            .then(res => res.opHash)
-            .finally(() => {
-            __classPrivateFieldGet(this, _iframe).toCard();
-            __classPrivateFieldGet(this, _iframe).hide();
-        });
-    }
-    /**
-     * Tracks the status of an operation in the network
-     *
-     * @param opHash - The operation hash used to track the status of the operation
-     * @returns the result of the transaction, either confirmation or rejection
-     */
-    async trackOperation(opHash) {
-        if (!this.initialized) {
-            throw new Error("Cannot track: Embed Uninitialized");
-        }
-        return await __classPrivateFieldGet(this, _messages).track(opHash);
-    }
-    /**
-     * Signs a message with associated Kukai UI
-     *
-     * @param message - The message to create a signature with
-     * @returns the detached signature made over the given message, encoded as baes58check
-     */
-    async signMessage(message) {
-        if (!this.initialized) {
-            throw new Error("Cannot sign: Embed Uninitialized");
-        }
-        // wait for card to close properly, if open
-        if (__classPrivateFieldGet(this, _iframe).isCard() && !__classPrivateFieldGet(this, _iframe).isHidden())
-            await __classPrivateFieldGet(this, _messages).card(false);
-        __classPrivateFieldGet(this, _iframe).toFullScreen();
-        __classPrivateFieldGet(this, _iframe).show();
-        return await __classPrivateFieldGet(this, _messages).sign(message)
-            .then(res => res.signature)
-            .finally(() => {
-            __classPrivateFieldGet(this, _iframe).hide();
-            __classPrivateFieldGet(this, _iframe).toCard();
-        });
-    }
-    /**
-     * Accepts a challenge and returns an auth token and signature
-     *
-     * @param requestId - The ID to represent this instance of authentication
-     * @param nonce - The challange string to sign
-     * @returns the
-     */
-    async authenticate(requestId, nonce) {
-        if (!this.initialized) {
-            throw new Error("Cannot authenticate: Embed Uninitialized");
-        }
-        return await __classPrivateFieldGet(this, _messages).authenticate(requestId, nonce)
-            .then(({ message, signature }) => ({ message, signature }));
-    }
-    async toggle() {
-        if (__classPrivateFieldGet(this, _iframe).isHidden()) {
-            __classPrivateFieldGet(this, _iframe).toCard();
-            __classPrivateFieldGet(this, _iframe).show();
-            __classPrivateFieldGet(this, _messages).card(true);
-        }
-        else {
-            await __classPrivateFieldGet(this, _messages).card(false).then(() => {
-                __classPrivateFieldGet(this, _iframe).hide();
-            });
-        }
-    }
-}
-exports.KukaiEmbed = KukaiEmbed;
-_iframe = new WeakMap(), _messages = new WeakMap(), _icon = new WeakMap(), _user = new WeakMap();
-
-
-/***/ }),
-
 /***/ 0:
 /*!***************************!*\
   !*** multi ./src/main.ts ***!
@@ -890,7 +618,7 @@ _iframe = new WeakMap(), _messages = new WeakMap(), _icon = new WeakMap(), _user
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\klas_\Git\kukai-icabod\src\main.ts */"zUnb");
+module.exports = __webpack_require__(/*! C:\Users\klas_\Git\kukai\src\main.ts */"zUnb");
 
 
 /***/ }),
@@ -1063,9 +791,9 @@ MessageService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineIn
 /***/ }),
 
 /***/ 11:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
+/*!************************!*\
+  !*** buffer (ignored) ***!
+  \************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -1085,6 +813,17 @@ MessageService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineIn
 /***/ }),
 
 /***/ 13:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 14:
 /*!********************!*\
   !*** fs (ignored) ***!
   \********************/
@@ -3431,7 +3170,7 @@ DeeplinkService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineI
 
 /***/ 5:
 /*!************************!*\
-  !*** crypto (ignored) ***!
+  !*** buffer (ignored) ***!
   \************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -3441,9 +3180,9 @@ DeeplinkService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineI
 /***/ }),
 
 /***/ 6:
-/*!********************!*\
-  !*** fs (ignored) ***!
-  \********************/
+/*!************************!*\
+  !*** crypto (ignored) ***!
+  \************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3507,9 +3246,9 @@ IndexerService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineIn
 /***/ }),
 
 /***/ 7:
-/*!*******************************************!*\
-  !*** ../../src/methods/node.js (ignored) ***!
-  \*******************************************/
+/*!********************!*\
+  !*** fs (ignored) ***!
+  \********************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3518,63 +3257,13 @@ IndexerService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineIn
 /***/ }),
 
 /***/ 8:
-/*!***************************!*\
-  !*** ./node.js (ignored) ***!
-  \***************************/
+/*!*******************************************!*\
+  !*** ../../src/methods/node.js (ignored) ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 /* (ignored) */
-
-/***/ }),
-
-/***/ "874q":
-/*!*******************************!*\
-  !*** ../icabod/dist/types.js ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Networks;
-(function (Networks) {
-    Networks["mainnet"] = "mainnet";
-    Networks["delphinet"] = "delphinet";
-    Networks["edonet"] = "edonet";
-    Networks["dev"] = "dev";
-})(Networks = exports.Networks || (exports.Networks = {}));
-var TypeOfLogin;
-(function (TypeOfLogin) {
-    TypeOfLogin["Google"] = "google";
-    TypeOfLogin["Reddit"] = "reddit";
-    TypeOfLogin["Twitter"] = "twitter";
-})(TypeOfLogin = exports.TypeOfLogin || (exports.TypeOfLogin = {}));
-var RequestTypes;
-(function (RequestTypes) {
-    RequestTypes["loginRequest"] = "login_request";
-    RequestTypes["operationRequest"] = "operation_request";
-    RequestTypes["trackRequest"] = "track_request";
-    RequestTypes["logoutRequest"] = "logout_request";
-    RequestTypes["signRequest"] = "sign_request";
-    RequestTypes["authRequest"] = "authentication_request";
-    RequestTypes["cardRequest"] = "card_request";
-    RequestTypes["dismissRequest"] = "dismiss_request";
-})(RequestTypes = exports.RequestTypes || (exports.RequestTypes = {}));
-var ResponseTypes;
-(function (ResponseTypes) {
-    ResponseTypes["initComplete"] = "init_complete";
-    ResponseTypes["loginResponse"] = "login_response";
-    ResponseTypes["operationResponse"] = "operation_response";
-    ResponseTypes["trackResponse"] = "track_response";
-    ResponseTypes["logoutResponse"] = "logout_response";
-    ResponseTypes["signResponse"] = "sign_response";
-    ResponseTypes["authResponse"] = "authentication_response";
-    ResponseTypes["cardResponse"] = "card_response";
-    ResponseTypes["dismissResponse"] = "dismiss_response";
-})(ResponseTypes = exports.ResponseTypes || (exports.ResponseTypes = {}));
-
 
 /***/ }),
 
@@ -5655,9 +5344,9 @@ TorusComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineCom
 /***/ }),
 
 /***/ 9:
-/*!************************!*\
-  !*** buffer (ignored) ***!
-  \************************/
+/*!***************************!*\
+  !*** ./node.js (ignored) ***!
+  \***************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -6025,42 +5714,6 @@ var PeriodKind;
     PeriodKind[PeriodKind["Testing"] = 2] = "Testing";
     PeriodKind[PeriodKind["Promotion"] = 3] = "Promotion";
 })(PeriodKind || (PeriodKind = {}));
-
-
-/***/ }),
-
-/***/ "D5E+":
-/*!******************************!*\
-  !*** ../icabod/dist/util.js ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const types_1 = __webpack_require__(/*! ./types */ "874q");
-exports.defer = () => {
-    // dummy value for typescript
-    let deferred = { resolve: (res) => { }, reject: (err) => { } };
-    // get promise and extract resolve/reject into d
-    const promise = new Promise((resolve, reject) => { deferred = { resolve, reject }; });
-    return { deferred, promise };
-};
-exports.networkToSrc = (network) => {
-    switch (network) {
-        case types_1.Networks.mainnet:
-            return 'https://wallet.kukai.app';
-        case types_1.Networks.delphinet:
-            return 'https://testnet.kukai.app';
-        case types_1.Networks.edonet:
-            return 'https://edonet.kukai.app';
-        case types_1.Networks.dev:
-            return 'https://ichabod-dev.kukai.app';
-        default:
-            return network;
-    }
-};
 
 
 /***/ }),
@@ -6726,142 +6379,6 @@ SigninComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineCo
 
 /***/ }),
 
-/***/ "I9fP":
-/*!********************************!*\
-  !*** ../icabod/dist/iframe.js ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
-};
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
-};
-var _iframeSrc, _getIframe;
-Object.defineProperty(exports, "__esModule", { value: true });
-const util_1 = __webpack_require__(/*! ./util */ "D5E+");
-const iframeId = 'kukai-iframe';
-class IFrameKukai {
-    constructor(src) {
-        _iframeSrc.set(this, void 0);
-        _getIframe.set(this, () => {
-            return document.getElementById(iframeId);
-        });
-        __classPrivateFieldSet(this, _iframeSrc, src);
-    }
-    show() {
-        const f = __classPrivateFieldGet(this, _getIframe).call(this);
-        if (f) {
-            // f.hidden = true
-            f.style.display = 'block';
-        }
-    }
-    hide() {
-        const f = __classPrivateFieldGet(this, _getIframe).call(this);
-        if (f) {
-            // f.hidden = true
-            f.style.display = 'none';
-        }
-    }
-    isHidden() {
-        const f = __classPrivateFieldGet(this, _getIframe).call(this);
-        return ((f === null || f === void 0 ? void 0 : f.style.display) === 'none');
-    }
-    toCard() {
-        const f = __classPrivateFieldGet(this, _getIframe).call(this);
-        if (f) {
-            f.style.position = 'fixed';
-            f.style.top = '';
-            f.style.bottom = '70px';
-            f.style.left = '70px';
-            f.style.borderRadius = '10px';
-            f.style.border = '0';
-            f.style.width = '400px';
-            f.style.height = '200px';
-        }
-    }
-    isCard() {
-        const f = __classPrivateFieldGet(this, _getIframe).call(this);
-        return ((f === null || f === void 0 ? void 0 : f.style.borderRadius) === '10px');
-    }
-    toFullScreen() {
-        const f = __classPrivateFieldGet(this, _getIframe).call(this);
-        if (f) {
-            f.style.position = 'fixed';
-            f.style.top = '0';
-            f.style.left = '0';
-            f.style.borderRadius = '0px';
-            f.style.border = '0';
-            f.style.width = '100%';
-            f.style.height = '100%';
-        }
-    }
-    async init(instanceId) {
-        if (!__classPrivateFieldGet(this, _getIframe).call(this)) {
-            let iframe = document.createElement('iframe');
-            const params = instanceId ? `?instanceId=${instanceId}` : '';
-            iframe.src = __classPrivateFieldGet(this, _iframeSrc) + "/embedded" + params;
-            iframe.id = iframeId;
-            iframe.style.zIndex = '99999';
-            iframe.style.display = 'none';
-            // sandbox attributes
-            // TODO jsDOM does not impl iFrame sandbox attrs, so these must be commented out when running tests
-            // scripts must be allowed to run or Kukai will not run
-            iframe.sandbox.add("allow-scripts");
-            // same origin must be allowed or message events will be blocked by CORS and storage will not work
-            iframe.sandbox.add('allow-same-origin');
-            // popups allowed to make oauth work
-            iframe.sandbox.add('allow-popups');
-            // forms allowed to make oauth work
-            iframe.sandbox.add('allow-forms');
-            const { promise, deferred } = util_1.defer();
-            try {
-                iframe.addEventListener('load', () => deferred.resolve());
-                document.body.appendChild(iframe);
-                return await promise.then(() => this.toFullScreen());
-            }
-            catch (err) {
-                deferred.reject(err);
-                throw err;
-            }
-        }
-        else {
-            throw new Error("Kukai-Embed Already Present");
-        }
-    }
-    get isInit() {
-        return !!__classPrivateFieldGet(this, _getIframe).call(this);
-    }
-    deinit() {
-        const f = __classPrivateFieldGet(this, _getIframe).call(this);
-        if (f) {
-            document.body.removeChild(f);
-        }
-    }
-    request(message) {
-        var _a, _b;
-        (_b = (_a = __classPrivateFieldGet(this, _getIframe).call(this)) === null || _a === void 0 ? void 0 : _a.contentWindow) === null || _b === void 0 ? void 0 : _b.postMessage(JSON.stringify(message), 
-        // TODO this may cause issues if a careless user overrides src as an empty string
-        __classPrivateFieldGet(this, _iframeSrc) ? __classPrivateFieldGet(this, _iframeSrc) : "*");
-    }
-}
-exports.IFrameKukai = IFrameKukai;
-_iframeSrc = new WeakMap(), _getIframe = new WeakMap();
-
-
-/***/ }),
-
 /***/ "JJGL":
 /*!*****************************************************************!*\
   !*** ./src/app/services/embedded-auth/embedded-auth.service.ts ***!
@@ -7173,7 +6690,7 @@ class SendComponent {
                     };
                 });
                 if (this.validParameters(txs)) {
-                    if (txs.length === 1) {
+                    if (txs.length === 1 && !this.template) {
                         const tokenTransferObj = this.getTokenTransferObj(txs[0]);
                         if (tokenTransferObj) {
                             const asset = this.tokenService.getAsset(tokenTransferObj.tokenId);
@@ -7397,91 +6914,6 @@ SendComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComp
         }], operationResponse: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"]
         }] }); })();
-
-
-/***/ }),
-
-/***/ "PYrL":
-/*!******************************!*\
-  !*** ../icabod/dist/icon.js ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
-};
-var _getIcon;
-Object.defineProperty(exports, "__esModule", { value: true });
-const iconId = 'kukai-icon';
-class IconUI {
-    constructor() {
-        _getIcon.set(this, () => {
-            return document.getElementById(iconId);
-        });
-    }
-    async init(cb, styleClass) {
-        var _a;
-        if (!this.isInit) {
-            let icon = document.createElement('button');
-            icon.id = iconId;
-            let k = document.createElement('img');
-            k.style.width = '60px';
-            k.style.height = '60px';
-            k.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEhQTFRF0dH/amn+urn/o6L+8/P/U1L+9PP/Xl3+mJf+3dz/gYD+3Nz/xcX/jIz+jIv+o6P/dXT+urr/xsX/6Oj/r67/////R0b+////pIBhiAAAABh0Uk5T//////////////////////////////8AzRMu6gAAAaZJREFUeNqsl9uSgyAMhgNyUNS2eyB9/zddXHW1QAKW/ccrhm8MSUgCPAkpkN2vJChqD2RBOVs8yc5SVcLgMCMHFbC0SMjKAgwCGQlgYNVjQb2i4FFgUWLMw5PGCukpB0uslEzhavZE7/CEFzS9wqO+AuvxDCuBlyTUCe7xovoDBrws+IMTox/Rin3EPhE7HEdJD94P59037/0tE68Fju9RH/b6/pX1Jr5jK5ycGJbN8Mp6nzl1+BwPu5VNfuEWWCELC/PLmjQTVIAlC9NscBk8Zw5mWJwDbBl4CRrFBn+DQhpm2XBoABousAggafiDZ1FCR8Irm+TloY6GN9YPb8CH7i2wF2/B5pM1nIWN0F+c4R0ZqjVGjjNckkmyxZczHMj03HLDGtpwxV+MvSZlDbelKxk0UIbPxWIQyjCVKrJchhC/CcNVRQFEbbIV0FWV3j3Yj1zpTfwdw1vg77min7gs7hgofLxytJu40WmIehXeTLwi6BYrYtfquG/C/zT3trGiaaBpG6Xahri28bFtcG0bmduG9bZnQuMDpfFp1Pgoq38O/ggwACoyIQpeKqtUAAAAAElFTkSuQmCC';
-            icon.innerHTML = k.outerHTML;
-            if (styleClass) {
-                icon.className = styleClass;
-            }
-            else {
-                icon.style.width = '60px';
-                icon.style.height = '60px';
-                icon.style.bottom = '40px';
-                icon.style.left = '40px';
-                icon.style.position = 'fixed';
-                icon.style.borderRadius = '50px';
-                icon.style.boxShadow = '2px 2px 3px #999';
-                icon.style.padding = '0';
-                icon.style.border = '0';
-            }
-            icon.style.zIndex = '99998';
-            icon.style.display = 'none';
-            document.body.appendChild(icon);
-            (_a = __classPrivateFieldGet(this, _getIcon).call(this)) === null || _a === void 0 ? void 0 : _a.addEventListener('click', cb);
-        }
-        else {
-            throw new Error("Kukai-Embed Already Present");
-        }
-    }
-    get isInit() {
-        return !!__classPrivateFieldGet(this, _getIcon).call(this);
-    }
-    deinit() {
-        const i = __classPrivateFieldGet(this, _getIcon).call(this);
-        if (i) {
-            document.body.removeChild(i);
-        }
-    }
-    show() {
-        const i = __classPrivateFieldGet(this, _getIcon).call(this);
-        if (i) {
-            i.style.display = 'block';
-        }
-    }
-    hide() {
-        const i = __classPrivateFieldGet(this, _getIcon).call(this);
-        if (i) {
-            i.style.display = 'none';
-        }
-    }
-}
-exports.IconUI = IconUI;
-_getIcon = new WeakMap();
 
 
 /***/ }),
@@ -10621,7 +10053,6 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
         _components_send_prepare_send_prepare_send_component__WEBPACK_IMPORTED_MODULE_68__["PrepareSendComponent"],
         _components_send_confirm_send_confirm_send_component__WEBPACK_IMPORTED_MODULE_69__["ConfirmSendComponent"],
         _components_send_confirm_send_template_confirm_send_template_component__WEBPACK_IMPORTED_MODULE_70__["ConfirmSendTemplateComponent"],
-        _components_sign_expr_sign_expr_component__WEBPACK_IMPORTED_MODULE_66__["SignExprComponent"],
         _components_originate_originate_component__WEBPACK_IMPORTED_MODULE_71__["OriginateComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
         _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_7__["BrowserAnimationsModule"],
         _angular_material_tabs__WEBPACK_IMPORTED_MODULE_6__["MatTabsModule"],
@@ -10674,7 +10105,6 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                     _components_send_prepare_send_prepare_send_component__WEBPACK_IMPORTED_MODULE_68__["PrepareSendComponent"],
                     _components_send_confirm_send_confirm_send_component__WEBPACK_IMPORTED_MODULE_69__["ConfirmSendComponent"],
                     _components_send_confirm_send_template_confirm_send_template_component__WEBPACK_IMPORTED_MODULE_70__["ConfirmSendTemplateComponent"],
-                    _components_sign_expr_sign_expr_component__WEBPACK_IMPORTED_MODULE_66__["SignExprComponent"],
                     _components_originate_originate_component__WEBPACK_IMPORTED_MODULE_71__["OriginateComponent"]
                 ],
                 imports: [
@@ -11436,286 +10866,6 @@ webpackEmptyAsyncContext.id = "crnd";
 
 /***/ }),
 
-/***/ "d9S5":
-/*!**********************************!*\
-  !*** ../icabod/dist/messages.js ***!
-  \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to set private field on non-instance");
-    }
-    privateMap.set(receiver, value);
-    return value;
-};
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
-};
-var _eventMap, _map, _queue, _single, _allowedOrigin, _init, _card, _login, _operation, _track, _logout, _sign, _auth, _dismiss, _handle, _listener, _messageTarget, _eventSrc;
-Object.defineProperty(exports, "__esModule", { value: true });
-const types_1 = __webpack_require__(/*! ./types */ "874q");
-const util_1 = __webpack_require__(/*! ./util */ "D5E+");
-class Concurrent {
-    constructor(map) {
-        _eventMap.set(this, {});
-        _map.set(this, void 0);
-        __classPrivateFieldSet(this, _map, map);
-    }
-    async listen(id) {
-        const { promise, deferred } = util_1.defer();
-        __classPrivateFieldGet(this, _eventMap)[id] = deferred;
-        return await promise;
-    }
-    handle(evt) {
-        var _a;
-        const id = __classPrivateFieldGet(this, _map).call(this, evt);
-        (_a = __classPrivateFieldGet(this, _eventMap)[id]) === null || _a === void 0 ? void 0 : _a.resolve(evt);
-        delete __classPrivateFieldGet(this, _eventMap)[id];
-    }
-}
-_eventMap = new WeakMap(), _map = new WeakMap();
-class Sequential {
-    constructor() {
-        _queue.set(this, []);
-    }
-    async listen() {
-        const { promise, deferred } = util_1.defer();
-        __classPrivateFieldGet(this, _queue).push(deferred);
-        return await promise;
-    }
-    get length() {
-        return __classPrivateFieldGet(this, _queue).length;
-    }
-    handle(evt) {
-        var _a;
-        (_a = __classPrivateFieldGet(this, _queue).shift()) === null || _a === void 0 ? void 0 : _a.resolve(evt);
-    }
-}
-_queue = new WeakMap();
-class Single {
-    constructor() {
-        _single.set(this, null);
-    }
-    async listen() {
-        if (__classPrivateFieldGet(this, _single))
-            throw new Error("OCCUPIED");
-        else {
-            const { promise, deferred } = util_1.defer();
-            __classPrivateFieldSet(this, _single, deferred);
-            return await promise;
-        }
-    }
-    handle(evt) {
-        var _a;
-        (_a = __classPrivateFieldGet(this, _single)) === null || _a === void 0 ? void 0 : _a.resolve(evt);
-        __classPrivateFieldSet(this, _single, null);
-    }
-}
-_single = new WeakMap();
-class MessageListener {
-    constructor(allowedOrigin) {
-        _allowedOrigin.set(this, void 0);
-        _init.set(this, new Single());
-        _card.set(this, new Sequential());
-        _login.set(this, new Sequential());
-        _operation.set(this, new Single());
-        _track.set(this, new Concurrent(res => res.opHash));
-        _logout.set(this, new Sequential());
-        _sign.set(this, new Sequential());
-        _auth.set(this, new Sequential());
-        _dismiss.set(this, new Sequential());
-        _handle.set(this, (data) => {
-            switch (data.type) {
-                case types_1.ResponseTypes.cardResponse:
-                    __classPrivateFieldGet(this, _card).handle(data);
-                    break;
-                case types_1.ResponseTypes.loginResponse:
-                    __classPrivateFieldGet(this, _login).handle(data);
-                    break;
-                case types_1.ResponseTypes.operationResponse:
-                    __classPrivateFieldGet(this, _operation).handle(data);
-                    break;
-                case types_1.ResponseTypes.trackResponse:
-                    __classPrivateFieldGet(this, _track).handle(data);
-                    break;
-                case types_1.ResponseTypes.logoutResponse:
-                    __classPrivateFieldGet(this, _logout).handle(data);
-                    break;
-                case types_1.ResponseTypes.signResponse:
-                    __classPrivateFieldGet(this, _sign).handle(data);
-                    break;
-                case types_1.ResponseTypes.authResponse:
-                    __classPrivateFieldGet(this, _auth).handle(data);
-                    break;
-                case types_1.ResponseTypes.initComplete:
-                    __classPrivateFieldGet(this, _init).handle(data);
-                    break;
-                case types_1.ResponseTypes.dismissResponse:
-                    __classPrivateFieldGet(this, _dismiss).handle(data);
-            }
-        });
-        __classPrivateFieldSet(this, _allowedOrigin, allowedOrigin);
-    }
-    async init() {
-        return await __classPrivateFieldGet(this, _init).listen();
-    }
-    async login() {
-        return await __classPrivateFieldGet(this, _login).listen();
-    }
-    async operation() {
-        return await __classPrivateFieldGet(this, _operation).listen();
-    }
-    async track(id) {
-        return await __classPrivateFieldGet(this, _track).listen(id);
-    }
-    async logout() {
-        return await __classPrivateFieldGet(this, _logout).listen();
-    }
-    async sign() {
-        return await __classPrivateFieldGet(this, _sign).listen();
-    }
-    async auth() {
-        return await __classPrivateFieldGet(this, _auth).listen();
-    }
-    async card() {
-        return await __classPrivateFieldGet(this, _card).listen();
-    }
-    async dismiss() {
-        return await __classPrivateFieldGet(this, _dismiss).listen();
-    }
-    handleEvent(evt) {
-        if (evt.type === 'message' && evt.origin === __classPrivateFieldGet(this, _allowedOrigin)) {
-            console.log(`Received ${evt.data} from ${evt.origin}`);
-            const data = JSON.parse(evt.data);
-            __classPrivateFieldGet(this, _handle).call(this, data);
-        }
-        else {
-            console.warn(evt.origin);
-        }
-    }
-}
-_allowedOrigin = new WeakMap(), _init = new WeakMap(), _card = new WeakMap(), _login = new WeakMap(), _operation = new WeakMap(), _track = new WeakMap(), _logout = new WeakMap(), _sign = new WeakMap(), _auth = new WeakMap(), _dismiss = new WeakMap(), _handle = new WeakMap();
-class KukaiMessaging {
-    constructor(messageTarget, allowedOrigin) {
-        _listener.set(this, void 0);
-        _messageTarget.set(this, void 0);
-        _eventSrc.set(this, null);
-        __classPrivateFieldSet(this, _messageTarget, messageTarget);
-        __classPrivateFieldSet(this, _listener, new MessageListener(allowedOrigin));
-    }
-    async init(eventSrc) {
-        if (__classPrivateFieldGet(this, _eventSrc)) {
-            throw new Error("Already Initialized");
-        }
-        else {
-            __classPrivateFieldSet(this, _eventSrc, eventSrc);
-            eventSrc.addEventListener('message', __classPrivateFieldGet(this, _listener));
-            return await __classPrivateFieldGet(this, _listener).init().then(res => {
-                if (res.failed)
-                    throw new Error("Init Failed: " + res.error);
-            });
-        }
-    }
-    get isInit() {
-        return !!__classPrivateFieldGet(this, _eventSrc);
-    }
-    deinit() {
-        if (__classPrivateFieldGet(this, _eventSrc)) {
-            __classPrivateFieldGet(this, _eventSrc).removeEventListener('message', __classPrivateFieldGet(this, _listener));
-            __classPrivateFieldSet(this, _eventSrc, null);
-        }
-    }
-    async card(show) {
-        __classPrivateFieldGet(this, _messageTarget).request({ type: types_1.RequestTypes.cardRequest, show });
-        return await __classPrivateFieldGet(this, _listener).card().then((res) => {
-            if (res.failed)
-                throw new Error("Card Failed: " + res.error);
-            else
-                return;
-        });
-    }
-    async login(config) {
-        __classPrivateFieldGet(this, _messageTarget).request({ type: types_1.RequestTypes.loginRequest, config });
-        return await __classPrivateFieldGet(this, _listener).login().then(res => {
-            if (res.failed)
-                throw new Error("Login Failed: " + res.error);
-            else
-                return res;
-        });
-    }
-    async operation(operations, ui) {
-        __classPrivateFieldGet(this, _messageTarget).request({ type: types_1.RequestTypes.operationRequest, operations, ui });
-        return await __classPrivateFieldGet(this, _listener).operation().then(res => {
-            if (res.failed)
-                throw new Error("Operation Failed: " + res.error);
-            else
-                return res;
-        }).catch(e => {
-            if (e.message === 'OCCUPIED')
-                throw new Error('Cannot send: Operation in progress');
-            else
-                throw e;
-        });
-    }
-    async track(opHash) {
-        __classPrivateFieldGet(this, _messageTarget).request({ type: types_1.RequestTypes.trackRequest, opHash });
-        return await __classPrivateFieldGet(this, _listener).track(opHash).then(res => {
-            if (res.failed)
-                throw new Error("Track Failed: " + res.error);
-            else
-                return res;
-        });
-    }
-    async logout() {
-        __classPrivateFieldGet(this, _messageTarget).request({ type: types_1.RequestTypes.logoutRequest });
-        return await __classPrivateFieldGet(this, _listener).logout().then(res => {
-            if (res.failed)
-                throw new Error("Logout Failed: " + res.error);
-            else
-                return res;
-        });
-    }
-    async sign(message) {
-        __classPrivateFieldGet(this, _messageTarget).request({ type: types_1.RequestTypes.signRequest, message });
-        return await __classPrivateFieldGet(this, _listener).sign().then(res => {
-            if (res.failed)
-                throw new Error("Signing Failed: " + res.error);
-            else
-                return res;
-        });
-    }
-    async authenticate(id, nonce) {
-        __classPrivateFieldGet(this, _messageTarget).request({ type: types_1.RequestTypes.authRequest, id, nonce });
-        return await __classPrivateFieldGet(this, _listener).auth().then(res => {
-            if (res.failed)
-                throw new Error("Auth Failed: " + res.error);
-            else
-                return res;
-        });
-    }
-    async dismiss() {
-        __classPrivateFieldGet(this, _messageTarget).request({ type: types_1.RequestTypes.dismissRequest });
-        return await __classPrivateFieldGet(this, _listener).dismiss().then((res) => {
-            if (res.failed)
-                throw new Error("Dismiss Failed: " + res.error);
-            else
-                return;
-        });
-    }
-}
-exports.KukaiMessaging = KukaiMessaging;
-_listener = new WeakMap(), _messageTarget = new WeakMap(), _eventSrc = new WeakMap();
-
-
-/***/ }),
-
 /***/ "ds67":
 /*!*******************************************************!*\
   !*** ./src/app/services/estimate/estimate.service.ts ***!
@@ -12165,7 +11315,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_lookup_lookup_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../services/lookup/lookup.service */ "QDvW");
 /* harmony import */ var _services_activity_activity_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../services/activity/activity.service */ "s6Pj");
 /* harmony import */ var _services_embedded_auth_embedded_auth_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../services/embedded-auth/embedded-auth.service */ "JJGL");
-/* harmony import */ var kukai_embed__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! kukai-embed */ "/qKp");
+/* harmony import */ var kukai_embed__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! kukai-embed */ "ztwt");
 /* harmony import */ var kukai_embed__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(kukai_embed__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common */ "ofXK");
 /* harmony import */ var _signin_signin_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./signin/signin.component */ "HlfV");
