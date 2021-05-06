@@ -11069,7 +11069,7 @@
               _iterator10.f();
             }
 
-            var storage = storageLimit.times(this.estimateService.costPerByte);
+            var storage = storageLimit.times(this.estimateService.costPerByte).div('1000000');
             var total = network.plus(storage).toFixed();
             network = network.toFixed();
             storage = storage.toFixed();
