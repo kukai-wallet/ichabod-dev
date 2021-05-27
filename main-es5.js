@@ -19360,6 +19360,9 @@
                   break;
 
                 case 'https://playwithbrio.com':
+                  _this41.logo = 'brio';
+                  break;
+
                 case 'https://staging.playwithbrio.com':
                   _this41.logo = 'brio';
                   break;
