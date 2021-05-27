@@ -19354,21 +19354,12 @@
             var _this41 = this;
 
             this.messageService.origin.subscribe(function (o) {
-              switch (o) {
-                case 'https://www.truesy.com':
-                  _this41.logo = 'truesy';
-                  break;
-
-                case 'https://playwithbrio.com':
-                  _this41.logo = 'brio';
-                  break;
-
-                case 'https://staging.playwithbrio.com':
-                  _this41.logo = 'brio';
-                  break;
-
-                default:
-                  _this41.logo = 'default';
+              if (o.endsWith('truesy.com')) {
+                _this41.logo = 'truesy';
+              } else if (o.endsWith('playwithbrio.com')) {
+                _this41.logo = 'brio';
+              } else {
+                _this41.logo = 'default';
               }
             });
           }

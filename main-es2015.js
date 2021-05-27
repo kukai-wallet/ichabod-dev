@@ -11470,18 +11470,14 @@ class SpinnerComponent {
     }
     ngOnInit() {
         this.messageService.origin.subscribe((o) => {
-            switch (o) {
-                case 'https://www.truesy.com':
-                    this.logo = 'truesy';
-                    break;
-                case 'https://playwithbrio.com':
-                    this.logo = 'brio';
-                    break;
-                case 'https://staging.playwithbrio.com':
-                    this.logo = 'brio';
-                    break;
-                default:
-                    this.logo = 'default';
+            if (o.endsWith('truesy.com')) {
+                this.logo = 'truesy';
+            }
+            else if (o.endsWith('playwithbrio.com')) {
+                this.logo = 'brio';
+            }
+            else {
+                this.logo = 'default';
             }
         });
     }
