@@ -19359,6 +19359,11 @@
                   _this41.logo = 'truesy';
                   break;
 
+                case 'https://playwithbrio.com':
+                case 'https://staging.playwithbrio.com':
+                  _this41.logo = 'brio';
+                  break;
+
                 default:
                   _this41.logo = 'default';
               }

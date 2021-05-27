@@ -11474,6 +11474,10 @@ class SpinnerComponent {
                 case 'https://www.truesy.com':
                     this.logo = 'truesy';
                     break;
+                case 'https://playwithbrio.com':
+                case 'https://staging.playwithbrio.com':
+                    this.logo = 'brio';
+                    break;
                 default:
                     this.logo = 'default';
             }
