@@ -687,6 +687,7 @@ class MessageService {
         this.messages = [];
         this.defaultTime = 10;
         this.origin = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+        this.beaconResponse = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
         this.pairingCompleteMsg = 'Pairing complete! Waiting for permission request...';
     }
     add(message, seconds = this.defaultTime) {
@@ -1474,16 +1475,15 @@ class OperationService {
                         secret: secret
                     }]
             };
-            return this.http.post(this.nodeURL + '/chains/main/blocks/head/helpers/forge/operations', fop)
+            return this.postRpc('chains/main/blocks/head/helpers/forge/operations', fop)
                 .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((opbytes) => {
                 const sopbytes = opbytes + Array(129).join('0');
                 fop.protocol = header.protocol;
                 fop.signature = 'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q';
-                return this.http.post(this.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop])
+                return this.postRpc('chains/main/blocks/head/helpers/preapply/operations', [fop])
                     .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((preApplyResult) => {
                     console.log(JSON.stringify(preApplyResult));
-                    return this.http.post(this.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions)
-                        .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((final) => {
+                    return this.postRpc('injection/operation', JSON.stringify(sopbytes)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((final) => {
                         return this.opCheck(final);
                     }));
                 }));
@@ -1517,9 +1517,9 @@ class OperationService {
         console.log(fee, origination);
         return this.getHeader()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((header) => {
-            return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {})
+            return this.getRpc(`chains/main/blocks/head/context/contracts/${keys.pkh}/counter`)
                 .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((actions) => {
-                return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {})
+                return this.getRpc(`chains/main/blocks/head/context/contracts/${keys.pkh}/manager_key`)
                     .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((manager) => {
                     if (fee >= this.feeHardCap) {
                         throw new Error('TooHighFee');
@@ -1567,9 +1567,9 @@ class OperationService {
     transfer(from, transactions, fee, keys, tokenTransfer = '') {
         return this.getHeader()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((header) => {
-            return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {})
+            return this.getRpc(`chains/main/blocks/head/context/contracts/${keys.pkh}/counter`)
                 .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((actions) => {
-                return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {})
+                return this.getRpc(`chains/main/blocks/head/context/contracts/${keys.pkh}/manager_key`)
                     .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((manager) => {
                     if (fee >= this.feeHardCap) {
                         throw new Error('TooHighFee');
@@ -1685,9 +1685,9 @@ class OperationService {
     delegate(from, to, fee = 0, keys) {
         return this.getHeader()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((header) => {
-            return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/counter', {})
+            return this.getRpc(`chains/main/blocks/head/context/contracts/${keys.pkh}/counter`)
                 .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((actions) => {
-                return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + keys.pkh + '/manager_key', {})
+                return this.getRpc(`chains/main/blocks/head/context/contracts/${keys.pkh}/manager_key`)
                     .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((manager) => {
                     if (fee >= this.feeHardCap) {
                         throw new Error('TooHighFee');
@@ -1749,7 +1749,7 @@ class OperationService {
     */
     operation(fop, header, keys, origination = false) {
         console.log('fop to send: ' + JSON.stringify(fop));
-        return this.http.post(this.nodeURL + '/chains/main/blocks/head/helpers/forge/operations', fop)
+        return this.postRpc('chains/main/blocks/head/helpers/forge/operations', fop)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((opbytes) => {
             return this.localForge(fop)
                 .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((localOpbytes) => {
@@ -1758,7 +1758,7 @@ class OperationService {
                 }
                 if (!keys.sk) {
                     fop.signature = 'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q';
-                    return this.http.post(this.nodeURL + '/chains/main/blocks/head/helpers/scripts/run_operation', { operation: fop, chain_id: header.chain_id })
+                    return this.postRpc('chains/main/blocks/head/helpers/scripts/run_operation', { operation: fop, chain_id: header.chain_id })
                         .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((applied) => {
                         console.log('applied: ' + JSON.stringify(applied));
                         this.checkApplied([applied]);
@@ -1775,13 +1775,13 @@ class OperationService {
                     const signed = this.sign('03' + opbytes, keys.sk);
                     const sopbytes = signed.sbytes;
                     fop.signature = signed.edsig;
-                    return this.http.post(this.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop])
+                    return this.postRpc('chains/main/blocks/head/helpers/preapply/operations', [fop])
                         .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((applied) => {
                         console.log('applied: ' + JSON.stringify(applied));
                         this.checkApplied(applied);
                         console.log('sop: ' + sopbytes);
-                        return this.http.post(this.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions)
-                            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["timeout"])(20000))
+                        return this.postRpc('injection/operation', JSON.stringify(sopbytes))
+                            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["timeout"])(30000))
                             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((final) => {
                             let newPkh = null;
                             if (origination) {
@@ -1806,7 +1806,7 @@ class OperationService {
             fop.signature = edsig;
             return this.getHeader().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((header) => {
                 fop.protocol = header.protocol;
-                return this.http.post(this.nodeURL + '/chains/main/blocks/head/helpers/preapply/operations', [fop])
+                return this.postRpc('chains/main/blocks/head/helpers/preapply/operations', [fop])
                     .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((parsed) => {
                     let newPkh = null;
                     for (let i = 0; i < parsed[0].contents.length; i++) {
@@ -1814,7 +1814,7 @@ class OperationService {
                             newPkh = parsed[0].contents[i].metadata.operation_result.originated_contracts[0];
                         }
                     }
-                    return this.http.post(this.nodeURL + '/injection/operation', JSON.stringify(sopbytes), httpOptions)
+                    return this.postRpc('injection/operation', JSON.stringify(sopbytes))
                         .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((final) => {
                         return this.opCheck(final, newPkh);
                     }));
@@ -1828,7 +1828,7 @@ class OperationService {
         if (tz2address.length !== 36 || tz2address.slice(0, 3) !== 'tz2') {
             throw new Error('InvalidTorusAddress');
         }
-        return this.http.get(this.nodeURL + `/chains/main/blocks/head/context/contracts/${tz2address}/manager_key`, {})
+        return this.getRpc(`chains/main/blocks/head/context/contracts/${tz2address}/manager_key`)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((manager) => {
             if (manager === null) {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({ noReveal: true });
@@ -1942,10 +1942,10 @@ class OperationService {
         }));
     }
     getHeader() {
-        return this.http.get(this.nodeURL + '/chains/main/blocks/head~3/header');
+        return this.getRpc(`chains/main/blocks/head~3/header`);
     }
     getBalance(pkh) {
-        return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/balance')
+        return this.getRpc(`chains/main/blocks/head/context/contracts/${pkh}/balance`)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((balance) => {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
                 success: true,
@@ -1956,7 +1956,7 @@ class OperationService {
         })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(err => this.errHandler(err)));
     }
     getDelegate(pkh) {
-        return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh)
+        return this.getRpc(`chains/main/blocks/head/context/contracts/${pkh}`)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((contract) => {
             let delegate = '';
             if (contract.delegate) {
@@ -1971,7 +1971,7 @@ class OperationService {
         })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(err => this.errHandler(err)));
     }
     getVotingRights() {
-        return this.http.get(this.nodeURL + '/chains/main/blocks/head/votes/listings')
+        return this.getRpc(`chains/main/blocks/head/votes/listings`)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((listings) => {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
                 success: true,
@@ -1980,7 +1980,7 @@ class OperationService {
         })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(err => this.errHandler(err)));
     }
     isRevealed(pkh) {
-        return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/manager_key', {})
+        return this.getRpc(`chains/main/blocks/head/context/contracts/${pkh}/manager_key`)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((manager) => {
             if (manager === null) {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(false);
@@ -1993,7 +1993,7 @@ class OperationService {
         })); // conservative action
     }
     getAccount(pkh) {
-        return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh)
+        return this.getRpc(`chains/main/blocks/head/context/contracts/${pkh}`)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((contract) => {
             let delegate = '';
             if (contract.delegate) {
@@ -2011,10 +2011,10 @@ class OperationService {
         })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(err => this.errHandler(err)));
     }
     getVerifiedOpBytes(operationLevel, operationHash, pkh, pk) {
-        return this.http.get(this.nodeURL + '/chains/main/blocks/' + operationLevel + '/operation_hashes', {})
+        return this.getRpc(`chains/main/blocks/${operationLevel}/operation_hashes`)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((opHashes) => {
             const opIndex = opHashes[3].findIndex(a => a === operationHash);
-            return this.http.get(this.nodeURL + '/chains/main/blocks/' + operationLevel + '/operations', {})
+            return this.getRpc(`chains/main/blocks/${operationLevel}/operations`)
                 .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((op) => {
                 let ans = '';
                 op = op[3][opIndex];
@@ -2030,7 +2030,7 @@ class OperationService {
                         delete op.contents[i].managerPubkey;
                     }
                 }
-                return this.http.post(this.nodeURL + '/chains/main/blocks/head/helpers/forge/operations', op)
+                return this.postRpc('chains/main/blocks/head/helpers/forge/operations', op)
                     .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])((opBytes) => {
                     if (this.pk2pkh(pk) === pkh) {
                         if (this.verify(opBytes, sig, pk)) {
@@ -2049,7 +2049,7 @@ class OperationService {
         }));
     }
     getConstants() {
-        return this.http.get(this.nodeURL + '/chains/main/blocks/head/context/constants');
+        return this.getRpc(`chains/main/blocks/head/context/constants`);
     }
     seed2keyPair(seed) {
         if (!seed) {
@@ -2218,7 +2218,10 @@ class OperationService {
             bytes = bytes.slice(2);
             const key = (new elliptic__WEBPACK_IMPORTED_MODULE_14__["ec"]('secp256k1')).keyFromPrivate(new Uint8Array(this.b58cdecode(sk, this.prefix.spsk)));
             let sig = key.sign(hash, { canonical: true });
-            sig = new Uint8Array(sig.r.toArray().concat(sig.s.toArray()));
+            const pad = new Array(32).fill(0);
+            const r = pad.concat(sig.r.toArray()).slice(-32);
+            const s = pad.concat(sig.s.toArray()).slice(-32);
+            sig = new Uint8Array(r.concat(s));
             const spsig = this.b58cencode(sig, this.prefix.spsig);
             const sbytes = bytes + this.buf2hex(sig);
             return {
@@ -2665,6 +2668,32 @@ class OperationService {
             }
         }
         return null;
+    }
+    postRpc(path, payload, retries = 2) {
+        return this.http.post(`${this.nodeURL}/${path}`, payload, httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(res => {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(res);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(err => {
+            if (retries > 0 && err.name === 'HttpErrorResponse' && err.statusText === 'Unknown Error') {
+                console.warn('Retry', path);
+                return this.postRpc(path, payload, --retries);
+            }
+            else {
+                throw err;
+            }
+        }));
+    }
+    getRpc(path, payload = {}, retries = 2) {
+        return this.http.get(`${this.nodeURL}/${path}`, payload).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(res => {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(res);
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(err => {
+            if (retries > 0 && err.name === 'HttpErrorResponse' && err.statusText === 'Unknown Error') {
+                console.warn('Retry', path);
+                return this.postRpc(path, payload, --retries);
+            }
+            else {
+                throw err;
+            }
+        }));
     }
 }
 OperationService.ɵfac = function OperationService_Factory(t) { return new (t || OperationService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_pipes_error_handling_pipe__WEBPACK_IMPORTED_MODULE_13__["ErrorHandlingPipe"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_token_token_service__WEBPACK_IMPORTED_MODULE_16__["TokenService"])); };
@@ -3718,6 +3747,14 @@ class OriginateComponent {
                         storageRecommendation: this.operationRequest.operationDetails[0].storage_limit ? this.operationRequest.operationDetails[0].storage_limit : undefined
                     };
                     this.estimateFees(recommendations);
+                    if (this.beaconMode) {
+                        this.syncSub = this.messageService.beaconResponse.subscribe((response) => {
+                            if (response) {
+                                this.operationResponse.emit('silent');
+                                this.closeModal();
+                            }
+                        });
+                    }
                 }
                 else {
                     console.warn('Invalid origination');
@@ -3988,6 +4025,10 @@ class OriginateComponent {
         this.ledgerError = '';
         this.simSemaphore = 0;
         this.activeTab = 0;
+        if (this.syncSub) {
+            this.syncSub.unsubscribe();
+            this.syncSub = undefined;
+        }
     }
     // Only Numbers with Decimals
     keyPressNumbersDecimal(event, input) {
@@ -5198,12 +5239,17 @@ class ErrorHandlingPipe {
         let errorMessage = '';
         const index = this.ERROR_LIST.findIndex((s) => s.id === errorId);
         console.log('errorId', errorId);
-        if (errorId === 'proto.alpha.michelson_v1.script_rejected' && withObj && (withObj.string !== undefined || withObj.args)) {
+        if (errorId === 'proto.alpha.michelson_v1.script_rejected' && withObj) {
             if (withObj.string) {
-                errorMessage = this.ERROR_LIST[index].msg + ' > ' + withObj.string;
+                errorMessage = `${this.ERROR_LIST[index].msg} | ${withObj.string}`;
             }
             else {
-                errorMessage = this.ERROR_LIST[index].msg + ' ' + JSON.stringify(withObj);
+                let jsonWith = JSON.stringify(withObj);
+                if (jsonWith.length > 200) {
+                    jsonWith = '[...]';
+                    console.error('FAILWITH', withObj);
+                }
+                errorMessage = `${this.ERROR_LIST[index].msg} ${jsonWith}`;
             }
             console.log(withObj);
         }
@@ -5674,7 +5720,10 @@ const environment = {
 };
 const CONSTANTS = {
     NAME: 'Testnet / Florencenet',
-    TEZOS_DOMAIN_CONTRACT: 'KT1KQkkVMTRhGUfJYbHBoaeJ6NUJi8o58cvg',
+    TEZOS_DOMAIN: {
+        CONTRACT: 'KT1KQkkVMTRhGUfJYbHBoaeJ6NUJi8o58cvg',
+        TOP_DOMAIN: 'flo'
+    },
     NETWORK: 'florencenet',
     MAINNET: false,
     NODE_URL: 'https://api.tez.ie/rpc/florencenet',
@@ -5758,6 +5807,38 @@ const CONSTANTS = {
                     isBooleanAmount: true
                 }
             }
+        },
+        'KT1Dwucgeaa9bgFi3Ds16Q1VAgpapXPhMZ5Q': {
+            kind: 'FA2',
+            category: 'finance',
+            tokens: {
+                '0-9': {
+                    name: 'in bloom',
+                    symbol: '',
+                    decimals: 0,
+                    description: 'I had a pretty intense year both personally and artistically, something between dream and frenzy. Things I was expecting for a long time happened suddenly and I feel like everything is blooming right now. It’s funny because the artwork itself is blooming while you’re watching it.',
+                    displayUrl: 'https://cloudflare-ipfs.com/ipfs/QmaN5STTo5TS5ittfMVFPmQSsS3z4JdNQfpMJNJtsCNsYZ',
+                    thumbnailUrl: 'https://cloudflare-ipfs.com/ipfs/QmaN5STTo5TS5ittfMVFPmQSsS3z4JdNQfpMJNJtsCNsYZ',
+                    shouldPreferSymbol: false,
+                    isBooleanAmount: true
+                }
+            }
+        },
+        'KT1TVA93qdPyhKXXgi5rN4XphJZBh4PgARb5': {
+            kind: 'FA2',
+            category: 'finance',
+            tokens: {
+                '0-9': {
+                    name: 'Welcome to Miami',
+                    symbol: '',
+                    decimals: 0,
+                    description: 'This piece was the first time I painted something inspired by the city that I’ve called home for my whole life. Miami. \nWhen I was considering the composition for this piece, I kept coming back to that famous saying, “the whole is greater than the sum of its parts.”\nSo if you asked me, what makes Miami, “Miami”? It’s the Miami skyline. It’s the palm trees that line the streets. It’s the boats parked on the dock. It’s the lifeguard towers spread along the beaches. It’s the ocean’s waves. And it’s the weather. The bipolar weather represented in the woman carrying an umbrella. First it’s sunny, then it rains, then it’s sunny again.\nMiami wouldn’t be “Miami” without all these features incorporated together that make up the vibrant city that it is. And so much more.',
+                    displayUrl: 'https://cloudflare-ipfs.com/ipfs/QmPfQcyyjqAATqjtpVH9YCUxKH8fasUYZGoaSR4BwyMiu5',
+                    thumbnailUrl: 'https://cloudflare-ipfs.com/ipfs/QmPfQcyyjqAATqjtpVH9YCUxKH8fasUYZGoaSR4BwyMiu5',
+                    shouldPreferSymbol: false,
+                    isBooleanAmount: true
+                }
+            }
         }
     },
     CONTRACT_OVERRIDES: {
@@ -5796,7 +5877,13 @@ const TRUSTED_TOKEN_CONTRACTS = [
     'KT1R3TqdxsHPYxNQBdY7jmXAeU17WpucMXDh',
     'KT1RUSCZ7pJ3WNTuXFD44UpStmNRjA459guZ',
     'KT1PrNd3sy1pLAqGtft47dzG4v8KizqPJntT',
-    'KT1WgeR4SaaTiTrwzrR1aD7h9YfeUTWcvC9j'
+    'KT1WgeR4SaaTiTrwzrR1aD7h9YfeUTWcvC9j',
+    'KT1D1S7KywvhzrTWHBo9MWUn5x3R9vxBmbio',
+    'KT1DzPX2SHnviWURFUfD5NQ9FcHQVmYFuPYu',
+    'KT1D1S7KywvhzrTWHBo9MWUn5x3R9vxBmbio',
+    'KT1MktwJ9ud6i57e4NKzBkwweEArVsMobHrU',
+    'KT1QzkVVgUYMTvwnyRwGttM8zTg5CyuHKxQH',
+    'KT1HEzZQV9B85HZnGpDgaZtZNk4ZXbLRuBii'
 ];
 
 
@@ -8408,6 +8495,12 @@ class PermissionRequestComponent {
             document.body.style.marginRight = scrollBarWidth.toString();
             document.body.style.overflow = 'hidden';
             this.messageService.removeBeaconMsg(true);
+            this.syncSub = this.messageService.beaconResponse.subscribe((response) => {
+                if (response) {
+                    this.permissionResponse.emit('silent');
+                    this.reset();
+                }
+            });
         }
     }
     rejectPermissions() {
@@ -8424,6 +8517,10 @@ class PermissionRequestComponent {
         document.body.style.marginRight = '';
         document.body.style.overflow = '';
         this.permissionRequest = null;
+        if (this.syncSub) {
+            this.syncSub.unsubscribe();
+            this.syncSub = undefined;
+        }
     }
     scopeToText(scope) {
         if (scope === 'sign') {
@@ -8883,8 +8980,7 @@ class InputValidationService {
                 return false;
             }
         }
-        const topDomain = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].MAINNET ? '.tez' : '.edo';
-        return (a.length >= 2 && domain.endsWith(topDomain));
+        return (a.length >= 2 && domain.endsWith(`.${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].TEZOS_DOMAIN.TOP_DOMAIN}`));
     }
     twitterAccount(username) {
         // The only characters you can use are uppercase and lowercase letters, numbers, and the underscore character ( _ ).
@@ -11477,10 +11573,13 @@ class EstimateService {
     }
     simulate(op) {
         op.signature = 'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q';
-        return this.http.post(this.nodeURL + '/chains/main/blocks/head/helpers/scripts/run_operation', { operation: op, chain_id: this.chainId }, httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(res => {
+        return this.operationService.postRpc('chains/main/blocks/head/helpers/scripts/run_operation', { operation: op, chain_id: this.chainId })
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(res => {
             this.operationService.checkApplied([res]);
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(res);
-        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(err => this.operationService.errHandler(err)));
+        })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(err => {
+            return this.operationService.errHandler(err);
+        }));
     }
     getUsageException(content, op) {
         var _a;
@@ -11507,16 +11606,12 @@ class EstimateService {
     }
     getCounter(pkh) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            return fetch(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/counter', {}).then(response => {
-                return response.json();
-            });
+            return this.operationService.getRpc(`chains/main/blocks/head/context/contracts/${pkh}/counter`).toPromise();
         });
     }
     getManager(pkh) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            return fetch(this.nodeURL + '/chains/main/blocks/head/context/contracts/' + pkh + '/manager_key', {}).then(response => {
-                return response.json();
-            });
+            return this.operationService.getRpc(`chains/main/blocks/head/context/contracts/${pkh}/manager_key`).toPromise();
         });
     }
 }
@@ -12413,6 +12508,14 @@ class DelegateComponent {
                     inputElem.focus();
                 }, 100);
             }
+            if (this.beaconMode) {
+                this.syncSub = this.messageService.beaconResponse.subscribe((response) => {
+                    if (response) {
+                        this.operationResponse.emit('silent');
+                        this.closeModal();
+                    }
+                });
+            }
         }
     }
     closeModalAction() {
@@ -12623,6 +12726,10 @@ class DelegateComponent {
         this.sendResponse = '';
         this.ledgerError = '';
         this.domainPendingLookup = false;
+        if (this.syncSub) {
+            this.syncSub.unsubscribe();
+            this.syncSub = undefined;
+        }
     }
     invalidInput() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -15200,6 +15307,7 @@ class QrScannerComponent {
         this.CONSTANTS = _environments_environment__WEBPACK_IMPORTED_MODULE_5__["CONSTANTS"];
         this.modalOpen = false;
         this.manualInput = '';
+        this.loadingCam = false;
     }
     ngOnInit() {
     }
@@ -15213,15 +15321,22 @@ class QrScannerComponent {
     }
     scan() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.loadingCam = true;
             const hasCamera = yield qr_scanner__WEBPACK_IMPORTED_MODULE_3__["default"].hasCamera();
             if (hasCamera) {
                 qr_scanner__WEBPACK_IMPORTED_MODULE_3__["default"].WORKER_PATH = './assets/js/qr-scanner-worker.min.js';
                 this.qrScanner = new qr_scanner__WEBPACK_IMPORTED_MODULE_3__["default"](this.videoplayer.nativeElement, result => this.handleQrCode(result));
                 yield this.qrScanner.start();
+                if (!this.modalOpen) {
+                    this.qrScanner.stop();
+                    this.qrScanner.destroy();
+                    this.qrScanner = null;
+                }
             }
             else {
                 console.warn('no camera found');
             }
+            this.loadingCam = false;
         });
     }
     handleQrCode(pairInfo) {
@@ -15248,8 +15363,10 @@ class QrScannerComponent {
     }
     closeModal() {
         // restore body scrollbar
-        if (this.qrScanner) {
+        if (this.qrScanner && !this.loadingCam) {
             this.qrScanner.stop();
+            this.qrScanner.destroy();
+            this.qrScanner = null;
         }
         document.body.style.marginRight = '';
         document.body.style.overflow = '';
@@ -16017,7 +16134,12 @@ class BeaconService {
     }
     preNotifyPairing(pairInfoJson) {
         const pairInfo = JSON.parse(pairInfoJson);
-        const peersJson = localStorage.getItem('beacon:communication-peers');
+        if (this.isNewPairingRequest(pairInfo)) {
+            this.messageService.addBeaconWait(`Pairing with ${pairInfo.name}. Please wait!`);
+        }
+    }
+    isNewPairingRequest(pairInfo) {
+        const peersJson = localStorage.getItem('beacon:communication-peers-wallet');
         let newPublicKey = true;
         if (peersJson) {
             const peers = JSON.parse(peersJson);
@@ -16031,15 +16153,13 @@ class BeaconService {
                 }
             }
         }
-        if (newPublicKey) {
-            this.messageService.addBeaconWait(`Pairing with ${pairInfo.name}. Please wait!`);
-        }
+        return newPublicKey;
     }
-    addPeer(pairInfoJson) {
+    addPeer(pairInfoJson, force = true) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const pairInfo = JSON.parse(pairInfoJson);
             console.log('PairInfo', pairInfo);
-            yield this.client.addPeer(pairInfo);
+            yield this.client.addPeer(pairInfo, force);
             this.syncBeaconState();
             this.messageService.removeBeaconMsg();
         });
@@ -16164,6 +16284,12 @@ class BeaconService {
                 signature
             };
             yield this.client.respond(response);
+        });
+    }
+    responseSync() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            localStorage.setItem('beacon:request-response', 'true');
+            localStorage.removeItem('beacon:request-response');
         });
     }
 }
@@ -17025,6 +17151,13 @@ class ConfirmSendComponent {
             this.transactions = changes.confirmRequest.currentValue.transactions;
             console.log('transactions', this.transactions);
             this.init();
+            if (this.headlessMode) {
+                this.syncSub = this.messageService.beaconResponse.subscribe((response) => {
+                    if (response) {
+                        this.closeModalAction('silent');
+                    }
+                });
+            }
         }
     }
     init() {
@@ -17336,9 +17469,9 @@ class ConfirmSendComponent {
         }
         return true;
     }
-    closeModalAction() {
+    closeModalAction(emit = null) {
         this.closeModal();
-        this.operationResponse.emit(null);
+        this.operationResponse.emit(emit);
         this.reset();
     }
     closeModal() {
@@ -17366,6 +17499,10 @@ class ConfirmSendComponent {
         this.pwdInvalid = '';
         this.advancedForm = false;
         this.customFee = '';
+        if (this.syncSub) {
+            this.syncSub.unsubscribe();
+            this.syncSub = undefined;
+        }
     }
 }
 ConfirmSendComponent.ɵfac = function ConfirmSendComponent_Factory(t) { return new (t || ConfirmSendComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_token_token_service__WEBPACK_IMPORTED_MODULE_2__["TokenService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_3__["WalletService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_estimate_estimate_service__WEBPACK_IMPORTED_MODULE_4__["EstimateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_operation_operation_service__WEBPACK_IMPORTED_MODULE_5__["OperationService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_message_message_service__WEBPACK_IMPORTED_MODULE_6__["MessageService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_coordinator_coordinator_service__WEBPACK_IMPORTED_MODULE_7__["CoordinatorService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_lookup_lookup_service__WEBPACK_IMPORTED_MODULE_8__["LookupService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_ledger_ledger_service__WEBPACK_IMPORTED_MODULE_9__["LedgerService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_input_validation_input_validation_service__WEBPACK_IMPORTED_MODULE_14__["InputValidationService"])); };
@@ -17999,8 +18136,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 class UriHandlerComponent {
-    constructor(route, messageService, walletService, location, beaconService, deeplinkService, inputValidationService) {
+    constructor(route, messageService, walletService, location, beaconService, deeplinkService, inputValidationService, router) {
         this.route = route;
         this.messageService = messageService;
         this.walletService = walletService;
@@ -18008,6 +18146,7 @@ class UriHandlerComponent {
         this.beaconService = beaconService;
         this.deeplinkService = deeplinkService;
         this.inputValidationService = inputValidationService;
+        this.router = router;
         this.permissionRequest = null;
         this.operationRequest = null;
         this.signRequest = null;
@@ -18032,17 +18171,13 @@ class UriHandlerComponent {
                         case _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].OperationRequest:
                             if (yield this.isSupportedOperationRequest(message)) {
                                 this.operationRequest = message;
-                            }
-                            else {
-                                yield this.beaconService.rejectOnUnknown(message);
+                                this.changeFavicon(true);
                             }
                             break;
                         case _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].SignPayloadRequest:
                             if (yield this.isSupportedSignPayload(message)) {
                                 this.signRequest = message;
-                            }
-                            else {
-                                yield this.beaconService.rejectOnUnknown(message);
+                                this.changeFavicon(true);
                             }
                             break;
                         default:
@@ -18057,6 +18192,9 @@ class UriHandlerComponent {
                 .catch((error) => console.error('connect error', error));
         });
     }
+    onFocus(event) {
+        this.changeFavicon();
+    }
     ngOnInit() {
         if (this.walletService.wallet) {
             this.init();
@@ -18069,12 +18207,20 @@ class UriHandlerComponent {
                 console.log(pairingString);
                 this.beaconService.preNotifyPairing(pairingString);
             }
+            window.addEventListener('storage', (e) => { this.handleStorageEvent(e); });
             yield this.connectApp().catch((error) => console.error('connect error', error));
             if (pairingString) {
                 yield this.beaconService.client.isConnected;
                 this.beaconService.addPeer(pairingString);
             }
         });
+    }
+    changeFavicon(active = false) {
+        if (active && document.hasFocus()) {
+            active = false;
+        }
+        const src = active ? 'favicon-attention.ico' : 'favicon.ico';
+        document.getElementById('favicon').setAttribute('href', src);
     }
     handlePermissionRequest(message) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -18083,6 +18229,7 @@ class UriHandlerComponent {
             if (message.scopes.length) {
                 if (this.walletService.wallet) {
                     this.permissionRequest = message;
+                    this.changeFavicon(true);
                 }
                 else {
                     console.warn('No wallet found');
@@ -18098,6 +18245,7 @@ class UriHandlerComponent {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             if (!this.walletService.wallet) {
                 console.log('No wallet found');
+                yield this.beaconService.rejectOnUnknown(message);
                 return false;
             }
             else if (!this.walletService.wallet.getImplicitAccount(message.sourceAddress)) {
@@ -18143,6 +18291,7 @@ class UriHandlerComponent {
                 if (!message.operationDetails[0].delegate) {
                     console.warn('Invalid delegate');
                     yield this.beaconService.rejectOnUnknown(message);
+                    return false;
                 }
             }
             else if (message.operationDetails[0].kind === 'origination') {
@@ -18166,6 +18315,12 @@ class UriHandlerComponent {
         });
     }
     invalidOptionals(op) {
+        if (typeof op.gas_limit === 'number') { // normalize
+            op.gas_limit = op.gas_limit.toString();
+        }
+        if (typeof op.storage_limit === 'number') {
+            op.storage_limit = op.storage_limit.toString();
+        }
         if (op.gas_limit && (typeof op.gas_limit !== 'string' || !this.inputValidationService.amount(op.gas_limit, 0))) {
             return true;
         }
@@ -18178,6 +18333,7 @@ class UriHandlerComponent {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             if (!this.walletService.wallet) {
                 console.log('No wallet found');
+                yield this.beaconService.rejectOnUnknown(message);
                 return false;
             }
             else if (!this.walletService.wallet.getImplicitAccount(message.sourceAddress)) {
@@ -18250,13 +18406,16 @@ class UriHandlerComponent {
             else if (opHash === 'unknown_error') {
                 yield this.beaconService.rejectOnUnknown(this.operationRequest);
             }
-            else {
+            else if (opHash !== 'silent') {
                 const response = {
                     type: _airgap_beacon_sdk__WEBPACK_IMPORTED_MODULE_4__["BeaconMessageType"].OperationResponse,
                     transactionHash: opHash,
                     id: this.operationRequest.id
                 };
                 yield this.beaconService.client.respond(response);
+            }
+            if (opHash !== 'silent') {
+                this.beaconService.responseSync();
             }
             this.operationRequest = null;
         });
@@ -18266,10 +18425,12 @@ class UriHandlerComponent {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             if (!publicKey) {
                 yield this.beaconService.rejectOnUserAbort(this.permissionRequest);
+                this.beaconService.responseSync();
             }
-            else {
+            else if (publicKey !== 'silent') {
                 yield this.beaconService.approvePermissionRequest(this.permissionRequest, publicKey);
                 this.beaconService.syncBeaconState();
+                this.beaconService.responseSync();
             }
             this.permissionRequest = null;
         });
@@ -18279,17 +18440,51 @@ class UriHandlerComponent {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             if (!signature) {
                 yield this.beaconService.rejectOnUserAbort(this.signRequest);
+                this.beaconService.responseSync();
             }
-            else {
+            else if (signature !== 'silent') {
                 yield this.beaconService.approveSignPayloadRequest(this.signRequest, signature);
+                this.beaconService.responseSync();
             }
             console.log(signature);
             this.signRequest = null;
         });
     }
+    handleStorageEvent(ev) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            switch (ev.key) {
+                case 'beacon:communication-peers-wallet':
+                    const peers = JSON.parse(ev.newValue);
+                    const senderIds = (yield this.beaconService.client.getAppMetadataList()).map(app => {
+                        return app.senderId;
+                    });
+                    const newPeers = peers.length - senderIds.length;
+                    if (newPeers > 0) {
+                        const newPeer = peers ? peers.pop() : null;
+                        if (newPeer && !senderIds.includes(newPeer.senderId)) {
+                            const { senderId } = newPeer, peer = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__rest"])(newPeer, ["senderId"]);
+                            yield this.beaconService.addPeer(JSON.stringify(peer), false);
+                        }
+                    }
+                    else {
+                        this.beaconService.syncBeaconState();
+                    }
+                    break;
+                case 'beacon:request-response':
+                    if (ev.newValue) {
+                        this.messageService.beaconResponse.next(true);
+                        this.beaconService.syncBeaconState();
+                        this.changeFavicon();
+                    }
+                    break;
+            }
+        });
+    }
 }
-UriHandlerComponent.ɵfac = function UriHandlerComponent_Factory(t) { return new (t || UriHandlerComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_message_message_service__WEBPACK_IMPORTED_MODULE_3__["MessageService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_5__["WalletService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_7__["Location"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_beacon_beacon_service__WEBPACK_IMPORTED_MODULE_8__["BeaconService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_deeplink_deeplink_service__WEBPACK_IMPORTED_MODULE_9__["DeeplinkService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_input_validation_input_validation_service__WEBPACK_IMPORTED_MODULE_13__["InputValidationService"])); };
-UriHandlerComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: UriHandlerComponent, selectors: [["app-uri-handler"]], decls: 6, vars: 11, consts: [[3, "headless", "activeAccount", "operationRequest", "operationResponse"], [3, "beaconMode", "operationRequest", "activeAccount", "operationResponse"], [3, "operationRequest", "activeAccount", "operationResponse"], [3, "permissionRequest", "permissionResponse"], [3, "signRequest", "activeAccount", "signResponse"]], template: function UriHandlerComponent_Template(rf, ctx) { if (rf & 1) {
+UriHandlerComponent.ɵfac = function UriHandlerComponent_Factory(t) { return new (t || UriHandlerComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_message_message_service__WEBPACK_IMPORTED_MODULE_3__["MessageService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_5__["WalletService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_7__["Location"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_beacon_beacon_service__WEBPACK_IMPORTED_MODULE_8__["BeaconService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_deeplink_deeplink_service__WEBPACK_IMPORTED_MODULE_9__["DeeplinkService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_input_validation_input_validation_service__WEBPACK_IMPORTED_MODULE_13__["InputValidationService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"])); };
+UriHandlerComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: UriHandlerComponent, selectors: [["app-uri-handler"]], hostBindings: function UriHandlerComponent_HostBindings(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("focus", function UriHandlerComponent_focus_HostBindingHandler($event) { return ctx.onFocus($event); }, false, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresolveWindow"]);
+    } }, decls: 6, vars: 11, consts: [[3, "headless", "activeAccount", "operationRequest", "operationResponse"], [3, "beaconMode", "operationRequest", "activeAccount", "operationResponse"], [3, "operationRequest", "activeAccount", "operationResponse"], [3, "permissionRequest", "permissionResponse"], [3, "signRequest", "activeAccount", "signResponse"]], template: function UriHandlerComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "app-send", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("operationResponse", function UriHandlerComponent_Template_app_send_operationResponse_1_listener($event) { return ctx.operationResponse($event); });
@@ -18326,7 +18521,10 @@ UriHandlerComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefi
                 templateUrl: './uri-handler.component.html',
                 styleUrls: ['./uri-handler.component.scss']
             }]
-    }], function () { return [{ type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] }, { type: _services_message_message_service__WEBPACK_IMPORTED_MODULE_3__["MessageService"] }, { type: _services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_5__["WalletService"] }, { type: _angular_common__WEBPACK_IMPORTED_MODULE_7__["Location"] }, { type: _services_beacon_beacon_service__WEBPACK_IMPORTED_MODULE_8__["BeaconService"] }, { type: _services_deeplink_deeplink_service__WEBPACK_IMPORTED_MODULE_9__["DeeplinkService"] }, { type: _services_input_validation_input_validation_service__WEBPACK_IMPORTED_MODULE_13__["InputValidationService"] }]; }, null); })();
+    }], function () { return [{ type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] }, { type: _services_message_message_service__WEBPACK_IMPORTED_MODULE_3__["MessageService"] }, { type: _services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_5__["WalletService"] }, { type: _angular_common__WEBPACK_IMPORTED_MODULE_7__["Location"] }, { type: _services_beacon_beacon_service__WEBPACK_IMPORTED_MODULE_8__["BeaconService"] }, { type: _services_deeplink_deeplink_service__WEBPACK_IMPORTED_MODULE_9__["DeeplinkService"] }, { type: _services_input_validation_input_validation_service__WEBPACK_IMPORTED_MODULE_13__["InputValidationService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }]; }, { onFocus: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"],
+            args: ['window:focus', ['$event']]
+        }] }); })();
 
 
 /***/ }),
@@ -18494,6 +18692,12 @@ class SignExprComponent {
             const value = Object(_taquito_local_forging_dist_lib_michelson_codec__WEBPACK_IMPORTED_MODULE_8__["valueDecoder"])(_taquito_local_forging_dist_lib_uint8array_consumer__WEBPACK_IMPORTED_MODULE_9__["Uint8ArrayConsumer"].fromHexString(this.signRequest.payload.slice(2)));
             const payload = Object(_taquito_michel_codec__WEBPACK_IMPORTED_MODULE_7__["emitMicheline"])(value, { indent: '  ', newline: '\n' });
             this.payload = this.isMessage ? value.string : payload;
+            this.syncSub = this.messageService.beaconResponse.subscribe((response) => {
+                if (response) {
+                    this.signResponse.emit('silent');
+                    this.closeModal();
+                }
+            });
         }
     }
     sign() {
@@ -18583,6 +18787,10 @@ class SignExprComponent {
         this.pwdInvalid = '';
         this.payload = '';
         this.isMessage = false;
+        if (this.syncSub) {
+            this.syncSub.unsubscribe();
+            this.syncSub = undefined;
+        }
     }
 }
 SignExprComponent.ɵfac = function SignExprComponent_Factory(t) { return new (t || SignExprComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_wallet_wallet_service__WEBPACK_IMPORTED_MODULE_2__["WalletService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_message_message_service__WEBPACK_IMPORTED_MODULE_3__["MessageService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_operation_operation_service__WEBPACK_IMPORTED_MODULE_6__["OperationService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_ledger_ledger_service__WEBPACK_IMPORTED_MODULE_10__["LedgerService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_input_validation_input_validation_service__WEBPACK_IMPORTED_MODULE_11__["InputValidationService"])); };
