@@ -239,7 +239,7 @@ self.addEventListener("fetch", function (event) {
                 },
                 error: error,
               },
-              "https://ichabod-dev.kukai.app"
+              location.origin
             );
           } else {
             // communicate via broadcast channel
